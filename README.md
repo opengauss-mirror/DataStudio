@@ -1,1 +1,1 @@
-Hello OpenGauss_DS
+Hello DataStudio
