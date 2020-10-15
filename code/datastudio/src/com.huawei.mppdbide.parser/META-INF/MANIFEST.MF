@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: gauss parser
+Bundle-SymbolicName: com.huawei.mppdbide.parser
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: HUAWEI
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: .,
+ antlr4-runtime-4.7.2.jar
+Import-Package: com.huawei.mppdbide.bl.queryparser,
+ com.huawei.mppdbide.utils.logger
+Export-Package: com.huawei.mppdbide.parser.alias,
+ com.huawei.mppdbide.parser.grammar,
+ com.huawei.mppdbide.parser.runtimehandler,
+ org.antlr.v4.runtime,
+ org.antlr.v4.runtime.misc,
+ org.antlr.v4.runtime.tree

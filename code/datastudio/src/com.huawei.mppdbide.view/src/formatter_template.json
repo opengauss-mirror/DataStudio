@@ -1,0 +1,49 @@
+{
+  "general": "create or replace function insertStudent(studentName varchar, sectionId integer)
+returns integer
+AS $$
+  studentNo integer;
+  i         integer;
+begin
+  studentNo := null;
+  i         := 1;
+  if studentName is null then
+    studentNo := null;
+  else
+    insert into student
+      (studentName, sectionId)
+    values
+      (studentName, sectionId);
+  end if;
+
+  for student_cursor in( select studentNo, studentName, sectionId
+                           from student) loop
+    if student_cursor.studentName = studentName and student_cursor.sectionId = sectionId then
+      studentNo :=emp_cursor.studentNo;
+    end if;
+  end loop;
+  begin
+-- Select
+
+    select stuId as student_number, stuName as student_name, secName as section_name
+      from student, section
+     where student.secId = section.secId
+       and student.classId = section.classId;
+
+    -- Insert
+
+    insert into student
+      (stuId, stuName, secId)
+    values
+      (1, 'A Student', 101);
+
+    -- Update
+
+    update student
+       set stuName = 'B Student', secId = 102
+     where stuId = 1;
+  end;
+  return studentNo;
+end; $$
+"
+}

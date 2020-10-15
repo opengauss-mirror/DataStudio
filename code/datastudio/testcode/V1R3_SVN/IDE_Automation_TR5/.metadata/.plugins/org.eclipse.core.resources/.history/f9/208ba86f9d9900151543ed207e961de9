@@ -1,0 +1,6 @@
+GAUSS_CONNECTION_NAME=NewConn
+GAUSS_DATABASE_NAME=idedb_automation
+GAUSS_HOST_IP=10.18.96.25
+GAUSS_HOST_PORT=27000
+GAUSS_USER_NAME=auto_execution
+eclipse.preferences.version=1

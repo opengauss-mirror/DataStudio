@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.huawei.mppdbide.feature_1.0.0.qualifier.jar" id="com.huawei.mppdbide.feature" version="1.0.0.qualifier">
+      <category name="com.huawei.mppdbide.repository"/>
+   </feature>
+   <category-def name="com.huawei.mppdbide.repository" label="Data Studio Repository">
+      <description>
+         Data Studio Repository
+      </description>
+   </category-def>
+</site>

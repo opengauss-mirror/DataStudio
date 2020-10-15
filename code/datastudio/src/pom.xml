@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.huawei.plide.build</groupId>
+  <artifactId>GAUSS_MPP_DB_IDE</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>com.huawei.dbdriver.jdbc.gauss</module>
+	<module>Common-collection</module>
+	<module>commons-csv</module>
+	<module>JSQLParser</module>
+    <module>com.huawei.mppdbide.utils</module>
+	<module>com.huawei.mppdbide.parser</module>
+    <module>com.huawei.mppdbide.adapter.gauss</module>
+    <module>com.huawei.mppdbide.bl</module>
+    <module>com.huawei.mppdbide.presentation</module>
+    <module>com.huawei.mppdbide.explainplan</module>
+	<module>com.huawei.mppdbide.editor.extension</module>
+    <module>com.huawei.mppdbide.view</module>
+    <module>com.huawei.mppdbide.feature</module>
+    <module>com.huawei.mppdbide.repository</module>
+	</modules>
+   <properties>
+    <tycho-version>1.4.0</tycho-version>
+	<java.version>1.8</java.version>
+	
+	<!-- <maven.test.skip>true</maven.test.skip> -->
+	<maven.compiler.source>1.8</maven.compiler.source>
+	<maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+  
+  <profiles>
+    <profile>
+      <id>include-test</id>
+      <activation>
+         <activeByDefault>false</activeByDefault>
+      </activation>
+	  <properties>
+		<presentation.skip>false</presentation.skip>
+		<runSuite>**/*.class</runSuite>
+      </properties>
+      <modules>
+        <module>..\testcode\LLT\com.huawei.mppdbide.bl.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.utils.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.adapter.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.bl.debug.test.fragment</module>		
+		<module>..\testcode\LLT\com.huawei.mppdbide.editor.extension.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.parser.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.explainplan.test.fragment</module>
+		<!-- <module>..\testcode\LLT\com.huawei.mppdbide.bl.windows.test.fragment</module> -->
+		<!-- <module>..\testcode\LLT\com.huawei.mppdbide.presentation.windows.test.fragment</module> -->
+		<!-- <module>..\testcode\LLT\com.huawei.mppdbide.util.windows.test.fragment</module> -->
+      </modules>
+    </profile>
+	
+	<profile>
+      <id>test_1</id>
+      <activation>
+         <activeByDefault>false</activeByDefault>
+      </activation>
+	  <properties>
+		<presentation.skip>false</presentation.skip>
+		<runSuite>**/*.class</runSuite>
+      </properties>
+    </profile>
+	
+	<profile>
+      <id>test_2</id>
+      <activation>
+         <activeByDefault>false</activeByDefault>
+      </activation>
+	  <properties>
+		<presentation.skip>true</presentation.skip>
+		<runSuite>**/*.class</runSuite>
+      </properties>
+	  <modules>
+        <module>..\testcode\LLT\com.huawei.mppdbide.bl.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.utils.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.adapter.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.bl.debug.test.fragment</module>		
+		<module>..\testcode\LLT\com.huawei.mppdbide.editor.extension.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.parser.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.explainplan.test.fragment</module>
+      </modules>
+    </profile>
+	
+	<profile>
+      <id>test_presentation</id>
+      <activation>
+         <activeByDefault>false</activeByDefault>
+      </activation>
+	  <properties>
+		<presentation.skip>false</presentation.skip>
+		<runSuite>**/*.class</runSuite>
+      </properties>
+    </profile>
+	
+	<profile>
+      <id>test_bl</id>
+      <activation>
+         <activeByDefault>false</activeByDefault>
+      </activation>
+	  <properties>
+		<presentation.skip>true</presentation.skip>
+		<runSuite>**/*.class</runSuite>
+      </properties>
+	  <modules>
+        <module>..\testcode\LLT\com.huawei.mppdbide.bl.test.fragment</module>
+      </modules>
+    </profile>
+	
+	<profile>
+      <id>test_other</id>
+      <activation>
+         <activeByDefault>false</activeByDefault>
+      </activation>
+	  <properties>
+		<presentation.skip>true</presentation.skip>
+      </properties>
+	  <modules>
+        <module>..\testcode\LLT\com.huawei.mppdbide.utils.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.adapter.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.bl.debug.test.fragment</module>		
+		<module>..\testcode\LLT\com.huawei.mppdbide.editor.extension.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.parser.test.fragment</module>
+		<module>..\testcode\LLT\com.huawei.mppdbide.explainplan.test.fragment</module>
+      </modules>
+    </profile>
+	
+  </profiles>
+
+  <repositories>
+    <!-- configure p2 repository to resolve against -->
+	<repository>
+      <id>eclipse_pdm</id>
+      <layout>p2</layout>
+	  <url>http://10.18.3.87:8081/nexus/content/repositories/eclipse_pdm/</url>
+    </repository>
+	<repository>
+      <id>nattable</id>
+      <layout>p2</layout>
+	  <url>http://10.18.10.241:8081/nexus/content/repositories/nattable/</url>
+    </repository>
+    <repository>
+      <id>gef</id>
+      <layout>p2</layout>
+          <url>http://10.18.10.241:8081/nexus/content/repositories/gef_5.1.0/</url>
+    </repository>
+	<repository>
+      <id>efxclipse_3.5.0</id>
+      <layout>p2</layout>
+          <url>http://10.18.10.241:8081/nexus/content/repositories/efxclipse_3.5.0/</url>
+    </repository>
+  </repositories>
+  <!--<build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>0.19.0</version>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>-->
+  
+  <build>
+    <plugins>
+	
+	
+<plugin>
+	<groupId>org.eclipse.tycho</groupId>
+	<artifactId>tycho-compiler-plugin</artifactId>
+	<version>${tycho-version}</version>
+		 <configuration>
+			<encoding>UTF-8</encoding>
+			<extraClasspathElements>
+			 <extraClasspathElement>
+			 <groupId>com.oracle</groupId>
+			 <artifactId>javafx</artifactId>
+			 <version>8.0.0-SNAPSHOT</version>
+			 <systemPath>${env.JAVA_HOME}/jre/lib/jfxswt.jar</systemPath>
+			 <scope>system</scope>
+			 </extraClasspathElement>
+			 </extraClasspathElements>
+		</configuration>
+ </plugin>
+	
+      <plugin>
+        <!-- enable tycho build extension -->
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <pomDependencies>consider</pomDependencies>
+          <!-- configure the p2 target environments for multi-platform build -->
+          <environments>
+            <!--environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86_64</arch>
+            </environment-->
+            <!--environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86</arch>
+            </environment-->
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86_64</arch>
+            </environment>
+          </environments>
+        </configuration>
+      </plugin>
+	  <plugin>
+			<groupId>com.huawei.devtest</groupId>
+			<artifactId>devtestcov-maven-plugin</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+			<configuration>
+				<forkCount>4</forkCount>
+				<reuseForks>true</reuseForks>	
+				<reportURL>http://100.101.122.206</reportURL>				
+				<autoOpenReport>true</autoOpenReport>
+			</configuration>
+		</plugin>
+		<plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-compiler-plugin</artifactId>
+			<version>3.5</version>
+			<configuration>
+				<source>1.8</source>
+				<target>1.8</target>
+            </configuration>
+        </plugin>
+
+      <!-- enable source bundle generation -->
+      <!-- <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-source-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin> -->
+	  <plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.7.6.201602180812</version>
+					<executions>
+						<execution>
+							<id>jacoco-initialize</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>jacoco-site</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+    </plugins>
+  </build>
+  <pluginRepositories>
+		<pluginRepository>
+			<id>devtest-releases</id>
+			<url>http://szxy1.artifactory.cd-cloud-artifact.tools.huawei.com/artifactory/sz-maven-public/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

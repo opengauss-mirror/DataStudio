@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SQL助手</title>
+    <link href="css/demo.css" rel="stylesheet">
+    <link href="css/scrollBar.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/suggestionParser.js"></script>
+    <script src="js/errorcodeParser.js"></script>
+    <script src="js/stringReader.js"></script>
+    <script src="js/scrollBar.js"></script>
+    <link href="css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="safe_area">
+        <div class="buttontitlearea">
+            <div id="grammar" class="button-title-Item button-title-Item-sm center">语法</div>
+            <div id="operationList" class="button-title-Item button-title-Item-md center">操作列表</div>
+            <div id="beginnerGuide" class="button-title-Item button-title-Item-md center">新手入门</div>
+            <div id="case" class="button-title-Item button-title-Item-sm center active">案列</div>
+        </div>
+        <div class="contentArea">
+            <div id="operationListContent" class="hidden">
+                <div class="operationTip">
+                    <p class="operationTipTnfo">通过操作列表，您只需要知道自己要“做什么”，就可以快速找到所需命令，而不需要事先知道命令名称。</p>
+                    <div class="operationTipselect"><b>选择您要做哪类操作?</b></div>
+                </div>
+                <div>
+                    <div class="functionalDimension">
+                        <div class="contentTitle">
+                            <b>功能维度</b>
+                        </div>
+                        <div id="funcDimen">
+                        </div>
+                    </div>
+                    <div class="sceneDimension">
+                        <div class="contentTitle">
+                            <b>场景维度</b>
+                        </div>
+                        <div id="scenDimen">
+                        </div>
+
+                    </div>
+                    <div class="operationalDimension">
+                        <div class="contentTitle">
+                            <b>操作维度</b>
+                        </div>
+                        <div id="operDimen">
+                        </div>
+                    </div>
+                </div>
+                <div id="beginnerContent" class="hidden">
+                    <input type="file" id="excel-file">
+                </div>
+                <div id="caseContent" class="hidden">
+                </div>
+            </div>
+            <script src="js/index.js"></script>
+            <!-- <script type="text/javascript" src="js/data.js"></script> -->
+            <script src="js/operationList.js"></script>
+        </div>
+</body>

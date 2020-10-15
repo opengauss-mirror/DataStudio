@@ -1,0 +1,111 @@
+/*************************************************************************
+TITLE - OBJECT BROWSER AND TOOLBAR
+DESCRIPTION - FUNCTIONS WITH RESPECT TO OBJECT BROWSER AND TOOLBAR
+AUTHORS - AWX321824
+CREATED DATE - 16-NOV-2015
+LAST UPDATED DATE - 16-NOV-2015
+MODIFICATION HISTORY - 
+TEST CASES COVERED - NA
+*************************************************************************/
+package script_library;
+
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import autoitx4java.AutoItX;
+import object_repository.ObjectBrowserElements;
+import support_functions.BaseActions;
+
+public class ObjectBrowserToolBar {
+
+	  
+    public static void ObjectBrowser() throws Exception
+{
+	Robot r = new Robot();
+	BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,
+							ObjectBrowserElements.xcord, ObjectBrowserElements.ycord);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyPress(KeyEvent.VK_ENTER);
+	r.keyRelease(KeyEvent.VK_ENTER);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyPress(KeyEvent.VK_ENTER);
+	r.keyRelease(KeyEvent.VK_ENTER);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyPress(KeyEvent.VK_ENTER);
+	r.keyRelease(KeyEvent.VK_ENTER);
+	r.keyPress(KeyEvent.VK_DOWN);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	r.keyRelease(KeyEvent.VK_DOWN);
+	}
+    public static void BrowserExport() throws Exception
+{
+	Robot r = new Robot();
+	r.keyPress(KeyEvent.VK_SHIFT);
+	r.keyPress(KeyEvent.VK_F10);
+	r.keyRelease(KeyEvent.VK_SHIFT);
+	r.keyRelease(KeyEvent.VK_F10);
+	r.keyPress(KeyEvent.VK_UP);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_UP);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_UP);
+	Thread.sleep(200);
+	r.keyPress(KeyEvent.VK_UP);
+	r.keyRelease(KeyEvent.VK_UP);
+	r.keyRelease(KeyEvent.VK_UP);
+	r.keyRelease(KeyEvent.VK_UP);
+	r.keyRelease(KeyEvent.VK_UP);
+	r.keyPress(KeyEvent.VK_ENTER);
+	r.keyRelease(KeyEvent.VK_ENTER);
+}
+    public static String HelpButton() throws Exception
+    {		
+    	String sHelpFlag;
+        Robot r = new Robot();
+        AutoItX x = new AutoItX();
+        r.keyPress(KeyEvent.VK_F1);
+        r.keyRelease(KeyEvent.VK_F1);
+        if(x.winExists("Help Document Does Not Exist"))
+    	{
+        	sHelpFlag = "False";
+    	}
+        else
+        {
+        	sHelpFlag = "True";
+        }
+        Thread.sleep(1000);
+        r.keyPress(KeyEvent.VK_ENTER);
+        r.keyRelease(KeyEvent.VK_ENTER);
+    	return sHelpFlag;
+    }
+    
+}

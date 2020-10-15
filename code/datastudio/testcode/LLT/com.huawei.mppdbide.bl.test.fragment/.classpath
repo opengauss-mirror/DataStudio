@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/MockRunner/mockrunner-jdbc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermockito/bsh-2.0b4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermockito/cglib-nodep-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermockito/javassist-3.20.0-GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermockito/jcommander-1.27.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermockito/mockito-all-1.10.19.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermockito/objenesis-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermockito/powermock-mockito-1.6.3-full.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermockito/snakeyaml-1.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-api-mockito-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-api-mockito-common-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-api-support-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-core-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-easymock-1.6.6-full.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-mockito-1.6.6-full.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-mockito2-1.6.6-full.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-module-javaagent-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-module-junit4-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-module-junit4-common-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-module-junit4-rule-agent-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-module-testng-agent-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/powermock/1.6.6/powermock-reflect-1.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/eclipse/org.eclipse.osgi_3.9.1.v20130814-1242.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/junit-4.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/MockRunner/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/MockRunner/jakarta-oro-2.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/MockRunner/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/MockRunner/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/gsjdbc4.jar"/>
+	<classpathentry kind="lib" path="lib/easyMock/cglib-nodep-2.2.3.jar"/>
+	<classpathentry kind="lib" path="lib/easyMock/easymock-3.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/easyMock/easymock-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/easyMock/objenesis-1.2.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

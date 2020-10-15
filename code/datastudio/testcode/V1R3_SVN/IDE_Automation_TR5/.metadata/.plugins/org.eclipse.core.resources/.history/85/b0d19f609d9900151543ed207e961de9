@@ -1,0 +1,206 @@
+/*************************************************************************
+TITLE - UTILITY FUNCTIONS
+DESCRIPTION - REGULAR REUSABLE FUNCTIONS 
+AUTHORS - AWX321824
+CREATED DATE - 16-NOV-2015
+LAST UPDATED DATE - 24-NOV-2015
+MODIFICATION HISTORY - 
+TEST CASES COVERED - NA
+*************************************************************************/
+package support_functions;
+
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.imageio.ImageIO;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import autoitx4java.AutoItX;
+
+
+public class UtilityFunctions {
+
+	public static String TestDataPath ="C:/Project_DB_Tool_Automation_Suite/IDE/IDE_Test_Data/";
+	
+	public static String TestResultPath ="C:/Project_DB_Tool_Automation_Suite/IDE/IDE_Test_Results/";
+		
+	public static String GetExcelCellValue(String excelName,String sheetName,int rowNum,int cellNum)
+	{
+	try
+	{
+	FileInputStream fis=new FileInputStream(TestDataPath.concat(excelName));
+	Workbook wb=WorkbookFactory.create(fis);
+	Sheet SheetName=wb.getSheet(sheetName);
+	String CellValue;
+	Cell CellName = SheetName.getRow(rowNum).getCell(cellNum);
+	if(CellName.getCellType()==0)
+	{
+	double d = CellName.getNumericCellValue();
+	int i = (int) d;
+	CellValue = Integer.toString(i);
+	return CellValue;
+	}
+	else
+	{
+		CellValue=CellName.getStringCellValue();
+	return CellValue;
+	}
+
+	}
+	catch(Exception e)
+	{
+	return "";
+	}
+	}
+	
+	public static int GetRowCount(String excelName,String Sheet)
+	{
+	try
+	{
+	FileInputStream fis=new FileInputStream(TestDataPath.concat(excelName));
+	Workbook wb=WorkbookFactory.create(fis);
+	Sheet SheetName=wb.getSheet(Sheet);
+	int iRowCount = SheetName.getLastRowNum();
+	return iRowCount;
+	}
+	catch(Exception e)
+	{
+	return 0;
+	}
+	}
+
+	public static void WriteToExcel(String ExcelName,String SheetName,int RowNum,int CellNum,String CellValue)
+	{
+	try
+	{
+	String sResultFolder = ExcelName.substring(0,ExcelName.lastIndexOf("."));
+	FileInputStream fis=new FileInputStream(TestResultPath.concat(sResultFolder+"/").concat(ExcelName));
+	XSSFWorkbook workbook = new XSSFWorkbook(fis);
+	Sheet s=workbook.getSheet(SheetName);
+	Cell CellName = s.getRow(RowNum).getCell(CellNum);
+	CellName.setCellValue(CellValue);
+	fis.close();
+	FileOutputStream fos=new FileOutputStream(new File(TestResultPath.concat(sResultFolder+"/").concat(ExcelName)));
+	workbook.write(fos);
+	workbook.close();
+	fos.close();
+	}
+	catch(Exception e)
+	{
+	e.getStackTrace();
+	}
+	}
+
+	public static String CreateResultFile(String sExecutionType) throws IOException
+	{
+		String ResultExcel,TemplateExcel,ResultPath,ScreenshotPath;
+		if (sExecutionType == "FunctionalTest")
+		{
+			ResultExcel = "IDE_Functional_Automation_Test_Results";
+			TemplateExcel = "Template_IDE_Functional_Automation_Test_Results.xlsx";
+			
+		}
+		else
+		{
+			ResultExcel = "IDE_Smoke_Automation_Test_Results";
+			TemplateExcel = "Template_IDE_Smoke_Automation_Test_Results.xlsx";
+		}
+		ResultExcel = UtilityFunctions.CurrentDateTime(ResultExcel);
+		ResultPath = TestResultPath+ResultExcel;
+		ScreenshotPath = TestResultPath+ResultExcel+"/Screenshots";
+		new File(ResultPath).mkdir();
+		new File(ScreenshotPath).mkdir();
+		//File ResultFile = new File(TestResultPath.concat(ResultExcel+".xlsx"));
+		File ResultFile = new File(ResultPath.concat("/").concat(ResultExcel+".xlsx"));
+		File TemplateFile = new File(TestResultPath.concat(TemplateExcel));
+		ResultFile.createNewFile();
+		FileInputStream fis = new FileInputStream(TemplateFile);
+		FileOutputStream fos = new FileOutputStream(ResultFile);
+		XSSFWorkbook workbook = new XSSFWorkbook(fis);
+		workbook.write(fos);
+		workbook.close();
+		fis.close();
+		fos.close();
+		return ResultExcel+".xlsx";
+	}
+	
+	public static String CurrentDateTime(String fileName){
+
+		int day, month,year;
+		int second, minute, hour;
+		GregorianCalendar date = new GregorianCalendar();
+		day = date.get(Calendar.DAY_OF_MONTH);
+		month = date.get(Calendar.MONTH);
+		year = date.get(Calendar.YEAR);
+		second = date.get(Calendar.SECOND);
+		minute = date.get(Calendar.MINUTE);
+		hour = date.get(Calendar.HOUR);
+		//WebDriver augmentedDriver = new Augmenter().augment(driver)
+		String path = fileName+"_"+day+"_"+(month+1)+"_"+year+"_"+hour+"_"+minute+"_"+second;
+		return path;
+		}
+	
+	public static void ScrollDown(String title, String text, String controlId, int iCount) throws Exception
+	  {
+	  	AutoItX x = new AutoItX();
+	  	x.controlFocus(title, "", controlId);
+	  	Thread.sleep(1000);
+	  	x.mouseWheel("down",iCount);
+	  }
+	
+	public static void ScrollUp(String title, String text, String controlId, int iCount) throws Exception
+	  {
+	  	AutoItX x = new AutoItX();
+	  	x.controlFocus(title, "", controlId);
+	  	Thread.sleep(1000);
+	  	x.mouseWheel("up",iCount);
+	  }
+	
+	public static void TakeScreenshot(String sTestCaseID, String ResultExcel) throws Exception
+	  {
+		Robot r = new Robot();
+		String sScreenshotFolder = TestResultPath+ResultExcel.substring(0,ResultExcel.lastIndexOf("."))+"/Screenshots/";
+		String sFormat = "jpg";
+		String sFileName = sScreenshotFolder+sTestCaseID+".jpg";
+	  	Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()); 
+	  	BufferedImage screenFullImage = r.createScreenCapture(screenRect);
+	  	ImageIO.write(screenFullImage,sFormat,new File(sFileName));
+	  }
+
+	  public static void KeyPress(int Key, int Count) throws Exception
+	    {
+	    	Robot r = new Robot();
+	    	for(int i=1;i<=Count;i++)
+	    	{
+	    		r.keyPress(Key);
+	    		Thread.sleep(100);
+	    	}
+	    	
+	    }
+	    
+	    public static void KeyRelease(int Key, int Count) throws Exception
+	    {
+	    	Robot r = new Robot();
+	    	for(int i=1;i<=Count;i++)
+	    	{
+	    		r.keyRelease(Key);
+	    		Thread.sleep(100);
+	    	}
+	    	
+	    }
+	  	
+}
+

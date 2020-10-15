@@ -1,0 +1,120 @@
+package test_scripts;
+
+import java.io.File;
+
+import object_repository.ErrorElements;
+import script_library.Login;
+import script_library.QueryEditor;
+import support_functions.BaseActions;
+import support_functions.UtilityFunctions;
+
+import com.jacob.com.LibraryLoader;
+
+public class AR_Tools_IDE_030_002_MUL_QRY {
+
+	public static void main(String args[]) throws Exception
+    {
+		File Jacob = new File("lib", "jacob-1.18-x86.dll");
+	    System.setProperty(LibraryLoader.JACOB_DLL_PATH,Jacob.getAbsolutePath()); 
+	    
+	    //Creating the Test Result File for Reporting
+	   	String ResultExcel = UtilityFunctions.CreateResultFile("FunctionalTest");
+	   	String sFlag,sInputQuery,sQueryType,sExeType,iQueryCount,sTestCaseID,sQuerySelection;
+	   	
+	   	//Launching the IDE Tool Application
+	    Login.LaunchIDE("C:/Project_DB_Tool_Automation_Suite/IDE/IDE_Tool/Gauss200 OLAP IDE.exe");
+	    Thread.sleep(1000);
+	    //Getting Login Credentials from IDE_Smoke_Test_Data file and user logs into IDE Tool
+	    String sConnection=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "IDELogin", 1, 0);
+	    String sHost=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "IDELogin", 1, 1);
+	    String sHostPort=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx","IDELogin", 1, 2);
+	    String sDBName=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "IDELogin", 1, 3);
+	    String sUserName=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "IDELogin", 1, 4);
+	    Thread.sleep(2000);        
+	    String sPassword=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "IDELogin", 1, 5);
+	    Login.IDELogin(sConnection,sHost,sHostPort,sDBName,sUserName,sPassword);
+	    
+	    //Scripts to Test AR.Tools.IDE.030.002 - Support multiple query execution from one sql editor
+	    
+	    int iRowCount = UtilityFunctions.GetRowCount("IDE_Functional_Test_Data.xlsx", "AR.Tools.IDE.030.002");
+		for(int i=1;i<=iRowCount;i++)
+		{
+			sTestCaseID=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "AR.Tools.IDE.030.002", i,1 );
+			sInputQuery=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "AR.Tools.IDE.030.002", i,2);
+			sQueryType=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "AR.Tools.IDE.030.002", i,3);
+			sExeType=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "AR.Tools.IDE.030.002", i,4);
+			iQueryCount=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "AR.Tools.IDE.030.002", i,5);
+			sQuerySelection=UtilityFunctions.GetExcelCellValue("IDE_Functional_Test_Data.xlsx", "AR.Tools.IDE.030.002", i,5);
+			sFlag = QueryEditor.MultipleQueryExe(sInputQuery,sQueryType,sExeType,iQueryCount,sQuerySelection);
+			UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,3,"Yes");
+			if(sFlag.equals("Success"))
+				UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Pass");
+			else if(sQueryType.equals("Invalid"))
+			{
+				if(sFlag.contains("ERROR: syntax error"))
+				{
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Pass");	
+				}
+				else
+				{
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Fail");
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,5,"Error message is not getting displayed for partial/invalid query. Please refer screenshot "+sTestCaseID+".jpg");
+					UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
+				}
+			}
+			else if(sQueryType.equals("NoAccess"))
+			{
+				if(sFlag.contains("ERROR: permission denied"))
+				{
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Pass");	
+				}
+				else
+				{
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Fail");
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,5,"Error message is not getting displayed for schema with no access. Please refer screenshot "+sTestCaseID+".jpg");
+					UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
+				}
+			}
+			else if(sQueryType.equals("NoAccess"))
+			{
+				if(sFlag.contains("ERROR: permission denied"))
+				{
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Pass");	
+				}
+				else
+				{
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Fail");
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,5,"Error message is not getting displayed for schema with no access. Please refer screenshot "+sTestCaseID+".jpg");
+					UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
+				}
+			}
+			else if(sQueryType.equals("Error"))
+			{
+				if(BaseActions.WinExists(ErrorElements.wExePlanError))
+				{
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Pass");
+					BaseActions.WinClose(ErrorElements.wExePlanError);
+				}
+				else
+				{
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Fail");
+					UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,5,"Execution Plan For Multiple Queries error window is not displayed. Please refer screenshot "+sTestCaseID+".jpg");
+					UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
+				}
+				
+			}
+			else
+			{
+				
+				UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,4,"Fail");
+				UtilityFunctions.WriteToExcel(ResultExcel,"AR.Tools.IDE.030.002",i+2,5,"Error occured while executing the query. Please refer screenshot "+sTestCaseID+".jpg");
+				UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
+			}
+		}
+    }
+	
+	
+	
+	
+}
+

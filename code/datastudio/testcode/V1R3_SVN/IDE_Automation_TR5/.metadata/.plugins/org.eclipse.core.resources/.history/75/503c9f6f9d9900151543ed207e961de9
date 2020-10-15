@@ -1,0 +1,286 @@
+/*************************************************************************
+TITLE - QUERY EDITOR
+DESCRIPTION - FUNCTIONS WITH RESPECT TO QUERY EDITOR
+AUTHORS - AWX321824
+CREATED DATE - 16-NOV-2015
+LAST UPDATED DATE - 16-NOV-2015
+MODIFICATION HISTORY - 
+TEST CASES COVERED - NA
+*************************************************************************/
+package script_library;
+
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.File;
+
+import object_repository.ExecQueryElements;
+import object_repository.ObjectBrowserElements;
+import support_functions.BaseActions;
+import autoitx4java.AutoItX;
+
+import com.jacob.com.LibraryLoader;
+
+public class QueryEditor {
+
+	public static String SingleQueryExe(String sQuery) throws Exception
+	{
+		File file = new File("lib", "jacob-1.18-x86.dll");
+		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+		AutoItX x = new AutoItX();
+		Robot r = new Robot();
+		String sFlag;
+		BaseActions.ClearConsole();
+		x.controlFocus(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor);
+		r.keyPress(KeyEvent.VK_CONTROL);
+	    r.keyPress(KeyEvent.VK_A);
+	    r.keyRelease(KeyEvent.VK_CONTROL);
+	    r.keyRelease(KeyEvent.VK_A);
+	    r.keyPress(KeyEvent.VK_DELETE);
+	    r.keyRelease(KeyEvent.VK_DELETE);
+	    BaseActions.SetText(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor, sQuery);
+		r.keyPress(KeyEvent.VK_CONTROL);
+		r.keyPress(KeyEvent.VK_ENTER);
+	    r.keyRelease(KeyEvent.VK_CONTROL);
+	    r.keyRelease(KeyEvent.VK_ENTER);
+	    Thread.sleep(2000);
+	    String sConsoleOutput = QueryResult.ReadConsoleOutput();
+	    Thread.sleep(1000);
+	    if(sConsoleOutput.contains("Executed Successfully.."))
+	    {
+	    	sFlag = "Success";
+	    }
+		else
+		{
+			sFlag = sConsoleOutput;
+		}
+		return sFlag;
+	}
+	
+	public static String SingleQueryExe(String sQuery, String sQueryType) throws Exception
+    {
+       File file = new File("lib", "jacob-1.18-x86.dll");
+       System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+       AutoItX x = new AutoItX();
+       Robot r = new Robot();
+       String sFlag;
+       BaseActions.ClearConsole();
+       x.controlFocus(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor);
+       r.keyPress(KeyEvent.VK_CONTROL);
+       r.keyPress(KeyEvent.VK_A);
+       r.keyRelease(KeyEvent.VK_CONTROL);
+       r.keyRelease(KeyEvent.VK_A);
+       r.keyPress(KeyEvent.VK_DELETE);
+       r.keyRelease(KeyEvent.VK_DELETE);
+       Thread.sleep(2000);
+       BaseActions.SetText(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor, sQuery);
+       r.keyPress(KeyEvent.VK_CONTROL);
+       r.keyPress(KeyEvent.VK_ENTER);
+       r.keyRelease(KeyEvent.VK_CONTROL);
+       r.keyRelease(KeyEvent.VK_ENTER);
+       Thread.sleep(10000);
+       String sConsoleOutput = QueryResult.ReadConsoleOutput();
+       if (sQueryType.equals("Valid"))
+       {
+    	   if(sConsoleOutput.contains("Executed Successfully.."))
+    	   {
+    		   sFlag = "Success";
+    	   }
+    	   else
+           {
+    		   sFlag = sConsoleOutput;
+           }
+    	   return sFlag;
+        }
+        else
+        {
+           return sConsoleOutput;
+        }
+    }
+	
+	public static void QueryFormat(String sQuery,String sFormatType) throws Exception
+	{
+		File file = new File("lib", "jacob-1.18-x86.dll");
+		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+		AutoItX x = new AutoItX();
+		Robot r = new Robot();
+		x.controlFocus(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor);
+		r.keyPress(KeyEvent.VK_CONTROL);
+	    r.keyPress(KeyEvent.VK_A);
+	    r.keyRelease(KeyEvent.VK_CONTROL);
+	    r.keyRelease(KeyEvent.VK_A);
+	    r.keyPress(KeyEvent.VK_DELETE);
+	    r.keyRelease(KeyEvent.VK_DELETE);
+	    BaseActions.SetText(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor, sQuery);
+		r.keyPress(KeyEvent.VK_CONTROL);
+	    r.keyPress(KeyEvent.VK_A);
+	    r.keyRelease(KeyEvent.VK_CONTROL);
+	    r.keyRelease(KeyEvent.VK_A);
+	    Thread.sleep(2000);
+	     switch(sFormatType)
+	     {
+	     case "Enter" :
+	    	 r.keyPress(KeyEvent.VK_DOWN);
+	    	 r.keyRelease(KeyEvent.VK_DOWN);
+	    	 r.keyPress(KeyEvent.VK_ENTER);
+	         r.keyRelease(KeyEvent.VK_ENTER);
+	     case "Shortcut" :
+	    	 r.keyPress(KeyEvent.VK_CONTROL);
+	         r.keyPress(KeyEvent.VK_SHIFT);
+	         r.keyPress(KeyEvent.VK_F);
+	         r.keyRelease(KeyEvent.VK_CONTROL);
+	         r.keyRelease(KeyEvent.VK_SHIFT);
+	         r.keyRelease(KeyEvent.VK_F);  
+	     case "Menu" :
+	    	 r.keyPress(KeyEvent.VK_ALT);
+	         r.keyPress(KeyEvent.VK_E);
+	         r.keyPress(KeyEvent.VK_F);
+	         r.keyRelease(KeyEvent.VK_ALT);
+	         r.keyRelease(KeyEvent.VK_E);
+	         r.keyRelease(KeyEvent.VK_F); 
+	     case "Toolbar" :
+	    	 BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sToolbarControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,
+						ObjectBrowserElements.iToolbarExportxcord, ObjectBrowserElements.iToolbarExportycord);
+	     	 }
+	     Thread.sleep(1000);
+	    
+	}
+	
+	public static String MultipleQueryExe(String sQuery,String sQueryType,String sExeType, String sQueryCount,String sQuerySelection) throws Exception
+	{
+		File file = new File("lib", "jacob-1.18-x86.dll");
+	    System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+	    AutoItX x = new AutoItX();
+	    Robot r = new Robot();
+	    String sFlag=null;
+	    int iQueryCount = Integer.valueOf(sQueryCount);
+	    BaseActions.ClearConsole();
+	    BaseActions.SetText(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor, sQuery);
+	    if(sQuerySelection.equals("Full"))
+	    {
+	    	x.controlFocus(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor);
+	        r.keyPress(KeyEvent.VK_CONTROL);
+	        r.keyPress(KeyEvent.VK_A);
+	        r.keyRelease(KeyEvent.VK_CONTROL);
+	        r.keyRelease(KeyEvent.VK_A);
+	    }
+	    else if(sQuerySelection.equals("Partial"))
+	    {
+	    	//x.controlFocus(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor);
+	    	BaseActions.Click(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor);
+	    	r.keyPress(KeyEvent.VK_SHIFT);
+	        r.keyPress(KeyEvent.VK_LEFT);
+	        r.keyPress(KeyEvent.VK_LEFT);
+	        r.keyPress(KeyEvent.VK_LEFT);
+	        r.keyPress(KeyEvent.VK_LEFT);
+	        r.keyRelease(KeyEvent.VK_SHIFT);
+	        r.keyRelease(KeyEvent.VK_LEFT);
+	        r.keyRelease(KeyEvent.VK_LEFT);
+	        r.keyRelease(KeyEvent.VK_LEFT);
+	        r.keyRelease(KeyEvent.VK_LEFT);
+	    }
+	    else if(sQuerySelection.equals("Error"))
+	    {
+	    	
+	    }
+	    else
+	    {
+	    	x.controlFocus(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor);
+	    }
+	    
+	    if (sExeType.equals("ToolBar"))
+	    {
+	    	r.keyPress(KeyEvent.VK_ALT);
+	        r.keyPress(KeyEvent.VK_R);
+	        r.keyPress(KeyEvent.VK_X);
+	        r.keyRelease(KeyEvent.VK_ALT);
+	        r.keyRelease(KeyEvent.VK_R);
+	        r.keyRelease(KeyEvent.VK_X); 
+	    }
+	    else
+	    {
+	    	BaseActions.Click(ExecQueryElements.wSQLTerminal,"",ExecQueryElements.sExeButton);
+	    }
+	    Thread.sleep(1000);
+	    if (sQueryType.equals("Error"))
+	    	sFlag = "Error";
+	    else
+	    {
+	    	String sConsoleOutput = QueryResult.ReadConsoleOutput();
+	    	if (sQueryType.equals("Valid"))
+	    	{
+	    		if(sConsoleOutput.contains("Executed Successfully.."))
+	    		{
+	    			int LastIndex = 0;
+	    			int Count = 0;
+	    			String sTarget = "Executed Successfully..";
+	    			while (LastIndex != -1)
+	    			{
+	    				LastIndex = sConsoleOutput.indexOf(sTarget, LastIndex);
+	    				if(LastIndex!=-1)
+	    				{
+	    					Count++;
+	    					LastIndex += sTarget.length();	
+	    				}
+	    			}
+	    			if(Count >= iQueryCount)
+	    				sFlag = "Success";
+	    			else
+	    				sFlag = sConsoleOutput;
+	    		}
+	    		else
+	    			sFlag = sConsoleOutput;
+	    	}
+	    	else if(sQueryType.equals("Continuous"))
+	    	{
+	    		BaseActions.Click(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sSQLEditor);
+	    		Thread.sleep(2000);
+	    		x.send(sQuery);
+	    		Thread.sleep(2000);
+	    		BaseActions.Click(ExecQueryElements.wSQLTerminal,"",ExecQueryElements.sExeButton);
+	    		Thread.sleep(2000);
+	    		sConsoleOutput = QueryResult.ReadConsoleOutput();
+	    		if(sConsoleOutput.contains("Execution failed."))
+	    			sFlag = sConsoleOutput;
+	    		else
+	    			sFlag = "Success";
+	    	}
+	    	else
+	    		sFlag = sConsoleOutput;	
+	    }
+	    return sFlag;
+	}
+
+	
+	public static String QueryFormatValidation(String sExpectedQuery[], String sQuery) throws Exception
+	    {
+	    	File file = new File("lib", "jacob-1.18-x86.dll");
+	    	System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+	    	AutoItX x = new AutoItX();
+	    	Robot r = new Robot();
+	    	String sActualFormatedQuery, sFlag=null;
+	    	r.keyPress(KeyEvent.VK_CONTROL);
+	        r.keyPress(KeyEvent.VK_A);
+	        r.keyRelease(KeyEvent.VK_CONTROL);
+	        r.keyRelease(KeyEvent.VK_A);
+	        r.keyPress(KeyEvent.VK_CONTROL);
+	        r.keyPress(KeyEvent.VK_C);
+	        r.keyRelease(KeyEvent.VK_CONTROL);
+	        r.keyRelease(KeyEvent.VK_C);
+	        Thread.sleep(200);
+	        sActualFormatedQuery = x.clipGet();
+	        Thread.sleep(200);
+	        
+	        for (int FieldIndex=0; FieldIndex<sExpectedQuery.length; FieldIndex++)
+	        {
+	        	if (sActualFormatedQuery.contains(sExpectedQuery[FieldIndex]))
+	        	{
+	        	}
+	            else
+	            {
+	            	sFlag = "Mismatch";
+	            }
+	        }
+	        return sFlag;
+	    }	
+	
+}

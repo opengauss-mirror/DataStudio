@@ -1,0 +1,103 @@
+
+	package test_scripts;
+
+	import java.sql.Connection;
+	import java.sql.DriverManager;
+	import java.sql.SQLException;
+	import java.sql.Statement;
+	import java.util.Date;
+	import java.util.Properties;
+
+	import org.eclipse.core.runtime.Platform;
+
+	import com.huawei.mppdbide.adapter.gauss.DBConnection;
+	import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
+	import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
+
+	public class test {
+
+		public static void main(String arg[]) throws DatabaseCriticalException, DatabaseOperationException, SQLException, ClassNotFoundException{
+			connect();
+			
+		}
+
+		 public static void connect()
+		            throws DatabaseCriticalException, DatabaseOperationException, SQLException, ClassNotFoundException
+		    {
+				Date date = new Date();
+				final long queryExecutionBegin = date.getTime();
+			 
+			 String        DRIVER_NAME              = "org.postgresql.Driver";
+			  DBConnection con = new DBConnection();
+		        String url = null;
+		        Properties props = new Properties();
+
+		        Class.forName(DRIVER_NAME);
+
+		        props.setProperty("user", "nav");
+		        props.setProperty("password", "Gaussdba@Mpp");
+		        props.setProperty("allowEncodingChanges", "true");
+		        String encoding = System.getProperty("file.encoding");
+		        props.setProperty("characterEncoding", encoding);
+		        props.setProperty("useUnicode", "true");
+		        props.setProperty("ApplicationName", "MPP IDE");
+		        // DTS2014102908156 start 
+		        
+		        String[] args = Platform.getApplicationArgs();
+		        boolean hasLoginTimeout = false;
+		        String loginTimeout = null;
+		        if(null != args)
+		        {
+		            int len = args.length;
+		            for(int i=0; i < len; i++)
+		            {
+		                if(args[i] != null && args[i].startsWith("-loginTimeout"))
+		                {
+		                    loginTimeout = args[i].split("=")[1].trim();
+		                    hasLoginTimeout = true;
+		                    break;
+		                }
+		            }
+		        }
+		        
+		        props.setProperty("loginTimeout", hasLoginTimeout ? loginTimeout : "180");
+		        // DTS2014102908156 end
+		        /*if (serverInfo.isSSLEnabled())
+		        {*/
+		        /*    if(!SSLUtility.getStatus(serverInfo.getServerIp() + ':' + serverInfo.getServerPort()))
+		            {
+		                System.setProperty("javax.net.ssl.keyStorePassword",
+		                        serverInfo.getSslPassword());
+		                System.setProperty("javax.net.ssl.trustStore",
+		                        serverInfo.getTrustStoreFilePath());
+		                System.setProperty("javax.net.ssl.keyStore",
+		                        serverInfo.getKeyStoreFilePath());    
+		            }*/
+		            
+		          /*  props.setProperty("ssl", "true");
+		            props.setProperty("trySSL", "true");*/
+		       // }
+	String ip = "10.19.91.55";
+	String portNumber = "15001";
+	String dbName = "postgres";
+		        url = "jdbc:postgresql://" +ip  + ':'
+		                + portNumber + '/'
+		                + dbName;
+		         Connection dbConnection = DriverManager.getConnection(url, props);
+		         Statement st = dbConnection.createStatement();
+		       boolean rs =   st.execute("select * from pg_am");
+		       System.out.println(rs);
+		         
+		        //con.dbConnect(props, url);
+		        System.setProperty("javax.net.ssl.keyStorePassword", "");
+		        System.setProperty("javax.net.ssl.trustStore", "");
+		        System.setProperty("javax.net.ssl.keyStore", "");
+		        //getVersion();
+		    	Date dateAfterExe = new Date();
+				long queryExecutionEnd = dateAfterExe.getTime();
+				long timeDiff = queryExecutionEnd
+						- queryExecutionBegin;
+				System.out.println("time Diff :"+timeDiff+"ms");
+		    }
+	}
+

@@ -1,0 +1,13 @@
+<configuration>
+    <project>Automation_New</project>
+    <version>1.0</version>
+	<autconfig>Automation_New@localhost</autconfig>
+    <dburl>jdbc:mysql://10.18.96.229:3306/uat_db</dburl>
+    <!-- <dbscheme>Default Embedded (H2)</dbscheme> -->
+    <dbuser>root</dbuser>
+    <dbpw>Htipl@123</dbpw>
+    <server>localhost</server>
+    <port>60000</port>
+    <testjob>TJ_Load_Default_Schema</testjob>  
+	<!-- testsuite>DataStudio_V1R3_Export_TestSuite</testsuite>  -->
+</configuration>

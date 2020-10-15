@@ -1,0 +1,80 @@
+/*************************************************************************
+TITLE - BASE ACTIONS
+DESCRIPTION - OVERRIDDEN FUNCTIONS WITH RESPECT TO AUTOIT 
+AUTHORS - AWX321824
+CREATED DATE - 16-NOV-2015
+LAST UPDATED DATE - 16-NOV-2015
+MODIFICATION HISTORY - 
+TEST CASES COVERED - NA
+*************************************************************************/
+package support_functions;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.File;
+
+import object_repository.ConsoleResultElements;
+import autoitx4java.AutoItX;
+
+import com.jacob.com.LibraryLoader;
+
+public class BaseActions {
+	AutoItX x = new AutoItX();
+	
+	public static void SetText(String title, String text, String controlId,
+			String key) throws AWTException, InterruptedException {
+		File file = new File("lib", "jacob-1.18-x86.dll");
+		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+		AutoItX x = new AutoItX();
+		Robot r = new Robot();
+		x.controlFocus(title, "", controlId);
+		r.keyPress(KeyEvent.VK_CONTROL);
+		r.keyPress(KeyEvent.VK_A);
+		r.keyPress(KeyEvent.VK_DELETE);
+		r.keyRelease(KeyEvent.VK_CONTROL);
+		r.keyRelease(KeyEvent.VK_A);
+		r.keyRelease(KeyEvent.VK_DELETE);
+		Thread.sleep(100);
+		x.send(key);
+		Thread.sleep(100);
+		
+	}
+
+	public static void Click(String title, String text, String controlID) {
+
+		AutoItX x = new AutoItX();
+		x.controlClick(title, text, controlID);
+		
+	}
+	
+	public static void MouseClick(String title, String text, String controlID,String button,int clicks,int a,int b)
+	{
+		AutoItX x = new AutoItX();
+		x.controlClick(title, text, controlID, button, clicks, a, b);
+	}
+	
+	public static void ClearConsole() throws Exception {
+        BaseActions.Click(ConsoleResultElements.wConsoleResult, "",ConsoleResultElements.sConsoleClear);
+        Thread.sleep(1000);
+	}    
+
+	public static boolean WinExists(String sWindowName) throws Exception
+	{
+		AutoItX x = new AutoItX();
+		boolean bExists=false;
+		x.winExists(sWindowName);
+		return bExists;
+	}
+	
+	public static void WinClose(String sWindowName) throws Exception
+	{
+		AutoItX x = new AutoItX();
+		x.winClose(sWindowName);
+	}
+	
+	
+	
+}
+
+

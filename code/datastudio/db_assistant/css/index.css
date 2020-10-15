@@ -1,0 +1,192 @@
+.safe_area {
+    /* width: 566px; */
+    width: 100%;
+}
+
+.buttontitlearea {
+    margin-top: 20px;
+    height: 25px;
+    width: 350px;
+    padding: 0px 20px 0px 20px;
+}
+
+.contentArea {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.button-title-Item {
+    background-color: #E6E6E6;
+    float: left;
+    margin-right: 2px;
+    height: 22px;
+    font-size: 14px;
+    line-height: 14px;
+    color: #333333;
+    cursor: pointer;
+}
+
+.button-title-Item-sm {
+    width: 60px;
+}
+
+.button-title-Item-md {
+    width: 80px;
+}
+
+.button-title-Item:hover {
+    background-color: #0371C3;
+    color: #FFFFFF;
+    box-shadow: 0 0 0 #FFFFFF;
+}
+
+.button-title-Item.active {
+    background-color: #0371C3;
+    color: #FFFFFF;
+}
+
+.hidden {
+    display: none!important;
+}
+
+.button-item {
+    height: 20px;
+    width: 100px;
+    margin-right: 20px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    margin: 0px 0px 0px 0px;
+}
+
+#grammarContent {
+    padding: 0px 20px 0px 20px;
+}
+
+.grammar_content_title {
+    width: 350px;
+}
+
+
+/* 输入框的样式 */
+
+.keywordselect {
+    font-size: 10px;
+    line-height: 14px;
+    width: 224px;
+    height: 19px;
+    border: solid 1px #0470c4;
+}
+
+.grammar-item-one {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+
+/* 返回箭头 */
+
+.grammar-item-goback {
+    line-height: 22px;
+    /* display: inline-flex; */
+    position: fixed;
+    top: 60px;
+    left: 300px;
+    margin: 0 0 0 2;
+    padding-left: 6px;
+    padding-right: 1px;
+    border-radius: 4px;
+    border: 0px solid;
+    border-color: #aaa9a9;
+    cursor: pointer;
+}
+
+
+/* 列表框的样式 */
+
+.keyInfoStyle {
+    position: fixed;
+    z-index: 9999;
+    display: none;
+    font-weight: normal;
+    font-style: normal;
+    border: 1px solid rgb(0, 110, 195);
+    color: rgb(0, 0, 0);
+    background-color: rgb(238, 238, 238);
+    overflow: auto;
+    left: 80px;
+    top: 78px;
+    width: 221px!important;
+}
+
+.grammar-font {
+    height: 14px;
+    width: 55px;
+    font-size: 12px;
+    line-height: 14px;
+    color: #666666;
+    align-items: center;
+}
+
+.operationTip {
+    padding: 0px 20px 0px 20px;
+}
+
+.operationTipTnfo {
+    font-size: 12px;
+    line-height: 15px;
+    color: #666666;
+}
+
+.operationTipselect {
+    width: 137px;
+    height: 15px;
+    font-size: 14px;
+    line-height: 15px;
+    margin-top: 20px;
+    color: #0470c4;
+}
+
+.contentTitle {
+    display: flex;
+    width: calc(100% - 66px);
+    font-size: 14px;
+    line-height: 15px;
+    padding: 10px 0px 10px 0px;
+    margin: 0px 20px 0px 20px;
+    color: #666666;
+    border-bottom: 1px dashed #c6c6c6;
+}
+
+.button-item-A {
+    text-decoration: none;
+    color: #666666;
+}
+
+.button-item {
+    float: left;
+    width: 100px;
+    height: 32px;
+    font-size: 12px;
+    border: 1px solid #1083f1;
+    color: #0470c4;
+    border-radius: 6px;
+    margin: 10px 0px 10px 20px;
+}
+
+.button-item:hover {
+    background-color: #0371C3;
+    color: #FFFFFF;
+    box-shadow: 0 0 0 #FFFFFF;
+}
+
+.button-item.active {
+    background-color: #0371C3;
+    color: #FFFFFF;
+}

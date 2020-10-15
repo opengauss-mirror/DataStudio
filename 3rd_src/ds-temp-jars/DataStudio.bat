@@ -1,0 +1,1 @@
+"Data Studioc.exe" %*

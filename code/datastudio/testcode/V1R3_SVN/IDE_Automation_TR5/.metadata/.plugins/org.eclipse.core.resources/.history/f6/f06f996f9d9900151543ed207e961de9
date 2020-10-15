@@ -1,0 +1,27 @@
+/*************************************************************************
+TITLE - OBJECT REPOSITORY OF CONSOLE AND RESULT WINDOW
+DESCRIPTION - COLLECTION OF EACH OBJECTS WITH THEIR IDENTIFIABLE-
+PROPERTIES IN CONSOLE AND RESULT WINDOW 
+AUTHORS - ANIL
+CREATED DATE - 16-NOV-2015
+LAST UPDATED DATE - 16-NOV-2015
+MODIFICATION HISTORY - 
+TEST CASES COVERED - NA
+*************************************************************************/
+package object_repository;
+
+public class ConsoleResultElements {
+
+	/*Parameters for console and result window*/
+	public static String wConsoleResult = "Gauss200 OLAP IDE";
+	public static String sMouseClick = "SWT_Window015";
+	public static String sMouseButton = "left";
+	public static int iClick = 1;
+	public static int iConsolexcord= 38;
+	public static int iConsoleycord=12;
+	public static int iResultxcord= 104;
+	public static int iResultycord=12;
+	public static String sConsolePane = "SWT_Window018";
+	public static String sResultScrollBar = "SysListView321";
+	public static String sConsoleClear="ToolbarWindow326";
+	}
