@@ -29,6 +29,11 @@
 	<!-- <maven.test.skip>true</maven.test.skip> -->
 	<maven.compiler.source>1.8</maven.compiler.source>
 	<maven.compiler.target>1.8</maven.compiler.target>
+	<url.ip_and_port>10.183.209.119:8081</url.ip_and_port>
+	<url.nattable>http://${url.ip_and_port}/nexus/content/repositories/nattable/</url.nattable>
+	<url.gef>http://${url.ip_and_port}/nexus/content/repositories/gef/</url.gef>
+	<url.efxclipse>http://${url.ip_and_port}/nexus/content/repositories/efxclipse/</url.efxclipse>
+	<url.eclipse>http://${url.ip_and_port}/nexus/content/repositories/eclipse_201906/</url.eclipse>
   </properties>
   
   <profiles>
@@ -134,24 +139,24 @@
   <repositories>
     <!-- configure p2 repository to resolve against -->
 	<repository>
-      <id>eclipse_pdm</id>
+      <id>eclipse</id>
       <layout>p2</layout>
-	  <url>http://10.18.3.87:8081/nexus/content/repositories/eclipse_pdm/</url>
+	  <url>${url.eclipse}</url>
     </repository>
 	<repository>
       <id>nattable</id>
       <layout>p2</layout>
-	  <url>http://10.18.10.241:8081/nexus/content/repositories/nattable/</url>
+	  <url>${url.nattable}</url>
     </repository>
     <repository>
       <id>gef</id>
       <layout>p2</layout>
-          <url>http://10.18.10.241:8081/nexus/content/repositories/gef_5.1.0/</url>
+	  <url>${url.gef}</url>
     </repository>
 	<repository>
-      <id>efxclipse_3.5.0</id>
+      <id>efxclipse</id>
       <layout>p2</layout>
-          <url>http://10.18.10.241:8081/nexus/content/repositories/efxclipse_3.5.0/</url>
+	  <url>${url.efxclipse}</url>
     </repository>
   </repositories>
   <!--<build>
