@@ -1,1 +1,1 @@
-{"fileVersion":"1","name":"Datastudio","serviceId":"c8339924eecb4a21a4f6691906cd6311","description":"","version":"1.0.0","type":"microService","processes":{"Datastudio":{"subscribes":[]}}}
+{"fileVersion":"1","name":"OpenGauss_DataStudio","serviceId":"0f7442cf111942dfbb61b0effbc70b0c","description":"","version":"1.0.0","type":"microService","processes":{"OpenGauss_DataStudio":{"subscribes":[]}}}
