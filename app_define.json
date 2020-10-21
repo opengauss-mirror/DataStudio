@@ -1,1 +1,1 @@
-{"fileVersion":"1","name":"DataStudio_Main","serviceId":"5d843f28af7a45209b30d47b043de08f","description":"","version":"1.0.0","type":"microService","processes":{"DataStudio_Main":{"subscribes":[]}}}
+{"fileVersion":"1","name":"DataStudio_DFX","serviceId":"0d56b574d04c4dbe98c3b99746d7c979","description":"","version":"1.0.0","type":"microService","processes":{"DataStudio_DFX":{"subscribes":[]}}}
