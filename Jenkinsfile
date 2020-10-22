@@ -2,11 +2,11 @@
 node("mesos") {
     stage("init") {
         cloudBuildConfig {
-            group_id = "g69055460842246c480c819e0a327c820"
-            service_id = "e79403fcdc114b2cbc1056d60836e1db"
-            project_id = "deec770c787445eaa7721ce046f0f1a1"
-            project_name = "OpenGauss_DS_MR"
-            gate_name = "OpenGauss_DS_MR"
+            group_id = "gfc0c0a9a63aa4c1191fd6c5007da94f3"
+            service_id = "1090009db65f4e628d736650fb30f4a3"
+            project_id = "3da32fd2704148a5a153b922c7e583b4"
+            project_name = "DataStudio_Main_MR"
+            gate_name = "DataStudio_Main_MR"
         }
     }
 
