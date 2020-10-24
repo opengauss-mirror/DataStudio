@@ -343,7 +343,7 @@ public class PartitionTable extends TableMetaData {
 
         long ptableId = rs.getLong("tableid");
 
-        PartitionTable ptbl = (PartitionTable) ptabgroup.getObjectById(ptableId);
+        TableMetaData ptbl = (TableMetaData) ptabgroup.getObjectById(ptableId);
         /*
          * ptbl can be null in case of the user doesnt have access privilege to
          * ptbl. Since table is the lowest level of object that get filtered by
