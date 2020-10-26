@@ -29,7 +29,7 @@
 	<!-- <maven.test.skip>true</maven.test.skip> -->
 	<maven.compiler.source>1.8</maven.compiler.source>
 	<maven.compiler.target>1.8</maven.compiler.target>
-	<url.ip>10.183.209.119</url.ip>
+	<url.ip>10.189.44.131</url.ip>
 	<url.port>8081</url.port>
     <url.nattable>http://${url.ip}:${url.port}/nexus/content/repositories/nattable/</url.nattable>
 	<url.gef>http://${url.ip}:${url.port}/nexus/content/repositories/gef/</url.gef>
