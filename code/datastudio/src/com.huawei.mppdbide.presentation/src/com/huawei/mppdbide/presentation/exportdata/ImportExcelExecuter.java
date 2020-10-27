@@ -178,6 +178,7 @@ public class ImportExcelExecuter {
             for (int index = 0; index < subList.size(); index++) {
                 kcount = setValuesPeriodExecuteExcInner(subList, columnDataType, preState, kcount, index);
             }
+            preState = dbCon.getPrepareStmt(preState.toString());
             validateForCancel(preState);
         } finally {
             dbCon.closeStatement(preState);
@@ -245,10 +246,14 @@ public class ImportExcelExecuter {
 
     private int setMoneyTypeValue(PreparedStatement preState, int kcount, String cellValue) throws SQLException {
         int retCount = kcount;
-        if (null == cellValue || cellValue.isEmpty()) {
+        String value = cellValue;
+        if (null == value || value.isEmpty()) {
             preState.setObject(retCount++, null);
         } else {
-            preState.setObject(retCount++, cellValue);
+            if (value.charAt(0) == '$') {
+                value = value.substring(1, value.length());
+            }
+            preState.setObject(retCount++, value, java.sql.Types.NUMERIC, 2);
         }
         return retCount;
     }
