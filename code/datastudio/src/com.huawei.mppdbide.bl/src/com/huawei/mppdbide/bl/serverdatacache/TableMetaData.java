@@ -1873,6 +1873,9 @@ public class TableMetaData extends BatchDropServerObject implements GaussOLAPDBM
         ResultSet rs = null;
         String tblspaceName = "";
         try {
+            if (conn == null) {
+                conn = getConnForFetchingDDL(this.getDatabase());
+            }
             rs = conn.execSelectAndReturnRs(query);
             while (rs.next()) {
                 tblspaceName = rs.getString("spcname");

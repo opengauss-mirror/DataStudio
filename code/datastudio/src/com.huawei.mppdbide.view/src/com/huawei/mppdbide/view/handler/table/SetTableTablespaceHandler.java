@@ -133,8 +133,15 @@ public class SetTableTablespaceHandler {
         protected void performOkOperation() {
             final BottomStatusBar bottomStatusBar = UIElement.getInstance().getProgressBarOnTop();
             TableMetaData tableMetaData = (TableMetaData) getObject();
-            String oldTablespaceName = "\"" + tableMetaData.getNamespace().getName() + "\".\"" + tableMetaData.getName()
-                    + "\"";
+            String oldTablespaceName = null;
+            try {
+                oldTablespaceName = tableMetaData.getTablespaceForTable(null);
+                if (oldTablespaceName == null) {
+                    oldTablespaceName = tableMetaData.getDatabase().getDBDefaultTblSpc();
+                }
+            } catch (DatabaseCriticalException | DatabaseOperationException dbException) {
+                oldTablespaceName = "";
+            }
             String userInput = getUserInput();
 
             if ("".equals(userInput)) {
@@ -268,7 +275,7 @@ public class SetTableTablespaceHandler {
                                 oldTablespaceName, tableMetaData.getTablespaceName(), userInput)));
             } else {
                 ObjectBrowserStatusBarProvider.getStatusBar().displayMessage(Message.getInfo(MessageConfigLoader
-                        .getProperty(IMessagesConstants.SET_TABLE_FROM_TABLESPACE_NULL, oldTablespaceName, userInput)));
+                        .getProperty(IMessagesConstants.SET_TABLE_FROM_TABLESPACE_NULL, tableMetaData.getName(), oldTablespaceName, userInput)));
             }
         }
 
