@@ -349,7 +349,7 @@ public class PartitionTable extends TableMetaData {
          * ptbl. Since table is the lowest level of object that get filtered by
          * privilege, all constraints are fetched
          */
-        PartitionTable fkeyTable = (PartitionTable) ptabgroup.getObjectById(rs.getLong("fkeytableId"));
+        TableMetaData fkeyTable = (TableMetaData) ptabgroup.getObjectById(rs.getLong("fkeytableId"));
         if (ptbl == null) {
             validateNamespacePrivilege(ns);
         } else {
