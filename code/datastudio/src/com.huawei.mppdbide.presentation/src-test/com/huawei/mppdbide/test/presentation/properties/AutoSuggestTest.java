@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.huawei.mppdbide.adapter.gauss.DBConnection;
 import com.huawei.mppdbide.bl.contentassist.ContentAssistKeywords;
 import com.huawei.mppdbide.bl.contentassist.ContentAssistProcesserData;
 import com.huawei.mppdbide.bl.keyword.KeywordObject;
@@ -536,6 +537,79 @@ public class AutoSuggestTest extends BasicJDBCTestCaseAdapter
         assertFalse(core.isAnyNonLoadedObject());
     }
 
+    @Test
+    public void testTableTableNameSpace() {
+        try {
+            Namespace ns = database.getNameSpaceById(1);
+            TableMetaData tableMetaData = new TableMetaData(1, "t1", ns, null);
+            ns.addTableToGroup(tableMetaData);
+            ns.addTableToSearchPool(tableMetaData);
+
+
+            String query ="select spcname from pg_class as class "
+                            + "left join pg_tablespace as tablespace"
+                            + " on class.reltablespace=tablespace.oid where class.oid=1";
+
+            String stardandTsName = "ts_1";
+            MockResultSet queryRS = preparedstatementHandler.createResultSet();
+            queryRS.addColumn("spcname");
+            queryRS.addRow(new Object[] {stardandTsName});
+            preparedstatementHandler.prepareResultSet(query, queryRS);
+            String tsName = tableMetaData.getTablespaceForTable(null);
+            assertEquals(tsName, stardandTsName);
+        } catch (MPPDBIDEException e) {
+            fail("can\'t run here");
+        }
+    }
+
+    @Test
+    public void testTableTableNameSpaceQueryDefault() {
+        try {
+            Namespace ns = database.getNameSpaceById(1);
+            TableMetaData tableMetaData = new TableMetaData(1, "t1", ns, null);
+            ns.addTableToGroup(tableMetaData);
+            ns.addTableToSearchPool(tableMetaData);
+
+
+            String query ="select spcname from pg_class as class "
+                            + "left join pg_tablespace as tablespace"
+                            + " on class.reltablespace=tablespace.oid where class.oid=1";
+
+            MockResultSet queryRS = preparedstatementHandler.createResultSet();
+            queryRS.addColumn("spcname");
+            preparedstatementHandler.prepareResultSet(query, queryRS);
+            String tsName = tableMetaData.getTablespaceForTable(null);
+            assertEquals(tsName, "");
+        } catch (MPPDBIDEException e) {
+            fail("can\'t run here");
+        }
+    }
+    
+    @Test
+    public void testTableTableNameSpaceWithConnection() {
+        try {
+            Namespace ns = database.getNameSpaceById(1);
+            TableMetaData tableMetaData = new TableMetaData(1, "t1", ns, null);
+            ns.addTableToGroup(tableMetaData);
+            ns.addTableToSearchPool(tableMetaData);
+
+
+            String query ="select spcname from pg_class as class "
+                            + "left join pg_tablespace as tablespace"
+                            + " on class.reltablespace=tablespace.oid where class.oid=1";
+
+            String stardandTsName = "ts_1";
+            MockResultSet queryRS = preparedstatementHandler.createResultSet();
+            queryRS.addColumn("spcname");
+            queryRS.addRow(new Object[] {stardandTsName});
+            preparedstatementHandler.prepareResultSet(query, queryRS);
+            DBConnection connection = database.getConnectionManager().getFreeConnection();
+            String tsName = tableMetaData.getTablespaceForTable(connection);
+            assertEquals(tsName, stardandTsName);
+        } catch (MPPDBIDEException e) {
+            fail("can\'t run here");
+        }
+    }
     @Test
     public void testAutoSuggestForPrefixSpecialCharacter()
     {
