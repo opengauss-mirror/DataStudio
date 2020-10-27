@@ -98,7 +98,6 @@ public class TableUIValidator {
             indexUI.getBtnUniqueIndex().setEnabled(validatorValue);
 
             indexUI.getTxtWhereExpr().setEnabled(validatorValue);
-            indexUI.getTxtUserExpr().setEnabled(validatorValue);
             indexUI.getFillFactor().setEnabled(validatorValue);
             indexUI.getDecofk().show();
             UIMandatoryAttribute.enableDisableIndexName(value);
