@@ -111,7 +111,7 @@ p {
 /* 列表框的样式 */
 
 .keyInfoStyle {
-    position: fixed;
+    position: absolute;
     z-index: 9999;
     display: none;
     font-weight: normal;
