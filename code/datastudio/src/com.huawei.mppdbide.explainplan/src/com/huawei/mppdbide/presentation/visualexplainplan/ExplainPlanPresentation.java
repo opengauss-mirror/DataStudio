@@ -60,7 +60,7 @@ public class ExplainPlanPresentation {
     private String queryWithExplainPretext;
     private MessageQueue msgQ;
     private static final String PRE_TEXT_DETAILED = "explain (analyze, verbose, format json, costs true, cpu true, "
-            + "detail true, num_nodes true, buffers true, timing true, nodes true) ";
+            + "buffers true, timing true) ";
     private UIModelAnalysedPlanNode analysedPlanOutput;
     private List<UIModelAnalysedPlanNode> flattenedExplainPlan;
     private List<Relationship> flattenedExplainPlanEdges;

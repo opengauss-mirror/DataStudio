@@ -1715,7 +1715,7 @@ public class TableTest extends BasicJDBCTestCaseAdapter
         ExplainPlanPresentation presentation = null;
         String query = "select * from Table1;";
         String query1 =
-                "explain (analyze, verbose, format json, costs true, cpu true, detail true, num_nodes true, buffers true, timing true, nodes true) select * from Table1";
+                "explain (analyze, verbose, format json, costs true, cpu true, buffers true, timing true) select * from Table1";
         MockResultSet colmetadataRS1 = preparedstatementHandler.createResultSet();
         colmetadataRS1.addColumn("QUERY PLAN");
         colmetadataRS1.addRow(new Object[] {
@@ -1765,7 +1765,7 @@ public class TableTest extends BasicJDBCTestCaseAdapter
                 + "\"IO Write Time\": 0.000}}]";
         String query = "select * from Table1;";
         String query1 =
-                "explain (analyze, verbose, format json, costs true, cpu true, detail true, num_nodes true, buffers true, timing true, nodes true) select * from Table1";
+                "explain (analyze, verbose, format json, costs true, cpu true, buffers true, timing true) select * from Table1";
         MockResultSet colmetadataRS1 = preparedstatementHandler.createResultSet();
         colmetadataRS1.addColumn("QUERY PLAN");
         colmetadataRS1.addRow(new Object[] {
