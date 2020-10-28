@@ -625,8 +625,16 @@ public class ColumnUI {
         spinnerColumnArray.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(ModifyEvent event) {
-                String txtArrayVal = getArrayDim(spinnerColumnArray.getText(), textArrayDim.getText());
-                textArrayDim.setText(txtArrayVal);
+                try {
+                    int dim = Integer.parseInt(spinnerColumnArray.getText());
+                    if (dim > spinnerColumnArray.getMaximum()) {
+                        return;
+                    }
+                    String txtArrayVal = getArrayDim(dim, textArrayDim.getText());
+                    textArrayDim.setText(txtArrayVal);
+                } catch (NumberFormatException formatExcept) {
+                    textArrayDim.setText("");
+                }
             }
         });
     }
@@ -638,17 +646,9 @@ public class ColumnUI {
      * @param arrayDesc the array desc
      * @return the array dim
      */
-    private String getArrayDim(String dimCount, String arrayDesc) {
+    private String getArrayDim(int dim, String arrayDesc) {
         StringBuilder dimension = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
-        int dim = 0;
         int targetCounter = 0;
-
-        try {
-            dim = Integer.parseInt(dimCount);
-        } catch (NumberFormatException e1) {
-            // Inform User via dialog
-            return dimension.toString();
-        }
 
         if (arrayDesc.matches("[\\[\\d*\\]]*")) {
             String[] parts = null;
