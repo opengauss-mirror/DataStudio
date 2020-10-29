@@ -898,7 +898,7 @@ public class ResultManagementViewDataPreferencePage extends PreferencePage {
             preferenceStore.setToDefault(MPPDBIDEConstants.PREF_RESULT_RECORD_FETCH_COUNT);
         }
 
-        if (!(resultWindCount < MIN_RESULT_WINDOWS && resultWindCount > MAX_RESULT_WINDOWS)) {
+        if (!(resultWindCount > MIN_RESULT_WINDOWS && resultWindCount < MAX_RESULT_WINDOWS)) {
             preferenceStore.setToDefault(MPPDBIDEConstants.PREF_RESULT_WINDOW_COUNT);
         }
     }

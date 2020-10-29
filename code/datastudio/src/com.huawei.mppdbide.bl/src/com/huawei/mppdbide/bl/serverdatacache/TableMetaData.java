@@ -1884,7 +1884,9 @@ public class TableMetaData extends BatchDropServerObject implements GaussOLAPDBM
             GaussUtils.handleCriticalException(sqlException);
             throw new DatabaseOperationException(IMessagesConstants.ERR_GUI_RESULT_SET_INVALID, sqlException);
         } finally {
-            conn.closeResultSet(rs);
+            if (conn != null) {
+                conn.closeResultSet(rs);
+            }
             MPPDBIDELoggerUtility.debug("fetch DDL done");
         }
         return tblspaceName;
