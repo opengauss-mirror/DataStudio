@@ -28,6 +28,7 @@ import com.huawei.mppdbide.presentation.IWindowDetail;
 import com.huawei.mppdbide.presentation.ViewSequenceCore;
 import com.huawei.mppdbide.presentation.ViewTableData;
 import com.huawei.mppdbide.presentation.ViewTableDataCore;
+import com.huawei.mppdbide.presentation.ViewTableSequenceDataCore;
 import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
 import com.huawei.mppdbide.utils.files.DSFilesWrapper;
@@ -312,37 +313,23 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
         }
     }
     
-   /*@Test
+   @Test
     public void test_queryRelated001() {
         Database database = connProfCache.getDbForProfileId(profileId);
         TableMetaData tablemetaData;
         try {
             tablemetaData = new TableMetaData(1, "MyTable", database.getNameSpaceById(1), "tablespace");
-            IViewTableDataCore core = new ViewTableDataCore();
+            IViewTableDataCore core = new ViewTableSequenceDataCore();
             core.init(tablemetaData);
             core.getWindowDetails().getShortTitle();
             core.getServerObject();
-            core.getWindowDetails().isCloseable();
-            String sequenceByTableSql =  "WITH temp_sql as (SELECT tu.rolname as tableuser"
-                    + ",tb.relname as tableName,tc.attname as columnName,scl.relname,sch.nspname FROM "
-                    + "pg_class  scl,pg_depend sdp,pg_attrdef sc,pg_attribute tc,pg_class tb,pg_roles tu"
-                    + ",pg_namespace sch WHERE tu.rolname = pg_catalog and tb.relname = MyTable AND scl.relnamespace = sch.oid "
-                    + "AND scl.relkind = 'S' AND sdp.refobjid = scl.oid AND sc.oid = sdp.objid AND tc.attrelid = sc.adrelid "
-                    + "AND tc.attnum = sc.adnum AND tb.oid = tc.attrelid AND tu.oid = tb.relowner)"
-                    + "select t.tableuser,t.tableName,t.columnName,decode(seq.sequence_name,t.relname,seq.sequence_name,'[No_Privilege]') as sequenceName"
-                    +" ,decode(seq.sequence_name,t.relname,seq.sequence_schema,'[No_Privilege]') as sequenceuser " 
-                    +" ,decode(seq.sequence_name,t.relname,seq.minimum_value,'[No_Privilege]') as minValue " 
-                    +" ,decode(seq.sequence_name,t.relname,seq.maximum_value,'[No_Privilege]')  as maxValue " 
-                    +" ,decode(seq.sequence_name,t.relname,seq.increment,'[No_Privilege]')  as increment "
-                    + "from temp_sql t LEFT OUTER join information_schema.sequences seq on (t.nspname = seq.sequence_schema "
-                    + "AND t.relname = seq.sequence_name )";
-
-            assertEquals(sequenceByTableSql, core.getRelatedQuery());
+            core.getWindowDetails().isCloseable();           
+            assertNotNull(core.getQuery());            
         } catch (DatabaseOperationException e) {
             fail("not expeted");
         }
        
-   }*/
+   }
     
     @Test
     public void test_viewcore_01() {
