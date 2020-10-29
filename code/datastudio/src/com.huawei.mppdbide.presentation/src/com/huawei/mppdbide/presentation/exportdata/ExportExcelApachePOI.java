@@ -363,8 +363,7 @@ public class ExportExcelApachePOI {
         Workbook workBook = null;
         if (EXCEL_XLSX.equals(fileFormat)) {
             workBook = xssfWorkBook;
-        }
-        else if (EXCEL_XLS.equals(fileFormat)) {
+        } else if (EXCEL_XLS.equals(fileFormat)) {
             workBook = hssfWorkBook;
         } else {
             return Optional.empty();
