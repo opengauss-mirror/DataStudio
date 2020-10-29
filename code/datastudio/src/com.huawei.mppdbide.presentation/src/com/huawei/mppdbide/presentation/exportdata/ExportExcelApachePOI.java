@@ -4,8 +4,6 @@
 
 package com.huawei.mppdbide.presentation.exportdata;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
