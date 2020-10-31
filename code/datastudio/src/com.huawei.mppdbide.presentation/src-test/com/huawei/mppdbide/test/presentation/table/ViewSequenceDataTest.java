@@ -1,13 +1,16 @@
 package com.huawei.mppdbide.test.presentation.table;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.huawei.mppdbide.adapter.gauss.DBConnection;
 import com.huawei.mppdbide.bl.preferences.BLPreferenceManager;
 import com.huawei.mppdbide.bl.preferences.IBLPreference;
 import com.huawei.mppdbide.bl.serverdatacache.ConnectionProfileId;
@@ -135,6 +138,24 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
 
     }
 
+    @Test
+    public void test_mytttt() {
+        String query = "select row_number() over () as \"*\", * from pg_catalog.\"Mytable\"";
+        Database database = connProfCache.getDbForProfileId(profileId);
+        try {
+            DBConnection conn = database.getConnectionManager().getFreeConnection();
+            ResultSet rs = conn.execSelectAndReturnRs(query);
+            while (rs.next()) {
+                for (int i = 0 ; i < 5; i++) {
+                    System.out.print(String.format(Locale.ENGLISH, "col%d: %10s  ", i, rs.getString(i + 1)));
+                }
+                System.out.println("");
+            }
+        } catch (Exception e) {
+            fail("some error occur");
+        }
+
+    }
     @Test
     public void test_initializeCore()
     {
@@ -271,7 +292,7 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
 
     
 
-        public void test_cancelQuery()
+    public void test_cancelQuery()
     {
         Database database = connProfCache.getDbForProfileId(profileId);
         SequenceMetadata seqData;
@@ -330,7 +351,7 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
         }
        
    }
-    
+
     @Test
     public void test_viewcore_01() {
         Database database = connProfCache.getDbForProfileId(profileId);
@@ -348,6 +369,69 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
             assertNotNull(viewSeqCore.getWindowDetails().getShortTitle());
             assertNotNull(viewSeqCore.getWindowDetails().getTitle());
             assertNotNull(viewSeqCore.getWindowDetails().getUniqueID());
+        } catch (DatabaseOperationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void test_viewcore_02() {
+        Database database = connProfCache.getDbForProfileId(profileId);
+        try {
+            SequenceMetadata seqData = null;
+            seqData = new SequenceMetadata(1, "seq001", database.getNameSpaceById(1));
+            seqData.setTableName("MyTable");
+            seqData.setSequenceName("seq001");
+            seqData.setSchemaName("pubilc");
+            seqData.setMinValue("1");
+            seqData.setMaxValue("9223372036854775807");
+            seqData.setIncrementBy("1");
+            seqData.setColumnName("id");
+
+            MockResultSet sequenceset = preparedstatementHandler.createResultSet();
+            sequenceset.addColumn("sequenceName");
+            sequenceset.addColumn("sequenceuser");
+            sequenceset.addColumn("minValue");
+            sequenceset.addColumn("maxValue");
+            sequenceset.addColumn("increment");
+            sequenceset.addColumn("columnName");
+            sequenceset.addColumn("tableuser");
+            sequenceset.addColumn("tableName");
+            sequenceset.addRow(new Object[] {"seq001", "public", 1, "9223372036854775807", 1, "id", "tpcc", "MyTable"});
+            String tableBySequenceSql = " SELECT seq.sequence_name as sequenceName, seq.sequence_schema as sequenceuser,"
+                    + " seq.minimum_value as minValue,seq.maximum_value as maxValue , seq.increment as increment, tc.attname as columnName, tu.rolname as tableuser"
+                    + " , tb.relname as tableName FROM information_schema.sequences seq, pg_namespace sch, pg_class scl, pg_depend sdp"
+                    + " , pg_attrdef sc, pg_attribute tc, pg_class tb, pg_roles tu"
+                    + " WHERE seq.sequence_schema = ? AND seq.sequence_name = ? AND sch.nspname = seq.sequence_schema"
+                    + " AND scl.relnamespace = sch.oid AND scl.relname = seq.sequence_name AND scl.relkind = 'S' AND sdp.refobjid = scl.oid "
+                    + " AND sc.oid = sdp.objid AND tc.attrelid = sc.adrelid AND tc.attnum = sc.adnum AND tb.oid = tc.attrelid"
+                    + " AND tu.oid = tb.relowner;";
+            preparedstatementHandler.prepareResultSet(tableBySequenceSql, sequenceset);
+
+            ViewSequenceCore viewSeqCore = new ViewSequenceCore();
+            viewSeqCore.init(seqData);
+            assertNotNull(viewSeqCore.getServerObject());
+            assertNotNull(viewSeqCore.getProgressBarLabel());
+            assertNotNull(viewSeqCore.getWindowDetails());
+            String result = viewSeqCore.getQuery();
+            if (!result.contains("com.mockrunner.mock.jdbc.MockPreparedStatement")) {
+                assertEquals(result, tableBySequenceSql);
+            } else {
+                assertEquals(tableBySequenceSql, ViewSequenceCore.getTableBySequenceSql());
+            }
+            String query = tableBySequenceSql;
+            try {
+                DBConnection conn = database.getConnectionManager().getFreeConnection();
+                ResultSet rs = conn.execSelectAndReturnRs(query);
+                while (rs.next()) {
+                    for (int i = 0 ; i < 8; i++) {
+                        System.out.print(String.format(Locale.ENGLISH, "col%d: %10s  ", i, rs.getString(i + 1)));
+                    }
+                    System.out.println("");
+                }
+            } catch (Exception e) {
+                fail("some error occur");
+            }
         } catch (DatabaseOperationException e) {
             e.printStackTrace();
         }

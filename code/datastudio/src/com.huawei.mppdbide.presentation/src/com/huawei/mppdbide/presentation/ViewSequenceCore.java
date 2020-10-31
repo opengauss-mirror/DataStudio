@@ -33,6 +33,19 @@ public class ViewSequenceCore extends AbstractViewTableDataCore {
     private SequenceMetadata serverObject;
     private ViewSequnceWindowDetails details;
 
+    private static final String tableBySequenceSql = " SELECT seq.sequence_name as sequenceName, seq.sequence_schema as sequenceuser,"
+            + " seq.minimum_value as minValue,seq.maximum_value as maxValue , seq.increment as increment, tc.attname as columnName, tu.rolname as tableuser"
+            + " , tb.relname as tableName FROM information_schema.sequences seq, pg_namespace sch, pg_class scl, pg_depend sdp"
+            + " , pg_attrdef sc, pg_attribute tc, pg_class tb, pg_roles tu"
+            + " WHERE seq.sequence_schema = ? AND seq.sequence_name = ? AND sch.nspname = seq.sequence_schema"
+            + " AND scl.relnamespace = sch.oid AND scl.relname = seq.sequence_name AND scl.relkind = 'S' AND sdp.refobjid = scl.oid "
+            + " AND sc.oid = sdp.objid AND tc.attrelid = sc.adrelid AND tc.attnum = sc.adnum AND tb.oid = tc.attrelid"
+            + " AND tu.oid = tb.relowner;";
+    public static String getTableBySequenceSql()
+    {
+        return tableBySequenceSql;
+    }
+
     @Override
     public ServerObject getServerObject() {
         return serverObject;
