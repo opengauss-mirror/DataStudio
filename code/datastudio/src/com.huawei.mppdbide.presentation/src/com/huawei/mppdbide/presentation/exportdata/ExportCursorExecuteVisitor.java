@@ -214,7 +214,7 @@ public class ExportCursorExecuteVisitor implements ICursorExecuteRecordVisitor {
 
     private void initColumnHeaderList(ResultSet rs, boolean isFuncProcExport,
             ThreadLocal<TempFileCreationStrategy> threadLocal) throws DatabaseOperationException, SQLException {
-        exportExcel = new ExportExcelApachePOI(fileFormat);
+        exportExcel = new ExportExcelApachePOI(fileFormat, true);
         List<String> columnHeaderName = new ArrayList<String>(columnCount);
         columnHeaderName.add(MessageConfigLoader.getProperty(IMessagesConstants.RESULT_TAB_COL_NAME));
         columnHeaderName.add(MessageConfigLoader.getProperty(IMessagesConstants.RESULT_TAB_COL_DATA_TYPE));

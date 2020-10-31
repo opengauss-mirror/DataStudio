@@ -1710,4 +1710,28 @@ public class ExportExcelApachePOITest extends BasicJDBCTestCaseAdapter
 
         }
     }
+    
+    @Test
+    public void testTTA_ExportExcel_XLSX_createTitle() {
+        try {
+            ExportExcelApachePOI poi = new ExportExcelApachePOI("Excel(xlsx)", true);
+            poi.createSheet("xsshSheet");
+            poi.createHeaderRow(Arrays.asList("c1", "c2"));
+            poi.setCellValue(Arrays.asList("11", "22"), 1);
+        } catch (Exception e) {
+            fail("can\'t run here");
+        }
+    }
+    
+    @Test
+    public void testTTA_ExportExcel_XLSX_createTitle_01() {
+        try {
+            ExportExcelApachePOI poi = new ExportExcelApachePOI("Excel(xlsx)");
+            poi.createSheet("xsshSheet");
+            poi.createHeaderRow(Arrays.asList("c1", "c2"));
+            poi.setCellValue(Arrays.asList("11", "22"), 1);
+        } catch (Exception e) {
+            fail("can\'t run here");
+        }
+    }
 }

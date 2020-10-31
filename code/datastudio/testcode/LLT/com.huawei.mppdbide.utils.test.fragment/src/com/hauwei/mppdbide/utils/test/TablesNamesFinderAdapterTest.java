@@ -1,22 +1,41 @@
 
 package com.hauwei.mppdbide.utils.test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.io.StringReader;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 
 import com.huawei.mppdbide.utils.TablesNamesFinderAdapter;
 
+import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.CaseExpression;
+import net.sf.jsqlparser.expression.DateValue;
 import net.sf.jsqlparser.expression.DoubleValue;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.HexValue;
+import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.expression.OracleHierarchicalExpression;
+import net.sf.jsqlparser.expression.StringValue;
+import net.sf.jsqlparser.expression.WhenClause;
+import net.sf.jsqlparser.expression.operators.conditional.OrExpression;
+import net.sf.jsqlparser.expression.operators.relational.Between;
+import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import net.sf.jsqlparser.expression.operators.relational.MinorThan;
 import net.sf.jsqlparser.expression.operators.relational.MultiExpressionList;
+import net.sf.jsqlparser.parser.CCJSqlParserManager;
+import net.sf.jsqlparser.parser.CCJSqlParserTokenManager;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
+import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
 import net.sf.jsqlparser.statement.UseStatement;
 import net.sf.jsqlparser.statement.alter.Alter;
@@ -24,12 +43,14 @@ import net.sf.jsqlparser.statement.create.index.CreateIndex;
 import net.sf.jsqlparser.statement.create.table.CreateTable;
 import net.sf.jsqlparser.statement.create.view.AlterView;
 import net.sf.jsqlparser.statement.create.view.CreateView;
+import net.sf.jsqlparser.statement.delete.Delete;
 import net.sf.jsqlparser.statement.drop.Drop;
 import net.sf.jsqlparser.statement.execute.Execute;
 import net.sf.jsqlparser.statement.replace.Replace;
 import net.sf.jsqlparser.statement.select.Join;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
+import net.sf.jsqlparser.statement.select.SelectBody;
 import net.sf.jsqlparser.statement.select.SelectItem;
 import net.sf.jsqlparser.statement.truncate.Truncate;
 import net.sf.jsqlparser.statement.upsert.Upsert;
@@ -193,5 +214,83 @@ public class TablesNamesFinderAdapterTest {
         tnfa.visit(caseExpression);
         assertTrue(caseExpression != null);
     }
-   
+    @Test
+    public void test_getVisit_whenInputIsBetween() throws JSQLParserException {
+        try {
+            TablesNamesFinderAdapter tnfa = new TablesNamesFinderAdapter();
+            Between bt = new Between();
+            bt.setLeftExpression(new Column("a"));
+            bt.setBetweenExpressionStart(new LongValue(1));
+            bt.setBetweenExpressionEnd(new LongValue(10));
+            tnfa.visit(bt);
+            assertTrue(bt != null);
+        } catch (Exception e) {
+            fail("can\'t run here");
+        }
+    } 
+    
+    @Test
+    public void test_getVisit_whenInputIsOrExpression() {
+        try {
+            EqualsTo left = new EqualsTo();
+            left.setLeftExpression(new Column("a"));
+            left.setRightExpression(new LongValue(1));
+            
+            EqualsTo right = new EqualsTo();
+            right.setLeftExpression(new Column(""));
+            right.setRightExpression(new LongValue(2));
+            
+            OrExpression or = new OrExpression(left, right);
+            TablesNamesFinderAdapter tnfa = new TablesNamesFinderAdapter();
+            tnfa.visit(or);
+            assertNotNull(or);
+        } catch (Exception e) {
+            fail("can\'t run here");
+        }
+    }
+    
+    @Test
+    public void test_getVisit_whenInputIsDelete() {
+        try {
+            Delete del = getDeleteSt();
+            TablesNamesFinderAdapter ta = new TablesNamesFinderAdapter();
+            Table table = new Table("t2");
+            ta.getTableList(table);
+            ta.visit(del);
+            assertNotNull(del);
+        } catch (Exception e) {
+            fail("can\'t run here");
+        }
+    }
+    
+    @Test
+    public void test_getVisit_whenInputIsWhenClause() {
+        TablesNamesFinderAdapter ta = new TablesNamesFinderAdapter();
+        WhenClause when = new WhenClause();
+        when.setThenExpression(new StringValue("mon"));
+        EqualsTo whenExpress = new EqualsTo();
+        whenExpress.setLeftExpression(new Column("a"));
+        whenExpress.setRightExpression(new LongValue(1));
+        when.setWhenExpression(whenExpress);
+        ta.visit(when);
+        assertNotNull(when);
+    }
+
+    public static Delete getDeleteSt() {
+        String sql = "delete from t1 where a = 100";
+        return (Delete) getBaseStatement(sql).get();
+    }
+
+    public static Optional<Statement> getBaseStatement(String sql) {
+        CCJSqlParserManager pm = new CCJSqlParserManager();
+        try {
+            Statement st = pm.parse(new StringReader(sql));
+            return Optional.of(st);
+        } catch (JSQLParserException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return Optional.empty();
+        
+    }
 }

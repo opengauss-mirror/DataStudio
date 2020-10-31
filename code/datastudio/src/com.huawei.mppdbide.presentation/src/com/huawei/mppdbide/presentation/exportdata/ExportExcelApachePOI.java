@@ -11,7 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -21,8 +23,13 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ooxml.POIXMLProperties;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -70,14 +77,30 @@ public class ExportExcelApachePOI {
     private HSSFCellStyle hssfDateCellStyl;
     private XSSFCellStyle xssfDateCellStyl;
 
+    // true mains column cell style is common
+    private boolean dbDataExport;
+    // if dbDataExport is true, then common column index use this common index cell style
+    // this will init when createHeaderRow
+    private List<CellStyle> dbDataCellStyles = new ArrayList<>();
+
     /**
      * Instantiates a new export excel apache POI.
      *
      * @param fileFormat the file format
-     * @param columnDatatype the column datatype
      */
     public ExportExcelApachePOI(String fileFormat) {
+        this(fileFormat, false);
+    }
+    
+    /**
+     * Instantiates a new export excel apache POI.
+     *
+     * @param fileFormat the file format
+     * @param dbDataExport is database data export
+     */
+    public ExportExcelApachePOI(String fileFormat, boolean dbDataExport) {
         this.fileFormat = fileFormat;
+        this.dbDataExport = dbDataExport;
     }
 
     /**
@@ -88,49 +111,25 @@ public class ExportExcelApachePOI {
      * @throws ParseException the parse exception
      */
     public void setCellValue(List<String> oneRow, int rowNo) throws ParseException {
-
+        Sheet sheet = null;
         if (EXCEL_XLSX.equals(fileFormat)) {
-            SXSSFRow row = xssfsheet.createRow(rowNo);
-            for (int i = 0; i < oneRow.size(); i++) {
-                String cellValue = oneRow.get(i);
-                SXSSFCell cell = (SXSSFCell) row.createCell(i);
-                if (cellValue == null || "".equals(cellValue)) {
-                    cell.setCellValue("");
-                } else {
-                    String truncatedCellValue = truncateCellSize(cellValue);
-                    /*
-                     * Set all the values of the cell as String to avoid
-                     * executing
-                     */
-
-                    DataFormat fmt = xssfWorkBook.createDataFormat();
-                    CellStyle cellStyle = xssfWorkBook.createCellStyle();
-                    cellStyle.setDataFormat(fmt.getFormat("@"));
-                    cell.setCellStyle(cellStyle);
-                    cell.setCellValue(truncatedCellValue);
-                }
-            }
+            sheet = xssfsheet;
+        } else if (EXCEL_XLS.equals(fileFormat)) {
+            sheet = hssfSheet;
+        } else {
+            return;
         }
-        if (EXCEL_XLS.equals(fileFormat)) {
-            HSSFRow row = hssfSheet.createRow(rowNo);
-            for (int i = 0; i < oneRow.size(); i++) {
-                String cellValue = oneRow.get(i);
-                HSSFCell cell = row.createCell(i);
-                if (cellValue == null || "".equals(cellValue)) {
-                    cell.setCellValue("");
-                } else {
-                    cellValue = truncateCellSize(cellValue);
-                    /*
-                     * Set all the values of the cell as String to avoid
-                     * executing
-                     */
 
-                    DataFormat fmt = hssfWorkBook.createDataFormat();
-                    CellStyle cellStyle = hssfWorkBook.createCellStyle();
-                    cellStyle.setDataFormat(fmt.getFormat("@"));
-                    cell.setCellStyle(cellStyle);
-                    cell.setCellValue(cellValue);
-                }
+        Row row = sheet.createRow(rowNo);
+        for (int i = 0; i < oneRow.size(); i ++) {
+            String cellValue = oneRow.get(i);
+            Cell cell = row.createCell(i);
+            if (cellValue == null || "".equals(cellValue)) {
+                cell.setCellValue("");
+            } else {
+                cellValue = truncateCellSize(cellValue);
+                cell.setCellStyle(getCellStyleByColumn(i));
+                cell.setCellValue(cellValue);
             }
         }
     }
@@ -249,22 +248,22 @@ public class ExportExcelApachePOI {
      * @param headerList the header list
      */
     public void createHeaderRow(List<String> headerList) {
+        Sheet sheet = null;
         if ("Excel(xlsx)".equals(fileFormat)) {
-            SXSSFRow row = xssfsheet.createRow(0);
-
-            for (int i = 0; i < headerList.size(); i++) {
-                SXSSFCell cell = row.createCell(i);
-                cell.setCellValue(headerList.get(i));
-            }
-
+            sheet = xssfsheet;
         } else if ("Excel(xls)".equals(fileFormat)) {
-            HSSFRow row = hssfSheet.createRow(0);
+            sheet = hssfSheet;
+        } else {
+            return;
+        }
 
-            for (int i = 0; i < headerList.size(); i++) {
-                HSSFCell cell = (HSSFCell) row.createCell(i);
-                cell.setCellValue(headerList.get(i));
+        Row row = sheet.createRow(0);
+        for (int i = 0; i < headerList.size(); i ++) {
+            Cell cell = row.createCell(i);
+            cell.setCellValue(headerList.get(i));
+            if (dbDataExport) {
+                dbDataCellStyles.add(getCellStyle().get());
             }
-
         }
     }
 
@@ -353,4 +352,25 @@ public class ExportExcelApachePOI {
         handleWorkbookCleanupActivity(fileName);
     }
 
+    private CellStyle getCellStyleByColumn(int column) {
+        if (dbDataExport) {
+            return dbDataCellStyles.get(column);
+        }
+        return getCellStyle().get();
+    }
+
+    private Optional<CellStyle> getCellStyle() {
+        Workbook workBook = null;
+        if (EXCEL_XLSX.equals(fileFormat)) {
+            workBook = xssfWorkBook;
+        } else if (EXCEL_XLS.equals(fileFormat)) {
+            workBook = hssfWorkBook;
+        } else {
+            return Optional.empty();
+        }
+        DataFormat fmt = workBook.createDataFormat();
+        CellStyle cellStyle = workBook.createCellStyle();
+        cellStyle.setDataFormat(fmt.getFormat("@"));
+        return Optional.of(cellStyle);
+    }
 }

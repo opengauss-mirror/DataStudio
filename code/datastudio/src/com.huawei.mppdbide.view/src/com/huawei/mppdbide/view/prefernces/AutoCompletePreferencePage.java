@@ -149,7 +149,7 @@ public class AutoCompletePreferencePage extends PreferencePage {
                             setErrorMessage();
                             return;
                         }
-                        if ((newSize > 10 || newSize < 2)) {
+                        if (newSize > 10) {
                             event.doit = false;
                             if (Integer.parseInt(oldValue) < 2) {
                                 setErrorMessage();
