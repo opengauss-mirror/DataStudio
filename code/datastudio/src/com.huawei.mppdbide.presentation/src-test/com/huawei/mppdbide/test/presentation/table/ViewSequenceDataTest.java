@@ -139,24 +139,6 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
     }
 
     @Test
-    public void test_mytttt() {
-        String query = "select row_number() over () as \"*\", * from pg_catalog.\"Mytable\"";
-        Database database = connProfCache.getDbForProfileId(profileId);
-        try {
-            DBConnection conn = database.getConnectionManager().getFreeConnection();
-            ResultSet rs = conn.execSelectAndReturnRs(query);
-            while (rs.next()) {
-                for (int i = 0 ; i < 5; i++) {
-                    System.out.print(String.format(Locale.ENGLISH, "col%d: %10s  ", i, rs.getString(i + 1)));
-                }
-                System.out.println("");
-            }
-        } catch (Exception e) {
-            fail("some error occur");
-        }
-
-    }
-    @Test
     public void test_initializeCore()
     {
         Database database = connProfCache.getDbForProfileId(profileId);
@@ -344,7 +326,7 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
             core.init(tablemetaData);
             core.getWindowDetails().getShortTitle();
             core.getServerObject();
-            core.getWindowDetails().isCloseable();           
+            core.getWindowDetails().isCloseable();
             assertNotNull(core.getQuery());            
         } catch (DatabaseOperationException e) {
             fail("not expeted");
