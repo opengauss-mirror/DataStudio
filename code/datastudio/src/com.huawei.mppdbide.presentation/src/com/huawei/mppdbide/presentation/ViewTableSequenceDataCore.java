@@ -44,7 +44,7 @@ public class ViewTableSequenceDataCore extends ViewTableDataCore {
             final String sequenceByTableSql = "WITH temp_sql as (SELECT tu.rolname as tableuser"
                     + ",tb.relname as tableName,tc.attname as columnName,scl.relname,sch.nspname FROM "
                     + "pg_class  scl,pg_depend sdp,pg_attrdef sc,pg_attribute tc,pg_class tb,pg_roles tu"
-                    + ",pg_namespace sch WHERE tu.rolname = ? and tb.relname = ?  AND scl.relnamespace = sch.oid "
+                    + ",pg_namespace sch WHERE sch.nspname = ? and tb.relname = ?  AND scl.relnamespace = sch.oid "
                     + "AND scl.relkind = 'S' AND sdp.refobjid = scl.oid AND sc.oid = sdp.objid "
                     + "AND tc.attrelid = sc.adrelid "
                     + "AND tc.attnum = sc.adnum AND tb.oid = tc.attrelid AND tu.oid = tb.relowner)"
