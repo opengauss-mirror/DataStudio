@@ -32,7 +32,7 @@
 	<url.ip>mirrors.tools.huawei.com</url.ip>
 	<url.port></url.port>
     <url.nattable>http://${url.ip}${url.port}/eclipse/nattable/releases/1.6.0/repository/</url.nattable>
-	<url.gef>http://${url.ip}${url.port}/eclipse/tools/gef/updates/releases/5.1.0_gef-master_5509//</url.gef>
+	<url.gef>http://${url.ip}${url.port}/eclipse/tools/gef/updates/releases/5.1.0_gef-master_5509/</url.gef>
 	<url.efxclipse>http://${url.ip}${url.port}/eclipse/efxclipse/updates-released/3.5.0/site/</url.efxclipse>
 	<url.eclipse>http://${url.ip}${url.port}/eclipse/releases/2019-06/201906191000/</url.eclipse>
   </properties>
