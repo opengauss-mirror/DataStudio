@@ -29,12 +29,12 @@
 	<!-- <maven.test.skip>true</maven.test.skip> -->
 	<maven.compiler.source>1.8</maven.compiler.source>
 	<maven.compiler.target>1.8</maven.compiler.target>
-	<url.ip>10.189.44.131</url.ip>
-	<url.port>8081</url.port>
-    <url.nattable>http://${url.ip}:${url.port}/nexus/content/repositories/nattable/</url.nattable>
-	<url.gef>http://${url.ip}:${url.port}/nexus/content/repositories/gef/</url.gef>
-	<url.efxclipse>http://${url.ip}:${url.port}/nexus/content/repositories/efxclipse/</url.efxclipse>
-	<url.eclipse>http://${url.ip}:${url.port}/nexus/content/repositories/eclipse_201906/</url.eclipse>
+	<url.ip>mirrors.tools.huawei.com</url.ip>
+	<url.port></url.port>
+    <url.nattable>http://${url.ip}${url.port}/eclipse/nattable/releases/1.6.0/repository/</url.nattable>
+	<url.gef>http://${url.ip}${url.port}/eclipse/tools/gef/updates/releases/5.1.0_gef-master_5509/</url.gef>
+	<url.efxclipse>http://${url.ip}${url.port}/eclipse/efxclipse/updates-released/3.5.0/site/</url.efxclipse>
+	<url.eclipse>http://${url.ip}${url.port}/eclipse/releases/2019-06/201906191000/</url.eclipse>
   </properties>
   
   <profiles>
