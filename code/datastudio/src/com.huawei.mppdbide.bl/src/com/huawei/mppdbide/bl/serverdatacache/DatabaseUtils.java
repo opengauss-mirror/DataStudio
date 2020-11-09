@@ -551,7 +551,7 @@ public interface DatabaseUtils {
             {"bit", null}, {"box", null}, {"bytea", null}, {"cidr", null}, {"circle", null}, {"inet", null},
             {"lseg", null}, {"macaddr", null}, {"path", null}, {"point", null}, {"polygon", null},
             {"timetz", "time with time zone"}, {"timestamptz", "timestamp with time zone"}, {"tsquery", null},
-            {"tsvector", null}, {"txid_snapshot", null}, {"uuid", null}, {"varbit", null}};
+            {"tsvector", null}, {"txid_snapshot", null}, {"uuid", null}, {"varbit", null}, {"xml", null}};
         return defaultDatatype;
     }
 
