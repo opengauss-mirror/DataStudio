@@ -58,7 +58,7 @@ public class PartitionTable extends TableMetaData {
             + "LEFT JOIN pg_class ci on (i.indexrelid = ci.oid) "
             + "LEFT JOIN pg_namespace ns on (ci.relnamespace = ns.oid) "
             + "LEFT JOIN pg_indexes def on (ci.relname = def.indexname and ns.nspname = def.schemaname) "
-            + "WHERE t.relkind in ('r', 'f') " + "and ci.parttype in ('p','v') ";
+            + "WHERE t.relkind in ('r', 'f', 'I') " + "and ci.parttype in ('p','n') ";
 
     /**
      * Instantiates a new partition table.
@@ -456,7 +456,7 @@ public class PartitionTable extends TableMetaData {
             throws DatabaseOperationException, SQLException {
         boolean hasNext;
         ns.getDatabase().getNameSpaceById(resultSet.getLong("namespaceid"));
-        PartitionTable table = (PartitionTable) ptabGroup.getObjectById(resultSet.getLong("tableId"));
+        TableMetaData table = (TableMetaData) ptabGroup.getObjectById(resultSet.getLong("tableId"));
         if (table == null) {
             validateNamespacePrivilege(ns);
         } else {
@@ -475,8 +475,9 @@ public class PartitionTable extends TableMetaData {
      * @throws DatabaseCriticalException the database critical exception
      */
     private void getPartitionIndexes(DBConnection conn) throws DatabaseOperationException, DatabaseCriticalException {
-        String qry = String.format(Locale.ENGLISH, PartitionTable.PARTITION_INDEX_QUERY + "and ci.oid = %d;",
-                this.getOid());
+        String qry = String.format(Locale.ENGLISH, PartitionTable.PARTITION_INDEX_QUERY
+                + " and ci.relnamespace = %d and tableid= %d;",
+                this.getNamespace().getOid(), this.getOid());
         ResultSet resultSet = conn.execSelectAndReturnRs(qry);
         boolean hasNext = false;
 

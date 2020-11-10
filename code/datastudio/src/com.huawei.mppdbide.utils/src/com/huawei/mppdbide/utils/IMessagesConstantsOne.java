@@ -662,6 +662,7 @@ public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
     String INDEX_UI_REMOVE = "INDEX_UI_REMOVE";
     String INDEX_UI_MOVE_UP = "INDEX_UI_MOVE_UP";
     String INDEX_UI_MOVE_DOWN = "INDEX_UI_MOVE_DOWN";
+    String INDEX_UI_TYPE = "INDEX_UI_TYPE";
     String INDEX_UI_ACCESS_METHOD = "INDEX_UI_ACCESS_METHOD";
     String INDEX_UI_TABLESPACE = "INDEX_UI_TABLESPACE";
 

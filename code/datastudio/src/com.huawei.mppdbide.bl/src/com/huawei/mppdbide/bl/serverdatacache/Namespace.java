@@ -600,7 +600,9 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
      */
     private void fetchAllIndexes(DBConnection conn) throws DatabaseCriticalException, DatabaseOperationException {
         MPPDBIDELoggerUtility.perf("Loading Indexes starts");
-        String qry = String.format(Locale.ENGLISH, LOAD_INDEXES + " and ci.parttype not in ('p','v') " + ';', getOid());
+        String qry = String.format(Locale.ENGLISH, LOAD_INDEXES
+                + " and ci.parttype not in ('p','v') and ci.relkind not in ('I');",
+                getOid());
         ResultSet resultSet = conn.execSelectAndReturnRs(qry);
         boolean hasNext = false;
 
