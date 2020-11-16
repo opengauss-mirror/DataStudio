@@ -273,7 +273,7 @@ public class TableValidatorTest extends BasicJDBCTestCaseAdapter
             
             CommonLLTUtils.mockResultsetForNewlyCreatedTable(preparedstatementHandler);
             tablemetaData.execCreate(database.getConnectionManager().getObjBrowserConn());
-            assertTrue( validatorRules.getDataTypeList(database,true).size()==34);
+            assertTrue( validatorRules.getDataTypeList(database,true).size()==35);
 
         }
         catch (Exception e)
@@ -312,7 +312,7 @@ public class TableValidatorTest extends BasicJDBCTestCaseAdapter
             CommonLLTUtils.mockResultsetForNewlyCreatedTable(preparedstatementHandler);
             tablemetaData.execCreate(database.getConnectionManager().getObjBrowserConn());
             assertTrue(validatorRules.getDataTypeList(database, true)
-                    .size() == 34);
+                    .size() == 35);
 
         }
         catch (Exception e)
