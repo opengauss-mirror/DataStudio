@@ -476,7 +476,7 @@ public class PartitionTable extends TableMetaData {
      */
     private void getPartitionIndexes(DBConnection conn) throws DatabaseOperationException, DatabaseCriticalException {
         String qry = String.format(Locale.ENGLISH, PartitionTable.PARTITION_INDEX_QUERY
-                + " and ci.relnamespace = %d and tableid= %d;",
+                + "and ci.relnamespace = %d and tableid= %d;",
                 this.getNamespace().getOid(), this.getOid());
         ResultSet resultSet = conn.execSelectAndReturnRs(qry);
         boolean hasNext = false;

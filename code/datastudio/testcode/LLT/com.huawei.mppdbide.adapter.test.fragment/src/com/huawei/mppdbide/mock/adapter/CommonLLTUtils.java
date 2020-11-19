@@ -117,7 +117,7 @@ public class CommonLLTUtils
             + "i.indkey as cols, array_to_string(ci.reloptions, ',') as reloptions, def.indexdef , def.tablespace  "
             + "FROM pg_index i LEFT JOIN pg_class t on (t.oid = i.indrelid) LEFT JOIN pg_class ci on (i.indexrelid = ci.oid) LEFT JOIN pg_namespace ns on (ci.relnamespace = ns.oid)"
             + " LEFT JOIN pg_indexes def on (ci.relname = def.indexname and ns.nspname = def.schemaname) WHERE t.relkind = 'r' and ci.relnamespace = 1"
-            + " and ci.parttype not in ('p','v') " + ';';
+            + " and ci.parttype not in ('p','v') and ci.relkind not in ('I')" + ';';
 
     public static final String GET_ALL_CONSTRAINTS                       = "SELECT c.oid as constraintid, c.conrelid as tableid, c.connamespace as namespaceid, c.conname  as constraintname ,c.contype as constrainttype, c.condeferrable as deferrable, c.condeferred  as deferred, c.convalidated as validate, c.conindid  as indexid, c.confrelid as fkeytableId, c.confupdtype as updatetype, c.confdeltype as deletetype, c.confmatchtype as matchtype, c.consrc as expr, c.conkey as columnlist, c.confkey as fkeycolumnlist, pg_get_constraintdef(c.oid) as const_def ,case when (def.tablespace is null or '') and c.contype <> 'c' then 'DEFAULT' else def.tablespace end FROM pg_constraint c LEFT JOIN pg_class t on (t.oid = c.conrelid) LEFT JOIN pg_index ind ON c.conindid = ind.indexrelid LEFT JOIN pg_class ci on (ind.indexrelid = ci.oid) LEFT JOIN pg_indexes def on (ci.relname = def.indexname) WHERE t.relkind = 'r' and t.oid = 1";
 
@@ -1236,24 +1236,24 @@ public class CommonLLTUtils
 
         MockResultSet partitionConstraintRS = preparedstatementHandler
                 .createResultSet();
-        constraintRS.addColumn("constraintid");
-        constraintRS.addColumn("tableid");
-        constraintRS.addColumn("namespaceid");
-        constraintRS.addColumn("constraintname");
-        constraintRS.addColumn("constrainttype");
-        constraintRS.addColumn("deferrable");
-        constraintRS.addColumn("deferred");
-        constraintRS.addColumn("validate");
-        constraintRS.addColumn("indexid");
-        constraintRS.addColumn("fkeytableId");
-        constraintRS.addColumn("updatetype");
-        constraintRS.addColumn("deletetype");
-        constraintRS.addColumn("matchtype");
-        constraintRS.addColumn("expr");
-        constraintRS.addColumn("columnlist");
-        constraintRS.addColumn("fkeycolumnlist");
-        constraintRS.addColumn("const_def");
-        constraintRS.addRow(new Object[] {1, 1, 1, "ConstraintName",
+        partitionConstraintRS.addColumn("constraintid");
+        partitionConstraintRS.addColumn("tableid");
+        partitionConstraintRS.addColumn("namespaceid");
+        partitionConstraintRS.addColumn("constraintname");
+        partitionConstraintRS.addColumn("constrainttype");
+        partitionConstraintRS.addColumn("deferrable");
+        partitionConstraintRS.addColumn("deferred");
+        partitionConstraintRS.addColumn("validate");
+        partitionConstraintRS.addColumn("indexid");
+        partitionConstraintRS.addColumn("fkeytableId");
+        partitionConstraintRS.addColumn("updatetype");
+        partitionConstraintRS.addColumn("deletetype");
+        partitionConstraintRS.addColumn("matchtype");
+        partitionConstraintRS.addColumn("expr");
+        partitionConstraintRS.addColumn("columnlist");
+        partitionConstraintRS.addColumn("fkeycolumnlist");
+        partitionConstraintRS.addColumn("const_def");
+        partitionConstraintRS.addRow(new Object[] {1, 1, 1, "ConstraintName",
                 "ConstraintType", false, false, false, 1, 1, "", "", "", "",
                 "1", "1", ""});
         preparedstatementHandler.prepareResultSet(
