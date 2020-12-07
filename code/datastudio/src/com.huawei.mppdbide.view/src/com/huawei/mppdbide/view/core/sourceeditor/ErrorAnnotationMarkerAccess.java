@@ -4,6 +4,8 @@
 
 package com.huawei.mppdbide.view.core.sourceeditor;
 
+import java.util.Optional;
+
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
@@ -62,7 +64,7 @@ public class ErrorAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
      */
     @Override
     public String getTypeLabel(Annotation annotation) {
-        if (annotation instanceof ErrorAnnotation) {
+        if (annotation instanceof AnnotationWithLineNumber) {
             ErrorAnnotation.getTypelabel();
         } else {
             return super.getTypeLabel(annotation);
@@ -79,7 +81,7 @@ public class ErrorAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
      */
     @Override
     public int getLayer(Annotation annotation) {
-        if (annotation instanceof ErrorAnnotation) {
+        if (annotation instanceof AnnotationWithLineNumber) {
             return ErrorAnnotation.getLayer();
         }
         return super.getLayer(annotation);
@@ -95,12 +97,10 @@ public class ErrorAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
      */
     @Override
     public void paint(Annotation annotation, GC gc, Canvas canvas, Rectangle bounds) {
-        Image paintImg = null;
         if (annotation instanceof ErrorAnnotation) {
-            paintImg = ((ErrorAnnotation) annotation).getImage();
-
-            if (null != paintImg) {
-                ImageUtilities.drawImage(paintImg, gc, canvas, bounds, SWT.CENTER, SWT.TOP);
+            Optional<Image> paintImg = ((ErrorAnnotation) annotation).getImage();
+            if (paintImg.isPresent()) {
+                ImageUtilities.drawImage(paintImg.get(), gc, canvas, bounds, SWT.CENTER, SWT.TOP);
             }
 
             // Update the line number of the modified ErrorAnnotation.
@@ -137,7 +137,7 @@ public class ErrorAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
     @Override
     public boolean isPaintable(Annotation annotation) {
         if (annotation instanceof ErrorAnnotation) {
-            return ((ErrorAnnotation) annotation).getImage() != null;
+            return ((ErrorAnnotation) annotation).getImage().isPresent();
         } else {
             return super.isPaintable(annotation);
         }

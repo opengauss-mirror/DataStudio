@@ -12,12 +12,11 @@ package com.huawei.mppdbide.view.core.sourceeditor;
  * @since 17 Jan, 2020
  */
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
+import java.util.Optional;
 
-import com.huawei.mppdbide.utils.IMessagesConstants;
-import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
-import com.huawei.mppdbide.view.utils.icon.IconUtility;
+import org.eclipse.swt.graphics.Image;
+
+import com.huawei.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationType;
 import com.huawei.mppdbide.view.utils.icon.IiconPath;
 
 /**
@@ -33,21 +32,14 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * @since 04 Apr, 2020
  */
 public class ErrorPositionAnnotation extends AnnotationWithLineNumber {
-    private static int layer = 2;
-    private static final String ANNOTATION_TYPE_LABEL = MessageConfigLoader
-            .getProperty(IMessagesConstants.ERROR_POSITION_LABEL);
-    private static final RGB DEBUGPOSITION_RGB = new RGB(255, 255, 0);
-    private static final String STRATEGY_ID = "PLSQL_ERROR_POSITION";
-    private int line;
-
+    private static final AnnotationType annotationType = AnnotationType.ERROR_POSITION;
     /**
      * Instantiates a new debug position annotation.
      *
      * @param errorMessage the line
      */
     public ErrorPositionAnnotation(String errorMessage, int line) {
-        super(STRATEGY_ID, false, errorMessage);
-        this.line = line;
+        super(annotationType.getStrategy(), false, errorMessage, line);
     }
 
     /**
@@ -56,7 +48,7 @@ public class ErrorPositionAnnotation extends AnnotationWithLineNumber {
      * @return the layer
      */
     public static int getLayer() {
-        return layer;
+        return annotationType.getLayer();
     }
 
     /**
@@ -64,8 +56,8 @@ public class ErrorPositionAnnotation extends AnnotationWithLineNumber {
      *
      * @return the image
      */
-    public Image getImage() {
-        return IconUtility.getIconImage(IiconPath.ICO_ERROR, this.getClass());
+    public Optional<Image> getImage() {
+        return Optional.of(loadImage(IiconPath.ICO_ERROR));
     }
 
     /**
@@ -74,7 +66,7 @@ public class ErrorPositionAnnotation extends AnnotationWithLineNumber {
      * @return the strategyid
      */
     public static String getStrategyid() {
-        return STRATEGY_ID;
+        return annotationType.getStrategy();
     }
 
     /**
@@ -83,42 +75,11 @@ public class ErrorPositionAnnotation extends AnnotationWithLineNumber {
      * @return the typelabel
      */
     public static String getTypelabel() {
-        return ANNOTATION_TYPE_LABEL;
+        return annotationType.getTypeLabel();
     }
 
-    /**
-     * Equals.
-     *
-     * @param obj the obj
-     * @return true, if successful
-     */
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ErrorPositionAnnotation) {
-            return true;
-        } else {
-            return false;
-        }
+    public AnnotationType getAnnotationType() {
+        return annotationType;
     }
-
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    /**
-     * returns the line number of annotation
-     *
-     * @return the int line number
-     */
-    @Override
-    public int getLine() {
-        return line;
-    }
-
 }
