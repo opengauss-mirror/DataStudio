@@ -21,7 +21,7 @@
         </children>
         <children xsi:type="basic:PartSashContainer" xmi:id="_kw6PkDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partsashcontainer.id.sub.alldebug" visible="false" containerData="35">
           <children xsi:type="basic:PartStack" xmi:id="_rt8TIDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.stack" containerData="">
-            <children xsi:type="basic:Part" xmi:id="_3JGu4DKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.part.id.stack" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.ui.StackFrameWindow" label="%viewmenu.label.stack" iconURI="" tooltip="%viewmenu.tooltip.stack"/>
+            <children xsi:type="basic:Part" xmi:id="_3JGu4DKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.part.id.stack" contributionURI="" label="%viewmenu.label.stack" iconURI="" tooltip="%viewmenu.tooltip.stack"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_tL-XYDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.breakpoint" containerData=""/>
           <children xsi:type="basic:PartStack" xmi:id="_ukJrQDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.variable" containerData=""/>
