@@ -19,6 +19,14 @@
             </children>
           </children>
         </children>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_kw6PkDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partsashcontainer.id.sub.alldebug" visible="false" containerData="35">
+          <children xsi:type="basic:PartStack" xmi:id="_rt8TIDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.stack" containerData="">
+            <children xsi:type="basic:Part" xmi:id="_3JGu4DKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.part.id.stack" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.ui.StackFrameWindow" label="%viewmenu.label.stack" iconURI="" tooltip="%viewmenu.tooltip.stack"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_tL-XYDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.breakpoint" containerData=""/>
+          <children xsi:type="basic:PartStack" xmi:id="_ukJrQDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.variable" containerData=""/>
+          <children xsi:type="basic:PartStack" xmi:id="_vqV3QDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.monitor" containerData=""/>
+        </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_zhYg0ZPqEeOwspWUd5Ul7A" elementId="com.huawei.mppdbide.partstack.id.dbassistant" visible="false" containerData="20">
         <tags>NoMove</tags>
@@ -79,6 +87,14 @@
         </children>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_x4yIIGu0EeacKs9JD8MZAw" elementId="com.huawei.executemenu.id.cancelexecutingquery" label="%executemenu.label.cancelquery" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/closeQuery.png" tooltip="%executemenu.tooltip.cancelquery" mnemonics="%executemenu.mnemonics.cancelquery" command="_6Z5W8GRIEeaKr-crVTyWIQ"/>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="_t073EC-KEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.menu.id.debugmenu" label="%menu.label.debugmenu" mnemonics="%menu.mnemonics.debugmenu">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_B8m9sC-QEeu3vZBI81hPmA" elementId="com.huawei.executemenu.id.debug" label="%executemenu.label.debug" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/debug.png" tooltip="%executemenu.tooltip.debug" mnemonics="%executemenu.mnemonics.debug" command="_qQEP4C-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_FKMP0C-XEeu3vZBI81hPmA" elementId="com.huawei.executemenu.id.terminate" label="%executemenu.label.terminate" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/terminateExecution.png" tooltip="%executemenu.tooltip.terminate" mnemonics="%executemenu.mnemonics.terminate" command="_tz90cC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_NWkbYC-XEeu3vZBI81hPmA" elementId="com.huawei.executemenu.id.continue" label="%executemenu.label.continue" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/resume.png" tooltip="%executemenu.tooltip.continue" mnemonics="%executemenu.mnemonics.continue" command="_xGswgC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_TxRN8C-XEeu3vZBI81hPmA" elementId="com.huawei.executemenu.id.stepin" label="%executemenu.label.stepin" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/step-in.png" tooltip="%executemenu.tooltip.stepin" mnemonics="%executemenu.mnemonics.stepin" command="_1t6MMC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_ZG_8gC-XEeu3vZBI81hPmA" elementId="com.huawei.executemenu.id.stepover" label="%executemenu.label.stepover" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/step-over.png" tooltip="%executemenu.tooltip.stepover" mnemonics="%executemenu.mnemonics.stepover" command="_zmRKQC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_e41_UC-XEeu3vZBI81hPmA" elementId="com.huawei.executemenu.id.stepout" label="%executemenu.label.stepout" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/step-out.png" tooltip="%executemenu.tooltip.stepout" mnemonics="%executemenu.mnemonics.stepout" command="_4NaUgC-PEeu3vZBI81hPmA"/>
+      </children>
       <children xsi:type="menu:Menu" xmi:id="_f2xy4DEqEeaogdUAzbbHTA" elementId="com.huawei.mppdbide.menu.id.settings" label="%menu.label.settingsmenu" mnemonics="%menu.mnemonics.settingsmenu">
         <children xsi:type="menu:Menu" xmi:id="_p0hOYDEqEeaogdUAzbbHTA" elementId="com.huawei.mppdbide.view.menu.language" label="%menu.label.filelanguagemenu" mnemonics="%menu.mnemonics.filelanguagemenu ">
           <children xsi:type="menu:HandledMenuItem" xmi:id="_tWeSMDEqEeaogdUAzbbHTA" elementId="com.huawei.mppdbide.view.handledmenuitem.englishlanguage" label="%filelanguagemenu.label.englishlanguage" tooltip="%filelanguagemenu.tooltip.englishlanguage" mnemonics="%filelanguagemenu.mnemonics.englishlanguage" command="_EnfkkCMoEeaEWZ0k43NoIw"/>
@@ -134,8 +150,16 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_cKCGwL6PEemAzeDbx-eZnA" elementId="com.huawei.mppdbide.view.handledtoolitem.opendbassistant" label="%view.db.assistant.open" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/db_assistant16x16.png" tooltip="%view.db.assistant.open" enabled="false" command="_C16uYNSrEeeSkptHttmlIw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_c5GzQL6PEemAzeDbx-eZnA" elementId="com.huawei.mppdbide.trimbar.id.maintrimbar.toolbar.9">
-        <children xsi:type="menu:HandledToolItem" xmi:id="_dpfHUL6PEemAzeDbx-eZnA" elementId="com.huawei.mppdbide.view.handledmenuitem.ToggleLineCommentToolBar" accessibilityPhrase="%objectbrowser.popupmenu.mnemonics.togglelinecomments-mnemonics" label="%editmenu.label.togglelinecomments - label" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/icon-AddSingleLineComment.png" tooltip="%editmenu.tooltip.togglelinecomments" command="_KDUMwFjPEeiJj5ArmyjakQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_dpfHUL6PEemAzeDbx-eZnA" elementId="com.huawei.mppdbide.view.handledmenuitem.ToggleLineCommentToolBar" accessibilityPhrase="%objectbrowser.popupmenu.mnemonics.togglelinecomments" label="%editmenu.label.togglelinecomments" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/icon-AddSingleLineComment.png" tooltip="%editmenu.tooltip.togglelinecomments1" command="_KDUMwFjPEeiJj5ArmyjakQ"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_eIjo8L6PEemAzeDbx-eZnA" elementId="com.huawei.mppdbide.view.handledmenuitem.ToggleBlockCommentToolBar" accessibilityPhrase="%objectbrowser.popupmenu.mnemonics.toggleblockcomments" label="%editmenu.label.toggleblockcomments" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/icon-AddMultiLineComment.png" tooltip="%editmenu.tooltip.toggleblockcomments" command="_HX9OAGAHEei_usYh_n3jLQ"/>
+      </children>
+      <children xsi:type="menu:ToolBar" xmi:id="_kjW9sDXPEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.toolbar.debug">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Lm_UMDFEEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handledmenuitem.startdebug" accessibilityPhrase="" label="%executemenu.label.debug" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/debug.png" tooltip="%executemenu.tooltip.debug" command="_qQEP4C-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Lm5E4DK1Eeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handledmenuitem.stopdebug" label="%executemenu.label.terminate" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/terminateExecution.png" tooltip="%executemenu.tooltip.terminate" command="_tz90cC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_o7vs0DRnEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handledmenuitem.continue" label="%executemenu.label.continue" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/resume.png" tooltip="%executemenu.tooltip.continue" command="_xGswgC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_6IaakDXPEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handledmenuitem.stepin" label="%executemenu.label.stepin" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/step-in.png" tooltip="%executemenu.tooltip.stepin" command="_1t6MMC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_KFBBMDXQEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handledmenuitem.stepover" label="%executemenu.label.stepover" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/step-over.png" tooltip="%executemenu.tooltip.stepover" command="_zmRKQC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_PrFR0DXQEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handledmenuitem.stepout" label="%executemenu.label.stepout" iconURI="platform:/plugin/com.huawei.mppdbide.view/icons/debug/step-out.png" tooltip="%executemenu.tooltip.stepout" command="_4NaUgC-PEeu3vZBI81hPmA"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_bPUcwPflEeGIPdc-KG9aww" elementId="com.huawei.mppdbide.view.trimbar" side="Bottom">
@@ -281,6 +305,12 @@
   <handlers xmi:id="_VGFB0AA4Eeq5051u6lYRsA" elementId="com.huawei.mppdbide.handler.id.createsynonym" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.synonym.handler.CreateSynonymHandler" command="_ch_PMAA3Eeq5051u6lYRsA"/>
   <handlers xmi:id="_4gpxcAFTEeq9mJM5AwY0ng" elementId="com.huawei.mppdbide.handler.id.zdropsynonym" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.synonym.handler.DropSynonymHandler" command="_x2-HsAFTEeq9mJM5AwY0ng"/>
   <handlers xmi:id="_hKInwEdAEeqLWpgRlTLE0g" elementId="com.huawei.mppdbide.view.handler.viewviewdata" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.view.handler.ViewViewDataHandler" command="_alBU8EdAEeqLWpgRlTLE0g"/>
+  <handlers xmi:id="_DNwx0C-3Eeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.startdebug" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.StartDebugHandler" command="_qQEP4C-PEeu3vZBI81hPmA"/>
+  <handlers xmi:id="_s7sGYDK1Eeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.terminate" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.TerminateDebugHandler" command="_tz90cC-PEeu3vZBI81hPmA"/>
+  <handlers xmi:id="_w2Z2QDRnEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.stepout" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.StepOutDebugHandler" command="_4NaUgC-PEeu3vZBI81hPmA"/>
+  <handlers xmi:id="_PxB-QDXPEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.stepin" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.StepInDebugHandler" command="_1t6MMC-PEeu3vZBI81hPmA"/>
+  <handlers xmi:id="_UI-18DXPEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.stepover" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.StepOverDebugHandler" command="_zmRKQC-PEeu3vZBI81hPmA"/>
+  <handlers xmi:id="_YUBTADXPEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.continue" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.ContinueDebugHandler" command="_xGswgC-PEeu3vZBI81hPmA"/>
   <bindingTables xmi:id="_ZMuLcP2OEeGZi6yaMvtO4A" elementId="com.huawei.mppdbide.view.bindingtable.id" bindingContext="_3i-_QP2OEeGZi6yaMvtO4A">
     <tags>type:user</tags>
     <bindings xmi:id="_Znpz8P2OEeGZi6yaMvtO4A" elementId="key.id.newdbconnection" keySequence="M1+N" command="_yJ2c0Pf7EeGyxMhq6ePu1A">
@@ -939,6 +969,14 @@
     <parameters xmi:id="_YwnLEArGEeqHkd6sAUoUNQ" elementId="sslEnable" name="sslEnable"/>
   </commands>
   <commands xmi:id="_alBU8EdAEeqLWpgRlTLE0g" elementId="com.huawei.mppdbide.view.command.viewviewdata" commandName="ViewViewData" description="ViewViewData"/>
+  <commands xmi:id="_qQEP4C-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.startdebug" commandName="Start Debugging" description="Start Debugging Desc"/>
+  <commands xmi:id="_tz90cC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.terminate" commandName="Terminate Debugging" description="Terminate Debugging"/>
+  <commands xmi:id="_xGswgC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.continue" commandName="Continue" description="Continue"/>
+  <commands xmi:id="_zmRKQC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.stepover" commandName="Step over" description="Step over"/>
+  <commands xmi:id="_1t6MMC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.stepin" commandName="Step In" description="Step In"/>
+  <commands xmi:id="_4NaUgC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.stepout" commandName="Step out" description="Step out"/>
+  <commands xmi:id="_6GFGUC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.command.ToggleBlockComment" commandName="Toggle Block Comment" description="Toggle Block Comment"/>
+  <commands xmi:id="_9RstwC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.viewbreakpoint" commandName="View Breakpoint" description="View Breakpoint"/>
   <addons xmi:id="_C4LugfdQEeG3IOiaXuj5Ng" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_C4LugvdQEeG3IOiaXuj5Ng" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_C4Lug_dQEeG3IOiaXuj5Ng" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

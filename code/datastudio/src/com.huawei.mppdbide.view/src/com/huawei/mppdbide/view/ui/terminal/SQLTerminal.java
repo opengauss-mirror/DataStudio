@@ -778,7 +778,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
         if (iter != null) {
             while (iter.hasNext()) {
                 Annotation annotation = (Annotation) iter.next();
-                if (ErrorAnnotation.STRATEGY_ID.equals(annotation.getType())) {
+                if (annotation instanceof ErrorAnnotation) {
                     ErrorAnnotation errorAnnotation = (ErrorAnnotation) annotation;
                     if (errorAnnotation.getLine() == lineAtOffset && !enteredPressed) {
                         fAnnotationModel.removeAnnotation(errorAnnotation);
@@ -941,7 +941,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * @param endsAfter the ends after
      */
     public void removeErrorsInSelectedRange(int off, int length, boolean startsBefore, boolean endsAfter) {
-        @SuppressWarnings("unchecked")
         Iterator<Annotation> annotationIterator = fAnnotationModel.getAnnotationIterator(off, length, startsBefore,
                 endsAfter);
         Annotation anno = null;
@@ -1019,16 +1018,11 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
 
             while (ite.hasNext()) {
                 annotation = (Annotation) ite.next();
-                switch (annotation.getType()) {
-                    case ErrorAnnotation.STRATEGY_ID: {
-                        cnt = ((ErrorAnnotation) annotation).getLine();
-                        if (lineNumber + 1 == cnt) {
-                            hoverStr.add(((ErrorAnnotation) annotation).getText());
-                        }
-                        break;
+                if (annotation instanceof ErrorAnnotation) {
+                    cnt = ((ErrorAnnotation) annotation).getLine();
+                    if (lineNumber + 1 == cnt) {
+                        hoverStr.add(((ErrorAnnotation) annotation).getText());
                     }
-                    default:
-                        break;
                 }
             }
             StringBuilder hoverInfo = new StringBuilder();

@@ -14,6 +14,7 @@
     <module>com.huawei.mppdbide.utils</module>
 	<module>com.huawei.mppdbide.parser</module>
     <module>com.huawei.mppdbide.adapter.gauss</module>
+    <module>com.huawei.mppdbide.debuger</module>
     <module>com.huawei.mppdbide.bl</module>
     <module>com.huawei.mppdbide.presentation</module>
     <module>com.huawei.mppdbide.explainplan</module>

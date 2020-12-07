@@ -938,4 +938,20 @@ public interface IiconPath {
      * The synonym
      */
     String ICO_SYNONYM = "synonym.png";
+    
+    String PRE_DEBUG_PATH = "debug" + File.separator;
+    /**
+     * The ico breakpoint disabled.
+     */
+    String ICO_BREAKPOINT_DISABLED = PRE_DEBUG_PATH + "icon_breakpoint-disabled.png";
+
+    /**
+     * The ico breakpoint enabled.
+     */
+    String ICO_BREAKPOINT_ENABLED =PRE_DEBUG_PATH + "icon_breakpoint-enabled.png";
+    
+    /**
+     * The ico breakpoint arrow.
+     */
+    String ICO_BREAKPOINT_ARROW =PRE_DEBUG_PATH + "debugarrows.png";
 }
