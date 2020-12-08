@@ -102,9 +102,7 @@ public class StartDebugHandler {
                         .get(debugObject.getOid());
                 debugParams = getDebugParams(serverParams);
             }
-            serviceHelper.getDebugService().prepareDebug();
-            serviceHelper.getDebugService().startDebug(debugParams);
-            serviceHelper.getDebugService().attachDebug();
+            serviceHelper.getDebugService().begin(debugParams);
         } catch (DatabaseCriticalException exception) {
             UIDisplayFactoryProvider.getUIDisplayStateIf().handleDBCriticalError(exception, debugObject.getDatabase());
             return;

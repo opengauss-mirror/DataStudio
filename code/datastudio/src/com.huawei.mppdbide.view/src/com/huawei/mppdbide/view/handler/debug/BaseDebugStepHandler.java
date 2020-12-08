@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import com.huawei.mppdbide.debuger.exception.DebugExitException;
-import com.huawei.mppdbide.debuger.service.DebugService;
+import com.huawei.mppdbide.debuger.service.IDebugService;
 import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
@@ -43,7 +43,7 @@ public abstract class BaseDebugStepHandler {
         return serviceHelper.canStepDebugRun();
     }
     
-    public DebugService getDebugService() {
+    public IDebugService getDebugService() {
         return serviceHelper.getDebugService();
     }
 }

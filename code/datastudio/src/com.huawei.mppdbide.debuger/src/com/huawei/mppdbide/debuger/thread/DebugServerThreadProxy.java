@@ -17,6 +17,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * @since 2020/11/20
  */
 public class DebugServerThreadProxy {
+    private static final int DEFAULT_WAIT_LOCK_TIME = 2000; //ms
     private Thread proxyThread;
     private DebugServerRunable debugServerRunable;
 
@@ -38,9 +39,13 @@ public class DebugServerThreadProxy {
         return proxyThread != null && proxyThread.isAlive();
     }
 
-    public void join() throws InterruptedException {
+    public void join() {
         if (this.proxyThread != null) {
-            this.proxyThread.join();
+            try {
+                this.proxyThread.join(DEFAULT_WAIT_LOCK_TIME);
+            } catch (InterruptedException e) {
+                MPPDBIDELoggerUtility.warn("proxyThread join with error!" + e.getMessage());
+            }
             this.proxyThread = null;
         }
     }

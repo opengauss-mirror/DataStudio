@@ -18,5 +18,4 @@ public class SessionVo {
     public Integer serverPort;
     public Integer clientPort;
     public Object result;
-    public final Object waitLock = new int[0];
 }

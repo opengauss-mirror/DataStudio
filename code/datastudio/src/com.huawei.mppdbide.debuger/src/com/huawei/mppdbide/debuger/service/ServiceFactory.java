@@ -41,7 +41,7 @@ public class ServiceFactory {
 
     private static DebugService createDebugService(FunctionVo functionVo, IConnection serverConn, IConnection clientConn) {
         DebugService debugService = new DebugService();
-        debugService.functionVo = functionVo;
+        debugService.setFunctionVo(functionVo);
         debugService.setServerConn(serverConn);
         debugService.setClientConn(clientConn);
         return debugService;

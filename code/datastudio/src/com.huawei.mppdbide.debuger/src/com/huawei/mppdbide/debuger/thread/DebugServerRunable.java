@@ -30,14 +30,14 @@ public class DebugServerRunable implements Runnable {
         this.debugParams = params;
         this.eventQueueThread = eventQueueThread;
     }
+
     @Override
     public void run() {
         Event event;
         Object retValue = null;
         Exception exp = null;
-        try {
-            ResultSet rs = debugService.serverDebugCallBack(debugParams);
-            while (rs.next()) {
+        try (ResultSet rs = debugService.serverDebugCallBack(debugParams)) {
+            if (rs.next()) {
                 retValue = rs.getObject(1);
             }
         } catch (SQLException sqlExp) {

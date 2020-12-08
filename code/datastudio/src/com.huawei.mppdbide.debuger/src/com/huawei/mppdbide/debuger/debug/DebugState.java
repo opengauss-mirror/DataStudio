@@ -59,6 +59,10 @@ public class DebugState {
     public boolean isStopped() {
         return state == State.STOP || state == State.TERMINALED;
     }
+    
+    public boolean isNormalStopped() {
+        return state == State.STOP;
+    }
 
     public void stateLocked() {
         this.stateLocked = true;
@@ -72,7 +76,7 @@ public class DebugState {
         return this.state;
     }
 
-    private void setState(State state) {
+    public void setState(State state) {
         if (state == getState()) {
             return;
         }
@@ -80,7 +84,8 @@ public class DebugState {
         if (!getLockState()) {
             this.state = state;
             return;
+        } else {
+            MPPDBIDELoggerUtility.warn("not allow modify state!");
         }
-        MPPDBIDELoggerUtility.warn("not allow modify state!");
     }
 }

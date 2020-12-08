@@ -29,7 +29,7 @@ public class TerminateDebugHandler {
     
     @Execute
     public void execute() {
-        MPPDBIDELoggerUtility.error("start debugint:" + "null");
+        MPPDBIDELoggerUtility.error("terminate debugint:" + "null");
         debugUtils.showAllDebugView(false);
         PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
         if (plSourceEditor != null) {

@@ -35,6 +35,6 @@ public class StepOutDebugHandler extends BaseDebugStepHandler {
 
     @Override
     public Optional<PositionVo> debugRun() throws SQLException, DebugExitException {
-        return Optional.empty();
+        return getDebugService().stepOut();
     }
 }

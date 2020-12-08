@@ -5,7 +5,9 @@ package com.huawei.mppdbide.debuger.service;
 
 import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.event.EventHander;
+import com.huawei.mppdbide.debuger.event.Event.EventMessage;
 import com.huawei.mppdbide.debuger.exception.DebugExitException;
+import com.huawei.mppdbide.debuger.service.chain.MsgChainHelper;
 import com.huawei.mppdbide.debuger.annotation.ParseVo;
 import com.huawei.mppdbide.debuger.debug.DebugConstants;
 import com.huawei.mppdbide.debuger.debug.DebugState;
@@ -22,8 +24,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Title: the DebugService class
@@ -50,13 +50,15 @@ import java.util.regex.Pattern;
  * @version [DataStudio 1.0.0, 2020/11/18]
  * @since 2020/11/18
  */
-public class DebugService implements NoticeListener, EventHander, IService {
+public class DebugService implements NoticeListener, EventHander, IDebugService {
     private static final int DEFAULT_WAIT_LOCK_TIME = 2000; //ms
     private IConnection serverConn;
     private IConnection clientConn;
-    public FunctionVo functionVo;
-    public SessionVo sessionVo = new SessionVo();
-    public DebugState serverState = new DebugState();
+    private FunctionVo functionVo;
+    private MsgChainHelper msgChainHelper;
+    private SessionVo sessionVo = new SessionVo();
+    private final Object waitLock = new int[0];
+    private DebugState serverState = new DebugState();
     private DebugState clientState = new DebugState();
     private EventQueueThread eventQueueThread = new EventQueueThread();
     private DebugServerThreadProxy serverThreadProxy = new DebugServerThreadProxy();
@@ -64,6 +66,7 @@ public class DebugService implements NoticeListener, EventHander, IService {
     public DebugService() {
         eventQueueThread.setEventHandler(this);
         eventQueueThread.start();
+        msgChainHelper = new MsgChainHelper(this);
     }
 
     public void prepareDebug() throws SQLException {
@@ -73,7 +76,7 @@ public class DebugService implements NoticeListener, EventHander, IService {
     }
 
     public DebugServerThreadProxy startDebug(Object[] args) {
-        DebugServerRunable debugServerRunable =new DebugServerRunable(
+        DebugServerRunable debugServerRunable = new DebugServerRunable(
                this,
                 args,
                 eventQueueThread);
@@ -96,9 +99,24 @@ public class DebugService implements NoticeListener, EventHander, IService {
     }
 
     public void attachDebug() throws SQLException {
-        synchronized (sessionVo.waitLock) {
+        waitServerStart();
+        try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
+                DebugConstants.DebugOpt.ATTACH_SESSION,
+                new Object[] {sessionVo.serverPort}
+                ).executeQuery()) {
+            if (rs.next()) {
+                clientState.attached();
+                sessionVo.clientPort = rs.getInt(1);
+                return;
+            }
+        }
+        throw new SQLException("client attach failed, please check");
+    }
+    
+    private void waitServerStart() throws SQLException {
+        synchronized (waitLock) {
             try {
-                sessionVo.waitLock.wait(DEFAULT_WAIT_LOCK_TIME);
+                waitLock.wait(DEFAULT_WAIT_LOCK_TIME);
             } catch (InterruptedException intExp) {
                 MPPDBIDELoggerUtility.debug("wait has error!!!! err=" + intExp.toString());
             }
@@ -107,26 +125,12 @@ public class DebugService implements NoticeListener, EventHander, IService {
         if (!serverState.isRunning()) {
             throw new SQLException("server not running, please check!");
         }
-        clientState.attached();
-        try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
-                DebugConstants.DebugOpt.ATTACH_SESSION,
-                new Object[] {sessionVo.serverPort}
-                ).executeQuery() ) {
-            if (rs.next()) {
-                sessionVo.clientPort = rs.getInt(1);
-                return;
-            }
-        }
-        throw new SQLException("client attach failed, please check");
     }
 
     public void debugOff() throws SQLException {
         serverConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.DEBUG_OFF,
                 new Object[] {}).execute();
-//        clientConn.getDebugOptPrepareStatement(
-//                DebugConstants.DebugOpt.DEBUG_OFF,
-//                new Object[] {}).execute();
     }
 
     public Optional<Boolean> abortDebug() throws SQLException {
@@ -147,21 +151,29 @@ public class DebugService implements NoticeListener, EventHander, IService {
         }
     }
 
+    @Override
     public Optional<PositionVo> stepOver() throws SQLException, DebugExitException {
         return getPositionVo(DebugConstants.DebugOpt.STEP_OVER);
     }
 
+    @Override
     public Optional<PositionVo> stepInto() throws SQLException, DebugExitException {
         return getPositionVo(DebugConstants.DebugOpt.STEP_INTO);
     }
 
+    @Override
+    public Optional<PositionVo> stepOut() throws SQLException, DebugExitException {
+        throw new SQLException("not support method");
+    }
+
+    @Override
     public Optional<PositionVo> continueExec() throws SQLException, DebugExitException {
         return getPositionVo(DebugConstants.DebugOpt.CONTINUE_EXEC);
     }
 
-    private Optional<PositionVo> getPositionVo(DebugConstants.DebugOpt debugOpt) throws SQLException, DebugExitException {
+    @Override
+    public Optional<PositionVo> getPositionVo(DebugConstants.DebugOpt debugOpt) throws SQLException, DebugExitException {
         clientState.running();
-
         try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
                 debugOpt,
                 new Object[] {sessionVo.clientPort}).executeQuery()) {
@@ -178,30 +190,37 @@ public class DebugService implements NoticeListener, EventHander, IService {
         }
     }
 
+    @Override
     public List<VariableVo> getVariables() throws SQLException {
         return getListVos(DebugConstants.DebugOpt.GET_VARIABLES, VariableVo.class);
     }
 
+    @Override
     public List<StackVo> getStacks() throws SQLException {
         return getListVos(DebugConstants.DebugOpt.GET_STACKS, StackVo.class);
     }
 
+    @Override
     public List<PositionVo> getBreakPoints() throws SQLException {
         return getListVos(DebugConstants.DebugOpt.GET_BREAKPOINTS, PositionVo.class);
     }
 
     private <T> List<T> getListVos(DebugConstants.DebugOpt debugOpt, Class<T> clazz) throws SQLException {
-        ResultSet rs = clientConn.getDebugOptPrepareStatement(debugOpt,
-                new Object[] {sessionVo.clientPort}).executeQuery();
-        List<T> results = ParseVo.parseList(rs, clazz);
-        rs.close();
-        return results;
+        try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
+                debugOpt,
+                new Object[] {sessionVo.clientPort}).executeQuery()
+                ) {
+            List<T> results = ParseVo.parseList(rs, clazz);
+            return results;
+        }
     }
 
+    @Override
     public boolean setBreakPoint(PositionVo positionVo) throws SQLException {
         return disposeBreakpoint(DebugConstants.DebugOpt.SET_BREAKPOINT, positionVo);
     }
 
+    @Override
     public boolean dropBreakPoint(PositionVo positionVo) throws SQLException {
         return disposeBreakpoint(DebugConstants.DebugOpt.DROP_BREAKPOINT, positionVo);
     }
@@ -231,19 +250,25 @@ public class DebugService implements NoticeListener, EventHander, IService {
     @Override
     public void closeService() {
         try {
-            clientConn.close();
-            clientConn = null;
+            if (clientConn != null) {
+                clientConn.close();
+                clientConn = null;
+            }
         } catch (SQLException sqlErr) {
             MPPDBIDELoggerUtility.warn("clientConn close failed!err=" + sqlErr.toString());
         }
 
         try {
-            serverConn.close();
-            serverConn = null;
+            if (serverConn != null) {
+                serverConn.close();
+                serverConn = null;
+            }
         } catch (SQLException sqlErr) {
             MPPDBIDELoggerUtility.warn("serverConn close failed, err=" + sqlErr.toString());
         }
-        eventQueueThread.stopThread();
+        if (eventQueueThread.isAlive()) {
+            eventQueueThread.stopThread();
+        }
     }
 
     @Override
@@ -253,36 +278,83 @@ public class DebugService implements NoticeListener, EventHander, IService {
         }
         String msgString = notice.getMessage();
         MPPDBIDELoggerUtility.debug("sql message:" + msgString);
-        if (msgString.contains("Pldebugger is started successfully, you are SERVER now")) {
-            serverState.prepared();
-        } else if (msgString.contains("YOUR PROXY PORT ID IS:")) {
-            Matcher matcher = Pattern.compile("YOUR PROXY PORT ID IS:(\\d+)").matcher(msgString);
-            if (matcher.find()) {
-                sessionVo.serverPort = Integer.parseInt(matcher.group(1).trim());
-                serverState.running();
-                synchronized (sessionVo.waitLock) {
-                    sessionVo.waitLock.notify();
-                }
-            }
-        } else {
-            MPPDBIDELoggerUtility.debug("not processed msg");
-        }
+        msgChainHelper.handleSqlMsg(new Event(EventMessage.ON_SQL_MSG, msgString));
     }
 
     @Override
     public void handleEvent(Event event) {
-        if (event.getMsg().equals(Event.EventMessage.ON_EXIT)) {
-            if (event.hasException()) {
-                serverState.ternimaled();
-                MPPDBIDELoggerUtility.error("thread exit with error:" + event.getException().toString());
-            } else {
-                serverState.stop();
-                serverState.stateLocked();
-                Object addition = event.getAddition().orElse("");
-                MPPDBIDELoggerUtility.debug("thread exit and ret value = " + addition);
-                sessionVo.result = addition;
-                serverThreadProxy.start();
-            }
+        msgChainHelper.handleEventMsg(event);
+    }
+
+    public void updateServerPort(int serverPort) {
+        sessionVo.serverPort = serverPort;
+        serverState.running();
+        synchronized (waitLock) {
+            waitLock.notify();
+        } 
+    }
+    
+    public void updateServerWithException() {
+        serverState.ternimaled();
+    }
+    
+    public void updateServerWithResult(Object result) {
+        serverState.stop();
+        serverState.stateLocked();
+        sessionVo.result = result;
+        serverThreadProxy.start();
+    }
+    
+    @Override
+    public void begin(Object[] args) throws SQLException {
+        prepareDebug();
+        startDebug(args);
+        attachDebug();
+    }
+
+    @Override
+    public void end() {
+        try {
+            abortDebug();
+        } catch (SQLException e) {
+            MPPDBIDELoggerUtility.debug("abortDebug with error:" + e.toString());
         }
+        serverThreadProxy.join();
+        try {
+            debugOff();
+        } catch (SQLException e) {
+            MPPDBIDELoggerUtility.debug("debugOff with error:" + e.toString());
+        }
+        closeService();
+    }
+
+    @Override
+    public Optional<Object> getResult() {
+        if (isNormalEnd()) {
+            return Optional.ofNullable(sessionVo.result);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean isNormalEnd() {
+        return serverState.isNormalStopped();
+    }
+    
+    @Override
+    public boolean isRunning() {
+        return getServerDebugState().isRunning();
+    }
+    
+    public void setFunctionVo(FunctionVo functionVo) {
+        this.functionVo = functionVo;
+    }
+    
+    public DebugState getServerDebugState() {
+        return serverState;
+    }
+    
+    public DebugState getClientDebugState() {
+        return clientState;
     }
 }

@@ -6,9 +6,10 @@ package com.huawei.mppdbide.view.handler.debug;
 import java.sql.SQLException;
 
 import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
-import com.huawei.mppdbide.debuger.service.DebugService;
+import com.huawei.mppdbide.debuger.event.IHandlerManger;
 import com.huawei.mppdbide.debuger.service.QueryService;
 import com.huawei.mppdbide.debuger.service.ServiceFactory;
+import com.huawei.mppdbide.debuger.service.WrappedDebugService;
 import com.huawei.mppdbide.debuger.vo.FunctionVo;
 
 /**
@@ -24,7 +25,7 @@ public class DebugServiceHelper {
     private static DebugServiceHelper debugServiceHelper = new DebugServiceHelper();
     private IDebugObject debugObject;
     private ServiceFactory serviceFactory;
-    private DebugService debugService;
+    private WrappedDebugService debugService;
     private FunctionVo functionVo;
     private QueryService queryService;
     private DebugServiceHelper() {
@@ -41,7 +42,8 @@ public class DebugServiceHelper {
             serviceFactory = new ServiceFactory(new DBConnectionProvider(debugObject.getDatabase()));
             queryService = serviceFactory.getQueryService();
             functionVo = queryService.queryFunction(debugObject.getName());
-            debugService = serviceFactory.getDebugService(functionVo);
+            debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));
+            debugService.addHandler(new TestEventHandler());
         }
         return true;
     }
@@ -50,7 +52,11 @@ public class DebugServiceHelper {
         return (this.debugObject != null) && (this.debugObject.getOid() == debugObject.getOid());
     }
     
-    public DebugService getDebugService() {
+    public WrappedDebugService getDebugService() {
+        return debugService;
+    }
+    
+    public IHandlerManger getHandlerManger() {
         return debugService;
     }
     
@@ -60,21 +66,7 @@ public class DebugServiceHelper {
     
     public void closeService() {
         if (this.debugObject != null) {
-            try {
-                debugService.abortDebug();
-                try {
-                    debugService.getServerThreadProxy().join();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                debugService.debugOff();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            
-            debugService.closeService();
+            debugService.end();
             queryService.closeService();
             this.debugObject = null;
         }
@@ -82,6 +74,6 @@ public class DebugServiceHelper {
 
     public boolean canStepDebugRun() {
         return debugService != null
-                && debugService.serverState.isRunning();
+                && debugService.isRunning();
     }
 }
