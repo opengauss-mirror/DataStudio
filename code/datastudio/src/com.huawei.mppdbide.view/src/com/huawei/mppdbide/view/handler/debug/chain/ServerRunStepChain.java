@@ -57,9 +57,7 @@ public class ServerRunStepChain extends IMsgChain {
     private int getCurLine(int breakPointLine) {
         SourceCodeService codeService = serviceHelper.getCodeService();
         try {
-            return codeService.getBeginTotalAndBaseDiff()
-                    + breakPointLine
-                    - SourceCodeService.CODE_BASE_OFFSET;
+            return codeService.codeLine2ShowLine(breakPointLine);
         } catch (DebugPositionNotFoundException dbgExp) {
             MPPDBIDELoggerUtility.error("receive invalid position:" + dbgExp.toString());
         }

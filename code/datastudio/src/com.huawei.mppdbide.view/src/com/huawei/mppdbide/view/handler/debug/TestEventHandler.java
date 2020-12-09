@@ -8,6 +8,7 @@ import com.huawei.mppdbide.debuger.service.chain.IMsgChain;
 import com.huawei.mppdbide.debuger.event.EventHander;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.handler.debug.chain.ServerBeginRunChain;
+import com.huawei.mppdbide.view.handler.debug.chain.ServerBreakPointChain;
 import com.huawei.mppdbide.view.handler.debug.chain.ServerEndRunChain;
 import com.huawei.mppdbide.view.handler.debug.chain.ServerExitChain;
 import com.huawei.mppdbide.view.handler.debug.chain.ServerRunStepChain;
@@ -34,6 +35,9 @@ public class TestEventHandler implements EventHander {
         
         IMsgChain serviceEnd = new ServerEndRunChain();
         serviceExit.setNext(serviceEnd);
+        
+        IMsgChain serveiceBreakPoint = new ServerBreakPointChain();
+        serviceEnd.setNext(serveiceBreakPoint);
     }
     @Override
     public void handleEvent(Event event) {

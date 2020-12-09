@@ -24,7 +24,8 @@ public class Event {
         ON_SQL_MSG,
         DEBUG_BEGIN,
         DEBUG_RUN,
-        DEBUG_END;
+        DEBUG_END,
+        BREAKPOINT;
     }
     private static AtomicInteger autoId = new AtomicInteger();
     private EventMessage msg;

@@ -6,12 +6,15 @@ package com.huawei.mppdbide.view.handler.debug;
 import java.sql.SQLException;
 
 import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
+import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.event.IHandlerManger;
+import com.huawei.mppdbide.debuger.event.Event.EventMessage;
 import com.huawei.mppdbide.debuger.service.QueryService;
 import com.huawei.mppdbide.debuger.service.ServiceFactory;
 import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.service.WrappedDebugService;
 import com.huawei.mppdbide.debuger.vo.FunctionVo;
+import com.huawei.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
 
 /**
  * Title: class
@@ -75,6 +78,12 @@ public class DebugServiceHelper {
     
     public SourceCodeService getCodeService() {
         return codeService;
+    }
+    
+    public void notifyBreakPointChange(BreakpointAnnotation annotation) {
+        if (canStepDebugRun()) {
+            debugService.notifyAllHandler(new Event(EventMessage.BREAKPOINT, annotation));
+        }
     }
     
     public void closeService() {

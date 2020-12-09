@@ -36,6 +36,18 @@ public class SourceCodeService implements IService {
     public void setTotalCode(String code) {
         this.totalCodeDesc = new CodeDescription(code);
     }
+    
+    public int showLine2CodeLine(int showLine) throws DebugPositionNotFoundException {
+        return showLine - getBeginTotalAndBaseDiff() + CODE_BASE_OFFSET;
+    }
+    
+    public int codeLine2ShowLine(int codeLine) throws DebugPositionNotFoundException {
+        return codeLine + getBeginTotalAndBaseDiff() - CODE_BASE_OFFSET;
+    }
+    
+    public int getBeginDebugCodeLine() throws DebugPositionNotFoundException {
+        return getFirstValidDebugPos() + getBeginTotalAndBaseDiff();
+    }
 
     public int getFirstValidDebugPos() throws DebugPositionNotFoundException {
         // BEGIN line is not a valid debug pos, so add 1

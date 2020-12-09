@@ -28,7 +28,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
     private static final AnnotationHelper.AnnotationType annotationType = AnnotationType.BREAKPOINT;
     private static final RGB BREAKPOINT_RGB = new RGB(188, 188, 222);
     private int breakpointId;
-    private boolean isDisabled;
+    private boolean enable;
 
     /**
      * Instantiates a new breakpoint annotation.
@@ -61,8 +61,8 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
      */
     @Override
     public Optional<Image> getImage() {
-        String imgPath = isDisabled ? IiconPath.ICO_BREAKPOINT_DISABLED :
-                IiconPath.ICO_BREAKPOINT_ENABLED;
+        String imgPath = enable ? IiconPath.ICO_BREAKPOINT_ENABLED :
+                IiconPath.ICO_BREAKPOINT_DISABLED;
         return Optional.ofNullable(loadImage(imgPath));
     }
     
@@ -116,8 +116,8 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
      *
      * @param isDisabld the new disabled
      */
-    public void setDisabled(boolean isDisabld) {
-        this.isDisabled = isDisabld;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     /**
@@ -125,7 +125,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
      *
      * @param isDisabld the new disabled
      */
-    public boolean getDisabled() {
-        return this.isDisabled;
+    public boolean getEnable() {
+        return this.enable;
     }
 }

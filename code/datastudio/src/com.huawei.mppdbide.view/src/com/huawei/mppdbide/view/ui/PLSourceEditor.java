@@ -115,6 +115,7 @@ import com.huawei.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationTyp
 import com.huawei.mppdbide.view.handler.ExecuteEditorItem;
 import com.huawei.mppdbide.view.handler.HandlerUtilities;
 import com.huawei.mppdbide.view.handler.debug.DebugHandlerUtils;
+import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 import com.huawei.mppdbide.view.prefernces.PreferenceWrapper;
 import com.huawei.mppdbide.view.terminal.executioncontext.FuncProcEditorTerminalExecutionContext;
 import com.huawei.mppdbide.view.ui.autosave.AbstractAutoSaveObject;
@@ -1141,7 +1142,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 BreakpointAnnotation breakpointAnnotation = (BreakpointAnnotation) annotation.get();
                 fAnnotationModel.removeAnnotation(breakpointAnnotation);
                 try {
-                    createBreakpoint(line, breakpointAnnotation.getDisabled());
+                    createBreakpoint(line, !breakpointAnnotation.getEnable());
                 } catch (BadLocationException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -1152,14 +1153,17 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     
     private void createBreakpoint(int line, boolean isEnable) throws BadLocationException {
         BreakpointAnnotation annotation = new BreakpointAnnotation("[" + (line + 1), line);
-        annotation.setDisabled(!isEnable);
+        annotation.setEnable(isEnable);
         fAnnotationModel.addAnnotation(annotation,
                 new Position(sourceEditor.getDocument().getLineOffset(line))
                 );
+        DebugServiceHelper.getInstance().notifyBreakPointChange(annotation);
     }
     
     private void deleteBreakpoint(int line, BreakpointAnnotation annotation) {
         fAnnotationModel.removeAnnotation(annotation);
+        annotation.setEnable(false);
+        DebugServiceHelper.getInstance().notifyBreakPointChange(annotation);
     }
     
     public void remoteDebugPosition() {

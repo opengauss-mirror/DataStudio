@@ -56,8 +56,7 @@ public class ServerBeginRunChain extends IMsgChain {
     private int getCurLine() {
         SourceCodeService codeService = serviceHelper.getCodeService();
         try {
-            int beginDiff = codeService.getBeginTotalAndBaseDiff();
-            return beginDiff + codeService.getFirstValidDebugPos();
+            return codeService.getBeginDebugCodeLine();
         } catch (DebugPositionNotFoundException debugExp) {
             MPPDBIDELoggerUtility.error("receive invalid position:" + debugExp.toString());
         }

@@ -18,6 +18,7 @@ Export-Package: com.huawei.mppdbide.common,
  com.huawei.mppdbide.debuger.event,
  com.huawei.mppdbide.debuger.exception,
  com.huawei.mppdbide.debuger.service,
+ com.huawei.mppdbide.debuger.service.chain,
  com.huawei.mppdbide.debuger.thread,
  com.huawei.mppdbide.debuger.vo
 Bundle-ClassPath: .

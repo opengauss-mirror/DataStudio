@@ -226,6 +226,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     public boolean disposeBreakpoint(DebugConstants.DebugOpt debugOpt, PositionVo positionVo) throws SQLException {
+        if (positionVo.func == null || positionVo.func.intValue() == 0) {
+            positionVo.func = new Long(functionVo.oid);
+        }
         try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
                 debugOpt,
                 new Object[] {sessionVo.clientPort, positionVo.func, positionVo.linenumber}).executeQuery()) {
