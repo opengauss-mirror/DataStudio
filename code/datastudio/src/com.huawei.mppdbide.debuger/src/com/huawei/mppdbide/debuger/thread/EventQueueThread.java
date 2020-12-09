@@ -5,8 +5,11 @@ package com.huawei.mppdbide.debuger.thread;
 
 import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.event.EventHander;
+import com.huawei.mppdbide.debuger.event.IHandlerManger;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -20,14 +23,12 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @version [DataStudio 1.0.0, 2020/11/20]
  * @since 2020/11/20
  */
-public class EventQueueThread extends Thread {
+public class EventQueueThread extends Thread implements IHandlerManger {
+    private static final int DEFAULT_EVENT_HANDLES = 3;
     private static final int DEFAULT_EVENT_SLEEP = 10;
     private LinkedBlockingQueue<Event> queue = new LinkedBlockingQueue<>();
-    private EventHander eventHander;
+    private List<EventHander> eventHandlers = new ArrayList<EventHander>(DEFAULT_EVENT_HANDLES);
 
-    public void setEventHandler(EventHander eventHandler) {
-        this.eventHander = eventHandler;
-    }
     @Override
     public void run() {
         while (true) {
@@ -37,9 +38,7 @@ public class EventQueueThread extends Thread {
                     break;
                 }
                 Thread.sleep(DEFAULT_EVENT_SLEEP);
-                if (eventHander != null) {
-                    eventHander.handleEvent(event);
-                }
+                notifyAllHandler(event);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -53,5 +52,29 @@ public class EventQueueThread extends Thread {
 
     public void stopThread() {
         add(new Event(null, null));
+    }
+
+    @Override
+    public void addHandler(EventHander handler) {
+        if (!eventHandlers.contains(handler)) {
+            eventHandlers.add(handler);
+        }
+    }
+
+    @Override
+    public void removeHandler(EventHander handler) {
+        eventHandlers.remove(handler);
+    }
+
+    @Override
+    public void removeAllHandler() {
+        eventHandlers.clear();
+    }
+
+    @Override
+    public void notifyAllHandler(Event event) {
+        for (EventHander hander: eventHandlers) {
+            hander.handleEvent(event);
+        }
     }
 }

@@ -64,7 +64,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     private DebugServerThreadProxy serverThreadProxy = new DebugServerThreadProxy();
 
     public DebugService() {
-        eventQueueThread.setEventHandler(this);
+        eventQueueThread.addHandler(this);
         eventQueueThread.start();
         msgChainHelper = new MsgChainHelper(this);
     }
@@ -356,5 +356,10 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     
     public DebugState getClientDebugState() {
         return clientState;
+    }
+
+    @Override
+    public void addServerExistListener(EventHander handler) {
+        eventQueueThread.addHandler(handler);
     }
 }

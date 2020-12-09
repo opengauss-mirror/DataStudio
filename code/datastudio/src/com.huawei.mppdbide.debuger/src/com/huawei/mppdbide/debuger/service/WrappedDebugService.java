@@ -41,7 +41,6 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     public WrappedDebugService(DebugService debugService) {
         this.debugService = debugService;
     }
-
     
     @Override
     public void begin(Object[] args) throws SQLException {
@@ -125,6 +124,7 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         if (!eventHandlers.contains(handler)) {
             eventHandlers.add(handler);
         }
+        addServerExistListener(handler);
     }
 
     @Override
@@ -206,5 +206,10 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     @Override
     public boolean isRunning() {
         return debugService.isRunning();
+    }
+
+    @Override
+    public void addServerExistListener(EventHander handler) {
+        debugService.addServerExistListener(handler);
     }
 }

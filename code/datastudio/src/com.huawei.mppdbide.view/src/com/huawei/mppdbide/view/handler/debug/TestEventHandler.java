@@ -31,6 +31,15 @@ public class TestEventHandler implements EventHander {
     @Override
     public void handleEvent(Event event) {
         MPPDBIDELoggerUtility.error("Event:" + event);
+        if (event.getMsg() == EventMessage.ON_EXIT) {
+            if (event.hasException()) {
+                MPPDBIDELoggerUtility.error("debug exit with exception:" + event.getException().getMessage());
+            } else {
+                MPPDBIDELoggerUtility.info("debug already exit: result:" + event.getAddition());
+            }
+            return;
+        }
+
         DebugAddtionMsg msg = (DebugAddtionMsg) event.getAddition().get();
         if (event.getMsg() == EventMessage.DEBUG_RUN) {
             if (msg.getState() == State.END && preEventState.get(event.getId()) != State.HAS_ERROR) {

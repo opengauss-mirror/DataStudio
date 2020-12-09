@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.huawei.mppdbide.debuger.debug.DebugConstants.DebugOpt;
+import com.huawei.mppdbide.debuger.event.EventHander;
 import com.huawei.mppdbide.debuger.exception.DebugExitException;
 import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.debuger.vo.StackVo;
@@ -40,6 +41,8 @@ public interface IDebugService extends IService {
     List<PositionVo> getBreakPoints() throws SQLException;
     boolean setBreakPoint(PositionVo positionVo) throws SQLException;
     boolean dropBreakPoint(PositionVo positionVo) throws SQLException;
+    
+    void addServerExistListener(EventHander handler);
     
     Optional<Object> getResult();
     boolean isNormalEnd();
