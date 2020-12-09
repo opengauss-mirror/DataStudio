@@ -1101,7 +1101,6 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         @Override
         public void mouseDoubleClick(MouseEvent e) {
             int line = fAnnotationRuler.getLineOfLastMouseButtonActivity();
-            //int serverLineEquivalent = line + PLSourceEditorCore.SERVER_BREAKPOINT_LINE_OFFSET;
             /**
              * No action performed when, 1. Line number is beyond end of
              * procedure 2. Already an breakpoint operation is in progress for
@@ -1111,7 +1110,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 return;
             }
 
-            Optional<Annotation> annotation = findAnnotation(line);
+            Optional<BreakpointAnnotation> annotation = findAnnotation(line);
 
             if (!annotation.isPresent()) {
                 try {
@@ -1120,7 +1119,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                     badLocationExp.printStackTrace();
                 }
             } else {
-                deleteBreakpoint(line, (BreakpointAnnotation) annotation.get());
+                deleteBreakpoint(line, annotation.get());
             }
         }
 
@@ -1137,14 +1136,13 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 return;
             }
 
-            Optional<Annotation> annotation = findAnnotation(line);
+            Optional<BreakpointAnnotation> annotation = findAnnotation(line);
             if (annotation.isPresent()) {
-                BreakpointAnnotation breakpointAnnotation = (BreakpointAnnotation) annotation.get();
+                BreakpointAnnotation breakpointAnnotation = annotation.get();
                 fAnnotationModel.removeAnnotation(breakpointAnnotation);
                 try {
                     createBreakpoint(line, !breakpointAnnotation.getEnable());
                 } catch (BadLocationException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }
@@ -1193,20 +1191,17 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      * @param line the line
      * @return the annotation
      */
-    private Optional<Annotation> findAnnotation(int line) {
-        Iterator<?> annotations = fAnnotationModel.getAnnotationIterator();
-
+    private Optional<BreakpointAnnotation> findAnnotation(int line) {
+        Iterator<Annotation> annotations = fAnnotationModel.getAnnotationIterator();
         boolean annotationsHasNext = annotations.hasNext();
         Annotation annotation = null;
         while (annotationsHasNext) {
-            annotation = (Annotation) annotations.next();
+            annotation = annotations.next();
             if (annotation instanceof BreakpointAnnotation && line == ((BreakpointAnnotation) annotation).getLine()) {
-                return Optional.of(annotation);
+                return Optional.of((BreakpointAnnotation)annotation);
             }
-
             annotationsHasNext = annotations.hasNext();
         }
-
         return Optional.empty();
     }
 
@@ -1509,7 +1504,6 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      * @param endsAfter the ends after
      */
     public void removeFunctErrorsInSelectedRange(int off, int length, boolean startsBefore, boolean endsAfter) {
-        @SuppressWarnings("unchecked")
         Iterator<Annotation> annotationIterator = fAnnotationModel.getAnnotationIterator(off, length, startsBefore,
                 endsAfter);
         Annotation anno = null;

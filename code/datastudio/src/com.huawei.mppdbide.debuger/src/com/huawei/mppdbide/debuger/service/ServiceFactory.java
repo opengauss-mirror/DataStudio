@@ -39,7 +39,10 @@ public class ServiceFactory {
         return new SourceCodeService();
     }
 
-    private static DebugService createDebugService(FunctionVo functionVo, IConnection serverConn, IConnection clientConn) {
+    private static DebugService createDebugService(
+            FunctionVo functionVo,
+            IConnection serverConn,
+            IConnection clientConn) {
         DebugService debugService = new DebugService();
         debugService.setFunctionVo(functionVo);
         debugService.setServerConn(serverConn);

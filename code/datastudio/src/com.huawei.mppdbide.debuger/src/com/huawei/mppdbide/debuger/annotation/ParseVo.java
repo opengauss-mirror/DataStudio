@@ -63,6 +63,7 @@ public class ParseVo {
      * @param rs database query one row
      * @param clazz input clz
      * @return List<T> new instance by ResultSet
+     * @throws SQLException execute with ResultSet error
      */
     public static <T> List<T> parseList(ResultSet rs, Class<T> clazz) throws SQLException {
         Map<String, Field> name2Field = parseDumpFields(clazz);

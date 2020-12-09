@@ -98,7 +98,6 @@ public class DebugHandlerUtils {
                         + MPPDBIDEConstants.LINE_NUMBER_OFFSET;
             }
         } catch (BadLocationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return -1;

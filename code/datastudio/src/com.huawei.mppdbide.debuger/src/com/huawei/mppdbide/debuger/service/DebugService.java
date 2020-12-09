@@ -28,19 +28,27 @@ import java.util.*;
 /**
  * Title: the DebugService class
  * <p>
- * Description: this is module use to debug openGauss database's pl/sql function. you can use by this step:
+ * Description: this is module use to debug openGauss database's pl/sql function. 
+ * you can use by this step:
  * 1. create and DebugService by new DebugService()
- * 2. set DebugService.functionVo which come from QueryService.queryFunction by functionName
- * 3. set DebugService.clientConn and DebugService.serverConn, this is IConnection instance, your can create ConnectionAdapter objects
- * 4. set DebugService.clinetConn and DebugService.serverConn's NoticeListener, which is DebugService instance self
+ * 2. set DebugService.functionVo which come from QueryService.queryFunction
+      * by functionName
+ * 3. set DebugService.clientConn and DebugService.serverConn,
+      * this is IConnection instance, your can create ConnectionAdapter objects
+ * 4. set DebugService.clinetConn and DebugService.serverConn's NoticeListener,
+     * which is DebugService instance self
  * 5. call DebugService.prepareDebug
- * 6. call DebugService.startDebug and receive return value for close back server thread in end
+ * 6. call DebugService.startDebug and receive return value for close back server
+     * thread in end
  * 7. call DebugService.attachDebug
  * 8. then you can use stepOver/StepInto/continueExec to control debug process
  * 9. you can use getVariables and getStacks get variables and stacks info
- * 10. you can use getBreakPoints/setBreakpoint/dropBreakpoint function to manager breakpoints
- * 11. when debug over, call DebugService.abortDebug, if forget this operation, threadleak will occur
- * 12. call DebugService.debugOff, if forget this operation, openGauss Database will exit!!
+ * 10. you can use getBreakPoints/setBreakpoint/dropBreakpoint function to manager
+     * breakpoints
+ * 11. when debug over, call DebugService.abortDebug, if forget this operation,
+     * threadleak will occur
+ * 12. call DebugService.debugOff, if forget this operation, openGauss Database
+     * will exit!!
  * 13. call DebugService.closeConn
  * sample use you can see DebugTest.java
  * <p>
@@ -51,7 +59,7 @@ import java.util.*;
  * @since 2020/11/18
  */
 public class DebugService implements NoticeListener, EventHander, IDebugService {
-    private static final int DEFAULT_WAIT_LOCK_TIME = 2000; //ms
+    private static final int DEFAULT_WAIT_LOCK_TIME = 2000; // ms
     private IConnection serverConn;
     private IConnection clientConn;
     private FunctionVo functionVo;
@@ -70,14 +78,14 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     public void prepareDebug() throws SQLException {
-         serverConn.getDebugOptPrepareStatement(
+        serverConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.START_SESSION,
                 new Object[]{functionVo.oid}).execute();
     }
 
     public DebugServerThreadProxy startDebug(Object[] args) {
         DebugServerRunable debugServerRunable = new DebugServerRunable(
-               this,
+                this,
                 args,
                 eventQueueThread);
         serverThreadProxy.setDebugServerRunable(debugServerRunable);
@@ -172,7 +180,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     @Override
-    public Optional<PositionVo> getPositionVo(DebugConstants.DebugOpt debugOpt) throws SQLException, DebugExitException {
+    public Optional<PositionVo> getPositionVo(
+            DebugConstants.DebugOpt debugOpt
+            ) throws SQLException, DebugExitException {
         clientState.running();
         try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
                 debugOpt,
@@ -293,7 +303,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         sessionVo.serverPort = serverPort;
         serverState.running();
         synchronized (waitLock) {
-            waitLock.notify();
+            waitLock.notifyAll();
         } 
     }
     

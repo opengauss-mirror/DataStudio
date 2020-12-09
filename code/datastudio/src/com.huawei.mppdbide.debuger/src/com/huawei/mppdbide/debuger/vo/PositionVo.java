@@ -19,6 +19,8 @@ import java.util.Locale;
  * @since 2020/11/20
  */
 public class PositionVo {
+    public static final String FORMAT = "%8s %20s";
+
     @DumpFiled
     public Long func;
 
@@ -31,13 +33,13 @@ public class PositionVo {
     public PositionVo() {
         this(null, null, null);
     }
+
     public PositionVo(Long func, Integer linenumber, String targetname) {
         this.func = func;
         this.linenumber = linenumber;
         this.targetname = targetname;
     }
 
-    public static final String FORMAT = "%8s %20s";
     public static String title() {
         return String.format(Locale.ENGLISH, FORMAT, "linenum", "funcoid");
     }

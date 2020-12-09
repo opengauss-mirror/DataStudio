@@ -20,6 +20,7 @@ public class DebugExitException extends Exception {
      */
     private static final long serialVersionUID = 6693123333489198245L;
     public static final String DEBUG_EXIT = "debug_exit";
+
     public DebugExitException() {
         super(DEBUG_EXIT);
     }

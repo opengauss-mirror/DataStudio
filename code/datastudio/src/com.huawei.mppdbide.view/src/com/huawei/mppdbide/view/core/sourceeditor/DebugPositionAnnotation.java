@@ -25,7 +25,7 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * @since 17 May, 2019
  */
 public class DebugPositionAnnotation extends AnnotationWithLineNumber {
-    private static final AnnotationType annotationType = AnnotationType.DEBUG_POSITION;
+    private static final AnnotationType ANNOTATION_TYPE = AnnotationType.DEBUG_POSITION;
     private static final RGB DEBUGPOSITION_RGB = new RGB(255, 153, 51);
     /**
      * Instantiates a new debug position annotation.
@@ -33,7 +33,7 @@ public class DebugPositionAnnotation extends AnnotationWithLineNumber {
      * @param line the line
      */
     public DebugPositionAnnotation(int line) {
-        super(annotationType.getStrategy(), false, "[Line : " + line, line);
+        super(ANNOTATION_TYPE.getStrategy(), false, "[Line : " + line, line);
     }
 
     /**
@@ -42,7 +42,7 @@ public class DebugPositionAnnotation extends AnnotationWithLineNumber {
      * @return the layer
      */
     public static int getLayer() {
-        return annotationType.getLayer();
+        return ANNOTATION_TYPE.getLayer();
     }
 
     /**
@@ -71,7 +71,7 @@ public class DebugPositionAnnotation extends AnnotationWithLineNumber {
      * @return the strategyid
      */
     public static String getStrategyid() {
-        return annotationType.getStrategy();
+        return ANNOTATION_TYPE.getStrategy();
     }
 
     /**
@@ -80,11 +80,11 @@ public class DebugPositionAnnotation extends AnnotationWithLineNumber {
      * @return the typelabel
      */
     public static String getTypelabel() {
-        return annotationType.getTypeLabel();
+        return ANNOTATION_TYPE.getTypeLabel();
     }
 
     @Override
     public AnnotationType getAnnotationType() {
-        return annotationType;
+        return ANNOTATION_TYPE;
     }
 }

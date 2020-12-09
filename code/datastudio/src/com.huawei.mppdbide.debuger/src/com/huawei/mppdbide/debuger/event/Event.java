@@ -61,7 +61,10 @@ public class Event {
     }
     
     public String getStringAddition() {
-        return (String) this.addition;
+        if (this.addition instanceof String) {
+            return (String) this.addition;
+        }
+        return addition.toString();
     }
 
     public boolean hasException() {

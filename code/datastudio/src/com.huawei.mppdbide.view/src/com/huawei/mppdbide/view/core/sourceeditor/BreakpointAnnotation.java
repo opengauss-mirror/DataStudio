@@ -25,7 +25,7 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * @since 17 May, 2019
  */
 public class BreakpointAnnotation extends AnnotationWithLineNumber {
-    private static final AnnotationHelper.AnnotationType annotationType = AnnotationType.BREAKPOINT;
+    private static final AnnotationHelper.AnnotationType ANNOTATION_TYPE = AnnotationType.BREAKPOINT;
     private static final RGB BREAKPOINT_RGB = new RGB(188, 188, 222);
     private int breakpointId;
     private boolean enable;
@@ -37,12 +37,12 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
      * @param line the line
      */
     public BreakpointAnnotation(String info, int line) {
-        super(annotationType.getStrategy(), false, info, line);
+        super(ANNOTATION_TYPE.getStrategy(), false, info, line);
     }
     
     @Override
     public AnnotationHelper.AnnotationType getAnnotationType() {
-        return annotationType;
+        return ANNOTATION_TYPE;
     }
 
     /**
@@ -51,7 +51,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
      * @return the layer
      */
     public static int getLayer() {
-        return annotationType.getLayer();
+        return ANNOTATION_TYPE.getLayer();
     }
 
     /**
@@ -81,7 +81,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
      * @return the strategyid
      */
     public static String getStrategyid() {
-        return annotationType.getStrategy();
+        return ANNOTATION_TYPE.getStrategy();
     }
 
     /**
@@ -108,7 +108,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
      * @return the typelabel
      */
     public static String getTypelabel() {
-        return annotationType.getTypeLabel();
+        return ANNOTATION_TYPE.getTypeLabel();
     }
 
     /**
@@ -124,6 +124,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
      * Sets the disabled.
      *
      * @param isDisabld the new disabled
+     * @return boolean true is enable
      */
     public boolean getEnable() {
         return this.enable;

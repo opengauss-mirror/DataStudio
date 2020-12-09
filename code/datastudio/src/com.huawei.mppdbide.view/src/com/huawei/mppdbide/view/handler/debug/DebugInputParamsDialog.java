@@ -21,7 +21,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
 public class DebugInputParamsDialog extends ParameterInputDialog {
 
     /**
-     * @param parentShell
+     * descript: create input param dialog
+     * @param parentShell shell param
      */
     public DebugInputParamsDialog(Shell parentShell) {
         super(parentShell);

@@ -17,7 +17,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * @since 2020/11/20
  */
 public class DebugServerThreadProxy {
-    private static final int DEFAULT_WAIT_LOCK_TIME = 2000; //ms
+    private static final int DEFAULT_WAIT_LOCK_TIME = 2000; // ms
     private Thread proxyThread;
     private DebugServerRunable debugServerRunable;
 

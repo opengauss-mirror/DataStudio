@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+ */
 package com.huawei.mppdbide.common;
 
 import org.postgresql.core.BaseStatement;
@@ -10,12 +13,19 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 
 /**
- * author: z00588921
- * date: 2020/9/14
- * descript:
+ * 
+ * Title: GaussManager for use
+ * 
+ * Description: GaussManager to add default listener to PreparedStatement
+ * 
+ * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
+ *
+ * @author z00589921
+ * @version [DataStudio for openGauss 1.0.0, 19 Sep, 2019]
+ * @since 19 Sep, 2019
  */
 public class GaussManager {
-    public static final GaussManager instance = new GaussManager();
+    public static final GaussManager INSTANCE = new GaussManager();
     private GaussManager() {}
 
     public boolean addNoticeListener(PreparedStatement ps) {

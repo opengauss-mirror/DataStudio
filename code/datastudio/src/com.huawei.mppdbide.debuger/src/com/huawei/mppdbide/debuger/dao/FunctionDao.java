@@ -22,8 +22,10 @@ import java.util.Locale;
  */
 public class FunctionDao {
     public String getSql(String proname) {
-        String sql = "select oid, proname, proretset, prorettype, pronargs, pronargdefaults, proargtypes, proallargtypes," +
-                "proargmodes, proargnames, proargdefaults, prodefaultargpos, prosrc from pg_proc where proname = ";
+        String sql = "select oid, proname, proretset, prorettype, "
+                    + "pronargs, pronargdefaults, proargtypes, proallargtypes,"
+                    + "proargmodes, proargnames, proargdefaults, "
+                    + "prodefaultargpos, prosrc from pg_proc where proname = ";
         return String.format(Locale.ENGLISH, "%s \'%s\'", sql, proname);
     }
 

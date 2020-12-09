@@ -23,7 +23,9 @@ import org.postgresql.core.NoticeListener;
  */
 public interface IConnection {
     PreparedStatement getStatement(String sql) throws SQLException;
-    PreparedStatement getDebugOptPrepareStatement(DebugConstants.DebugOpt debugOpt, Object[] params) throws SQLException;
+    PreparedStatement getDebugOptPrepareStatement(
+            DebugConstants.DebugOpt debugOpt,
+            Object[] params) throws SQLException;
     void setNoticeListener(NoticeListener listener);
     void close() throws SQLException;
 }

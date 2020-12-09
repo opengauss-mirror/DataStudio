@@ -81,7 +81,7 @@ public class StartDebugHandler {
      *
      * @param debugObject the debug object
      */
-    public void executeSQLObjWindow(IDebugObject debugObject, boolean isCurrentTerminal) {
+    public void executeSQLObjWindow(IDebugObject debugObject) {
         DebugInputParamsDialog debugInputDlg = new DebugInputParamsDialog(
                 Display.getDefault().getActiveShell());
         debugInputDlg.setSyntax(getSqlSyntax(debugObject));
@@ -121,8 +121,8 @@ public class StartDebugHandler {
     
     private Object[] getDebugParams(List<DefaultParameter> serverParams) throws DatabaseOperationException {
         List<DefaultParameter> filterInParams = serverParams.stream().filter(
-                p -> (PARAMETERTYPE.IN.equals(p.getDefaultParameterMode())
-                || PARAMETERTYPE.INOUT.equals(p.getDefaultParameterMode()))
+                param -> (PARAMETERTYPE.IN.equals(param.getDefaultParameterMode())
+                || PARAMETERTYPE.INOUT.equals(param.getDefaultParameterMode()))
                 ).collect(Collectors.toList());
         Object[] params = new Object[filterInParams.size()];
         for (int i = 0; i < params.length; i ++) {

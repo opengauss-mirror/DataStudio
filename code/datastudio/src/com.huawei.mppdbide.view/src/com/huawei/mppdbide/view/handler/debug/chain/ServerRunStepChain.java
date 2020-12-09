@@ -38,18 +38,21 @@ public class ServerRunStepChain extends IMsgChain {
 
     @Override
     protected void disposeMsg(Event event) {
-        DebugAddtionMsg msg = (DebugAddtionMsg) event.getAddition().get();
-        if (msg.getState() == State.END && !event.hasException()) {
-            try {
-                List<VariableVo> variableVos = serviceHelper.getDebugService().getVariables();
-                MPPDBIDELoggerUtility.debug(VariableVo.title());
-                for (VariableVo vo: variableVos) {
-                    MPPDBIDELoggerUtility.debug(vo.formatSelf());
+        Object additionObj = event.getAddition().get();
+        if (additionObj instanceof DebugAddtionMsg) {
+            DebugAddtionMsg msg = (DebugAddtionMsg) additionObj;
+            if (msg.getState() == State.END && !event.hasException()) {
+                try {
+                    List<VariableVo> variableVos = serviceHelper.getDebugService().getVariables();
+                    MPPDBIDELoggerUtility.debug(VariableVo.title());
+                    for (VariableVo vo: variableVos) {
+                        MPPDBIDELoggerUtility.debug(vo.formatSelf());
+                    }
+                    int line = msg.getPositionVo().get().linenumber;
+                    Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine(line)));
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                int line = msg.getPositionVo().get().linenumber;
-                Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine(line)));
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
     }

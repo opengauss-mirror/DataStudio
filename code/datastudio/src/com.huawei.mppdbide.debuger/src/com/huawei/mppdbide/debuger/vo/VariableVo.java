@@ -19,6 +19,9 @@ import java.util.Locale;
  * @since 2020/11/19
  */
 public class VariableVo {
+    // name linenumber value dtype isnotnull
+    public static final String FORMAT = "%40s %6s %20s %6s %7s";
+
     @DumpFiled
     public String name;
 
@@ -48,8 +51,6 @@ public class VariableVo {
         return String.format(Locale.ENGLISH, "VariableVo(name %s : value: %s)", name, value);
     }
 
-    // name linenumber value dtype isnotnull
-    public static final String FORMAT = "%40s %6s %20s %6s %7s";
     public static String title() {
         return String.format(Locale.ENGLISH, FORMAT, "name", "line", "value", "type", "isNull");
     }

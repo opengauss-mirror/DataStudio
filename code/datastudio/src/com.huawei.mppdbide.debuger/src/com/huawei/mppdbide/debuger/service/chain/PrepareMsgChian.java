@@ -1,15 +1,24 @@
-/**
- * 
+/*
+ * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
 package com.huawei.mppdbide.debuger.service.chain;
 
 import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.event.Event.EventMessage;
 import com.huawei.mppdbide.debuger.service.DebugService;
+import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 /**
- * @author z00588921
+ * 
+ * Title: PrepareMsgChian
+ * 
+ * Description: PrepareMsgChian to instance IMsgChain and deal with ON_SQL_MSG
+ * 
+ * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
+ * @author z00589921
+ * @version [DataStudio for openGauss 1.0.0, 19 Sep, 2019]
+ * @since 19 Sep, 2019
  */
 public class PrepareMsgChian extends IMsgChain {
     public static final String PREPARE_SUCCESS = "Pldebugger is started successfully, you are";
@@ -35,6 +44,8 @@ public class PrepareMsgChian extends IMsgChain {
             debugService.getServerDebugState().prepared();
         } else if (msg.contains("CLIENT")) {
             debugService.getClientDebugState().prepared();
+        } else {
+            MPPDBIDELoggerUtility.debug("can\'t run here!");
         }
     }
 

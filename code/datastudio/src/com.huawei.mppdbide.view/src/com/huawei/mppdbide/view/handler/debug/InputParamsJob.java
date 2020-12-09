@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
 package com.huawei.mppdbide.view.handler.debug;
@@ -22,8 +22,11 @@ public class InputParamsJob extends UIWorkerJob {
 
     private StartDebugHandler debugHandler;
     /**
-     * @param name
-     * @param family
+     * descript: InputParam back thread Job
+     * 
+     * @param name the job name
+     * @param family the input family param
+     * @param debugHandler start debug handler
      */
     public InputParamsJob(String name, Object family, StartDebugHandler debugHandler) {
         super(name, family);
@@ -37,7 +40,7 @@ public class InputParamsJob extends UIWorkerJob {
     
     @Override
     public void onSuccessUIAction(Object object) {
-        debugHandler.executeSQLObjWindow(debugHandler.getSourceEditor().getDebugObject(), true);
+        debugHandler.executeSQLObjWindow(debugHandler.getSourceEditor().getDebugObject());
     }
 
     @Override

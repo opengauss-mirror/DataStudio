@@ -1,13 +1,21 @@
-/**
- * 
+/*
+ * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
 package com.huawei.mppdbide.debuger.service.chain;
 
 import com.huawei.mppdbide.debuger.event.Event;
 
 /**
- * @author z00588921
+ * 
+ * Title: IMsgChain for use
+ * 
+ * Description: IMsgChain is base chain of Responsibility
+ * 
+ * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
+ * @author z00589921
+ * @version [DataStudio for openGauss 1.0.0, 19 Sep, 2019]
+ * @since 19 Sep, 2019
  */
 public abstract class IMsgChain {
     protected IMsgChain msgChain = null;

@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
 package com.huawei.mppdbide.common;
 
@@ -15,8 +15,16 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
 import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 
 /**
- * @author z00588921
+ * 
+ * Title: DBConnectionAdapter for use
+ * 
+ * Description: IConnection instance
+ * 
+ * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
+ * @author z00589921
+ * @version [DataStudio for openGauss 1.0.0, 19 Sep, 2019]
+ * @since 19 Sep, 2019
  */
 public class DBConnectionAdapter implements IConnection {
     private DBConnection conn;
@@ -25,12 +33,18 @@ public class DBConnectionAdapter implements IConnection {
         this.conn = conn;
     }
 
+    /**
+     * get PreparedStatement from connection
+     *
+     * @param sql sql to execute
+     * @return PreparedStatement preparedstatement instance
+     */
     @Override
     public PreparedStatement getStatement(String sql) throws SQLException {
         try {
             PreparedStatement ps =  conn.getPrepareStmt(sql);
             if (this.listener != null) {
-                GaussManager.instance.addNoticeListener(ps, this.listener);
+                GaussManager.INSTANCE.addNoticeListener(ps, this.listener);
             }
             return ps;
         } catch (DatabaseCriticalException | DatabaseOperationException dbException) {
@@ -38,6 +52,13 @@ public class DBConnectionAdapter implements IConnection {
         }
     }
 
+    /**
+     * get templated of DebugOpt PreparedStatement from connection
+     *
+     * @param debugOpt enum opt
+     * @param params the param to set to PreparedStatement
+     * @return PreparedStatement preparedstatement instance
+     */
     @Override
     public PreparedStatement getDebugOptPrepareStatement(DebugOpt debugOpt, Object[] params) throws SQLException {
         String sql = DebugConstants.getSql(debugOpt);
@@ -50,7 +71,7 @@ public class DBConnectionAdapter implements IConnection {
 
     @Override
     public void setNoticeListener(NoticeListener listener) {
-       this.listener = listener; 
+        this.listener = listener; 
     }
 
     @Override

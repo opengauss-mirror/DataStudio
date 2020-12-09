@@ -50,10 +50,10 @@ public class DebugConstants {
 
     public static String getSql(String opt, int paramNum) {
         // generate number of ?
-        String paramReplace = Stream.iterate(0, n -> n)
+        String paramReplace = Stream.iterate(0, number -> number)
                 .limit(paramNum)
-                .map(a-> "?")
-                .reduce((a, b) -> a + "," +  b)
+                .map(paramArg-> "?")
+                .reduce((paramArgsA, paramArgsB) -> paramArgsA + "," +  paramArgsB)
                 .orElse("");
         return String.format(Locale.ENGLISH, "select * from %s(%s)",
                 opt,

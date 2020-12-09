@@ -25,11 +25,10 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * @since 17 May, 2019
  */
 public class ErrorAnnotation extends AnnotationWithLineNumber {
-    private static final AnnotationType annotationType = AnnotationType.ERROR; 
+    private static final AnnotationType ANNOTATION_TYPE = AnnotationType.ERROR; 
     /**
      * The Constant STRATEGY_ID.
      */
-    //ggpublic static final String STRATEGY_ID = "error.type";
 
     private static final Object LOCK = new Object();
     private static volatile RGB errorRGB;
@@ -40,7 +39,7 @@ public class ErrorAnnotation extends AnnotationWithLineNumber {
      * @param info the info
      */
     public ErrorAnnotation(int line, String info) {
-        super(annotationType.getStrategy(), false, info, line);
+        super(ANNOTATION_TYPE.getStrategy(), false, info, line);
     }
 
     /**
@@ -49,7 +48,7 @@ public class ErrorAnnotation extends AnnotationWithLineNumber {
      * @return the layer
      */
     public static int getLayer() {
-        return annotationType.getLayer();
+        return ANNOTATION_TYPE.getLayer();
     }
 
     /**
@@ -70,7 +69,7 @@ public class ErrorAnnotation extends AnnotationWithLineNumber {
         if (null == errorRGB) {
             synchronized (LOCK) {
                 if (null == errorRGB) {
-                    errorRGB = annotationType.getRGB();
+                    errorRGB = ANNOTATION_TYPE.getRGB();
                 }
             }
         }
@@ -83,7 +82,7 @@ public class ErrorAnnotation extends AnnotationWithLineNumber {
      * @return the strategyid
      */
     public static String getStrategyid() {
-        return annotationType.getStrategy();
+        return ANNOTATION_TYPE.getStrategy();
     }
 
     /**
@@ -92,12 +91,12 @@ public class ErrorAnnotation extends AnnotationWithLineNumber {
      * @return the typelabel
      */
     public static String getTypelabel() {
-        return annotationType.getTypeLabel();
+        return ANNOTATION_TYPE.getTypeLabel();
     }
 
     @Override
     public AnnotationType getAnnotationType() {
-        return annotationType;
+        return ANNOTATION_TYPE;
     }
 
 }

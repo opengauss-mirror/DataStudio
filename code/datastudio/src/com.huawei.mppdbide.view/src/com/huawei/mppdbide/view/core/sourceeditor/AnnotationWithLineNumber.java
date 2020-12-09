@@ -80,6 +80,11 @@ public abstract class AnnotationWithLineNumber extends Annotation {
         return this.getClass().isInstance(obj);
     }
     
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+    
     public static Image loadImage(String imagePath) {
         return IconUtility.getIconImage(imagePath, AnnotationWithLineNumber.class);
     }

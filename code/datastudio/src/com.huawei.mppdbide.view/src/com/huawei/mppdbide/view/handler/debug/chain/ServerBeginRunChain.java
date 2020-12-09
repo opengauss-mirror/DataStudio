@@ -38,18 +38,21 @@ public class ServerBeginRunChain extends IMsgChain {
 
     @Override
     protected void disposeMsg(Event event) {
-        DebugAddtionMsg msg = (DebugAddtionMsg) event.getAddition().get();
-        if (msg.getState() == State.END && !event.hasException()) {
-            try {
-                List<PositionVo> breakPoints = serviceHelper.getDebugService().getBreakPoints();
-                MPPDBIDELoggerUtility.info(PositionVo.title());
-                for (PositionVo vo: breakPoints) {
-                    MPPDBIDELoggerUtility.info(vo.formatSelf());
+        Object additionObj = event.getAddition().get();
+        if (additionObj instanceof DebugAddtionMsg) {
+            DebugAddtionMsg msg = (DebugAddtionMsg) additionObj;
+            if (msg.getState() == State.END && !event.hasException()) {
+                try {
+                    List<PositionVo> breakPoints = serviceHelper.getDebugService().getBreakPoints();
+                    MPPDBIDELoggerUtility.info(PositionVo.title());
+                    for (PositionVo vo: breakPoints) {
+                        MPPDBIDELoggerUtility.info(vo.formatSelf());
+                    }
+                    Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine()));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            }   
         }
     }
     

@@ -48,7 +48,9 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
             new EventRunner(this, args, EventMessage.DEBUG_BEGIN) {
                 @Override
                 protected void innertRun() throws SQLException {
-                    debugService.begin((Object[])this.args);
+                    if (this.args instanceof Object[]) {
+                        debugService.begin((Object[]) this.args);
+                    }
                 }
             }.run();
         } catch (DebugExitException e) {
@@ -74,44 +76,16 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         EventRunner runner = new EventRunner(this, debugOpt, EventMessage.DEBUG_RUN) {
             @Override
             protected void innertRun() throws SQLException, DebugExitException {
-                positionVo = debugService.getPositionVo((DebugOpt)args).orElse(null);
+                if (args instanceof DebugOpt) {
+                    positionVo = debugService.getPositionVo((DebugOpt) args).orElse(null);
+                }
             }
         };
         runner.run();
         return Optional.ofNullable(runner.getPositionVo());
     }
     
-    private static abstract class EventRunner {
-        protected WrappedDebugService service;
-        protected Object args;
-        protected PositionVo positionVo = null;
-        protected EventMessage msg;
-        public EventRunner(WrappedDebugService service, Object args, EventMessage msg) {
-            this.service = service;
-            this.args = args;
-            this.msg = msg;
-        }
-        
-        protected abstract void innertRun() throws SQLException, DebugExitException;
 
-        public PositionVo getPositionVo() {
-            return positionVo;
-        }
-
-        public void run() throws SQLException, DebugExitException {
-            Event beginEvent = new Event(msg, new DebugAddtionMsg(State.START));
-            Exception runException = null;
-            try {
-                service.notifyAllHandler(beginEvent);
-                innertRun();
-            } catch (SQLException | DebugExitException debugExp) {
-                runException = debugExp;
-                throw debugExp;
-            } finally {
-                service.notifyAllHandler(new Event(msg, new DebugAddtionMsg(State.END, positionVo), runException, beginEvent.getId()));
-            }
-        }
-    }
 
     @Override
     public void notifyAllHandler(Event event) {
@@ -168,7 +142,8 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
 
 
     @Override
-    public Optional<PositionVo> getPositionVo(DebugOpt debugOpt) throws SQLException, DebugExitException {
+    public Optional<PositionVo> getPositionVo(DebugOpt debugOpt)
+            throws SQLException, DebugExitException {
         return debugService.getPositionVo(debugOpt);
     }
 
@@ -222,5 +197,45 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     @Override
     public void addServerExistListener(EventHander handler) {
         debugService.addServerExistListener(handler);
+    }
+
+    private static abstract class EventRunner {
+        protected WrappedDebugService service;
+        protected Object args;
+        protected PositionVo positionVo = null;
+        protected EventMessage msg;
+
+        public EventRunner(WrappedDebugService service, Object args, EventMessage msg) {
+            this.service = service;
+            this.args = args;
+            this.msg = msg;
+        }
+        
+        protected abstract void innertRun() throws SQLException, DebugExitException;
+
+        public PositionVo getPositionVo() {
+            return positionVo;
+        }
+
+        public void run() throws SQLException, DebugExitException {
+            Event beginEvent = new Event(msg, new DebugAddtionMsg(State.START));
+            Exception runException = null;
+            try {
+                service.notifyAllHandler(beginEvent);
+                innertRun();
+            } catch (SQLException | DebugExitException debugExp) {
+                runException = debugExp;
+                throw debugExp;
+            } finally {
+                service.notifyAllHandler(
+                        new Event(
+                                msg,
+                                new DebugAddtionMsg(State.END, positionVo),
+                                runException,
+                                beginEvent.getId()
+                                )
+                        );
+            }
+        }
     }
 }

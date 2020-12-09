@@ -40,14 +40,21 @@ public class QueryService implements IService {
     }
 
     public Optional<SourceCodeVo> getSourceCode(Long oid) throws SQLException {
-        return getTempSourceCode(oid, DebugConstants.DebugOpt.GET_SOURCE_CODE, SourceCodeVo.class);
+        return getTempSourceCode(oid,
+                DebugConstants.DebugOpt.GET_SOURCE_CODE,
+                SourceCodeVo.class);
     }
 
     public Optional<TotalSourceCodeVo> getTotalSourceCode(Long oid) throws SQLException {
-        return getTempSourceCode(oid, DebugConstants.DebugOpt.GET_TOTAL_SOURCE_CODE, TotalSourceCodeVo.class);
+        return getTempSourceCode(oid,
+                DebugConstants.DebugOpt.GET_TOTAL_SOURCE_CODE,
+                TotalSourceCodeVo.class);
     }
 
-    private <T> Optional<T> getTempSourceCode(Long oid, DebugConstants.DebugOpt debugOpt, Class<T> clazz) throws SQLException {
+    private <T> Optional<T> getTempSourceCode(
+            Long oid,
+            DebugConstants.DebugOpt debugOpt,
+            Class<T> clazz) throws SQLException {
         try (ResultSet rs = conn.getDebugOptPrepareStatement(
                 debugOpt,
                 new Object[] {oid}).executeQuery()) {

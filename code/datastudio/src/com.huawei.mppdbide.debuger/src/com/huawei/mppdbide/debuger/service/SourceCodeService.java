@@ -7,6 +7,7 @@ import com.huawei.mppdbide.debuger.exception.DebugPositionNotFoundException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -112,7 +113,7 @@ public class SourceCodeService implements IService {
 
         private int getBeginFromCode(List<String> lines) {
             for (int i = 0; i < lines.size(); i ++) {
-                if (lines.get(i).toUpperCase().startsWith("BEGIN")) {
+                if (lines.get(i).toUpperCase(Locale.ENGLISH).startsWith("BEGIN")) {
                     return i;
                 }
             }

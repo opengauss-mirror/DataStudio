@@ -35,24 +35,27 @@ public class ServerBreakPointChain extends IMsgChain {
 
     @Override
     protected void disposeMsg(Event event) {
-        BreakpointAnnotation annotation = (BreakpointAnnotation) event.getAddition().get();
-        WrappedDebugService debugService = serviceHelper.getDebugService();
-        try {
-            int codeLine = getCurLine(annotation.getLine());
-            if (codeLine == -1) {
-                MPPDBIDELoggerUtility.warn("invalid breakpoint line:" + annotation.getLine());
-                return;
-            }
+        Object additionObj = event.getAddition().get();
+        if (additionObj instanceof BreakpointAnnotation) {
+            BreakpointAnnotation annotation = (BreakpointAnnotation) additionObj;
+            WrappedDebugService debugService = serviceHelper.getDebugService();
+            try {
+                int codeLine = getCurLine(annotation.getLine());
+                if (codeLine == -1) {
+                    MPPDBIDELoggerUtility.warn("invalid breakpoint line:" + annotation.getLine());
+                    return;
+                }
 
-            PositionVo positionVo = new PositionVo(null, codeLine, null);
-            if (annotation.getEnable()) {
-                debugService.setBreakPoint(positionVo);
-            } else {
-                debugService.dropBreakPoint(positionVo);
+                PositionVo positionVo = new PositionVo(null, codeLine, null);
+                if (annotation.getEnable()) {
+                    debugService.setBreakPoint(positionVo);
+                } else {
+                    debugService.dropBreakPoint(positionVo);
+                }
+       
+            } catch (SQLException e) {
+                MPPDBIDELoggerUtility.warn("set breakpoint failed!" + e.getMessage());
             }
-   
-        } catch (SQLException e) {
-            MPPDBIDELoggerUtility.warn("set breakpoint failed!" + e.getMessage());
         }
     }
     
