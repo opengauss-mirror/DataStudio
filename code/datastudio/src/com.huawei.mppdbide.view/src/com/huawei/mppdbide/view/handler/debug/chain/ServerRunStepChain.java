@@ -4,18 +4,21 @@
 package com.huawei.mppdbide.view.handler.debug.chain;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import org.eclipse.swt.widgets.Display;
 
 import com.huawei.mppdbide.debuger.event.DebugAddtionMsg;
 import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.event.DebugAddtionMsg.State;
 import com.huawei.mppdbide.debuger.event.Event.EventMessage;
+import com.huawei.mppdbide.debuger.exception.DebugPositionNotFoundException;
+import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.service.chain.IMsgChain;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
+import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
 
 /**
  * Title: class
@@ -28,7 +31,6 @@ import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
  */
 public class ServerRunStepChain extends IMsgChain {
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
-    private Map<Integer, State> preEventState = new HashMap<Integer, State>();
     @Override
     public boolean matchMsg(Event event) {
         return event.getMsg() == EventMessage.DEBUG_RUN;
@@ -37,23 +39,31 @@ public class ServerRunStepChain extends IMsgChain {
     @Override
     protected void disposeMsg(Event event) {
         DebugAddtionMsg msg = (DebugAddtionMsg) event.getAddition().get();
-        if (msg.getState() == State.END && preEventState.get(event.getId()) != State.HAS_ERROR) {
+        if (msg.getState() == State.END && !event.hasException()) {
             try {
                 List<VariableVo> variableVos = serviceHelper.getDebugService().getVariables();
                 MPPDBIDELoggerUtility.debug(VariableVo.title());
                 for (VariableVo vo: variableVos) {
                     MPPDBIDELoggerUtility.debug(vo.formatSelf());
                 }
+                int line = msg.getPositionVo().get().linenumber;
+                Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine(line)));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
         }
-        if (msg.getState() != State.END) {
-            preEventState.put(event.getId(), msg.getState());
-        } else {
-            preEventState.remove(event.getId());
+    }
+    
+    private int getCurLine(int breakPointLine) {
+        SourceCodeService codeService = serviceHelper.getCodeService();
+        try {
+            return codeService.getBeginTotalAndBaseDiff()
+                    + breakPointLine
+                    - SourceCodeService.CODE_BASE_OFFSET;
+        } catch (DebugPositionNotFoundException dbgExp) {
+            MPPDBIDELoggerUtility.error("receive invalid position:" + dbgExp.toString());
         }
+        return -1;
     }
 
 }

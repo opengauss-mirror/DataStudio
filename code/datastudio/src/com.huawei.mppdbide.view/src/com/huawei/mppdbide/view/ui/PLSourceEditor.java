@@ -1162,7 +1162,21 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         fAnnotationModel.removeAnnotation(annotation);
     }
     
-    private void createDebugPosition(int line) throws BadLocationException {
+    public void remoteDebugPosition() {
+        Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
+        List<Annotation> needRemoveAnnotations = new ArrayList<Annotation>(1);
+        while (annoIterator.hasNext()) {
+            Annotation annotation = annoIterator.next();
+            if (annotation instanceof DebugPositionAnnotation) {
+                needRemoveAnnotations.add(annotation);
+            }
+        }
+        for (Annotation anno: needRemoveAnnotations) {
+            fAnnotationModel.removeAnnotation(anno);
+        }
+    }
+
+    public void createDebugPosition(int line) throws BadLocationException {
         DebugPositionAnnotation annotation = new DebugPositionAnnotation(line);
         fAnnotationModel.addAnnotation(annotation,
                 new Position(sourceEditor.getDocument().getLineOffset(line))

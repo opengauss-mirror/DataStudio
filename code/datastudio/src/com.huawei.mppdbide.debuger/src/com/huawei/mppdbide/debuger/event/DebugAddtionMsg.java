@@ -23,7 +23,6 @@ import com.huawei.mppdbide.debuger.vo.PositionVo;
 public class DebugAddtionMsg {
     public static enum State {
         START,
-        HAS_ERROR,
         END;
     }
     private State state;

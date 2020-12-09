@@ -100,14 +100,15 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
 
         public void run() throws SQLException, DebugExitException {
             Event beginEvent = new Event(msg, new DebugAddtionMsg(State.START));
+            Exception runException = null;
             try {
                 service.notifyAllHandler(beginEvent);
                 innertRun();
             } catch (SQLException | DebugExitException debugExp) {
-                service.notifyAllHandler(new Event(msg, new DebugAddtionMsg(State.HAS_ERROR, positionVo), debugExp, beginEvent.getId()));
+                runException = debugExp;
                 throw debugExp;
             } finally {
-                service.notifyAllHandler(new Event(msg, new DebugAddtionMsg(State.END, positionVo), null, beginEvent.getId()));
+                service.notifyAllHandler(new Event(msg, new DebugAddtionMsg(State.END, positionVo), runException, beginEvent.getId()));
             }
         }
     }

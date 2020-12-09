@@ -57,6 +57,10 @@ public class DebugServiceHelper {
         return (this.debugObject != null) && (this.debugObject.getOid() == debugObject.getOid());
     }
     
+    public IDebugObject getDebugObject() {
+        return debugObject;
+    }
+    
     public WrappedDebugService getDebugService() {
         return debugService;
     }

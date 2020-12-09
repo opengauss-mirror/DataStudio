@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  * @since 2020/11/21
  */
 public class SourceCodeService implements IService {
+    public static final int CODE_BASE_OFFSET = 1;
     private CodeDescription baseCodeDesc;
     private CodeDescription totalCodeDesc;
 
@@ -40,7 +41,7 @@ public class SourceCodeService implements IService {
         // BEGIN line is not a valid debug pos, so add 1
         // out code line base on 0, but breakpoint base on 1, so add 1
         // next BEGIN line is default attach breakpoint, so add 1, total pos need add 3!
-        return getBeignOfBaseCode() + 3;
+        return getBeignOfBaseCode() + CODE_BASE_OFFSET;
     }
 
     public int getMaxValidDebugPos() {
@@ -54,12 +55,16 @@ public class SourceCodeService implements IService {
     public CodeDescription getTotalCodeDesc() {
         return this.totalCodeDesc;
     }
+    
+    public int getBeginTotalAndBaseDiff() throws DebugPositionNotFoundException {
+        return getBeignfTotalCode() - getBeignOfBaseCode();
+    }
 
     public int getBeignOfBaseCode() throws DebugPositionNotFoundException {
         return this.baseCodeDesc.getBeginPosition();
     }
 
-    public int getBeginOfTotalCode() throws DebugPositionNotFoundException {
+    public int getBeignfTotalCode() throws DebugPositionNotFoundException {
         return this.totalCodeDesc.getBeginPosition();
     }
 
