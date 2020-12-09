@@ -35,7 +35,7 @@ public class ServiceFactory {
                 provider.getFreeConnection().get());
     }
 
-    public SourceCodeService getCodeService(FunctionVo functionVo) {
+    public SourceCodeService getCodeService() {
         return new SourceCodeService();
     }
 

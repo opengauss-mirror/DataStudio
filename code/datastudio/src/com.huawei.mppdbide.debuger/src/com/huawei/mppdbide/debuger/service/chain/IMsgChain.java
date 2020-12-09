@@ -4,7 +4,6 @@
 package com.huawei.mppdbide.debuger.service.chain;
 
 import com.huawei.mppdbide.debuger.event.Event;
-import com.huawei.mppdbide.debuger.service.DebugService;
 
 /**
  * @author z00588921
@@ -12,14 +11,10 @@ import com.huawei.mppdbide.debuger.service.DebugService;
  */
 public abstract class IMsgChain {
     protected IMsgChain msgChain = null;
-    protected DebugService debugService;
-    public IMsgChain(DebugService debugService) {
-        this.debugService = debugService;
-    }
     public IMsgChain getNext() {
         return this.msgChain;
     }
-    void setNext(IMsgChain msgChain) {
+    public void setNext(IMsgChain msgChain) {
         this.msgChain = msgChain;
     }
 

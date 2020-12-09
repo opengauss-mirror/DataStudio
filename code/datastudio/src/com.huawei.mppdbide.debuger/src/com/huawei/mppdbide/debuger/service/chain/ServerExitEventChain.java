@@ -21,8 +21,10 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * @since 2020-12-08
  */
 public class ServerExitEventChain extends IMsgChain {
+    private DebugService debugService;
     public ServerExitEventChain(DebugService debugService) {
-        super(debugService);
+        super();
+        this.debugService = debugService;
     }
 
     @Override

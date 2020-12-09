@@ -9,6 +9,7 @@ import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
 import com.huawei.mppdbide.debuger.event.IHandlerManger;
 import com.huawei.mppdbide.debuger.service.QueryService;
 import com.huawei.mppdbide.debuger.service.ServiceFactory;
+import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.service.WrappedDebugService;
 import com.huawei.mppdbide.debuger.vo.FunctionVo;
 
@@ -28,6 +29,7 @@ public class DebugServiceHelper {
     private WrappedDebugService debugService;
     private FunctionVo functionVo;
     private QueryService queryService;
+    private SourceCodeService codeService;
     private DebugServiceHelper() {
         
     }
@@ -44,6 +46,9 @@ public class DebugServiceHelper {
             functionVo = queryService.queryFunction(debugObject.getName());
             debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));
             debugService.addHandler(new TestEventHandler());
+            codeService = serviceFactory.getCodeService();
+            codeService.setBaseCode(queryService.getSourceCode(functionVo.oid).get().getSourceCode());
+            codeService.setTotalCode(this.debugObject.getSourceCode().getCode());
         }
         return true;
     }
@@ -62,6 +67,10 @@ public class DebugServiceHelper {
     
     public QueryService getQueryService() {
         return queryService;
+    }
+    
+    public SourceCodeService getCodeService() {
+        return codeService;
     }
     
     public void closeService() {

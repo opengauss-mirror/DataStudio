@@ -146,7 +146,17 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
 
     @Override
     public void end() {
-        debugService.end();
+        try {
+            new EventRunner(this, null, EventMessage.DEBUG_END) {
+                
+                @Override
+                protected void innertRun() throws SQLException, DebugExitException {
+                    debugService.end();
+                }
+            }.run();
+        } catch (SQLException | DebugExitException sqlExp) {
+            MPPDBIDELoggerUtility.error("can\'t run here!");
+        }
     }
 
 

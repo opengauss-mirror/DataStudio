@@ -23,7 +23,8 @@ public class Event {
         ON_EXIT,
         ON_SQL_MSG,
         DEBUG_BEGIN,
-        DEBUG_RUN;
+        DEBUG_RUN,
+        DEBUG_END;
     }
     private static AtomicInteger autoId = new AtomicInteger();
     private EventMessage msg;

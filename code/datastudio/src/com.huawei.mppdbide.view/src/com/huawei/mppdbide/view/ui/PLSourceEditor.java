@@ -1115,9 +1115,8 @@ public class PLSourceEditor extends AbstractAutoSaveObject
             if (!annotation.isPresent()) {
                 try {
                     createBreakpoint(line, false);
-                } catch (BadLocationException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                } catch (BadLocationException badLocationExp) {
+                    badLocationExp.printStackTrace();
                 }
             } else {
                 deleteBreakpoint(line, (BreakpointAnnotation) annotation.get());
@@ -1152,7 +1151,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     }
     
     private void createBreakpoint(int line, boolean isEnable) throws BadLocationException {
-        BreakpointAnnotation annotation = new BreakpointAnnotation("", line);
+        BreakpointAnnotation annotation = new BreakpointAnnotation("[" + (line + 1), line);
         annotation.setDisabled(!isEnable);
         fAnnotationModel.addAnnotation(annotation,
                 new Position(sourceEditor.getDocument().getLineOffset(line))

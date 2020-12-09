@@ -13,9 +13,11 @@ import com.huawei.mppdbide.debuger.service.DebugService;
  */
 public class PrepareMsgChian extends IMsgChain {
     public static final String PREPARE_SUCCESS = "Pldebugger is started successfully, you are";
+    private DebugService debugService;
 
     public PrepareMsgChian(DebugService debugService) {
-        super(debugService);
+        super();
+        this.debugService = debugService;
     }
     @Override
     public boolean matchMsg(Event event) {
