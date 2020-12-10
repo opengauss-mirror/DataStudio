@@ -43,14 +43,14 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     }
     
     @Override
-    public void begin(Object[] args) throws SQLException {
+    public void begin(List<?> args) throws SQLException {
         try {
             new EventRunner(this, args, EventMessage.DEBUG_BEGIN) {
                 @Override
                 protected void innertRun() throws SQLException {
                     Object inputArgs = this.args;
-                    if (inputArgs instanceof Object[]) {
-                        Object[] beginParams = (Object[]) inputArgs;
+                    if (inputArgs instanceof List) {
+                        List<?> beginParams = (List<?>) inputArgs;
                         debugService.begin(beginParams);
                     }
                 }

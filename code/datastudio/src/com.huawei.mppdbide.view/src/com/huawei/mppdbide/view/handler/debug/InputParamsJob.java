@@ -35,7 +35,7 @@ public class InputParamsJob extends UIWorkerJob {
 
     @Override
     public Object doJob() throws DatabaseOperationException, DatabaseCriticalException, MPPDBIDEException, Exception {
-        return null;
+        return "";
     }
     
     @Override

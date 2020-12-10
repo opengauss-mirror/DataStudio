@@ -9,6 +9,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Title: the DebugServerRunable class
@@ -23,9 +24,9 @@ import java.sql.SQLException;
  */
 public class DebugServerRunable implements Runnable {
     private DebugService debugService;
-    private Object[] debugParams;
+    private List<?> debugParams;
     private EventQueueThread eventQueueThread;
-    public DebugServerRunable(DebugService debugService, Object[] params, EventQueueThread eventQueueThread) {
+    public DebugServerRunable(DebugService debugService, List<?> params, EventQueueThread eventQueueThread) {
         this.debugService = debugService;
         this.debugParams = params;
         this.eventQueueThread = eventQueueThread;

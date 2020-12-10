@@ -88,7 +88,7 @@ public class StartDebugHandler {
         try {
             debugInputDlg.setDebugObject(debugObject);
             debugInputDlg.defaultParameterValues();
-            Object[] debugParams = new Object[0];
+            List<?> debugParams = new ArrayList<>(1);
             ArrayList<ObjectParameter> params = debugObject.getTemplateParameters();
             if (params != null && params.size() > 0) {
                 int code = debugInputDlg.open();
@@ -119,19 +119,19 @@ public class StartDebugHandler {
 
     }
     
-    private Object[] getDebugParams(List<DefaultParameter> serverParams) throws DatabaseOperationException {
+    private List<Object> getDebugParams(List<DefaultParameter> serverParams) throws DatabaseOperationException {
         List<DefaultParameter> filterInParams = serverParams.stream().filter(
                 param -> (PARAMETERTYPE.IN.equals(param.getDefaultParameterMode())
                 || PARAMETERTYPE.INOUT.equals(param.getDefaultParameterMode()))
                 ).collect(Collectors.toList());
-        Object[] params = new Object[filterInParams.size()];
-        for (int i = 0; i < params.length; i ++) {
+        List<Object> params = new ArrayList<>(filterInParams.size());
+        for (int i = 0; i < filterInParams.size(); i ++) {
             DefaultParameter defaultParameter = filterInParams.get(i);
             if ("refcursor".equals(defaultParameter.getDefaultParameterType())) {
                 throw new DatabaseOperationException(
                         IMessagesConstants.ERR_BL_REFCUR_EXECUTION_TEMPLATE_FAILURE);
             }
-            params[i] = defaultParameter.getDefaultParameterValue();
+            params.add(defaultParameter.getDefaultParameterValue());
         }
         return params;
     }
@@ -154,6 +154,6 @@ public class StartDebugHandler {
      * @return the sql syntax
      */
     private SQLSyntax getSqlSyntax(IDebugObject debugObject) {
-        return debugObject.getDatabase() == null ? null : debugObject.getDatabase().getSqlSyntax();
+        return debugObject.getDatabase().getSqlSyntax();
     }
 }

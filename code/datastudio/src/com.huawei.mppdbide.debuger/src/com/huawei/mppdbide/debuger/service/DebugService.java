@@ -78,12 +78,13 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     public void prepareDebug() throws SQLException {
+        List<Object> inputsParams = Arrays.asList(functionVo.oid);
         serverConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.START_SESSION,
-                new Object[]{functionVo.oid}).execute();
+                inputsParams).execute();
     }
 
-    public DebugServerThreadProxy startDebug(Object[] args) {
+    public DebugServerThreadProxy startDebug(List<?> args) {
         DebugServerRunable debugServerRunable = new DebugServerRunable(
                 this,
                 args,
@@ -97,20 +98,21 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         return serverThreadProxy;
     }
 
-    public ResultSet serverDebugCallBack(Object[] args) throws SQLException {
-        String sql = DebugConstants.getSql(functionVo.proname, args.length);
+    public ResultSet serverDebugCallBack(List<?> args) throws SQLException {
+        String sql = DebugConstants.getSql(functionVo.proname, args.size());
         PreparedStatement ps = serverConn.getStatement(sql);
-        for (int i = 1 ; i < args.length + 1; i ++) {
-            ps.setObject(i, args[i - 1]);
+        for (int i = 1 ; i < args.size() + 1; i ++) {
+            ps.setObject(i, args.get(i - 1));
         }
         return ps.executeQuery();
     }
 
     public void attachDebug() throws SQLException {
         waitServerStart();
+        List<Object> inputParams = Arrays.asList(sessionVo.serverPort);
         try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.ATTACH_SESSION,
-                new Object[] {sessionVo.serverPort}
+                inputParams
                 ).executeQuery()) {
             if (rs.next()) {
                 clientState.attached();
@@ -138,16 +140,18 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public void debugOff() throws SQLException {
         serverConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.DEBUG_OFF,
-                new Object[] {}).execute();
+                new ArrayList<Object>(1)).execute();
     }
 
     public Optional<Boolean> abortDebug() throws SQLException {
         if (clientState.isStopped()) {
             return Optional.empty();
         }
+        List<Object> inputParams = Arrays.asList(sessionVo.clientPort);
         PreparedStatement ps = clientConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.ABORT_TARGET,
-                new Object[] {sessionVo.clientPort});
+                inputParams
+                );
         clientState.stop();
         clientState.stateLocked();
         try (ResultSet rs = ps.executeQuery()) {
@@ -184,9 +188,11 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
             DebugConstants.DebugOpt debugOpt
             ) throws SQLException, DebugExitException {
         clientState.running();
+        List<Object> inputParams = Arrays.asList(sessionVo.clientPort);
         try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
                 debugOpt,
-                new Object[] {sessionVo.clientPort}).executeQuery()) {
+                inputParams
+                ).executeQuery()) {
             // this order is very important, becase when debug opt is return,
             // maybe server is already over, so must stop debug!
             if (!serverState.isRunning()) {
@@ -216,9 +222,11 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     private <T> List<T> getListVos(DebugConstants.DebugOpt debugOpt, Class<T> clazz) throws SQLException {
+        List<Object> inputParams = Arrays.asList(sessionVo.clientPort);
         try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
                 debugOpt,
-                new Object[] {sessionVo.clientPort}).executeQuery()
+                inputParams
+                ).executeQuery()
                 ) {
             List<T> results = ParseVo.parseList(rs, clazz);
             return results;
@@ -239,9 +247,16 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         if (positionVo.func == null || positionVo.func.intValue() == 0) {
             positionVo.func = new Long(functionVo.oid);
         }
+        
+        List<Object> inputParams = Arrays.asList(
+                sessionVo.clientPort,
+                positionVo.func,
+                positionVo.linenumber
+                );
         try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
                 debugOpt,
-                new Object[] {sessionVo.clientPort, positionVo.func, positionVo.linenumber}).executeQuery()) {
+                inputParams).executeQuery()
+                ) {
             boolean result = false;
             if (rs.next()) {
                 result = rs.getBoolean(1);
@@ -319,7 +334,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
     
     @Override
-    public void begin(Object[] args) throws SQLException {
+    public void begin(List<?> args) throws SQLException {
         prepareDebug();
         startDebug(args);
         attachDebug();

@@ -14,6 +14,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -55,9 +57,11 @@ public class QueryService implements IService {
             Long oid,
             DebugConstants.DebugOpt debugOpt,
             Class<T> clazz) throws SQLException {
+        List<Object> inputParams = Arrays.asList(oid);
         try (ResultSet rs = conn.getDebugOptPrepareStatement(
                 debugOpt,
-                new Object[] {oid}).executeQuery()) {
+                inputParams
+                ).executeQuery()) {
             if (rs.next()) {
                 return Optional.of(ParseVo.parse(rs, clazz));
             }

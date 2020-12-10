@@ -27,7 +27,7 @@ import com.huawei.mppdbide.debuger.vo.VariableVo;
  * @since 2020-12-08
  */
 public interface IDebugService extends IService {
-    void begin(Object[] args) throws SQLException;
+    void begin(List<?> args) throws SQLException;
     void end();
 
     Optional<PositionVo> stepInto() throws SQLException, DebugExitException;

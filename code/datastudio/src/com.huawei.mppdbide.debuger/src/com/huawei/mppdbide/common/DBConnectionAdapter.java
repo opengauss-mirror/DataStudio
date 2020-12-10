@@ -5,6 +5,7 @@ package com.huawei.mppdbide.common;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.postgresql.core.NoticeListener;
 
@@ -60,11 +61,11 @@ public class DBConnectionAdapter implements IConnection {
      * @return PreparedStatement preparedstatement instance
      */
     @Override
-    public PreparedStatement getDebugOptPrepareStatement(DebugOpt debugOpt, Object[] params) throws SQLException {
+    public PreparedStatement getDebugOptPrepareStatement(DebugOpt debugOpt, List<Object> params) throws SQLException {
         String sql = DebugConstants.getSql(debugOpt);
         PreparedStatement ps = getStatement(sql);
-        for (int i = 1 ; i < params.length + 1 ; i ++) {
-            ps.setObject(i, params[i - 1]);
+        for (int i = 1 ; i < params.size() + 1 ; i ++) {
+            ps.setObject(i, params.get(i - 1));
         }
         return ps;
     }

@@ -8,11 +8,8 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
 import com.huawei.mppdbide.eclipse.dependent.EclipseInjections;
-import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.view.handler.IHandlerUtilities;
 import com.huawei.mppdbide.view.ui.PLSourceEditor;
 import com.huawei.mppdbide.view.utils.UIElement;
@@ -87,20 +84,4 @@ public class DebugHandlerUtils {
         ParameterizedCommand parameterizedCommand = ParameterizedCommand.generateCommand(command, null);
         handlerService.executeHandler(parameterizedCommand);
     }
-    
-    public int getCurLine(Object viewer) {
-        try {
-            if (viewer instanceof ProjectionViewer) {
-                ProjectionViewer projectionViewer = (ProjectionViewer) viewer;
-                return projectionViewer
-                        .getDocument()
-                        .getLineOfOffset(projectionViewer.getSelectedRange().x)
-                        + MPPDBIDEConstants.LINE_NUMBER_OFFSET;
-            }
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-    
 }

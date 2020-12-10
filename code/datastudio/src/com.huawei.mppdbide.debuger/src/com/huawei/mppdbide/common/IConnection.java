@@ -5,6 +5,7 @@ package com.huawei.mppdbide.common;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.huawei.mppdbide.debuger.debug.DebugConstants;
 import org.postgresql.core.NoticeListener;
@@ -25,7 +26,7 @@ public interface IConnection {
     PreparedStatement getStatement(String sql) throws SQLException;
     PreparedStatement getDebugOptPrepareStatement(
             DebugConstants.DebugOpt debugOpt,
-            Object[] params) throws SQLException;
+            List<Object> params) throws SQLException;
     void setNoticeListener(NoticeListener listener);
     void close() throws SQLException;
 }

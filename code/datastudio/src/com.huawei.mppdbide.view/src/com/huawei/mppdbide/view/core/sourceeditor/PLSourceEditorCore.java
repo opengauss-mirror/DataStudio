@@ -1008,7 +1008,6 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         public void selectionChanged(SelectionChangedEvent event) {
             ISelection selection = event.getSelection();
             selectionService.setSelection(selection);
-            MPPDBIDELoggerUtility.error("select line:" + DebugHandlerUtils.getInstance().getCurLine(viewer));
         }
     }
 

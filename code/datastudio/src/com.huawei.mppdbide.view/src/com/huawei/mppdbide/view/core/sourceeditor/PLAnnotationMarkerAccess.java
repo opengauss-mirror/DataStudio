@@ -68,11 +68,9 @@ public class PLAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
      */
     @Override
     public void paint(Annotation annotation, GC gc, Canvas canvas, Rectangle bounds) {
-        Optional<Image> paintImage = null;
+        Optional<Image> paintImage = Optional.empty();
         if (annotation instanceof AnnotationWithLineNumber) {
             paintImage = ((AnnotationWithLineNumber) annotation).getImage();
-        } else {
-            paintImage = Optional.empty();
         }
 
         if (paintImage.isPresent()) {
