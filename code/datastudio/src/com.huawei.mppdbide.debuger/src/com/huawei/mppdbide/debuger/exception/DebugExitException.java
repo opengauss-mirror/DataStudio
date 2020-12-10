@@ -15,11 +15,12 @@ package com.huawei.mppdbide.debuger.exception;
  * @since 2020/11/20
  */
 public class DebugExitException extends Exception {
+    public static final String DEBUG_EXIT = "debug_exit";
+    
     /**
      * serialVersionUID
      */
     private static final long serialVersionUID = 6693123333489198245L;
-    public static final String DEBUG_EXIT = "debug_exit";
 
     public DebugExitException() {
         super(DEBUG_EXIT);

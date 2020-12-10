@@ -82,7 +82,14 @@ public class DebugServiceHelper {
     
     public void notifyBreakPointChange(BreakpointAnnotation annotation) {
         if (canStepDebugRun()) {
-            debugService.notifyAllHandler(new Event(EventMessage.BREAKPOINT, annotation));
+            debugService.notifyAllHandler(new Event(EventMessage.BREAKPOINT_CHANGE, annotation));
+        }
+    }
+    
+    public void notifyBreakPointStatus(BreakpointAnnotation annotation, boolean add) {
+        if (canStepDebugRun()) {
+            EventMessage msg = add ? EventMessage.BREAKPOINT_ADD : EventMessage.BREAKPOINT_DELETE;
+            debugService.notifyAllHandler(new Event(msg, annotation));
         }
     }
     

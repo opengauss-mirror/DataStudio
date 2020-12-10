@@ -25,7 +25,9 @@ public class Event {
         DEBUG_BEGIN,
         DEBUG_RUN,
         DEBUG_END,
-        BREAKPOINT;
+        BREAKPOINT_ADD,
+        BREAKPOINT_DELETE,
+        BREAKPOINT_CHANGE;
     }
     private static AtomicInteger autoId = new AtomicInteger();
     private EventMessage msg;

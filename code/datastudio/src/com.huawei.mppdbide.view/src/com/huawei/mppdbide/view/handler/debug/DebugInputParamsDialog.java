@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
 package com.huawei.mppdbide.view.handler.debug;
@@ -22,6 +22,7 @@ public class DebugInputParamsDialog extends ParameterInputDialog {
 
     /**
      * descript: create input param dialog
+     * 
      * @param parentShell shell param
      */
     public DebugInputParamsDialog(Shell parentShell) {

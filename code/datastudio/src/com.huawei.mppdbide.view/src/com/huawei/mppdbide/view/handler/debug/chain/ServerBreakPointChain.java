@@ -26,11 +26,12 @@ import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
  * @since 09,12,2020
  */
 public class ServerBreakPointChain extends IMsgChain {
-
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
     @Override
     public boolean matchMsg(Event event) {
-        return event.getMsg() == EventMessage.BREAKPOINT;
+        return event.getMsg() == EventMessage.BREAKPOINT_ADD
+                || event.getMsg() == EventMessage.BREAKPOINT_DELETE
+                || event.getMsg() == EventMessage.BREAKPOINT_CHANGE;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class ServerBreakPointChain extends IMsgChain {
                 }
 
                 PositionVo positionVo = new PositionVo(null, codeLine, null);
-                if (annotation.getEnable()) {
+                if (getBreakPointStatus(annotation, event.getMsg())) {
                     debugService.setBreakPoint(positionVo);
                 } else {
                     debugService.dropBreakPoint(positionVo);
@@ -56,6 +57,16 @@ public class ServerBreakPointChain extends IMsgChain {
             } catch (SQLException e) {
                 MPPDBIDELoggerUtility.warn("set breakpoint failed!" + e.getMessage());
             }
+        }
+    }
+    
+    private boolean getBreakPointStatus(BreakpointAnnotation annotation, EventMessage msg) {
+        if (msg == EventMessage.BREAKPOINT_ADD) {
+            return true;
+        } else if (msg == EventMessage.BREAKPOINT_DELETE) {
+            return false;
+        } else {
+            return annotation.getEnable();
         }
     }
     

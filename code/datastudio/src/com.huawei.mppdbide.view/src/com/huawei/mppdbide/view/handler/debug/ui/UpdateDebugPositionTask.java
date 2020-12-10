@@ -31,7 +31,7 @@ public class UpdateDebugPositionTask implements Runnable {
             return;
         }
 
-        plSourceEditor.remoteDebugPosition();
+        plSourceEditor.removeDebugPosition();
         try {
             if (showLine >= 0) {
                 plSourceEditor.createDebugPosition(showLine);

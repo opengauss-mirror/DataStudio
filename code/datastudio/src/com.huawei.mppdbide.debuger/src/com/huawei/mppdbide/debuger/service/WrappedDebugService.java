@@ -48,8 +48,10 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
             new EventRunner(this, args, EventMessage.DEBUG_BEGIN) {
                 @Override
                 protected void innertRun() throws SQLException {
-                    if (this.args instanceof Object[]) {
-                        debugService.begin((Object[]) this.args);
+                    Object inputArgs = this.args;
+                    if (inputArgs instanceof Object[]) {
+                        Object[] beginParams = (Object[]) inputArgs;
+                        debugService.begin(beginParams);
                     }
                 }
             }.run();
@@ -199,11 +201,11 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         debugService.addServerExistListener(handler);
     }
 
-    private static abstract class EventRunner {
+    public static abstract class EventRunner {
         protected WrappedDebugService service;
         protected Object args;
-        protected PositionVo positionVo = null;
         protected EventMessage msg;
+        protected PositionVo positionVo = null;
 
         public EventRunner(WrappedDebugService service, Object args, EventMessage msg) {
             this.service = service;

@@ -32,9 +32,9 @@ import java.util.*;
  * you can use by this step:
  * 1. create and DebugService by new DebugService()
  * 2. set DebugService.functionVo which come from QueryService.queryFunction
-      * by functionName
+     * by functionName
  * 3. set DebugService.clientConn and DebugService.serverConn,
-      * this is IConnection instance, your can create ConnectionAdapter objects
+     * this is IConnection instance, your can create ConnectionAdapter objects
  * 4. set DebugService.clinetConn and DebugService.serverConn's NoticeListener,
      * which is DebugService instance self
  * 5. call DebugService.prepareDebug

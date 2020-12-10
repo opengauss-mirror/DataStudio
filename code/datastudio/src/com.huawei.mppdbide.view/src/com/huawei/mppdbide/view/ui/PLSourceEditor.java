@@ -1097,6 +1097,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      */
     private class SourceEditorMouseListener implements MouseListener {
         private static final int INVALID_LINE = -1;
+        private boolean isDoubleClickedBefore = false;
 
         @Override
         public void mouseDoubleClick(MouseEvent e) {
@@ -1106,65 +1107,97 @@ public class PLSourceEditor extends AbstractAutoSaveObject
              * procedure 2. Already an breakpoint operation is in progress for
              * this Line number 3. If line number falls in PL header or footer.
              */
-            if (INVALID_LINE == line || null == debugObject) {
+            if (!validCheck(line)) {
                 return;
             }
-
-            Optional<BreakpointAnnotation> annotation = findAnnotation(line);
-
-            if (!annotation.isPresent()) {
-                try {
-                    createBreakpoint(line, false);
-                } catch (BadLocationException badLocationExp) {
-                    badLocationExp.printStackTrace();
-                }
-            } else {
-                deleteBreakpoint(line, annotation.get());
-            }
+            MPPDBIDELoggerUtility.info("double clicked!");
+            isDoubleClickedBefore = true;
         }
 
         @Override
         public void mouseDown(MouseEvent e) {
             // Skip the handling
         }
+        
+        private boolean validCheck(int line) {
+            if (line == INVALID_LINE || null == debugObject) {
+                return false;
+            }
+            return true;
+        }
 
         @Override
         public void mouseUp(MouseEvent e) {
-            // Nothing to handle
             int line = fAnnotationRuler.getLineOfLastMouseButtonActivity();
-            if (INVALID_LINE == line || null == debugObject) {
+            if (!validCheck(line)) {
                 return;
             }
+            MPPDBIDELoggerUtility.info("mouseUp clicked!");
 
             Optional<BreakpointAnnotation> annotation = findAnnotation(line);
-            if (annotation.isPresent()) {
-                BreakpointAnnotation breakpointAnnotation = annotation.get();
-                fAnnotationModel.removeAnnotation(breakpointAnnotation);
-                try {
-                    createBreakpoint(line, !breakpointAnnotation.getEnable());
-                } catch (BadLocationException e1) {
-                    e1.printStackTrace();
-                }
+            if (isDoubleClickedBefore) {
+                isDoubleClickedBefore = false;
+                doubleClickRun(annotation, line);
+            } else {
+                singleClickRun(annotation, line);
             }
         }
     }
     
-    private void createBreakpoint(int line, boolean isEnable) throws BadLocationException {
+    private void doubleClickRun(Optional<BreakpointAnnotation> annotation, int line) {
+        if (!annotation.isPresent()) {
+            try {
+                BreakpointAnnotation annotationNew = createBreakpoint(line, true);
+                DebugServiceHelper.getInstance().notifyBreakPointStatus(
+                        annotationNew,
+                        true);
+            } catch (BadLocationException badLocationExp) {
+                MPPDBIDELoggerUtility.error("invalid set position");
+            }
+        } else {
+            deleteBreakpoint(line, annotation.get());
+            DebugServiceHelper.getInstance().notifyBreakPointStatus(
+                    annotation.get(),
+                    false);
+        }
+    }
+    
+    private void singleClickRun(Optional<BreakpointAnnotation> annotation, int line) {
+        if (annotation.isPresent()) {
+            try {
+                BreakpointAnnotation bpAnnotation = changeBreakPoint(
+                        line,
+                        annotation.get()
+                        );
+                DebugServiceHelper.getInstance().notifyBreakPointChange(bpAnnotation);
+            } catch (BadLocationException e1) {
+                MPPDBIDELoggerUtility.error("invalid set position");
+            }
+        }
+    }
+    
+    private BreakpointAnnotation createBreakpoint(int line, boolean isEnable) throws BadLocationException {
         BreakpointAnnotation annotation = new BreakpointAnnotation("[" + (line + 1), line);
         annotation.setEnable(isEnable);
         fAnnotationModel.addAnnotation(annotation,
                 new Position(sourceEditor.getDocument().getLineOffset(line))
                 );
-        DebugServiceHelper.getInstance().notifyBreakPointChange(annotation);
+        return annotation;
     }
     
     private void deleteBreakpoint(int line, BreakpointAnnotation annotation) {
         fAnnotationModel.removeAnnotation(annotation);
-        annotation.setEnable(false);
-        DebugServiceHelper.getInstance().notifyBreakPointChange(annotation);
     }
     
-    public void remoteDebugPosition() {
+    private BreakpointAnnotation changeBreakPoint(
+            int line,
+            BreakpointAnnotation breakpointAnnotation)
+                    throws BadLocationException {
+        fAnnotationModel.removeAnnotation(breakpointAnnotation);
+        return createBreakpoint(line, !breakpointAnnotation.getEnable());
+    }
+    
+    public void removeDebugPosition() {
         Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
         List<Annotation> needRemoveAnnotations = new ArrayList<Annotation>(1);
         while (annoIterator.hasNext()) {

@@ -28,7 +28,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
     private static final AnnotationHelper.AnnotationType ANNOTATION_TYPE = AnnotationType.BREAKPOINT;
     private static final RGB BREAKPOINT_RGB = new RGB(188, 188, 222);
     private int breakpointId;
-    private boolean enable;
+    private boolean enable = true;
 
     /**
      * Instantiates a new breakpoint annotation.

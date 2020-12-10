@@ -3,6 +3,10 @@
  */
 package com.huawei.mppdbide.debuger.thread;
 
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 /**
@@ -17,36 +21,55 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * @since 2020/11/20
  */
 public class DebugServerThreadProxy {
-    private static final int DEFAULT_WAIT_LOCK_TIME = 2000; // ms
-    private Thread proxyThread;
+    private static final int DEFAULT_WAIT_TIME = 2000; // ms
+    private static final int DEFAULT_WAIT_PER_COUNT = 10; // ms
+    private static final int DEFAULT_MAX_THREADS = 2;
+    private ThreadPoolExecutor executor = new ThreadPoolExecutor(
+            DEFAULT_MAX_THREADS,
+            DEFAULT_MAX_THREADS,
+            0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>());
     private DebugServerRunable debugServerRunable;
 
     public void setDebugServerRunable(DebugServerRunable runable) {
         this.debugServerRunable = runable;
     }
 
-    public Thread start() {
+    public void start() {
         if (isAlive()) {
             MPPDBIDELoggerUtility.warn("old thread not exit, please check!");
-            return proxyThread;
         }
-        proxyThread = new Thread(debugServerRunable);
-        proxyThread.start();
-        return proxyThread;
+        executor.execute(debugServerRunable);
     }
 
     public boolean isAlive() {
-        return proxyThread != null && proxyThread.isAlive();
+        return executor.getActiveCount() != 0;
     }
 
     public void join() {
-        if (this.proxyThread != null) {
-            try {
-                this.proxyThread.join(DEFAULT_WAIT_LOCK_TIME);
-            } catch (InterruptedException e) {
-                MPPDBIDELoggerUtility.warn("proxyThread join with error!" + e.getMessage());
+        if (this.executor != null) {
+            this.executor.shutdown();
+            boolean shutDownSuccess = waitExecutorShutDown(DEFAULT_WAIT_TIME);
+            if (!shutDownSuccess) {
+                MPPDBIDELoggerUtility.warn("executor shutdown failed!");
             }
-            this.proxyThread = null;
+            this.executor = null;
         }
+    }
+    
+    private boolean waitExecutorShutDown(int timeout) {
+        int curWaitTime = 0;
+        while (curWaitTime < timeout) {
+            if (this.executor.isShutdown()) {
+                return true;
+            }
+            curWaitTime += DEFAULT_WAIT_PER_COUNT;
+            try {
+                Thread.sleep(DEFAULT_WAIT_PER_COUNT);
+            } catch (InterruptedException e) {
+                MPPDBIDELoggerUtility.warn("wait executor shutdown have error:" + e.getMessage());
+            }
+        }
+        return false;
     }
 }
