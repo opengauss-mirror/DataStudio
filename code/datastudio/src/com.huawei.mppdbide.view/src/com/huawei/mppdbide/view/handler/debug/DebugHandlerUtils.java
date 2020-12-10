@@ -23,7 +23,6 @@ import com.huawei.mppdbide.view.utils.UIElement;
  * @version [openGauss DataStudio 1.0.1, 30,11,2020]
  * @since 30,11,2020
  */
-@SuppressWarnings("restriction")
 public class DebugHandlerUtils {
     private static DebugHandlerUtils debugUtils = new DebugHandlerUtils();
     private boolean isDebugStart = false;
@@ -76,6 +75,7 @@ public class DebugHandlerUtils {
         allDebugPart.setVisible(isShow);
     }
     
+    @SuppressWarnings("restriction")
     public void initDebugSourceView() {
         String viewCommand = "com.huawei.mppdbide.command.id.viewsourceobjectbrowseritem";
         ECommandService commandService = EclipseInjections.getInstance().getCommandService();

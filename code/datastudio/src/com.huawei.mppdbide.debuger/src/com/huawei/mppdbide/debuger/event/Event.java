@@ -19,6 +19,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 2020/11/20
  */
 public class Event {
+    /**
+     * Title: the EventMessage enum
+     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
+     *
+     * @author z00588921
+     * @version [DataStudio 1.0.0, 2020/11/20]
+     * @since 2020/11/20
+     */
     public static enum EventMessage {
         ON_EXIT,
         ON_SQL_MSG,
@@ -50,18 +58,38 @@ public class Event {
         this.id = id;
     }
 
+    /**
+     * get event id
+     *
+     * @return int unique id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * get event type
+     *
+     * @return EventMessage the eunm of message
+     */
     public EventMessage getMsg() {
         return this.msg;
     }
 
+    /**
+     * get addition msg
+     *
+     * @return Optional<Object> return addition msg
+     */
     public Optional<Object> getAddition() {
         return Optional.ofNullable(this.addition);
     }
     
+    /**
+     * get addition string msg
+     *
+     * @return String auto convert addtion object to String object
+     */
     public String getStringAddition() {
         if (this.addition instanceof String) {
             return (String) this.addition;
@@ -69,10 +97,20 @@ public class Event {
         return addition.toString();
     }
 
+    /**
+     * get if have exception
+     *
+     * @return boolean true if have exception
+     */
     public boolean hasException() {
         return exp != null;
     }
 
+    /**
+     * get exception
+     *
+     * @return Exception if exp occur, this will not null
+     */
     public Exception getException() {
         return this.exp;
     }

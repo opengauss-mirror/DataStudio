@@ -32,6 +32,14 @@ import java.util.Optional;
 public class QueryService implements IService {
     private IConnection conn;
     private FunctionDao functionDao;
+    
+    /**
+     * query function vo
+     *
+     * @param proname the debug function name  
+     * @throws SQLException sql exp
+     * @return FunctionVo the function vo
+     */
     public FunctionVo queryFunction(String proname) throws SQLException {
         try (ResultSet rs = conn.getStatement(functionDao.getSql(proname)).executeQuery()) {
             if (rs.next()) {
@@ -41,12 +49,26 @@ public class QueryService implements IService {
         }
     }
 
+    /**
+     * get base source code
+     *
+     * @param oid function oid
+     * @throws SQLException sql exp
+     * @return Optional<SourceCodeVo> the source code
+     */
     public Optional<SourceCodeVo> getSourceCode(Long oid) throws SQLException {
         return getTempSourceCode(oid,
                 DebugConstants.DebugOpt.GET_SOURCE_CODE,
                 SourceCodeVo.class);
     }
 
+    /**
+     * get sourceCode source code
+     *
+     * @param oid function oid
+     * @throws SQLException sql exp
+     * @return Optional<TotalSourceCode> the source code
+     */
     public Optional<TotalSourceCodeVo> getTotalSourceCode(Long oid) throws SQLException {
         return getTempSourceCode(oid,
                 DebugConstants.DebugOpt.GET_TOTAL_SOURCE_CODE,
@@ -69,22 +91,49 @@ public class QueryService implements IService {
         }
     }
 
+    /**
+     * set conn
+     *
+     * @param conn connection
+     * @return void
+     */
     public void setConn(IConnection conn) {
         this.conn = conn;
     }
 
+    /**
+     * get conn
+     *
+     * @return IConnection the connection
+     */
     public IConnection getConn() {
         return this.conn;
     }
 
+    /**
+     * set function dao
+     *
+     * @param dao set function dao
+     * @return void
+     */
     public void setFunctionDao(FunctionDao dao) {
         this.functionDao = dao;
     }
 
+    /**
+     * get function dao
+     *
+     * @return FunctionDao get function dao
+     */
     public FunctionDao getFunctionDao() {
         return this.functionDao;
     }
 
+    /**
+     * close service
+     *
+     * @return void
+     */
     @Override
     public void closeService() {
         try {

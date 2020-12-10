@@ -18,17 +18,47 @@ import com.huawei.mppdbide.debuger.event.Event;
  * @since 19 Sep, 2019
  */
 public abstract class IMsgChain {
+    // next chain
     protected IMsgChain msgChain = null;
+    
+    /**
+     * get next chain
+     *
+     * @return IMsgChain get next chain
+     */
     public IMsgChain getNext() {
         return this.msgChain;
     }
+    
+    /**
+     * set next chain
+     *
+     * @return void no return value
+     */
     public void setNext(IMsgChain msgChain) {
         this.msgChain = msgChain;
     }
 
+    /**
+     * if event matched, than this chain will dispose it
+     *
+     * @param event event to dispose
+     * @return boolean true if matched
+     */
     public abstract boolean matchMsg(Event event);
+
+    /**
+     * dispose Event msg
+     * @param event event to dispose
+     * @return void 
+     */
     protected abstract void disposeMsg(Event event);
 
+    /**
+     * handleMsg by chain
+     * @param event event to dispose
+     * @return void 
+     */
     public void handleMsg(Event event) {
         if (matchMsg(event)) {
             disposeMsg(event);

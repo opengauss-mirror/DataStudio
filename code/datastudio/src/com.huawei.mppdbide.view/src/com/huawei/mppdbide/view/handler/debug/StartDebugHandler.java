@@ -109,7 +109,7 @@ public class StartDebugHandler {
         } catch (MPPDBIDEException exception) {
             handleMppDbIdeException(exception);
             return;
-        } catch (Exception exception) {
+        } catch (SQLException exception) {
             MPPDBIDELoggerUtility.error(
                     MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHILE_STARTING_TO_EXECUTE_SQL_OBJECT),
                     exception);

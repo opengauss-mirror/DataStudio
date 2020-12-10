@@ -1224,7 +1224,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
             Clipboard clipboard = new Clipboard(Display.getDefault());
             TextTransfer textTransfer = TextTransfer.getInstance();
             String textData = (String) clipboard.getContents(textTransfer);
-            boolean togglePaste = null != textData && !"".equals(textData);
+            boolean togglePaste = textData != null && !"".equals(textData);
 
             toggelExecuteStmt = getToggleExecuteStmt(uiEle, terminal);
             menuExecutionPlan.setEnabled(getExecutionPlanEnableState(terminal));
@@ -1794,7 +1794,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
             public void widgetSelected(SelectionEvent e) {
                 DBConnection dbConnection = getTermConnection().getConnection();
                 try {
-                    if (null != dbConnection && dbConnection.isTransactionOpen(getServerVersion())) {
+                    if (dbConnection != null && dbConnection.isTransactionOpen(getServerVersion())) {
                         if (DSViewDataManager.getInstance().isShowCommitConfirmation()) {
                             manualCommit(dbConnection);
                         } else {

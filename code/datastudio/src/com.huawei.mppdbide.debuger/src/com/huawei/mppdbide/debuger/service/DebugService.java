@@ -77,6 +77,12 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         msgChainHelper = new MsgChainHelper(this);
     }
 
+    /**
+     * prepare to debug
+     *
+     * @throws SQLException the exp
+     * @return void
+     */
     public void prepareDebug() throws SQLException {
         List<Object> inputsParams = Arrays.asList(functionVo.oid);
         serverConn.getDebugOptPrepareStatement(
@@ -84,6 +90,12 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
                 inputsParams).execute();
     }
 
+    /**
+     * start to debug
+     *
+     * @param args input args to function
+     * @return DebugServerThreadProxy debug manager thread
+     */
     public DebugServerThreadProxy startDebug(List<?> args) {
         DebugServerRunable debugServerRunable = new DebugServerRunable(
                 this,
@@ -94,10 +106,22 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         return serverThreadProxy;
     }
 
+    /**
+     * get debug manager thread
+     *
+     * @return DebugServerThreadProxy debug manager thread
+     */
     public DebugServerThreadProxy getServerThreadProxy() {
         return serverThreadProxy;
     }
 
+    /**
+     * when server backthread started, this will callback
+     *
+     * @param args input args to function
+     * @throws SQLException the exp
+     * @return ResultSet the function result
+     */
     public ResultSet serverDebugCallBack(List<?> args) throws SQLException {
         String sql = DebugConstants.getSql(functionVo.proname, args.size());
         PreparedStatement ps = serverConn.getStatement(sql);
@@ -107,6 +131,12 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         return ps.executeQuery();
     }
 
+    /**
+     * client attach debug
+     *
+     * @throws SQLException the exp
+     * @return void
+     */
     public void attachDebug() throws SQLException {
         waitServerStart();
         List<Object> inputParams = Arrays.asList(sessionVo.serverPort);
@@ -137,12 +167,24 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         }
     }
 
+    /**
+     * server set debug session off
+     *
+     * @throws SQLException the exp
+     * @return void
+     */
     public void debugOff() throws SQLException {
         serverConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.DEBUG_OFF,
                 new ArrayList<Object>(1)).execute();
     }
 
+    /**
+     * client abort debug
+     *
+     * @throws SQLException the exp
+     * @return Optional<Boolean> true if success
+     */
     public Optional<Boolean> abortDebug() throws SQLException {
         if (clientState.isStopped()) {
             return Optional.empty();
@@ -163,26 +205,62 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         }
     }
 
+    /**
+     * step over run
+     *
+     * @throws SQLException the exp
+     * @throws DebugExitException the debug exit exp
+     * @return Optional<PositionVo> the breakpoint line position
+     */
     @Override
     public Optional<PositionVo> stepOver() throws SQLException, DebugExitException {
         return getPositionVo(DebugConstants.DebugOpt.STEP_OVER);
     }
 
+    /**
+     * step into run
+     *
+     * @throws SQLException the exp
+     * @throws DebugExitException the debug exit exp
+     * @return Optional<PositionVo> the breakpoint line position
+     */
     @Override
     public Optional<PositionVo> stepInto() throws SQLException, DebugExitException {
         return getPositionVo(DebugConstants.DebugOpt.STEP_INTO);
     }
 
+    /**
+     * step out run
+     *
+     * @throws SQLException the exp
+     * @throws DebugExitException the debug exit exp
+     * @return Optional<PositionVo> the breakpoint line position
+     */
     @Override
     public Optional<PositionVo> stepOut() throws SQLException, DebugExitException {
         throw new SQLException("not support method");
     }
 
+    /**
+     * continue exec run
+     *
+     * @throws SQLException the exp
+     * @throws DebugExitException the debug exit exp
+     * @return Optional<PositionVo> the breakpoint line position
+     */
     @Override
     public Optional<PositionVo> continueExec() throws SQLException, DebugExitException {
         return getPositionVo(DebugConstants.DebugOpt.CONTINUE_EXEC);
     }
 
+    /**
+     * step run common command
+     *
+     * @param debugOpt which opteration to exec
+     * @throws SQLException the exp
+     * @throws DebugExitException the debug exit exp
+     * @return Optional<PositionVo> the breakpoint line position
+     */
     @Override
     public Optional<PositionVo> getPositionVo(
             DebugConstants.DebugOpt debugOpt
@@ -206,16 +284,34 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         }
     }
 
+    /**
+     * get cur variables
+     *
+     * @throws SQLException the exp
+     * @return List<VariableVo>  all variables
+     */
     @Override
     public List<VariableVo> getVariables() throws SQLException {
         return getListVos(DebugConstants.DebugOpt.GET_VARIABLES, VariableVo.class);
     }
 
+    /**
+     * get cur stacks
+     *
+     * @throws SQLException the exp
+     * @return List<VariableVo>  all stacks
+     */
     @Override
     public List<StackVo> getStacks() throws SQLException {
         return getListVos(DebugConstants.DebugOpt.GET_STACKS, StackVo.class);
     }
 
+    /**
+     * get cur breakpoints 
+     *
+     * @throws SQLException the exp
+     * @return List<VariableVo>  all breakpoints
+     */
     @Override
     public List<PositionVo> getBreakPoints() throws SQLException {
         return getListVos(DebugConstants.DebugOpt.GET_BREAKPOINTS, PositionVo.class);
@@ -233,17 +329,40 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         }
     }
 
+    /**
+     * set breakpoint
+     *
+     * @param positionVo which line will set breakpoint
+     * @throws SQLException the exp
+     * @return boolean true if success
+     */
     @Override
     public boolean setBreakPoint(PositionVo positionVo) throws SQLException {
         return disposeBreakpoint(DebugConstants.DebugOpt.SET_BREAKPOINT, positionVo);
     }
 
+    /**
+     * delete breakpoint
+     *
+     * @param positionVo which line will set breakpoint
+     * @throws SQLException the exp
+     * @return boolean true if success
+     */
     @Override
     public boolean dropBreakPoint(PositionVo positionVo) throws SQLException {
         return disposeBreakpoint(DebugConstants.DebugOpt.DROP_BREAKPOINT, positionVo);
     }
 
-    public boolean disposeBreakpoint(DebugConstants.DebugOpt debugOpt, PositionVo positionVo) throws SQLException {
+    /**
+     * set/delete breakpoint
+     *
+     * @param debugOpt which opteration to exec
+     * @param positionVo which line will set breakpoint
+     * @throws SQLException the exp
+     * @return boolean true if success
+     */
+    public boolean disposeBreakpoint(DebugConstants.DebugOpt debugOpt,
+            PositionVo positionVo) throws SQLException {
         if (positionVo.func == null || positionVo.func.intValue() == 0) {
             positionVo.func = new Long(functionVo.oid);
         }
@@ -265,16 +384,33 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         }
     }
 
+    /**
+     * set server connection
+     *
+     * @param IConnection connection
+     * @return void
+     */
     public void setServerConn(IConnection serverConn) {
         this.serverConn = serverConn;
         this.serverConn.setNoticeListener(this);
     }
 
+    /**
+     * set client connection
+     *
+     * @param IConnection connection
+     * @return void
+     */
     public void setClientConn(IConnection clientConn) {
         this.clientConn = clientConn;
         this.clientConn.setNoticeListener(this);
     }
 
+    /**
+     * close all connection
+     *
+     * @return void
+     */
     @Override
     public void closeService() {
         try {
@@ -299,6 +435,12 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         }
     }
 
+    /**
+     * dispose sql warning of notice 
+     *
+     * @param notice the notice
+     * @return void
+     */
     @Override
     public void noticeReceived(SQLWarning notice) {
         if (null == notice || null == notice.getMessage()) {
@@ -309,11 +451,23 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         msgChainHelper.handleSqlMsg(new Event(EventMessage.ON_SQL_MSG, msgString));
     }
 
+    /**
+     * handle event
+     *
+     * @param Event event to handle
+     * @return void
+     */
     @Override
     public void handleEvent(Event event) {
         msgChainHelper.handleEventMsg(event);
     }
 
+    /**
+     * update server port
+     *
+     * @param serverPort the port to set
+     * @return void
+     */
     public void updateServerPort(int serverPort) {
         sessionVo.serverPort = serverPort;
         serverState.running();
@@ -322,17 +476,34 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         } 
     }
     
+    /**
+     * update server state with exception
+     *
+     * @return void
+     */
     public void updateServerWithException() {
-        serverState.ternimaled();
+        serverState.terminaled();
     }
     
+    /**
+     * update server state with normal exit
+     *
+     * @param result the execute result
+     * @return void
+     */
     public void updateServerWithResult(Object result) {
         serverState.stop();
         serverState.stateLocked();
         sessionVo.result = result;
         serverThreadProxy.start();
     }
-    
+
+    /**
+     * begin debug
+     *
+     * @param args function input args
+     * @return void
+     */
     @Override
     public void begin(List<?> args) throws SQLException {
         prepareDebug();
@@ -340,6 +511,11 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         attachDebug();
     }
 
+    /**
+     * end debug
+     *
+     * @return void
+     */
     @Override
     public void end() {
         try {
@@ -356,6 +532,11 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         closeService();
     }
 
+    /**
+     * get normal end result
+     *
+     * @return Optional<Object> the result
+     */
     @Override
     public Optional<Object> getResult() {
         if (isNormalEnd()) {
@@ -364,28 +545,60 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         return Optional.empty();
     }
 
+    /**
+     * is normal end
+     *
+     * @return true if normal end
+     */
     @Override
     public boolean isNormalEnd() {
         return serverState.isNormalStopped();
     }
     
+    /**
+     * is debug server still running
+     *
+     * @return true if running
+     */
     @Override
     public boolean isRunning() {
         return getServerDebugState().isRunning();
     }
     
+    /**
+     * set function vo
+     *
+     * @param functionVo function vo
+     * @return void
+     */
     public void setFunctionVo(FunctionVo functionVo) {
         this.functionVo = functionVo;
     }
     
+    /**
+     * get server state
+     *
+     * @return DebugState state of server
+     */
     public DebugState getServerDebugState() {
         return serverState;
     }
     
+    /**
+     * get server state
+     *
+     * @return DebugState state of client
+     */
     public DebugState getClientDebugState() {
         return clientState;
     }
 
+    /**
+     * add server debug exit listener
+     *
+     * @param handler event handler of exit
+     * @return void
+     */
     @Override
     public void addServerExistListener(EventHander handler) {
         eventQueueThread.addHandler(handler);

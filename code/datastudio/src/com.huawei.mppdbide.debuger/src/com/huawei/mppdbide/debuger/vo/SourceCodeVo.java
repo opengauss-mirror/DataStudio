@@ -17,9 +17,15 @@ import com.huawei.mppdbide.debuger.annotation.DumpFiled;
  * @since 2020/11/19
  */
 public class SourceCodeVo {
+    // the source code
     @DumpFiled
     private String pldbg_get_source;
 
+    /**
+     * get source code
+     *
+     * @return String source code
+     */
     public String getSourceCode() {
         return pldbg_get_source;
     }

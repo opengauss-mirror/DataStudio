@@ -21,6 +21,12 @@ import java.util.Locale;
  * @since 2020/11/17
  */
 public class FunctionDao {
+    /**
+     * query function detail by proname
+     *
+     * @param proname name of function
+     * @return String query sql
+     */
     public String getSql(String proname) {
         String sql = "select oid, proname, proretset, prorettype, "
                     + "pronargs, pronargdefaults, proargtypes, proallargtypes,"
@@ -29,6 +35,12 @@ public class FunctionDao {
         return String.format(Locale.ENGLISH, "%s \'%s\'", sql, proname);
     }
 
+    /**
+     * parse ResultSet to FunctionVo object
+     *
+     * @param rs the sql query result
+     * @return FunctionVo the result
+     */
     public FunctionVo parse(ResultSet rs) {
         return ParseVo.parse(rs, FunctionVo.class);
     }

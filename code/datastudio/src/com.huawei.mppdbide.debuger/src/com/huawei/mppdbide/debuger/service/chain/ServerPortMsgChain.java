@@ -23,6 +23,7 @@ import com.huawei.mppdbide.debuger.service.DebugService;
  * @since 2020-12-08
  */
 public class ServerPortMsgChain extends IMsgChain {
+    // msg to matched
     public static final String SERVER_PORT_MATCH = "YOUR PROXY PORT ID IS:";
     private DebugService debugService;
     public ServerPortMsgChain(DebugService debugService) {

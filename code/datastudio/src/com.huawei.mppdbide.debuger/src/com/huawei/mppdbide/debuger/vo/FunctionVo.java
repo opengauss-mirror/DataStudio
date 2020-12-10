@@ -7,8 +7,6 @@ import com.huawei.mppdbide.debuger.annotation.DumpFiled;
 import org.postgresql.jdbc.PgArray;
 import org.postgresql.util.PGobject;
 
-import java.util.List;
-
 /**
  * Title: the FunctionVo class
  * <p>
@@ -21,34 +19,58 @@ import java.util.List;
  * @since 2020/11/16
  */
 public class FunctionVo {
+    // oid of function
     @DumpFiled
     public Long oid;
+
+    // proname of function
     @DumpFiled
     public String proname;
+    
+    // prorettype of function
     @DumpFiled
     public Long prorettype;
+    
+    // proretset of function
     @DumpFiled
     public Boolean proretset;
+
+    // pronargs of function
     @DumpFiled
     public Integer pronargs;
+    
+    // pronargdefaults of function
     @DumpFiled
     public Integer pronargdefaults;
+
+    // proargtypes of function
     @DumpFiled
     public PGobject proargtypes;
+
+    // proallargtypes of function
     @DumpFiled
     public PgArray proallargtypes;
+
+    // proargmodes of function
     @DumpFiled
     public PgArray proargmodes;
+
+    // proargnames of function
     @DumpFiled
     public PgArray proargnames;
+
+    // proargdefaults of function
     @DumpFiled
     public PGobject proargdefaults;
+
+    // prodefaultargpos of function
     @DumpFiled
     public PGobject prodefaultargpos;
+
+    // prosrc of function
     @DumpFiled
     public String prosrc;
 
-    // all param desc
+    // all input param desc
     public Boolean allInputParam;
-    public List<ParamVo> allParam;
 }

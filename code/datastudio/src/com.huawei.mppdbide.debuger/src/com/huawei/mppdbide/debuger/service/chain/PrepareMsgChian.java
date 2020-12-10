@@ -21,6 +21,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * @since 19 Sep, 2019
  */
 public class PrepareMsgChian extends IMsgChain {
+    // msg to match
     public static final String PREPARE_SUCCESS = "Pldebugger is started successfully, you are";
     private DebugService debugService;
 
@@ -28,6 +29,7 @@ public class PrepareMsgChian extends IMsgChain {
         super();
         this.debugService = debugService;
     }
+
     @Override
     public boolean matchMsg(Event event) {
         if (event.getMsg() == EventMessage.ON_SQL_MSG

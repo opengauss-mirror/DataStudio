@@ -15,6 +15,7 @@ package com.huawei.mppdbide.debuger.exception;
  * @since 2020/11/20
  */
 public class DebugExitException extends Exception {
+    // description of exit exception
     public static final String DEBUG_EXIT = "debug_exit";
     
     /**

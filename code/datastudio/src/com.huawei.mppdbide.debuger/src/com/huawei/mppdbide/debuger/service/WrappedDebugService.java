@@ -42,6 +42,12 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         this.debugService = debugService;
     }
     
+    /**
+     * begin debug
+     *
+     * @param args function input args
+     * @return void
+     */
     @Override
     public void begin(List<?> args) throws SQLException {
         try {
@@ -70,10 +76,19 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         return runDebugRunStep(DebugOpt.STEP_INTO);
     }
     
+    @Override
     public Optional<PositionVo> continueExec() throws SQLException, DebugExitException {
         return runDebugRunStep(DebugOpt.CONTINUE_EXEC);
     }
 
+    /**
+     * step run debug step
+     *
+     * @param debugOpt which debug opt to run
+     * @throws SQLException the exp
+     * @throws DebugExitException the debug exit exp
+     * @return Optional<PositionVo> the breakpoint line position
+     */
     public Optional<PositionVo> runDebugRunStep(DebugOpt debugOpt) throws SQLException, DebugExitException {
         EventRunner runner = new EventRunner(this, debugOpt, EventMessage.DEBUG_RUN) {
             @Override
@@ -201,10 +216,23 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         debugService.addServerExistListener(handler);
     }
 
+    /**
+    *
+    * Title: EventRunner for use
+    * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
+    *
+    * @author z00588921
+    * @version [DataStudio for openGauss 2020-12-08]
+    * @since 2020-12-08
+    */
     public static abstract class EventRunner {
+        // the wrapped debug service
         protected WrappedDebugService service;
+        // the start debug args
         protected Object args;
+        // the event msg to send
         protected EventMessage msg;
+        // result of debug breakpoint position
         protected PositionVo positionVo = null;
 
         public EventRunner(WrappedDebugService service, Object args, EventMessage msg) {
@@ -212,13 +240,32 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
             this.args = args;
             this.msg = msg;
         }
-        
+
+        /**
+         * inner run of debug step
+         *
+         * @throws SQLException the exp
+         * @throws DebugExitException the debug exit exp
+         * @return void
+         */
         protected abstract void innertRun() throws SQLException, DebugExitException;
 
+        /**
+         * get result of position
+         *
+         * @return PositionVo the debug position
+         */
         public PositionVo getPositionVo() {
             return positionVo;
         }
 
+        /**
+         * run of debug step ,and send event
+         *
+         * @throws SQLException the exp
+         * @throws DebugExitException the debug exit exp
+         * @return void
+         */
         public void run() throws SQLException, DebugExitException {
             Event beginEvent = new Event(msg, new DebugAddtionMsg(State.START));
             Exception runException = null;

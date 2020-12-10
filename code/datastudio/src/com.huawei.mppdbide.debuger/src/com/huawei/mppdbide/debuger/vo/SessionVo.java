@@ -15,7 +15,12 @@ package com.huawei.mppdbide.debuger.vo;
  * @since 2020/11/16
  */
 public class SessionVo {
+    // serverPort for sessionVO
     public Integer serverPort;
+
+    // clientPort for sessionVO
     public Integer clientPort;
+
+    // result for sessionVO
     public Object result;
 }

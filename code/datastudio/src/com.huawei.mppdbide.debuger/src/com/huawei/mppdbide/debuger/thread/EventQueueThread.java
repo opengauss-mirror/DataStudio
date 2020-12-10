@@ -46,10 +46,21 @@ public class EventQueueThread extends Thread implements IHandlerManger {
         MPPDBIDELoggerUtility.debug("event queue exit!");
     }
 
+    /**
+     * add event to queue
+     *
+     * @param event event to queue
+     * @return void
+     */
     public void add(Event event) {
         queue.offer(event);
     }
 
+    /**
+     * exit this thread
+     *
+     * @return void
+     */
     public void stopThread() {
         add(new Event(null, null));
     }

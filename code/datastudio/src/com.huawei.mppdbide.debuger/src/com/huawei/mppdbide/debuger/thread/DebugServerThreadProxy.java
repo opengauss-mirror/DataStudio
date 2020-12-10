@@ -31,10 +31,20 @@ public class DebugServerThreadProxy {
             new LinkedBlockingQueue<Runnable>());
     private DebugServerRunable debugServerRunable;
 
+    /**
+     * set which torrun
+     *
+     * @return void
+     */
     public void setDebugServerRunable(DebugServerRunable runable) {
         this.debugServerRunable = runable;
     }
 
+    /**
+     * start debug
+     *
+     * @return void
+     */
     public void start() {
         if (isAlive()) {
             MPPDBIDELoggerUtility.warn("old thread not exit, please check!");
@@ -42,10 +52,20 @@ public class DebugServerThreadProxy {
         executor.execute(debugServerRunable);
     }
 
+    /**
+     * is back run alive
+     *
+     * @return true if alive
+     */
     public boolean isAlive() {
         return executor.getActiveCount() != 0;
     }
 
+    /**
+     * wait back thread exit
+     *
+     * @return void
+     */
     public void join() {
         if (this.executor != null) {
             this.executor.shutdown();

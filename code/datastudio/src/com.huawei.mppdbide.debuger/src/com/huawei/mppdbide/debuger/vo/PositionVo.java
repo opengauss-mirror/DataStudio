@@ -19,14 +19,18 @@ import java.util.Locale;
  * @since 2020/11/20
  */
 public class PositionVo {
+    // the format of this vo
     public static final String FORMAT = "%8s %20s";
 
+    // func of positionvo
     @DumpFiled
     public Long func;
 
+    // linenumber of positionvo
     @DumpFiled
     public Integer linenumber;
 
+    // targetname of positionvo
     @DumpFiled
     public String targetname;
 
@@ -40,10 +44,20 @@ public class PositionVo {
         this.targetname = targetname;
     }
 
+    /**
+     * format this vo title
+     *
+     * @return String the title
+     */
     public static String title() {
         return String.format(Locale.ENGLISH, FORMAT, "linenum", "funcoid");
     }
 
+    /**
+     * format self
+     *
+     * @return String the self
+     */
     public String formatSelf() {
         return String.format(Locale.ENGLISH, FORMAT, linenumber, func);
     }
