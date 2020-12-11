@@ -38,7 +38,7 @@ public abstract class AnnotationWithLineNumber extends Annotation {
         super();
         this.line = line;
     }
-    
+
     /**
      * description: get annotationType
      *

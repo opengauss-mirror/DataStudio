@@ -32,7 +32,7 @@ import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
  */
 public class ServerRunStepChain extends IMsgChain {
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
-    
+
     @Override
     public boolean matchMsg(Event event) {
         return event.getMsg() == EventMessage.DEBUG_RUN;
