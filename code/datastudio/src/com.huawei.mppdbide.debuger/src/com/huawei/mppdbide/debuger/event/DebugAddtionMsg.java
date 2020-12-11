@@ -44,29 +44,29 @@ public class DebugAddtionMsg {
         this.state = state;
         this.positionVo = positionVo;
     }
-    
+
     /**
      * description: get stateu
-     * 
+     *
      * @return State get state
      */
     public State getState() {
         return state;
     }
-    
+
     /**
      * description: get position vo
-     * 
+     *
      * @return Optional<PositionVo> the position vo
      */
     public Optional<PositionVo> getPositionVo() {
         return Optional.ofNullable(positionVo);
     }
-    
+
     @Override
     public String toString() {
         return String.format(Locale.ENGLISH, "DebugAdditionMsg{state: %s, position: %s}",
                 this.state.toString(),
-                positionVo == null? "": positionVo.formatSelf());
+                positionVo == null ? "" : positionVo.formatSelf());
     }
 }

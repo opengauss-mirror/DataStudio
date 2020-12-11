@@ -37,19 +37,19 @@ public class DebugServiceHelper {
 
     private DebugServiceHelper() {
     }
-    
+
     /**
      * description: get singleton of DebugServiceHelper
-     * 
+     *
      * @return DebugServiceHelper the instance
      */
     public static DebugServiceHelper getInstance() {
         return debugServiceHelper;
     }
-    
+
     /**
      * description: create service factory
-     * 
+     *
      * @param debugObject the debug object
      * @return boolean true if success
      * @throws SQLException the execute sql exception
@@ -68,65 +68,65 @@ public class DebugServiceHelper {
         }
         return true;
     }
-    
+
     /**
      * description: is common function to debug
-     * 
+     *
      * @param debugObject the debug object
      * @return true if is common
      */
     public boolean isCommonDatabase(IDebugObject debugObject) {
         return (this.debugObject != null) && (this.debugObject.getOid() == debugObject.getOid());
     }
-    
+
     /**
      * description: get debug object
-     * 
+     *
      * @return IDebugObject the debug object
      */
     public IDebugObject getDebugObject() {
         return debugObject;
     }
-    
+
     /**
      * description: get wrapped debug service
-     * 
+     *
      * @return WrappedDebugService the debug service
      */
     public WrappedDebugService getDebugService() {
         return debugService;
     }
-    
+
     /**
      * description: get handler manager
-     * 
+     *
      * @return IHandlerManger the handler manger
      */
     public IHandlerManger getHandlerManger() {
         return debugService;
     }
-    
+
     /**
      * description: get query service
-     * 
+     *
      * @return QueryService the query service
      */
     public QueryService getQueryService() {
         return queryService;
     }
-    
+
     /**
      * description: get code service
-     * 
+     *
      * @return SourceCodeService get code service
      */
     public SourceCodeService getCodeService() {
         return codeService;
     }
-    
+
     /**
      * description: notify breakpoint change event
-     * 
+     *
      * @param annotation the breakpoint status
      * @return void
      */
@@ -135,10 +135,10 @@ public class DebugServiceHelper {
             debugService.notifyAllHandler(new Event(EventMessage.BREAKPOINT_CHANGE, annotation));
         }
     }
-    
+
     /**
      * description: notify breakpoint add or delete
-     * 
+     *
      * @param annotation the breakpoint status
      * @param add true if add else if delete
      * @return void
@@ -149,10 +149,10 @@ public class DebugServiceHelper {
             debugService.notifyAllHandler(new Event(msg, annotation));
         }
     }
-    
+
     /**
      * description: close service
-     * 
+     *
      * @return void
      */
     public void closeService() {
@@ -165,7 +165,7 @@ public class DebugServiceHelper {
 
     /**
      * description: can step debug run
-     * 
+     *
      * @return void
      */
     public boolean canStepDebugRun() {

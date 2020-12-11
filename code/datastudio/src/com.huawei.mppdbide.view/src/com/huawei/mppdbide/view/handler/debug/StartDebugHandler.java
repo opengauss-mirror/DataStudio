@@ -44,20 +44,20 @@ public class StartDebugHandler {
     private DebugHandlerUtils debugUtils = DebugHandlerUtils.getInstance();
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
     private PLSourceEditor plSourceEditor;
-    
+
     /**
      * description: can execute
-     * 
+     *
      * @return boolean true if can
      */
     @CanExecute
     public boolean canExecute() {
         return debugUtils.canStartDebug();
     }
-    
+
     /**
      * description: excute the command
-     * 
+     *
      * @return void
      */
     @Execute
@@ -78,20 +78,20 @@ public class StartDebugHandler {
         debugUtils.setDebugStart(true);
         startInputParamDialog();
     }
-    
+
     private void startInputParamDialog() {
         new InputParamsJob("input dialog", null, this).schedule();
     }
-    
+
     /**
      * description: get PLSourceEditor instance
-     * 
+     *
      * @return PLSourceEditor the editor
      */
     public PLSourceEditor getSourceEditor() {
         return plSourceEditor;
     }
-    
+
     /**
      * description: Execute SQL obj window.
      *
@@ -134,7 +134,7 @@ public class StartDebugHandler {
                     MessageConfigLoader.getProperty(IMessagesConstants.UNKNOWN_INTERNAL_ERR), exception);
         }
     }
-    
+
     private List<Object> getDebugParams(List<DefaultParameter> serverParams) throws DatabaseOperationException {
         List<DefaultParameter> filterInParams = serverParams.stream().filter(
                 param -> (PARAMETERTYPE.IN.equals(param.getDefaultParameterMode())
@@ -151,7 +151,7 @@ public class StartDebugHandler {
         }
         return params;
     }
-    
+
     private void handleMppDbIdeException(MPPDBIDEException exception) {
         UIDisplayUtil.getDebugConsole().logError(MessageConfigLoader
                 .getProperty(IMessagesConstants.OPERATION_CANNOT_BE_PERFOREMD, exception.getMessage()));
@@ -161,8 +161,7 @@ public class StartDebugHandler {
                         exception.getServerMessage()),
                 exception);
     }
-    
-    
+
     /**
      * Gets the sql syntax.
      *

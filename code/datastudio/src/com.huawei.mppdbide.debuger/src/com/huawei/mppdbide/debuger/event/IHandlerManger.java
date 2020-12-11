@@ -6,7 +6,7 @@ package com.huawei.mppdbide.debuger.event;
 
 /**
  * Title: IHandlerManger for use
- * Description: 
+ * Description:
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -16,30 +16,30 @@ package com.huawei.mppdbide.debuger.event;
 public interface IHandlerManger {
     /**
      * description: add handler
-     * 
+     *
      * @param handler handler to add
      * @return void
      */
     void addHandler(EventHander handler);
-    
+
     /**
      * description: remove handler
-     * 
+     *
      * @param handler handler to remove
      * @return void
      */
     void removeHandler(EventHander handler);
-    
+
     /**
      * description: remove all handler
      *
      * @return remote all handler
      */
     void removeAllHandler();
-    
+
     /**
-     * description: notify all handler 
-     * 
+     * description: notify all handler
+     *
      * @param event the event to notify
      * @return void
      */

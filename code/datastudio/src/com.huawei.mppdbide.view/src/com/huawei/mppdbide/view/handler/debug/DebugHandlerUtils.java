@@ -27,29 +27,29 @@ import com.huawei.mppdbide.view.utils.UIElement;
 public class DebugHandlerUtils {
     private static DebugHandlerUtils debugUtils = new DebugHandlerUtils();
     private boolean isDebugStart = false;
-    
+
     private DebugHandlerUtils() {
     }
-    
+
     /**
      * description: get singleton DebugHandlerUtils instance
-     * 
+     *
      * @return DebugHandlerUtils the instance
      */
     public static DebugHandlerUtils getInstance() {
         return debugUtils;
     }
-    
+
     /**
      * description: can start debug
-     * 
+     *
      * @return boolean true if can start debug
      */
     public boolean canStartDebug() {
         if (isDebugStart) {
             return false;
         }
-        
+
         IDebugObject debugObject = IHandlerUtilities.getSelectedDebugObject();
         if (debugObject != null) {
             return debugObject.getDatabase().isConnected();
@@ -64,19 +64,19 @@ public class DebugHandlerUtils {
         }
         return false;
     }
-    
+
     /**
      * description: can terminate debug
-     * 
+     *
      * @return boolean true if can terminate
      */
     public boolean canTerminateDebug() {
         return isDebugStart;
     }
-    
+
     /**
      * description: set debug start status
-     * 
+     *
      * @param isDebugStart debug status
      * @return void
      */
@@ -86,20 +86,20 @@ public class DebugHandlerUtils {
 
     /**
      * description: this use to show debug view partstack
-     * 
+     *
      * @param isShow show or not
      * @return void
      */
     public void showAllDebugView(boolean isShow) {
         String partId = "com.huawei.mppdbide.partsashcontainer.id.sub.alldebug";
-        MUIElement allDebugPart = UIElement.getInstance().getModelService().find(partId, 
+        MUIElement allDebugPart = UIElement.getInstance().getModelService().find(partId,
                 UIElement.getInstance().getApplication());
         allDebugPart.setVisible(isShow);
     }
-    
+
     /**
      * description: show debug source code view
-     * 
+     *
      * @return void
      */
     @SuppressWarnings("restriction")

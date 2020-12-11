@@ -25,17 +25,17 @@ import com.huawei.mppdbide.debuger.vo.PositionVo;
 public class StepOverDebugHandler extends BaseDebugStepHandler {
     /**
      * description: can execute
-     * 
+     *
      * @return void
      */
     @CanExecute
     public boolean canExecute() {
         return canStepDebugRun();
     }
-    
+
     /**
      * description: execute
-     * 
+     *
      * @return void
      */
     @Execute

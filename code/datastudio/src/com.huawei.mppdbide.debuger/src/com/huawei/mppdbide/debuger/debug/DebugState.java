@@ -44,7 +44,7 @@ public class DebugState {
 
     private State state = State.UNKNOWN;
     private boolean stateLocked = false;
-    
+
     /**
      * set prepared state
      *
@@ -107,7 +107,7 @@ public class DebugState {
     public boolean isStopped() {
         return state == State.STOP || state == State.TERMINALED;
     }
-    
+
     /**
      * query is normal stopped
      *

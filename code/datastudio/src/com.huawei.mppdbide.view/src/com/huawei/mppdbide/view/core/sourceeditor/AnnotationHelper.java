@@ -119,37 +119,37 @@ public class AnnotationHelper {
             this.stragety = strategy;
             this.rgbShow = rgbShow;
         }
-        
+
         /**
          * get layer
-         * 
+         *
          * @return int layer
          * */
         public int getLayer() {
             return layer;
         }
-        
+
         /**
          * get type label
-         * 
+         *
          * @return String type label
          * */
         public String getTypeLabel() {
             return typeLabel;
         }
-        
+
         /**
          * get  stragegy
-         * 
+         *
          * @return String strategy id
          * */
         public String getStrategy() {
             return stragety;
         }
-        
+
         /**
          * get  rgb
-         * 
+         *
          * @return RGB  get rgb
          * */
         public RGB getRGB() {

@@ -34,10 +34,10 @@ public class TestEventHandler implements EventHander {
 
         IMsgChain serviceExit = new ServerExitChain();
         stepRun.setNext(serviceExit);
-        
+
         IMsgChain serviceEnd = new ServerEndRunChain();
         serviceExit.setNext(serviceEnd);
-        
+
         IMsgChain serveiceBreakPoint = new ServerBreakPointChain();
         serviceEnd.setNext(serveiceBreakPoint);
     }

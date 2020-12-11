@@ -13,11 +13,8 @@ import com.huawei.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationTyp
 import com.huawei.mppdbide.view.utils.icon.IiconPath;
 
 /**
- * 
  * Title: class
- * 
  * Description: The Class DebugPositionAnnotation.
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author pWX553609

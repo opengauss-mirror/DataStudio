@@ -22,14 +22,14 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
 public class DebugInputParamsDialog extends ParameterInputDialog {
     /**
      * descripton: create input param dialog
-     * 
+     *
      * @param parentShell shell param
      */
     public DebugInputParamsDialog(Shell parentShell) {
         super(parentShell);
         setDefaultImage(IconUtility.getIconImage(IiconPath.ICO_TOOL_128X128, this.getClass()));
     }
-    
+
     @Override
     public void executePressed() {
     }

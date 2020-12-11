@@ -30,7 +30,7 @@ public class TotalSourceCodeVo {
 
     /**
      * description: get source code
-     * 
+     *
      * @return String source code
      */
     public String getSourceCode() {
@@ -39,7 +39,7 @@ public class TotalSourceCodeVo {
 
     /**
      * description: get head lines
-     * 
+     *
      * @return int head lines
      */
     public int getHeadlines() {

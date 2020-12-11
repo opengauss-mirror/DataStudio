@@ -32,7 +32,7 @@ import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
  */
 public class ServerBeginRunChain extends IMsgChain {
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
-    
+
     @Override
     public boolean matchMsg(Event event) {
         return event.getMsg() == EventMessage.DEBUG_BEGIN;
@@ -54,10 +54,10 @@ public class ServerBeginRunChain extends IMsgChain {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }   
+            }
         }
     }
-    
+
     private int getCurLine() {
         SourceCodeService codeService = serviceHelper.getCodeService();
         try {

@@ -30,7 +30,7 @@ public class ParseVo {
      *
      * @param clz input clz
      * @return Map<String, Field> return map field name and Field
-     */ 
+     */
     public static Map<String, Field> parseDumpFields(Class<?> clz) {
         Field[] fields = clz.getDeclaredFields();
         Map<String, Field> name2Field = new HashMap<>();
@@ -84,7 +84,7 @@ public class ParseVo {
      * @param clazz input clz
      * @param name2Field returned by parseDumpFields
      * @return T new instance by ResultSet
-     */ 
+     */
     public static <T> T parse(ResultSet rs, Class<T> clazz, Map<String, Field> name2Field) {
         T obj;
         try {
@@ -96,7 +96,7 @@ public class ParseVo {
             }
         } catch (InstantiationException | SQLException | IllegalAccessException ignored) {
             obj = null;
-        } 
+        }
         return obj;
     }
 

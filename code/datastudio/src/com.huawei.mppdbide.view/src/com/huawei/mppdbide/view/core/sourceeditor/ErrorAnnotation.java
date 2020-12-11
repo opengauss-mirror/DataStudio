@@ -13,11 +13,8 @@ import com.huawei.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationTyp
 import com.huawei.mppdbide.view.utils.icon.IiconPath;
 
 /**
- * 
  * Title: class
- * 
  * Description: The Class ErrorAnnotation.
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author pWX553609
@@ -25,7 +22,7 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * @since 17 May, 2019
  */
 public class ErrorAnnotation extends AnnotationWithLineNumber {
-    private static final AnnotationType ANNOTATION_TYPE = AnnotationType.ERROR; 
+    private static final AnnotationType ANNOTATION_TYPE = AnnotationType.ERROR;
     /**
      * The Constant STRATEGY_ID.
      */

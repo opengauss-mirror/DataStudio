@@ -24,7 +24,7 @@ public class InputParamsJob extends UIWorkerJob {
 
     /**
      * descript: InputParam back thread Job
-     * 
+     *
      * @param name the job name
      * @param family the input family param
      * @param debugHandler start debug handler
@@ -38,7 +38,7 @@ public class InputParamsJob extends UIWorkerJob {
     public Object doJob() throws DatabaseOperationException, DatabaseCriticalException, MPPDBIDEException, Exception {
         return "";
     }
-    
+
     @Override
     public void onSuccessUIAction(Object object) {
         debugHandler.executeSQLObjWindow(debugHandler.getSourceEditor().getDebugObject());

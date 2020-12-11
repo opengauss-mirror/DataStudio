@@ -78,7 +78,7 @@ public class VariableVo {
 
     /**
      * description:title of variable
-     * 
+     *
      * @return String title of variable
      */
     public static String title() {
@@ -87,7 +87,7 @@ public class VariableVo {
 
     /**
      * description: format variable self
-     * 
+     *
      * @return String formated result
      */
     public String formatSelf() {

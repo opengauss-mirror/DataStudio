@@ -17,7 +17,7 @@ import com.huawei.mppdbide.debuger.vo.VariableVo;
 
 /**
  * Title: IDebugService for use
- * Description: 
+ * Description:
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -33,12 +33,12 @@ public interface IDebugService extends IService {
      * @throws SQLException sql exception
      */
     void begin(List<?> args) throws SQLException;
-    
+
     /**
      * end debug
      *
      * @return void
-     */ 
+     */
     void end();
 
     /**
@@ -49,7 +49,7 @@ public interface IDebugService extends IService {
      * @throws DebugExitException the debug exit exp
      */
     Optional<PositionVo> stepInto() throws SQLException, DebugExitException;
-    
+
     /**
      * step over run
      *
@@ -58,7 +58,7 @@ public interface IDebugService extends IService {
      * @throws DebugExitException the debug exit exp
      */
     Optional<PositionVo> stepOver() throws SQLException, DebugExitException;
-    
+
     /**
      * step out run
      *
@@ -67,7 +67,7 @@ public interface IDebugService extends IService {
      * @throws DebugExitException the debug exit exp
      */
     Optional<PositionVo> stepOut() throws SQLException, DebugExitException;
-    
+
     /**
      * continue exec run
      *
@@ -76,7 +76,7 @@ public interface IDebugService extends IService {
      * @throws DebugExitException the debug exit exp
      */
     Optional<PositionVo> continueExec() throws SQLException, DebugExitException;
-    
+
     /**
      * step run common command
      *
@@ -94,7 +94,7 @@ public interface IDebugService extends IService {
      * @throws SQLException the exp
      */
     List<VariableVo> getVariables() throws SQLException;
-    
+
     /**
      * get cur stacks
      *
@@ -102,15 +102,15 @@ public interface IDebugService extends IService {
      * @throws SQLException the exp
      */
     List<StackVo> getStacks() throws SQLException;
-    
+
     /**
-     * get cur breakpoints 
+     * get cur breakpoints
      *
      * @return List<VariableVo>  all breakpoints
      * @throws SQLException the exp
      */
     List<PositionVo> getBreakPoints() throws SQLException;
-    
+
     /**
      * set breakpoint
      *
@@ -119,7 +119,7 @@ public interface IDebugService extends IService {
      * @throws SQLException the exp
      */
     boolean setBreakPoint(PositionVo positionVo) throws SQLException;
-    
+
     /**
      * delete breakpoint
      *
@@ -128,7 +128,7 @@ public interface IDebugService extends IService {
      * @throws SQLException the exp
      */
     boolean dropBreakPoint(PositionVo positionVo) throws SQLException;
-    
+
     /**
      * add server debug exit listener
      *
@@ -136,21 +136,21 @@ public interface IDebugService extends IService {
      * @return void
      */
     void addServerExistListener(EventHander handler);
-    
+
     /**
      * get normal end result
      *
      * @return Optional<Object> the result
      */
     Optional<Object> getResult();
-    
+
     /**
      * is normal end
      *
      * @return true if normal end
      */
     boolean isNormalEnd();
-    
+
     /**
      * is debug server still running
      *

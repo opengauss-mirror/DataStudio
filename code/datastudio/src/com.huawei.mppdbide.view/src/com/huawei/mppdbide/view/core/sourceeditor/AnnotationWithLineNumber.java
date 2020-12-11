@@ -28,7 +28,7 @@ public abstract class AnnotationWithLineNumber extends Annotation {
      *  the annotation line
      */
     protected int line;
-    
+
     public AnnotationWithLineNumber(String strategyId, boolean isPersistent, String info, int line) {
         super(strategyId, isPersistent, info);
         this.line = line;
@@ -41,7 +41,7 @@ public abstract class AnnotationWithLineNumber extends Annotation {
     
     /**
      * description: get annotationType
-     * 
+     *
      * @return AnnotationType the type
      */
     public abstract AnnotationHelper.AnnotationType getAnnotationType();
@@ -54,7 +54,7 @@ public abstract class AnnotationWithLineNumber extends Annotation {
     public Optional<Image> getImage() {
         return Optional.empty();
     }
-    
+
     /**
      * Gets the line.
      *
@@ -63,17 +63,17 @@ public abstract class AnnotationWithLineNumber extends Annotation {
     public int getLine() {
         return this.line;
     }
-    
+
     /**
      * set line
-     * 
+     *
      * @param line line to set
      * @return void
      */
     public void setLine(int line) {
         this.line = line;
     }
-    
+
     /**
      * Equals.
      *
@@ -87,15 +87,15 @@ public abstract class AnnotationWithLineNumber extends Annotation {
         }
         return this.getClass().isInstance(obj);
     }
-    
+
     @Override
     public int hashCode() {
         return super.hashCode();
     }
-    
+
     /**
      * description: load image from path
-     * 
+     *
      * @param imagePath the image path
      * @return Image image instance
      */

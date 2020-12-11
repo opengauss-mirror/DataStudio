@@ -76,7 +76,7 @@ public class DebugServerThreadProxy {
             this.executor = null;
         }
     }
-    
+
     private boolean waitExecutorShutDown(int timeout) {
         int curWaitTime = 0;
         while (curWaitTime < timeout) {

@@ -31,11 +31,11 @@ import java.util.Optional;
 public class QueryService implements IService {
     private IConnection conn;
     private FunctionDao functionDao;
-    
+
     /**
      * query function vo
      *
-     * @param proname the debug function name  
+     * @param proname the debug function name
      * @return FunctionVo the function vo
      * @throws SQLException sql exp
      */

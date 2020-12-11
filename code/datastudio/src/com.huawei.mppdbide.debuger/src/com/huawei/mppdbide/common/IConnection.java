@@ -23,16 +23,16 @@ import org.postgresql.core.NoticeListener;
 public interface IConnection {
     /**
      * description: get PreparedStatement instance
-     * 
+     *
      * @param sql the sql query string
      * @return PreparedStatement the instance
      * @throws SQLException then sql exception
      */
     PreparedStatement getStatement(String sql) throws SQLException;
-    
+
     /**
      * description: get PreparedStatement instance
-     * 
+     *
      * @param debugOpt which debug operation
      * @param params input params
      * @return PreparedStatement the instance
@@ -40,18 +40,18 @@ public interface IConnection {
      */
     PreparedStatement getDebugOptPrepareStatement(DebugConstants.DebugOpt debugOpt,
             List<Object> params) throws SQLException;
-    
+
     /**
      * description: set listener
-     * 
+     *
      * @param listener then listener
      * @return void
      */
     void setNoticeListener(NoticeListener listener);
-    
+
     /**
      * description: close connection
-     * 
+     *
      * @return void
      * @throws SQLException
      */

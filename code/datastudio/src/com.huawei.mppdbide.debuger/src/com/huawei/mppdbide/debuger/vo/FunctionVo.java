@@ -29,13 +29,13 @@ public class FunctionVo {
      */
     @DumpFiled
     public String proname;
-    
+
     /**
      *  prorettype of function
      */
     @DumpFiled
     public Long prorettype;
-    
+
     /**
      *  proretset of function
      */
@@ -47,7 +47,7 @@ public class FunctionVo {
      */
     @DumpFiled
     public Integer pronargs;
-    
+
     /**
      *  pronargdefaults of function
      */

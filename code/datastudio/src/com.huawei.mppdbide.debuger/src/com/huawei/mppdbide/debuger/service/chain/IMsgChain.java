@@ -20,7 +20,7 @@ public abstract class IMsgChain {
      *  next chain
      */
     protected IMsgChain msgChain = null;
-    
+
     /**
      * get next chain
      *
@@ -29,7 +29,7 @@ public abstract class IMsgChain {
     public IMsgChain getNext() {
         return this.msgChain;
     }
-    
+
     /**
      * set next chain
      *
@@ -50,17 +50,17 @@ public abstract class IMsgChain {
 
     /**
      * dispose Event msg
-     * 
+     *
      * @param event event to dispose
-     * @return void 
+     * @return void
      */
     protected abstract void disposeMsg(Event event);
 
     /**
      * handleMsg by chain
-     * 
+     *
      * @param event event to dispose
-     * @return void 
+     * @return void
      */
     public void handleMsg(Event event) {
         if (matchMsg(event)) {

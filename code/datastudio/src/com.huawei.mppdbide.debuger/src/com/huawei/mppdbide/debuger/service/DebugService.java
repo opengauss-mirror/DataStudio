@@ -35,7 +35,7 @@ import java.util.Optional;
 
 /**
  * Title: the DebugService class
- * Description: this is module use to debug openGauss database's pl/sql function. 
+ * Description: this is module use to debug openGauss database's pl/sql function.
  * you can use by this step:
  * 1. create and DebugService by new DebugService()
  * 2. set DebugService.functionVo which come from QueryService.queryFunction
@@ -158,7 +158,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         }
         throw new SQLException("client attach failed, please check");
     }
-    
+
     private void waitServerStart() throws SQLException {
         synchronized (waitLock) {
             try {
@@ -313,7 +313,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     /**
-     * get cur breakpoints 
+     * get cur breakpoints
      *
      * @return List<VariableVo>  all breakpoints
      * @throws SQLException the exp
@@ -372,7 +372,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         if (positionVo.func == null || positionVo.func.intValue() == 0) {
             positionVo.func = new Long(functionVo.oid);
         }
-        
+
         List<Object> inputParams = Arrays.asList(
                 sessionVo.clientPort,
                 positionVo.func,
@@ -442,7 +442,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     /**
-     * dispose sql warning of notice 
+     * dispose sql warning of notice
      *
      * @param notice the notice
      * @return void
@@ -479,9 +479,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         serverState.running();
         synchronized (waitLock) {
             waitLock.notifyAll();
-        } 
+        }
     }
-    
+
     /**
      * update server state with exception
      *
@@ -490,7 +490,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public void updateServerWithException() {
         serverState.terminaled();
     }
-    
+
     /**
      * update server state with normal exit
      *
@@ -561,7 +561,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public boolean isNormalEnd() {
         return serverState.isNormalStopped();
     }
-    
+
     /**
      * is debug server still running
      *
@@ -571,7 +571,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public boolean isRunning() {
         return getServerDebugState().isRunning();
     }
-    
+
     /**
      * set function vo
      *
@@ -581,7 +581,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public void setFunctionVo(FunctionVo functionVo) {
         this.functionVo = functionVo;
     }
-    
+
     /**
      * get server state
      *
@@ -590,7 +590,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public DebugState getServerDebugState() {
         return serverState;
     }
-    
+
     /**
      * get server state
      *

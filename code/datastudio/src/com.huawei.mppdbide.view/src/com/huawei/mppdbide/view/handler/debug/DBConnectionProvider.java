@@ -14,7 +14,7 @@ import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
 
 /**
  * Title: class
- * Description: The ClassD BConnectionProvider 
+ * Description: The ClassD BConnectionProvider
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -23,14 +23,14 @@ import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
  */
 public class DBConnectionProvider implements IConnectionProvider {
     private Database db;
-    
+
     public DBConnectionProvider(Database db) {
         this.db = db;
     }
 
     /**
      * desrciption: get free connection from database
-     * 
+     *
      * @return Optional<IConnection> the connection
      */
     @Override

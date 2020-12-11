@@ -20,14 +20,14 @@ import com.huawei.mppdbide.common.IConnectionProvider;
  */
 public class ServiceFactory {
     private IConnectionProvider provider;
-    
+
     public ServiceFactory(IConnectionProvider provider) {
         this.provider = provider;
     }
 
     /**
      * description: get query service
-     * 
+     *
      * @return QueryService the query service
      */
     public QueryService getQueryService() {
@@ -36,7 +36,7 @@ public class ServiceFactory {
 
     /**
      * description: get debug service
-     * 
+     *
      * @param functionVo the functionVo
      * @return DebugService debug service
      */
@@ -48,7 +48,7 @@ public class ServiceFactory {
 
     /**
      * description: get code service
-     * 
+     *
      * @return SourceCodeService the code service
      */
     public SourceCodeService getCodeService() {

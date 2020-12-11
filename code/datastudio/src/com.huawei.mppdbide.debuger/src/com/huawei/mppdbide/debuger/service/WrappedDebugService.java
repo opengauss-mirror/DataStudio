@@ -25,7 +25,7 @@ import com.huawei.mppdbide.debuger.event.Event.EventMessage;
 
 /**
  * Title: WrappedDebugService for use
- * Description: 
+ * Description:
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -36,11 +36,11 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     private static final int DEFALUT_HANDER_SIZE = 10;
     private List<EventHander> eventHandlers = new ArrayList<EventHander>(DEFALUT_HANDER_SIZE);
     private DebugService debugService;
-    
+
     public WrappedDebugService(DebugService debugService) {
         this.debugService = debugService;
     }
-    
+
     /**
      * begin debug
      *
@@ -65,17 +65,17 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
             MPPDBIDELoggerUtility.error("begin can\'t run here!!");
         }
     }
-    
+
     @Override
     public Optional<PositionVo> stepOver() throws SQLException, DebugExitException {
         return runDebugRunStep(DebugOpt.STEP_OVER);
     }
-    
+
     @Override
     public Optional<PositionVo> stepInto() throws SQLException, DebugExitException {
         return runDebugRunStep(DebugOpt.STEP_INTO);
     }
-    
+
     @Override
     public Optional<PositionVo> continueExec() throws SQLException, DebugExitException {
         return runDebugRunStep(DebugOpt.CONTINUE_EXEC);
@@ -202,7 +202,7 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     public boolean isNormalEnd() {
         return debugService.isNormalEnd();
     }
-    
+
     @Override
     public boolean isRunning() {
         return debugService.isRunning();

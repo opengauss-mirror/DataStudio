@@ -28,7 +28,7 @@ import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
  */
 public class ServerBreakPointChain extends IMsgChain {
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
-    
+
     @Override
     public boolean matchMsg(Event event) {
         return event.getMsg() == EventMessage.BREAKPOINT_ADD
@@ -55,13 +55,12 @@ public class ServerBreakPointChain extends IMsgChain {
                 } else {
                     debugService.dropBreakPoint(positionVo);
                 }
-       
             } catch (SQLException e) {
                 MPPDBIDELoggerUtility.warn("set breakpoint failed!" + e.getMessage());
             }
         }
     }
-    
+
     private boolean getBreakPointStatus(BreakpointAnnotation annotation, EventMessage msg) {
         if (msg == EventMessage.BREAKPOINT_ADD) {
             return true;
@@ -71,7 +70,7 @@ public class ServerBreakPointChain extends IMsgChain {
             return annotation.getEnable();
         }
     }
-    
+
     private int getCurLine(int showLine) {
         SourceCodeService codeService = serviceHelper.getCodeService();
         try {

@@ -13,11 +13,8 @@ import com.huawei.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationTyp
 import com.huawei.mppdbide.view.utils.icon.IiconPath;
 
 /**
- * 
  * Title: class
- * 
  * Description: The Class BreakpointAnnotation.
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author pWX553609
@@ -39,7 +36,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
     public BreakpointAnnotation(String info, int line) {
         super(ANNOTATION_TYPE.getStrategy(), false, info, line);
     }
-    
+
     @Override
     public AnnotationHelper.AnnotationType getAnnotationType() {
         return ANNOTATION_TYPE;
@@ -65,7 +62,7 @@ public class BreakpointAnnotation extends AnnotationWithLineNumber {
                 IiconPath.ICO_BREAKPOINT_DISABLED;
         return Optional.ofNullable(loadImage(imgPath));
     }
-    
+
     /**
      * Gets the breakpoint rgb.
      *

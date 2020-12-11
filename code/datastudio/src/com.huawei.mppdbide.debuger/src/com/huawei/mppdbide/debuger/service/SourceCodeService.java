@@ -56,7 +56,7 @@ public class SourceCodeService implements IService {
     public void setTotalCode(String code) {
         this.totalCodeDesc = new CodeDescription(code);
     }
-    
+
     /**
      * showline convert to codeline
      *
@@ -67,7 +67,7 @@ public class SourceCodeService implements IService {
     public int showLine2CodeLine(int showLine) throws DebugPositionNotFoundException {
         return showLine - getBeginTotalAndBaseDiff() + CODE_BASE_OFFSET;
     }
-    
+
     /**
      * codeline convert to showline
      *
@@ -128,7 +128,7 @@ public class SourceCodeService implements IService {
     public CodeDescription getTotalCodeDesc() {
         return this.totalCodeDesc;
     }
-    
+
     /**
      * get total and base diff line
      *
@@ -142,7 +142,7 @@ public class SourceCodeService implements IService {
     /**
      * get base code being pos
      *
-     * @return int the begin line 
+     * @return int the begin line
      * @throws DebugPositionNotFoundException not found exp
      */
     public int getBeignOfBaseCode() throws DebugPositionNotFoundException {
@@ -152,7 +152,7 @@ public class SourceCodeService implements IService {
     /**
      * get total code being pos
      *
-     * @return int the begin line 
+     * @return int the begin line
      * @throws DebugPositionNotFoundException not found exp
      */
     public int getBeignfTotalCode() throws DebugPositionNotFoundException {
@@ -160,7 +160,7 @@ public class SourceCodeService implements IService {
     }
 
     /**
-     * Title: CodeDescription class 
+     * Title: CodeDescription class
      * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
      *
      * @author z00588921
@@ -185,7 +185,7 @@ public class SourceCodeService implements IService {
         /**
          * get the begin line
          *
-         * @return int the begin line 
+         * @return int the begin line
          * @throws DebugPositionNotFoundException the not found exp
          */
         public int getBeginPosition() throws DebugPositionNotFoundException {
@@ -198,7 +198,7 @@ public class SourceCodeService implements IService {
         /**
          * get max code line
          *
-         * @return int the max line 
+         * @return int the max line
          */
         public int getMaxPostion() {
             return this.codeList.size();

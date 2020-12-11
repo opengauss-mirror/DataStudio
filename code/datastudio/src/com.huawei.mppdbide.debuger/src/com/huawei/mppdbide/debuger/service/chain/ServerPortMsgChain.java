@@ -13,7 +13,7 @@ import com.huawei.mppdbide.debuger.service.DebugService;
 
 /**
  * Title: ServerPortMsgChain for use
- * Description: 
+ * Description:
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -26,7 +26,7 @@ public class ServerPortMsgChain extends IMsgChain {
      */
     public static final String SERVER_PORT_MATCH = "YOUR PROXY PORT ID IS:";
     private DebugService debugService;
-    
+
     public ServerPortMsgChain(DebugService debugService) {
         super();
         this.debugService = debugService;

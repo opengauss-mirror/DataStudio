@@ -50,7 +50,7 @@ public class Event {
     public Event(EventMessage msg, Object addtion, Exception exp) {
         this(msg, addtion, exp, autoId.getAndIncrement());
     }
-    
+
     public Event(EventMessage msg, Object addition, Exception exp, int id) {
         this.msg = msg;
         this.addition = addition;
@@ -84,7 +84,7 @@ public class Event {
     public Optional<Object> getAddition() {
         return Optional.ofNullable(this.addition);
     }
-    
+
     /**
      * get addition string msg
      *
@@ -114,7 +114,7 @@ public class Event {
     public Exception getException() {
         return this.exp;
     }
-    
+
     @Override
     public String toString() {
         return String.format(

@@ -11,7 +11,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 /**
  * Title: ServerExitEventChain for use
- * Description: 
+ * Description:
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -20,7 +20,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  */
 public class ServerExitEventChain extends IMsgChain {
     private DebugService debugService;
-    
+
     public ServerExitEventChain(DebugService debugService) {
         super();
         this.debugService = debugService;

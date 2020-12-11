@@ -26,19 +26,19 @@ public abstract class BaseDebugStepHandler {
      * the singleton instance of DebugServiceHelper
      */
     protected DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
-    
+
     /**
      * description: then step run of debugService
-     * 
+     *
      * @return Optional<PositionVo> the position of breakpoint paused
      * @throws SQLException the sql exp
      * @throws DebugExitException the debug end exp
      */
     public abstract Optional<PositionVo> debugRun() throws SQLException, DebugExitException;
-    
+
     /**
      * description: execute step
-     * 
+     *
      * @return void
      */
     public void executeRun() {
@@ -54,19 +54,19 @@ public abstract class BaseDebugStepHandler {
             MPPDBIDELoggerUtility.error("debug end!");
         }
     }
-    
+
     /**
      * description: can this step runnable
-     * 
+     *
      * @return boolean true if can run
      */
     public boolean canStepDebugRun() {
         return serviceHelper.canStepDebugRun();
     }
-    
+
     /**
      * description: get debug service
-     * 
+     *
      * @return IDebugService the debug service
      */
     public IDebugService getDebugService() {

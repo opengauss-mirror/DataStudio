@@ -19,27 +19,27 @@ import com.huawei.mppdbide.debuger.service.DebugService;
 public class MsgChainHelper {
     private IMsgChain sqlMsgChain = null;
     private IMsgChain eventChain = null;
-    
+
     public MsgChainHelper(DebugService debugService) {
         sqlMsgChain = new PrepareMsgChian(debugService);
         sqlMsgChain.setNext(new ServerPortMsgChain(debugService));
-        
+
         eventChain = new ServerExitEventChain(debugService);
     }
 
     /**
      * description: handle sql msg
-     * 
+     *
      * @param event event of reveive from sql
      * @return void
      */
     public void handleSqlMsg(Event event) {
         sqlMsgChain.handleMsg(event);
     }
-    
+
     /**
      * description: handle event msg
-     * 
+     *
      * @param event event of reveive from notify handler manager
      * @return void
      */
