@@ -20,7 +20,7 @@ public class SourceCodeVo {
      *  the source code
      */
     @DumpFiled
-    private String pldbg_get_source;
+    public String pldbg_get_source;
 
     /**
      * get source code

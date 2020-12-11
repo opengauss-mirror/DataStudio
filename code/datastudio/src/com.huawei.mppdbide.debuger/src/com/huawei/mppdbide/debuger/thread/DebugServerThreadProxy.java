@@ -48,6 +48,7 @@ public class DebugServerThreadProxy {
     public void start() {
         if (isAlive()) {
             MPPDBIDELoggerUtility.warn("old thread not exit, please check!");
+            return;
         }
         executor.execute(debugServerRunable);
     }

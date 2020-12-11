@@ -20,13 +20,13 @@ public class TotalSourceCodeVo {
      * headerlines of total source code
      */
     @DumpFiled
-    private Integer headerlines;
+    public Integer headerlines;
 
     /**
      * definition of total source code
      */
     @DumpFiled
-    private String definition;
+    public String definition;
 
     /**
      * description: get source code

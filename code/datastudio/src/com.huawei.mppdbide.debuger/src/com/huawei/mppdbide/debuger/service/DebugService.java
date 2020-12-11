@@ -498,6 +498,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * @return void
      */
     public void updateServerWithResult(Object result) {
+        if (serverState.getLockState()) {
+            return;
+        }
         serverState.stop();
         serverState.stateLocked();
         sessionVo.result = result;
