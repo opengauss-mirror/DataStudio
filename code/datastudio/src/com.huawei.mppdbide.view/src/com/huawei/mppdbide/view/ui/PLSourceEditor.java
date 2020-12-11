@@ -262,7 +262,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
 
     /**
      * sets the debug input value list
-     * 
+     *
      * @return the debug input value list
      */
     public ArrayList<DefaultParameter> getDebugInputList() {
@@ -1085,7 +1085,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     private void installDecorationSupport() {
         sourceEditor.installDecorationSupport();
     }
-    
+
     /**
      * The listener interface for receiving sourceEditorMouse events. The class
      * that is interested in processing a sourceEditorMouse event implements
@@ -1118,7 +1118,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         public void mouseDown(MouseEvent e) {
             // Skip the handling
         }
-        
+
         private boolean validCheck(int line) {
             if (line == INVALID_LINE || null == debugObject) {
                 return false;
@@ -1143,7 +1143,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
             }
         }
     }
-    
+
     private void doubleClickRun(Optional<BreakpointAnnotation> annotation, int line) {
         if (!annotation.isPresent()) {
             try {
@@ -1161,7 +1161,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                     false);
         }
     }
-    
+
     private void singleClickRun(Optional<BreakpointAnnotation> annotation, int line) {
         if (annotation.isPresent()) {
             try {
@@ -1175,7 +1175,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
             }
         }
     }
-    
+
     private BreakpointAnnotation createBreakpoint(int line, boolean isEnable) throws BadLocationException {
         BreakpointAnnotation annotation = new BreakpointAnnotation("[" + (line + 1), line);
         annotation.setEnable(isEnable);
@@ -1184,11 +1184,11 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 );
         return annotation;
     }
-    
+
     private void deleteBreakpoint(int line, BreakpointAnnotation annotation) {
         fAnnotationModel.removeAnnotation(annotation);
     }
-    
+
     private BreakpointAnnotation changeBreakPoint(
             int line,
             BreakpointAnnotation breakpointAnnotation)
@@ -1196,11 +1196,9 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         fAnnotationModel.removeAnnotation(breakpointAnnotation);
         return createBreakpoint(line, !breakpointAnnotation.getEnable());
     }
-    
+
     /**
      * description: remove debug position
-     * 
-     * @return void
      */
     public void removeDebugPosition() {
         Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
@@ -1228,7 +1226,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 new Position(sourceEditor.getDocument().getLineOffset(line))
                 );
     }
-    
+
     /**
      * Search for any annotation for given line.
      *

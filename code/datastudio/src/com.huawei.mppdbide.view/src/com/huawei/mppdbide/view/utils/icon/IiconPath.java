@@ -81,7 +81,7 @@ public interface IiconPath {
      * The icon warning
      */
     String ICON_WARNING = "warning.png";
-    
+
     /**
      * The ico refresh.
      */
@@ -938,8 +938,12 @@ public interface IiconPath {
      * The synonym
      */
     String ICO_SYNONYM = "synonym.png";
-    
+
+    /**
+     * the pre debug path
+     */
     String PRE_DEBUG_PATH = "debug" + File.separator;
+
     /**
      * The ico breakpoint disabled.
      */
@@ -948,10 +952,10 @@ public interface IiconPath {
     /**
      * The ico breakpoint enabled.
      */
-    String ICO_BREAKPOINT_ENABLED =PRE_DEBUG_PATH + "icon_breakpoint-enabled.png";
+    String ICO_BREAKPOINT_ENABLED = PRE_DEBUG_PATH + "icon_breakpoint-enabled.png";
     
     /**
      * The ico breakpoint arrow.
      */
-    String ICO_BREAKPOINT_ARROW =PRE_DEBUG_PATH + "debugarrows.png";
+    String ICO_BREAKPOINT_ARROW = PRE_DEBUG_PATH + "debugarrows.png";
 }

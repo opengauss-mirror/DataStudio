@@ -8,11 +8,8 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 /**
- * 
  * Title: class
- * 
  * Description: The Class Activator.
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author pWX553609
@@ -20,7 +17,6 @@ import org.osgi.framework.BundleContext;
  * @since 17 May, 2019
  */
 public class Activator implements BundleActivator {
-
     private static BundleContext context;
 
     /**

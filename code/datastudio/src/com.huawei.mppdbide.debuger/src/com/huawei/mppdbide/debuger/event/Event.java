@@ -10,9 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Title: the Event class
- * <p>
  * Description:
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -38,6 +36,7 @@ public class Event {
         BREAKPOINT_DELETE,
         BREAKPOINT_CHANGE;
     }
+
     private static AtomicInteger autoId = new AtomicInteger();
     private EventMessage msg;
     private Object addition;

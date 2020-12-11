@@ -17,11 +17,8 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
 import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 
 /**
- * 
  * Title: DBConnectionAdapter for use
- * 
  * Description: IConnection instance
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00589921
@@ -31,6 +28,7 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 public class DBConnectionAdapter implements IConnection {
     private DBConnection conn;
     private NoticeListener listener;
+
     public DBConnectionAdapter(DBConnection conn) {
         this.conn = conn;
     }
@@ -77,7 +75,7 @@ public class DBConnectionAdapter implements IConnection {
 
     @Override
     public void setNoticeListener(NoticeListener listener) {
-        this.listener = listener; 
+        this.listener = listener;
     }
 
     @Override

@@ -16,11 +16,8 @@ import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
 
 /**
- *
  * Title: IDebugService for use
- *
  * Description: 
- *
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -47,36 +44,36 @@ public interface IDebugService extends IService {
     /**
      * step into run
      *
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     Optional<PositionVo> stepInto() throws SQLException, DebugExitException;
     
     /**
      * step over run
      *
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     Optional<PositionVo> stepOver() throws SQLException, DebugExitException;
     
     /**
      * step out run
      *
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     Optional<PositionVo> stepOut() throws SQLException, DebugExitException;
     
     /**
      * continue exec run
      *
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     Optional<PositionVo> continueExec() throws SQLException, DebugExitException;
     
@@ -84,33 +81,33 @@ public interface IDebugService extends IService {
      * step run common command
      *
      * @param debugOpt which opteration to exec
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     Optional<PositionVo> getPositionVo(DebugOpt debugOpt) throws SQLException, DebugExitException;
 
     /**
      * get cur variables
      *
-     * @throws SQLException the exp
      * @return List<VariableVo>  all variables
+     * @throws SQLException the exp
      */
     List<VariableVo> getVariables() throws SQLException;
     
     /**
      * get cur stacks
      *
-     * @throws SQLException the exp
      * @return List<VariableVo>  all stacks
+     * @throws SQLException the exp
      */
     List<StackVo> getStacks() throws SQLException;
     
     /**
      * get cur breakpoints 
      *
-     * @throws SQLException the exp
      * @return List<VariableVo>  all breakpoints
+     * @throws SQLException the exp
      */
     List<PositionVo> getBreakPoints() throws SQLException;
     
@@ -118,8 +115,8 @@ public interface IDebugService extends IService {
      * set breakpoint
      *
      * @param positionVo which line will set breakpoint
-     * @throws SQLException the exp
      * @return boolean true if success
+     * @throws SQLException the exp
      */
     boolean setBreakPoint(PositionVo positionVo) throws SQLException;
     
@@ -127,8 +124,8 @@ public interface IDebugService extends IService {
      * delete breakpoint
      *
      * @param positionVo which line will set breakpoint
-     * @throws SQLException the exp
      * @return boolean true if success
+     * @throws SQLException the exp
      */
     boolean dropBreakPoint(PositionVo positionVo) throws SQLException;
     

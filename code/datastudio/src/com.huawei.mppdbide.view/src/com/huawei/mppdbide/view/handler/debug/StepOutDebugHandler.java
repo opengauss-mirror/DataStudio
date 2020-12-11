@@ -4,7 +4,6 @@
 
 package com.huawei.mppdbide.view.handler.debug;
 
-
 import java.sql.SQLException;
 import java.util.Optional;
 

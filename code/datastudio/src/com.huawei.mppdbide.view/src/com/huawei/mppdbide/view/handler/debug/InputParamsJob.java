@@ -21,6 +21,7 @@ import com.huawei.mppdbide.view.workerjob.UIWorkerJob;
  */
 public class InputParamsJob extends UIWorkerJob {
     private StartDebugHandler debugHandler;
+
     /**
      * descript: InputParam back thread Job
      * 
@@ -51,7 +52,6 @@ public class InputParamsJob extends UIWorkerJob {
     @Override
     public void onOperationalExceptionUIAction(DatabaseOperationException dbOperationException) {
         MPPDBIDELoggerUtility.error("find error on:" + dbOperationException);
-        
     }
 
 }

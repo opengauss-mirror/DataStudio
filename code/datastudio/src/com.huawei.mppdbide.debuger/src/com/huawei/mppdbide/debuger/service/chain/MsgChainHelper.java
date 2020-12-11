@@ -8,11 +8,8 @@ import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.service.DebugService;
 
 /**
- * 
  * Title: MsgChainHelper for use
- * 
  * Description: MsgChainHelper is a better way to use default chain
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00589921
@@ -22,6 +19,7 @@ import com.huawei.mppdbide.debuger.service.DebugService;
 public class MsgChainHelper {
     private IMsgChain sqlMsgChain = null;
     private IMsgChain eventChain = null;
+    
     public MsgChainHelper(DebugService debugService) {
         sqlMsgChain = new PrepareMsgChian(debugService);
         sqlMsgChain.setNext(new ServerPortMsgChain(debugService));

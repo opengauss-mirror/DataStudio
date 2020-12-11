@@ -23,11 +23,21 @@ import com.huawei.mppdbide.debuger.vo.PositionVo;
  * @since 04,12,2020
  */
 public class ContinueDebugHandler extends BaseDebugStepHandler {
+    /**
+     * description: can execute
+     * 
+     * @return boolean true if can execute
+     */
     @CanExecute
     public boolean canExecute() {
         return canStepDebugRun();
     }
     
+    /**
+     * description: execute
+     * 
+     * @return void
+     */
     @Execute
     public void execute() {
         executeRun();

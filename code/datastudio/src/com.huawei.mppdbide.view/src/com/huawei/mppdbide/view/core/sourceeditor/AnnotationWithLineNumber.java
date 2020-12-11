@@ -28,6 +28,7 @@ public abstract class AnnotationWithLineNumber extends Annotation {
      *  the annotation line
      */
     protected int line;
+    
     public AnnotationWithLineNumber(String strategyId, boolean isPersistent, String info, int line) {
         super(strategyId, isPersistent, info);
         this.line = line;

@@ -24,11 +24,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.debuger.event.Event.EventMessage;
 
 /**
- *
  * Title: WrappedDebugService for use
- *
  * Description: 
- *
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -39,6 +36,7 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     private static final int DEFALUT_HANDER_SIZE = 10;
     private List<EventHander> eventHandlers = new ArrayList<EventHander>(DEFALUT_HANDER_SIZE);
     private DebugService debugService;
+    
     public WrappedDebugService(DebugService debugService) {
         this.debugService = debugService;
     }
@@ -103,8 +101,6 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         runner.run();
         return Optional.ofNullable(runner.getPositionVo());
     }
-    
-
 
     @Override
     public void notifyAllHandler(Event event) {
@@ -142,7 +138,6 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     public void end() {
         try {
             new EventRunner(this, null, EventMessage.DEBUG_END) {
-                
                 @Override
                 protected void innertRun() throws SQLException, DebugExitException {
                     debugService.end();
@@ -227,7 +222,7 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     * @version [DataStudio for openGauss 2020-12-08]
     * @since 2020-12-08
     */
-    public static abstract class EventRunner {
+    public abstract static class EventRunner {
         /**
          *  the wrapped debug service
          */

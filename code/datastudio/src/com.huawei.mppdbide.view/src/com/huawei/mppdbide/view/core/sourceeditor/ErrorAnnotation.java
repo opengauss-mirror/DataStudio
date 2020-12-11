@@ -32,6 +32,7 @@ public class ErrorAnnotation extends AnnotationWithLineNumber {
 
     private static final Object LOCK = new Object();
     private static volatile RGB errorRGB;
+
     /**
      * Instantiates a new error annotation.
      *

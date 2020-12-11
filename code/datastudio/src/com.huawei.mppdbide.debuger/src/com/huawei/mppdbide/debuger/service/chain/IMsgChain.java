@@ -7,11 +7,8 @@ package com.huawei.mppdbide.debuger.service.chain;
 import com.huawei.mppdbide.debuger.event.Event;
 
 /**
- * 
  * Title: IMsgChain for use
- * 
  * Description: IMsgChain is base chain of Responsibility
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00589921

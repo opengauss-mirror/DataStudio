@@ -27,6 +27,7 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
 public class DebugPositionAnnotation extends AnnotationWithLineNumber {
     private static final AnnotationType ANNOTATION_TYPE = AnnotationType.DEBUG_POSITION;
     private static final RGB DEBUGPOSITION_RGB = new RGB(255, 153, 51);
+
     /**
      * Instantiates a new debug position annotation.
      *

@@ -27,8 +27,8 @@ import com.huawei.mppdbide.view.utils.UIElement;
 public class DebugHandlerUtils {
     private static DebugHandlerUtils debugUtils = new DebugHandlerUtils();
     private boolean isDebugStart = false;
+    
     private DebugHandlerUtils() {
-        
     }
     
     /**

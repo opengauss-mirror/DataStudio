@@ -34,6 +34,7 @@ public class DebugServiceHelper {
     private FunctionVo functionVo;
     private QueryService queryService;
     private SourceCodeService codeService;
+
     private DebugServiceHelper() {
     }
     
@@ -48,8 +49,8 @@ public class DebugServiceHelper {
     
     /**
      * description: create service factory
-     * @param debugObject the debug object
      * 
+     * @param debugObject the debug object
      * @return boolean true if success
      * @throws SQLException the execute sql exception
      */
@@ -71,7 +72,7 @@ public class DebugServiceHelper {
     /**
      * description: is common function to debug
      * 
-     * @param debugObject
+     * @param debugObject the debug object
      * @return true if is common
      */
     public boolean isCommonDatabase(IDebugObject debugObject) {

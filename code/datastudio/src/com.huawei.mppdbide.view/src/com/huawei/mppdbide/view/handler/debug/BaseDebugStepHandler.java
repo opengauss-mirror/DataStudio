@@ -30,9 +30,9 @@ public abstract class BaseDebugStepHandler {
     /**
      * description: then step run of debugService
      * 
+     * @return Optional<PositionVo> the position of breakpoint paused
      * @throws SQLException the sql exp
      * @throws DebugExitException the debug end exp
-     * @return Optional<PositionVo> the position of breakpoint paused
      */
     public abstract Optional<PositionVo> debugRun() throws SQLException, DebugExitException;
     

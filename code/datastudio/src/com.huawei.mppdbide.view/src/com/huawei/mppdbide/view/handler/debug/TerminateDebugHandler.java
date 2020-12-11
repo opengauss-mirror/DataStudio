@@ -23,19 +23,20 @@ import com.huawei.mppdbide.view.utils.UIElement;
 public class TerminateDebugHandler {
     private DebugHandlerUtils debugUtils = DebugHandlerUtils.getInstance();
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
+
     /**
      * description: can execute
-     * 
+     *
      * @return void
      */
     @CanExecute
     public boolean canExecute() {
         return debugUtils.canTerminateDebug();
     }
-    
+
     /**
      * description: execute
-     * 
+     *
      * @return void
      */
     @Execute

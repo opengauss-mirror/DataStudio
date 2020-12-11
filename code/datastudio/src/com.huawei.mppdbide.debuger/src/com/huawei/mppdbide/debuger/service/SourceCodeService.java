@@ -13,9 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * Title: the SourceCodeService class
- * <p>
  * Description:
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -177,6 +175,7 @@ public class SourceCodeService implements IService {
         private String code;
         private List<String> codeList;
         private int beginPosition = INVALID_POSITION;
+
         public CodeDescription(String code) {
             this.code = code;
             this.codeList = getLines(this.code);

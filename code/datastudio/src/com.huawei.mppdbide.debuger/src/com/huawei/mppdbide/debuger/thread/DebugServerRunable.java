@@ -1,7 +1,6 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
-
 package com.huawei.mppdbide.debuger.thread;
 
 import com.huawei.mppdbide.debuger.event.Event;
@@ -14,9 +13,7 @@ import java.util.List;
 
 /**
  * Title: the DebugServerRunable class
- * <p>
  * Description:
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -27,6 +24,7 @@ public class DebugServerRunable implements Runnable {
     private DebugService debugService;
     private List<?> debugParams;
     private EventQueueThread eventQueueThread;
+    
     public DebugServerRunable(DebugService debugService, List<?> params, EventQueueThread eventQueueThread) {
         this.debugService = debugService;
         this.debugParams = params;

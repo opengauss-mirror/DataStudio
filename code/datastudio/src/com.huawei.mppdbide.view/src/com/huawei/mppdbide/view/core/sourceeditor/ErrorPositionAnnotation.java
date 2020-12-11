@@ -33,6 +33,7 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  */
 public class ErrorPositionAnnotation extends AnnotationWithLineNumber {
     private static final AnnotationType ANNOTATION_TYPE = AnnotationType.ERROR_POSITION;
+
     /**
      * Instantiates a new debug position annotation.
      *

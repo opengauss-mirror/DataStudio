@@ -18,7 +18,6 @@ import com.huawei.mppdbide.debuger.service.chain.IMsgChain;
  * @since 09,12,2020
  */
 public class ServerEndRunChain extends IMsgChain {
-
     @Override
     public boolean matchMsg(Event event) {
         return event.getMsg() == EventMessage.DEBUG_END;
@@ -26,7 +25,5 @@ public class ServerEndRunChain extends IMsgChain {
 
     @Override
     protected void disposeMsg(Event event) {
-        
     }
-
 }

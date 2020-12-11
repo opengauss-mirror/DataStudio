@@ -7,11 +7,8 @@ package com.huawei.mppdbide.common;
 import java.util.Optional;
 
 /**
- * 
  * Title: IConnectionProvider
- * 
  * Description: IConnectionProvider to provider connection of database
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00589921

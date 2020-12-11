@@ -8,9 +8,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 /**
  * Title: the DebugState class
- * <p>
  * Description:
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -18,7 +16,6 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * @since 2020/11/16
  */
 public class DebugState {
-
     /**
      * Title: state of debuger
      * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.

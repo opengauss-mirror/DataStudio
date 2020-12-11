@@ -6,9 +6,7 @@ package com.huawei.mppdbide.debuger.event;
 
 /**
  * Title: the EventHander interface
- * <p>
  * Description:
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921

@@ -15,9 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Title: the EventQueueThread class
- * <p>
  * Description:
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921

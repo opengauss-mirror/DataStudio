@@ -8,9 +8,7 @@ import com.huawei.mppdbide.debuger.annotation.DumpFiled;
 
 /**
  * Title: the TotalSourceCodeVo class
- * <p>
  * Description:
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921

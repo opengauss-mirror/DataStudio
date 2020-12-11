@@ -28,6 +28,7 @@ import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
  */
 public class ServerBreakPointChain extends IMsgChain {
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
+    
     @Override
     public boolean matchMsg(Event event) {
         return event.getMsg() == EventMessage.BREAKPOINT_ADD

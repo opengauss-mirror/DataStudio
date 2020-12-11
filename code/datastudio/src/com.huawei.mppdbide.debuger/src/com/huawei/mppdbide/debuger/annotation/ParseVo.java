@@ -15,11 +15,8 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 /**
- * 
  * Title: class for LoadVO
- * 
  * Description: The dump VO load class
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00589921
@@ -50,6 +47,7 @@ public class ParseVo {
         }
         return name2Field;
     }
+
     /**
      * fill inputs clz's all fields with annotation @DumpField by ResultSet.
      *

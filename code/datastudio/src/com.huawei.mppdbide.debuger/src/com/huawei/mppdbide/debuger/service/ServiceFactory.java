@@ -11,9 +11,7 @@ import com.huawei.mppdbide.common.IConnectionProvider;
 
 /**
  * Title: the ServiceFactory class
- * <p>
  * Description:
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -22,6 +20,7 @@ import com.huawei.mppdbide.common.IConnectionProvider;
  */
 public class ServiceFactory {
     private IConnectionProvider provider;
+    
     public ServiceFactory(IConnectionProvider provider) {
         this.provider = provider;
     }

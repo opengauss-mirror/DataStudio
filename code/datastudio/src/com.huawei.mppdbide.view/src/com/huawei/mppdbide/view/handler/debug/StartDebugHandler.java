@@ -4,7 +4,6 @@
 
 package com.huawei.mppdbide.view.handler.debug;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +44,7 @@ public class StartDebugHandler {
     private DebugHandlerUtils debugUtils = DebugHandlerUtils.getInstance();
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
     private PLSourceEditor plSourceEditor;
+    
     /**
      * description: can execute
      * 

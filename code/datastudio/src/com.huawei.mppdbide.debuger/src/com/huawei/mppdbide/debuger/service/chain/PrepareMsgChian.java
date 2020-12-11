@@ -10,11 +10,8 @@ import com.huawei.mppdbide.debuger.service.DebugService;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 /**
- * 
  * Title: PrepareMsgChian
- * 
  * Description: PrepareMsgChian to instance IMsgChain and deal with ON_SQL_MSG
- * 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00589921

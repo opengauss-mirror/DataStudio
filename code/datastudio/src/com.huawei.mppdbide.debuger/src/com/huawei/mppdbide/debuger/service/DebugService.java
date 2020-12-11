@@ -15,8 +15,12 @@ import com.huawei.mppdbide.debuger.debug.DebugState;
 import com.huawei.mppdbide.debuger.thread.DebugServerRunable;
 import com.huawei.mppdbide.debuger.thread.DebugServerThreadProxy;
 import com.huawei.mppdbide.debuger.thread.EventQueueThread;
+import com.huawei.mppdbide.debuger.vo.FunctionVo;
+import com.huawei.mppdbide.debuger.vo.PositionVo;
+import com.huawei.mppdbide.debuger.vo.SessionVo;
+import com.huawei.mppdbide.debuger.vo.StackVo;
+import com.huawei.mppdbide.debuger.vo.VariableVo;
 import com.huawei.mppdbide.common.IConnection;
-import com.huawei.mppdbide.debuger.vo.*;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.postgresql.core.NoticeListener;
 
@@ -24,11 +28,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Title: the DebugService class
- * <p>
  * Description: this is module use to debug openGauss database's pl/sql function. 
  * you can use by this step:
  * 1. create and DebugService by new DebugService()
@@ -52,7 +58,6 @@ import java.util.*;
      * will exit!!
  * 13. call DebugService.closeConn
  * sample use you can see DebugTest.java
- * <p>
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -444,7 +449,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      */
     @Override
     public void noticeReceived(SQLWarning notice) {
-        if (null == notice || null == notice.getMessage()) {
+        if (notice == null || notice.getMessage() == null) {
             return;
         }
         String msgString = notice.getMessage();

@@ -21,6 +21,7 @@ import com.huawei.mppdbide.view.utils.UIElement;
  */
 public class UpdateDebugPositionTask implements Runnable {
     private int showLine = -1;
+
     public UpdateDebugPositionTask(int showLine) {
         this.showLine = showLine;
     }
@@ -41,5 +42,4 @@ public class UpdateDebugPositionTask implements Runnable {
             MPPDBIDELoggerUtility.error("set debugPostion at " + showLine + " failed,err=" + e.getMessage());
         }
     }
-
 }

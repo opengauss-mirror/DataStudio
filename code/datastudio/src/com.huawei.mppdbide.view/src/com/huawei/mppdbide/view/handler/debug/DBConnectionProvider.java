@@ -23,6 +23,7 @@ import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
  */
 public class DBConnectionProvider implements IConnectionProvider {
     private Database db;
+    
     public DBConnectionProvider(Database db) {
         this.db = db;
     }

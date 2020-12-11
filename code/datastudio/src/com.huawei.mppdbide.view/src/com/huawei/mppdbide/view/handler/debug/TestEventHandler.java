@@ -25,6 +25,7 @@ import com.huawei.mppdbide.view.handler.debug.chain.ServerRunStepChain;
  */
 public class TestEventHandler implements EventHander {
     private IMsgChain disposeChain = null;
+
     public TestEventHandler() {
         disposeChain = new ServerBeginRunChain();
 
@@ -40,6 +41,7 @@ public class TestEventHandler implements EventHander {
         IMsgChain serveiceBreakPoint = new ServerBreakPointChain();
         serviceEnd.setNext(serveiceBreakPoint);
     }
+
     @Override
     public void handleEvent(Event event) {
         MPPDBIDELoggerUtility.error("Event:" + event);

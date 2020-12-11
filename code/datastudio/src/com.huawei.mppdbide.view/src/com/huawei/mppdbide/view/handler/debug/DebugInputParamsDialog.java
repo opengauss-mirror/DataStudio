@@ -20,7 +20,6 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * @since 05,12,2020
  */
 public class DebugInputParamsDialog extends ParameterInputDialog {
-
     /**
      * descripton: create input param dialog
      * 
