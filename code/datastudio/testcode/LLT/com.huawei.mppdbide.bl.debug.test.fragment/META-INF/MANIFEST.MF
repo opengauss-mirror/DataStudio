@@ -20,4 +20,5 @@ Bundle-ClassPath: lib/MockRunner/commons-logging-1.0.4.jar,
 Require-Bundle: org.junit;bundle-version="4.12.0",
  org.apache.log4j;bundle-version="1.2.15",
  com.huawei.mppdbide.util,
- org.apache.commons.codec;bundle-version="1.10.0"
+ org.apache.commons.codec;bundle-version="1.10.0",
+ com.huawei.mppdbide.debuger;bundle-version="1.0.0"

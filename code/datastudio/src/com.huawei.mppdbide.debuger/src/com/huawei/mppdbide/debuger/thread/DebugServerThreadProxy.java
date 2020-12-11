@@ -23,6 +23,8 @@ public class DebugServerThreadProxy {
     private static final int DEFAULT_WAIT_TIME = 2000; // ms
     private static final int DEFAULT_WAIT_PER_COUNT = 10; // ms
     private static final int DEFAULT_MAX_THREADS = 2;
+    private int runCount = 1;// the max run count
+
     private ThreadPoolExecutor executor = new ThreadPoolExecutor(
             DEFAULT_MAX_THREADS,
             DEFAULT_MAX_THREADS,
@@ -46,10 +48,15 @@ public class DebugServerThreadProxy {
      * @return void
      */
     public void start() {
+        if (runCount < 0) {
+            return;
+        }
         if (isAlive()) {
             MPPDBIDELoggerUtility.warn("old thread not exit, please check!");
             return;
         }
+        MPPDBIDELoggerUtility.info("debug server run again!" + runCount);
+        runCount -= 1;
         executor.execute(debugServerRunable);
     }
 
@@ -59,6 +66,9 @@ public class DebugServerThreadProxy {
      * @return true if alive
      */
     public boolean isAlive() {
+        if (executor == null) { // this main executor already closed
+            return true;
+        }
         return executor.getActiveCount() != 0;
     }
 

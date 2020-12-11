@@ -419,6 +419,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      */
     @Override
     public void closeService() {
+        eventQueueThread.stopThread();
         try {
             if (clientConn != null) {
                 clientConn.close();
@@ -435,9 +436,6 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
             }
         } catch (SQLException sqlErr) {
             MPPDBIDELoggerUtility.warn("serverConn close failed, err=" + sqlErr.toString());
-        }
-        if (eventQueueThread.isAlive()) {
-            eventQueueThread.stopThread();
         }
     }
 
@@ -498,9 +496,6 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * @return void
      */
     public void updateServerWithResult(Object result) {
-        if (serverState.getLockState()) {
-            return;
-        }
         serverState.stop();
         serverState.stateLocked();
         sessionVo.result = result;

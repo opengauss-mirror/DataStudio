@@ -25,6 +25,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class EventQueueThread extends Thread implements IHandlerManger {
     private static final int DEFAULT_EVENT_HANDLES = 3;
     private static final int DEFAULT_EVENT_SLEEP = 10;
+    private static final int TIMEOUT_COUNT = 200;
     private LinkedBlockingQueue<Event> queue = new LinkedBlockingQueue<>();
     private List<EventHander> eventHandlers = new ArrayList<EventHander>(DEFAULT_EVENT_HANDLES);
 
@@ -62,6 +63,18 @@ public class EventQueueThread extends Thread implements IHandlerManger {
      */
     public void stopThread() {
         add(new Event(null, null));
+        int count = TIMEOUT_COUNT;
+        while (count > 0) {
+            if (!isAlive()) {
+                break;
+            }
+            try {
+                sleep(DEFAULT_EVENT_SLEEP);
+            } catch (InterruptedException e) {
+                MPPDBIDELoggerUtility.warn("sleep have error!");
+            }
+            count -= 1;
+        }
     }
 
     @Override
