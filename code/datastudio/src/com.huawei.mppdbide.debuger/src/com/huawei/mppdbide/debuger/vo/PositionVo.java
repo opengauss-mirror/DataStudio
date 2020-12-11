@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.vo;
 
 import com.huawei.mppdbide.debuger.annotation.DumpFiled;
@@ -19,18 +20,26 @@ import java.util.Locale;
  * @since 2020/11/20
  */
 public class PositionVo {
-    // the format of this vo
+    /**
+     *  the format of this vo
+     */
     public static final String FORMAT = "%8s %20s";
 
-    // func of positionvo
+    /**
+     *  func of positionvo
+     */
     @DumpFiled
     public Long func;
 
-    // linenumber of positionvo
+    /**
+     *  linenumber of positionvo
+     */
     @DumpFiled
     public Integer linenumber;
 
-    // targetname of positionvo
+    /**
+     *  targetname of positionvo
+     */
     @DumpFiled
     public String targetname;
 

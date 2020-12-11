@@ -1197,6 +1197,11 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         return createBreakpoint(line, !breakpointAnnotation.getEnable());
     }
     
+    /**
+     * description: remove debug position
+     * 
+     * @return void
+     */
     public void removeDebugPosition() {
         Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
         List<Annotation> needRemoveAnnotations = new ArrayList<Annotation>(1);
@@ -1211,6 +1216,12 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         }
     }
 
+    /**
+     * description: create debug position annotation
+     * 
+     * @param line the debug pos line
+     * @throws BadLocationException
+     */
     public void createDebugPosition(int line) throws BadLocationException {
         DebugPositionAnnotation annotation = new DebugPositionAnnotation(line);
         fAnnotationModel.addAnnotation(annotation,

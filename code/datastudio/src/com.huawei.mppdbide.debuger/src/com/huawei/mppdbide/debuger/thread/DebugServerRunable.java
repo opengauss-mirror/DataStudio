@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.thread;
 
 import com.huawei.mppdbide.debuger.event.Event;

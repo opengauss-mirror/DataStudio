@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service.chain;
 
 import com.huawei.mppdbide.debuger.event.Event;
@@ -21,7 +22,9 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * @since 19 Sep, 2019
  */
 public class PrepareMsgChian extends IMsgChain {
-    // msg to match
+    /**
+     *  msg to match
+     */
     public static final String PREPARE_SUCCESS = "Pldebugger is started successfully, you are";
     private DebugService debugService;
 

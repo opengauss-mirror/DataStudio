@@ -1,6 +1,7 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.view.handler.debug;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
@@ -22,11 +23,21 @@ import com.huawei.mppdbide.view.utils.UIElement;
 public class TerminateDebugHandler {
     private DebugHandlerUtils debugUtils = DebugHandlerUtils.getInstance();
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
+    /**
+     * description: can execute
+     * 
+     * @return void
+     */
     @CanExecute
     public boolean canExecute() {
         return debugUtils.canTerminateDebug();
     }
     
+    /**
+     * description: execute
+     * 
+     * @return void
+     */
     @Execute
     public void execute() {
         MPPDBIDELoggerUtility.error("terminate debugint:" + "null");

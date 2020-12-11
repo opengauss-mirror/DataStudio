@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.debug;
 
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
@@ -33,8 +34,12 @@ public class DebugState {
         ATTACHED(2),
         STOP(3),
         TERMINALED(4);
-        // state to description
+
+        /**
+         *  state to description
+         */
         public final int state;
+
         State(int state) {
             this.state = state;
         }

@@ -1,6 +1,7 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.view.handler.debug;
 
 
@@ -44,11 +45,21 @@ public class StartDebugHandler {
     private DebugHandlerUtils debugUtils = DebugHandlerUtils.getInstance();
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
     private PLSourceEditor plSourceEditor;
+    /**
+     * description: can execute
+     * 
+     * @return boolean true if can
+     */
     @CanExecute
     public boolean canExecute() {
         return debugUtils.canStartDebug();
     }
     
+    /**
+     * description: excute the command
+     * 
+     * @return void
+     */
     @Execute
     public void execute() {
         MPPDBIDELoggerUtility.error("start debugint:" + "null");
@@ -72,14 +83,20 @@ public class StartDebugHandler {
         new InputParamsJob("input dialog", null, this).schedule();
     }
     
+    /**
+     * description: get PLSourceEditor instance
+     * 
+     * @return PLSourceEditor the editor
+     */
     public PLSourceEditor getSourceEditor() {
         return plSourceEditor;
     }
     
     /**
-     * Execute SQL obj window.
+     * description: Execute SQL obj window.
      *
      * @param debugObject the debug object
+     * @return void
      */
     public void executeSQLObjWindow(IDebugObject debugObject) {
         DebugInputParamsDialog debugInputDlg = new DebugInputParamsDialog(
@@ -116,7 +133,6 @@ public class StartDebugHandler {
             MPPDBIDEDialogs.generateErrorDialog(MessageConfigLoader.getProperty(IMessagesConstants.PLSQL_ERR),
                     MessageConfigLoader.getProperty(IMessagesConstants.UNKNOWN_INTERNAL_ERR), exception);
         }
-
     }
     
     private List<Object> getDebugParams(List<DefaultParameter> serverParams) throws DatabaseOperationException {

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.vo;
 
 /**
@@ -15,12 +16,18 @@ package com.huawei.mppdbide.debuger.vo;
  * @since 2020/11/16
  */
 public class SessionVo {
-    // serverPort for sessionVO
+    /**
+     *  serverPort for sessionVO
+     */
     public Integer serverPort;
 
-    // clientPort for sessionVO
+    /**
+     *  clientPort for sessionVO
+     */
     public Integer clientPort;
 
-    // result for sessionVO
+    /**
+     *  result for sessionVO
+     */
     public Object result;
 }

@@ -1,6 +1,7 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.view.handler.debug;
 
 import java.util.Optional;
@@ -13,7 +14,7 @@ import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
 
 /**
  * Title: class
- * Description: The Class DebugEditorItem.
+ * Description: The ClassD BConnectionProvider 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -27,8 +28,10 @@ public class DBConnectionProvider implements IConnectionProvider {
     }
 
     /**
-     * get free connection from database
-     * */
+     * desrciption: get free connection from database
+     * 
+     * @return Optional<IConnection> the connection
+     */
     @Override
     public Optional<IConnection> getFreeConnection() {
         try {

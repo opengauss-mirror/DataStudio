@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.thread;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -34,6 +35,7 @@ public class DebugServerThreadProxy {
     /**
      * set which torrun
      *
+     * @param runable the runable
      * @return void
      */
     public void setDebugServerRunable(DebugServerRunable runable) {

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service.chain;
 
 import java.util.regex.Matcher;
@@ -23,7 +24,9 @@ import com.huawei.mppdbide.debuger.service.DebugService;
  * @since 2020-12-08
  */
 public class ServerPortMsgChain extends IMsgChain {
-    // msg to matched
+    /**
+     *  msg to matched
+     */
     public static final String SERVER_PORT_MATCH = "YOUR PROXY PORT ID IS:";
     private DebugService debugService;
     public ServerPortMsgChain(DebugService debugService) {

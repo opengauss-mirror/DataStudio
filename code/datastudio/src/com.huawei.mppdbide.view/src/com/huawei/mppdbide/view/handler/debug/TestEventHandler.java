@@ -1,6 +1,7 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.view.handler.debug;
 
 import com.huawei.mppdbide.debuger.event.Event;
@@ -44,5 +45,4 @@ public class TestEventHandler implements EventHander {
         MPPDBIDELoggerUtility.error("Event:" + event);
         disposeChain.handleMsg(event);
     }
-
 }

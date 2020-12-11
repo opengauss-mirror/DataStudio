@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service;
 
 import com.huawei.mppdbide.debuger.event.Event;
@@ -80,8 +81,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * prepare to debug
      *
-     * @throws SQLException the exp
      * @return void
+     * @throws SQLException the exp
      */
     public void prepareDebug() throws SQLException {
         List<Object> inputsParams = Arrays.asList(functionVo.oid);
@@ -119,8 +120,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * when server backthread started, this will callback
      *
      * @param args input args to function
-     * @throws SQLException the exp
      * @return ResultSet the function result
+     * @throws SQLException the exp
      */
     public ResultSet serverDebugCallBack(List<?> args) throws SQLException {
         String sql = DebugConstants.getSql(functionVo.proname, args.size());
@@ -134,8 +135,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * client attach debug
      *
-     * @throws SQLException the exp
      * @return void
+     * @throws SQLException the exp
      */
     public void attachDebug() throws SQLException {
         waitServerStart();
@@ -170,8 +171,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * server set debug session off
      *
-     * @throws SQLException the exp
      * @return void
+     * @throws SQLException the exp
      */
     public void debugOff() throws SQLException {
         serverConn.getDebugOptPrepareStatement(
@@ -182,8 +183,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * client abort debug
      *
-     * @throws SQLException the exp
      * @return Optional<Boolean> true if success
+     * @throws SQLException the exp
      */
     public Optional<Boolean> abortDebug() throws SQLException {
         if (clientState.isStopped()) {
@@ -208,9 +209,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * step over run
      *
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     @Override
     public Optional<PositionVo> stepOver() throws SQLException, DebugExitException {
@@ -220,9 +221,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * step into run
      *
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     @Override
     public Optional<PositionVo> stepInto() throws SQLException, DebugExitException {
@@ -232,9 +233,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * step out run
      *
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     @Override
     public Optional<PositionVo> stepOut() throws SQLException, DebugExitException {
@@ -244,9 +245,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * continue exec run
      *
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     @Override
     public Optional<PositionVo> continueExec() throws SQLException, DebugExitException {
@@ -257,9 +258,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * step run common command
      *
      * @param debugOpt which opteration to exec
+     * @return Optional<PositionVo> the breakpoint line position
      * @throws SQLException the exp
      * @throws DebugExitException the debug exit exp
-     * @return Optional<PositionVo> the breakpoint line position
      */
     @Override
     public Optional<PositionVo> getPositionVo(
@@ -287,8 +288,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * get cur variables
      *
-     * @throws SQLException the exp
      * @return List<VariableVo>  all variables
+     * @throws SQLException the exp
      */
     @Override
     public List<VariableVo> getVariables() throws SQLException {
@@ -298,8 +299,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * get cur stacks
      *
-     * @throws SQLException the exp
      * @return List<VariableVo>  all stacks
+     * @throws SQLException the exp
      */
     @Override
     public List<StackVo> getStacks() throws SQLException {
@@ -309,8 +310,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * get cur breakpoints 
      *
-     * @throws SQLException the exp
      * @return List<VariableVo>  all breakpoints
+     * @throws SQLException the exp
      */
     @Override
     public List<PositionVo> getBreakPoints() throws SQLException {
@@ -333,8 +334,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * set breakpoint
      *
      * @param positionVo which line will set breakpoint
-     * @throws SQLException the exp
      * @return boolean true if success
+     * @throws SQLException the exp
      */
     @Override
     public boolean setBreakPoint(PositionVo positionVo) throws SQLException {
@@ -345,8 +346,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * delete breakpoint
      *
      * @param positionVo which line will set breakpoint
-     * @throws SQLException the exp
      * @return boolean true if success
+     * @throws SQLException the exp
      */
     @Override
     public boolean dropBreakPoint(PositionVo positionVo) throws SQLException {
@@ -358,8 +359,8 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      *
      * @param debugOpt which opteration to exec
      * @param positionVo which line will set breakpoint
-     * @throws SQLException the exp
      * @return boolean true if success
+     * @throws SQLException the exp
      */
     public boolean disposeBreakpoint(DebugConstants.DebugOpt debugOpt,
             PositionVo positionVo) throws SQLException {
@@ -503,6 +504,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      *
      * @param args function input args
      * @return void
+     * @throws SQLException sql exception
      */
     @Override
     public void begin(List<?> args) throws SQLException {

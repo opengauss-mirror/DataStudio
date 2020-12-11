@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.common;
 
 import java.sql.PreparedStatement;
@@ -39,6 +40,7 @@ public class DBConnectionAdapter implements IConnection {
      *
      * @param sql sql to execute
      * @return PreparedStatement preparedstatement instance
+     * @throws SQLException sql exception
      */
     @Override
     public PreparedStatement getStatement(String sql) throws SQLException {
@@ -59,9 +61,12 @@ public class DBConnectionAdapter implements IConnection {
      * @param debugOpt enum opt
      * @param params the param to set to PreparedStatement
      * @return PreparedStatement preparedstatement instance
+     * @throws SQLException sql exception
      */
     @Override
-    public PreparedStatement getDebugOptPrepareStatement(DebugOpt debugOpt, List<Object> params) throws SQLException {
+    public PreparedStatement getDebugOptPrepareStatement(
+            DebugOpt debugOpt,
+            List<Object> params) throws SQLException {
         String sql = DebugConstants.getSql(debugOpt);
         PreparedStatement ps = getStatement(sql);
         for (int i = 1 ; i < params.size() + 1 ; i ++) {

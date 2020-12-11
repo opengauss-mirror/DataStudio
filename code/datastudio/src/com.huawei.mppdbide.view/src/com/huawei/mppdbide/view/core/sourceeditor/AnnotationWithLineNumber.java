@@ -24,7 +24,9 @@ import com.huawei.mppdbide.view.utils.icon.IconUtility;
  * @since 04 Apr, 2020
  */
 public abstract class AnnotationWithLineNumber extends Annotation {
-    // the annotation line
+    /**
+     *  the annotation line
+     */
     protected int line;
     public AnnotationWithLineNumber(String strategyId, boolean isPersistent, String info, int line) {
         super(strategyId, isPersistent, info);
@@ -36,12 +38,17 @@ public abstract class AnnotationWithLineNumber extends Annotation {
         this.line = line;
     }
     
+    /**
+     * description: get annotationType
+     * 
+     * @return AnnotationType the type
+     */
     public abstract AnnotationHelper.AnnotationType getAnnotationType();
 
     /**
      * Gets the image.
      *
-     * @return the line
+     * @return Optional<Image> the image
      */
     public Optional<Image> getImage() {
         return Optional.empty();
@@ -50,7 +57,7 @@ public abstract class AnnotationWithLineNumber extends Annotation {
     /**
      * Gets the line.
      *
-     * @return the line
+     * @return int the line
      */
     public int getLine() {
         return this.line;
@@ -60,7 +67,7 @@ public abstract class AnnotationWithLineNumber extends Annotation {
      * set line
      * 
      * @param line line to set
-     * @return the line
+     * @return void
      */
     public void setLine(int line) {
         this.line = line;
@@ -70,7 +77,7 @@ public abstract class AnnotationWithLineNumber extends Annotation {
      * Equals.
      *
      * @param obj the obj
-     * @return true, if successful
+     * @return boolean true if successful
      */
     @Override
     public boolean equals(Object obj) {
@@ -85,6 +92,12 @@ public abstract class AnnotationWithLineNumber extends Annotation {
         return super.hashCode();
     }
     
+    /**
+     * description: load image from path
+     * 
+     * @param imagePath the image path
+     * @return Image image instance
+     */
     public static Image loadImage(String imagePath) {
         return IconUtility.getIconImage(imagePath, AnnotationWithLineNumber.class);
     }

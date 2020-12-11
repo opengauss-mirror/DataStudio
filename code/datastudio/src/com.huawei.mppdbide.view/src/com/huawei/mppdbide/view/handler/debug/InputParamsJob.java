@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.view.handler.debug;
 
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
@@ -19,7 +20,6 @@ import com.huawei.mppdbide.view.workerjob.UIWorkerJob;
  * @since 05,12,2020
  */
 public class InputParamsJob extends UIWorkerJob {
-
     private StartDebugHandler debugHandler;
     /**
      * descript: InputParam back thread Job

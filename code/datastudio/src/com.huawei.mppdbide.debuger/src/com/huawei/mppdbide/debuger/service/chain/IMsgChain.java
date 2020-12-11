@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service.chain;
 
 import com.huawei.mppdbide.debuger.event.Event;
@@ -18,7 +19,9 @@ import com.huawei.mppdbide.debuger.event.Event;
  * @since 19 Sep, 2019
  */
 public abstract class IMsgChain {
-    // next chain
+    /**
+     *  next chain
+     */
     protected IMsgChain msgChain = null;
     
     /**
@@ -33,6 +36,7 @@ public abstract class IMsgChain {
     /**
      * set next chain
      *
+     * @param msgChain next chain to set
      * @return void no return value
      */
     public void setNext(IMsgChain msgChain) {
@@ -49,6 +53,7 @@ public abstract class IMsgChain {
 
     /**
      * dispose Event msg
+     * 
      * @param event event to dispose
      * @return void 
      */
@@ -56,6 +61,7 @@ public abstract class IMsgChain {
 
     /**
      * handleMsg by chain
+     * 
      * @param event event to dispose
      * @return void 
      */

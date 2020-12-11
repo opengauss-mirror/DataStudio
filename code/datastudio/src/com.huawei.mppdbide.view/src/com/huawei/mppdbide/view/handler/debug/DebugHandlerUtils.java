@@ -1,6 +1,7 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.view.handler.debug;
 
 import org.eclipse.core.commands.Command;
@@ -30,10 +31,20 @@ public class DebugHandlerUtils {
         
     }
     
+    /**
+     * description: get singleton DebugHandlerUtils instance
+     * 
+     * @return DebugHandlerUtils the instance
+     */
     public static DebugHandlerUtils getInstance() {
         return debugUtils;
     }
     
+    /**
+     * description: can start debug
+     * 
+     * @return boolean true if can start debug
+     */
     public boolean canStartDebug() {
         if (isDebugStart) {
             return false;
@@ -54,20 +65,31 @@ public class DebugHandlerUtils {
         return false;
     }
     
+    /**
+     * description: can terminate debug
+     * 
+     * @return boolean true if can terminate
+     */
     public boolean canTerminateDebug() {
         return isDebugStart;
     }
     
+    /**
+     * description: set debug start status
+     * 
+     * @param isDebugStart debug status
+     * @return void
+     */
     public void setDebugStart(boolean isDebugStart) {
         this.isDebugStart = isDebugStart;
     }
 
     /**
-     * this use to show debug view partstack
+     * description: this use to show debug view partstack
      * 
      * @param isShow show or not
-     * @return null
-     * */
+     * @return void
+     */
     public void showAllDebugView(boolean isShow) {
         String partId = "com.huawei.mppdbide.partsashcontainer.id.sub.alldebug";
         MUIElement allDebugPart = UIElement.getInstance().getModelService().find(partId, 
@@ -75,6 +97,11 @@ public class DebugHandlerUtils {
         allDebugPart.setVisible(isShow);
     }
     
+    /**
+     * description: show debug source code view
+     * 
+     * @return void
+     */
     @SuppressWarnings("restriction")
     public void initDebugSourceView() {
         String viewCommand = "com.huawei.mppdbide.command.id.viewsourceobjectbrowseritem";

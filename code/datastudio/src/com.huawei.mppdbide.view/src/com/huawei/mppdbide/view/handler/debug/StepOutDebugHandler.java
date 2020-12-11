@@ -1,6 +1,7 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.view.handler.debug;
 
 
@@ -23,11 +24,21 @@ import com.huawei.mppdbide.debuger.vo.PositionVo;
  * @since 02,12,2020
  */
 public class StepOutDebugHandler extends BaseDebugStepHandler {
+    /**
+     * description: can execute
+     * 
+     * @return void
+     */
     @CanExecute
     public boolean canExecute() {
         return canStepDebugRun();
     }
     
+    /**
+     * description: execute
+     * 
+     * @return void
+     */
     @Execute
     public void execute() {
         executeRun();

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service.chain;
 
 import com.huawei.mppdbide.debuger.event.Event;
@@ -28,10 +29,22 @@ public class MsgChainHelper {
         eventChain = new ServerExitEventChain(debugService);
     }
 
+    /**
+     * description: handle sql msg
+     * 
+     * @param event event of reveive from sql
+     * @return void
+     */
     public void handleSqlMsg(Event event) {
         sqlMsgChain.handleMsg(event);
     }
     
+    /**
+     * description: handle event msg
+     * 
+     * @param event event of reveive from notify handler manager
+     * @return void
+     */
     public void handleEventMsg(Event event) {
         eventChain.handleMsg(event);
     }

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.vo;
 
 import com.huawei.mppdbide.debuger.annotation.DumpFiled;
@@ -19,58 +20,86 @@ import org.postgresql.util.PGobject;
  * @since 2020/11/16
  */
 public class FunctionVo {
-    // oid of function
+    /**
+     *  oid of function
+     */
     @DumpFiled
     public Long oid;
 
-    // proname of function
+    /**
+     *  proname of function
+     */
     @DumpFiled
     public String proname;
     
-    // prorettype of function
+    /**
+     *  prorettype of function
+     */
     @DumpFiled
     public Long prorettype;
     
-    // proretset of function
+    /**
+     *  proretset of function
+     */
     @DumpFiled
     public Boolean proretset;
 
-    // pronargs of function
+    /**
+     *  pronargs of function
+     */
     @DumpFiled
     public Integer pronargs;
     
-    // pronargdefaults of function
+    /**
+     *  pronargdefaults of function
+     */
     @DumpFiled
     public Integer pronargdefaults;
 
-    // proargtypes of function
+    /**
+     *  proargtypes of function
+     */
     @DumpFiled
     public PGobject proargtypes;
 
-    // proallargtypes of function
+    /**
+     *  proallargtypes of function
+     */
     @DumpFiled
     public PgArray proallargtypes;
 
-    // proargmodes of function
+    /**
+     *  proargmodes of function
+     */
     @DumpFiled
     public PgArray proargmodes;
 
-    // proargnames of function
+    /**
+     *  proargnames of function
+     */
     @DumpFiled
     public PgArray proargnames;
 
-    // proargdefaults of function
+    /**
+     *  proargdefaults of function
+     */
     @DumpFiled
     public PGobject proargdefaults;
 
-    // prodefaultargpos of function
+    /**
+     *  prodefaultargpos of function
+     */
     @DumpFiled
     public PGobject prodefaultargpos;
 
-    // prosrc of function
+    /**
+     *  prosrc of function
+     */
     @DumpFiled
     public String prosrc;
 
-    // all input param desc
+    /**
+     *  all input param desc
+     */
     public Boolean allInputParam;
 }

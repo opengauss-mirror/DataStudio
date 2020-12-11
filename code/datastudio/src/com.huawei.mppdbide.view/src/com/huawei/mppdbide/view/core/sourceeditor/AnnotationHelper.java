@@ -18,27 +18,83 @@ import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
  * @since 03,12,2020
  */
 public class AnnotationHelper {
+    /**
+     * break point annotation layer
+     */
     public static final int BREAKPOINT_LAYER = 1;
+    /**
+     * break point annotation type label
+     */
     public static final String BREAKPOINIT_TYPE_LABEL = IMessagesConstants.BREAKPOINT_ANNOTATION_LABEL;
+    /**
+     * break point annotation strategy id
+     */
     public static final String BREAKPOINT_STRATEGY_ID = "PLSQL_DEBUGGER_BREAKPOINT";
+    /**
+     * break point annotation rgb
+     */
     public static final RGB BREAKPOINT_RGB = new RGB(188, 188, 222);
 
+    /**
+     * debug position annotation layer
+     */
     public static final int DEBUG_POSITION_LAYER = 2;
+    /**
+     * debug position annotation type label
+     */
     public static final String DEBUG_POSITION_TYPE_LABEL = IMessagesConstants.DEBUG_POSITION_LABEL;
+    /**
+     * debug position annotation strategy id
+     */
     public static final String DEBUG_POSITION_STRATEGY_ID = "PLSQL_DEBUGGER_DEBUG_POSITION";
+    /**
+     * debug position annotation rgb
+     */
     public static final RGB DEBUG_POSITION_RGB = new RGB(255, 153, 51);
 
+    /**
+     * error annotation layer
+     */
     public static final int ERROR_LAYER = 3;
+    /**
+     * error annotation type label
+     */
     public static final String ERROR_TYPE_LABEL = IMessagesConstants.ERROR_ANNOTATION_LABEL;
+    /**
+     * error annotation strategy id
+     */
     public static final String ERROR_STRATEGY_ID = "error.type";
+    /**
+     * error annotation rgb
+     */
     public static final RGB ERROR_RGB = new RGB(255, 0, 0);
 
+    /**
+     * error position annotation layer
+     */
     public static final int ERROR_POSITION_LAYER = 2;
+    /**
+     * error position annotation type label
+     */
     public static final String ERROR_POSITION_TYPE_LABEL = IMessagesConstants.ERROR_POSITION_LABEL;
+    /**
+     * error position annotation strategy id
+     */
     public static final String ERROR_POSITION_STRATEGY_ID = "PLSQL_ERROR_POSITION";
+    /**
+     * error position annotation rgb
+     */
     public static final RGB ERROR_POSITION_RGB = new RGB(255, 255, 0);
 
-    // this enum assocate with AnnotationWithLineNumber's instance
+    /**
+     * Title: AnnotationType enum this enum assocate with AnnotationWithLineNumber's instance
+     * Description: The Class AnnotationType
+     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
+     *
+     * @author z00588921
+     * @version [openGauss DataStudio 1.0.1, 11,12,2020]
+     * @since 11,12,2020
+     */
     public static enum AnnotationType {
         BREAKPOINT(BREAKPOINT_LAYER, BREAKPOINIT_TYPE_LABEL, BREAKPOINT_STRATEGY_ID,
                 BREAKPOINT_RGB),
@@ -66,7 +122,7 @@ public class AnnotationHelper {
         /**
          * get layer
          * 
-         * @return layer
+         * @return int layer
          * */
         public int getLayer() {
             return layer;
@@ -75,7 +131,7 @@ public class AnnotationHelper {
         /**
          * get type label
          * 
-         * @return typeLabel
+         * @return String type label
          * */
         public String getTypeLabel() {
             return typeLabel;
@@ -84,7 +140,7 @@ public class AnnotationHelper {
         /**
          * get  stragegy
          * 
-         * @return strategy
+         * @return String strategy id
          * */
         public String getStrategy() {
             return stragety;
@@ -93,7 +149,7 @@ public class AnnotationHelper {
         /**
          * get  rgb
          * 
-         * @return strategy
+         * @return RGB  get rgb
          * */
         public RGB getRGB() {
             return rgbShow;

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service;
 
 import com.huawei.mppdbide.debuger.dao.FunctionDao;
@@ -37,8 +38,8 @@ public class QueryService implements IService {
      * query function vo
      *
      * @param proname the debug function name  
-     * @throws SQLException sql exp
      * @return FunctionVo the function vo
+     * @throws SQLException sql exp
      */
     public FunctionVo queryFunction(String proname) throws SQLException {
         try (ResultSet rs = conn.getStatement(functionDao.getSql(proname)).executeQuery()) {
@@ -53,8 +54,8 @@ public class QueryService implements IService {
      * get base source code
      *
      * @param oid function oid
-     * @throws SQLException sql exp
      * @return Optional<SourceCodeVo> the source code
+     * @throws SQLException sql exp
      */
     public Optional<SourceCodeVo> getSourceCode(Long oid) throws SQLException {
         return getTempSourceCode(oid,
@@ -66,8 +67,8 @@ public class QueryService implements IService {
      * get sourceCode source code
      *
      * @param oid function oid
-     * @throws SQLException sql exp
      * @return Optional<TotalSourceCode> the source code
+     * @throws SQLException sql exp
      */
     public Optional<TotalSourceCodeVo> getTotalSourceCode(Long oid) throws SQLException {
         return getTempSourceCode(oid,

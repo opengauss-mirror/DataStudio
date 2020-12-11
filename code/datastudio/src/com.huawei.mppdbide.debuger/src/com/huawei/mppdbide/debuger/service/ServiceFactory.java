@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service;
 
 import com.huawei.mppdbide.debuger.dao.FunctionDao;
@@ -25,16 +26,32 @@ public class ServiceFactory {
         this.provider = provider;
     }
 
+    /**
+     * description: get query service
+     * 
+     * @return QueryService the query service
+     */
     public QueryService getQueryService() {
         return createQueryService(provider.getFreeConnection().get());
     }
 
+    /**
+     * description: get debug service
+     * 
+     * @param functionVo the functionVo
+     * @return DebugService debug service
+     */
     public DebugService getDebugService(FunctionVo functionVo) {
         return createDebugService(functionVo,
                 provider.getFreeConnection().get(),
                 provider.getFreeConnection().get());
     }
 
+    /**
+     * description: get code service
+     * 
+     * @return SourceCodeService the code service
+     */
     public SourceCodeService getCodeService() {
         return new SourceCodeService();
     }

@@ -1,6 +1,7 @@
-/**
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.view.handler.debug;
 
 import java.sql.SQLException;
@@ -22,11 +23,21 @@ import com.huawei.mppdbide.debuger.vo.PositionVo;
  * @since 04,12,2020
  */
 public class StepInDebugHandler extends BaseDebugStepHandler {
+    /**
+     * description: can execute
+     * 
+     * @return void
+     */
     @CanExecute
     public boolean canExecute() {
         return canStepDebugRun();
     }
     
+    /**
+     * description: execute
+     * 
+     * @return void
+     */
     @Execute
     public void execute() {
         executeRun();

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.common;
 
 import org.postgresql.core.BaseStatement;
@@ -25,9 +26,13 @@ import java.sql.SQLWarning;
  * @since 19 Sep, 2019
  */
 public class GaussManager {
-    // singleton instance
+    /** 
+     * singleton instance
+     */
     public static final GaussManager INSTANCE = new GaussManager();
-    private GaussManager() {}
+    private GaussManager() {
+        
+    }
 
     /**
      * add noticeListener to PreparedStatement object
@@ -43,6 +48,7 @@ public class GaussManager {
      * add noticeListener to PreparedStatement object
      *
      * @param ps listener to set
+     * @param listener the listener
      * @return boolean true if success
      */
     public boolean addNoticeListener(PreparedStatement ps, NoticeListener listener) {

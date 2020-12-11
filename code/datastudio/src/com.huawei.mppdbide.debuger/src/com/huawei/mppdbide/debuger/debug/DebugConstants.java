@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.debug;
 
 import java.util.Locale;
@@ -18,7 +19,9 @@ import java.util.stream.Stream;
  * @since 2020/11/16
  */
 public class DebugConstants {
-    // default string length
+    /** 
+     * default string length
+     */
     public static final int DEFAULT_STRING_BUILD_LEN = 128;
     
     /**
@@ -45,12 +48,17 @@ public class DebugConstants {
         GET_STACKS("pldbg_get_stack", 1),
         GET_BREAKPOINTS("pldbg_get_breakpoints", 1),
         DROP_BREAKPOINT("pldbg_drop_breakpoint", 3),
-        SET_BREAKPOINT("pldbg_set_breakpoint", 3),
-        ;
-        // opt of interface
+        SET_BREAKPOINT("pldbg_set_breakpoint", 3);
+
+        /**
+         *  opt of interface
+         */
         public final String opt;
-        // interface param num
+        /**
+         *  interface param num
+         */
         public final int paramNum;
+
         DebugOpt(String opt, int paramNum) {
             this.opt = opt;
             this.paramNum = paramNum;

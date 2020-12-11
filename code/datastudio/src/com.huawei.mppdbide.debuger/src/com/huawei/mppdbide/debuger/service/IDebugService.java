@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service;
 
 import java.sql.SQLException;
@@ -32,6 +33,7 @@ public interface IDebugService extends IService {
      *
      * @param args function input args
      * @return void
+     * @throws SQLException sql exception
      */
     void begin(List<?> args) throws SQLException;
     

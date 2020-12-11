@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
  */
+
 package com.huawei.mppdbide.debuger.service;
 
 import com.huawei.mppdbide.debuger.exception.DebugPositionNotFoundException;
@@ -22,7 +23,9 @@ import java.util.stream.Collectors;
  * @since 2020/11/21
  */
 public class SourceCodeService implements IService {
-    // the offset of show code and base code
+    /**
+     *  the offset of show code and base code
+     */
     public static final int CODE_BASE_OFFSET = 1;
     private CodeDescription baseCodeDesc;
     private CodeDescription totalCodeDesc;
@@ -60,8 +63,8 @@ public class SourceCodeService implements IService {
      * showline convert to codeline
      *
      * @param showLine the show line
-     * @throws DebugPositionNotFoundException debug position exp
      * @return int return converted result line
+     * @throws DebugPositionNotFoundException debug position exp
      */
     public int showLine2CodeLine(int showLine) throws DebugPositionNotFoundException {
         return showLine - getBeginTotalAndBaseDiff() + CODE_BASE_OFFSET;
@@ -71,8 +74,8 @@ public class SourceCodeService implements IService {
      * codeline convert to showline
      *
      * @param codeLine the code line
-     * @throws DebugPositionNotFoundException debug position exp
      * @return int return converted result line
+     * @throws DebugPositionNotFoundException debug position exp
      */
     public int codeLine2ShowLine(int codeLine) throws DebugPositionNotFoundException {
         return codeLine + getBeginTotalAndBaseDiff() - CODE_BASE_OFFSET;
@@ -81,8 +84,8 @@ public class SourceCodeService implements IService {
     /**
      * get begin debug line number
      *
-     * @throws DebugPositionNotFoundException debug position exp
      * @return int return begin debug line number in code line
+     * @throws DebugPositionNotFoundException debug position exp
      */
     public int getBeginDebugCodeLine() throws DebugPositionNotFoundException {
         return getFirstValidDebugPos() + getBeginTotalAndBaseDiff();
@@ -91,8 +94,8 @@ public class SourceCodeService implements IService {
     /**
      * get base code begin line position
      *
-     * @throws DebugPositionNotFoundException debug position exp
      * @return int return begin debug line number in code line
+     * @throws DebugPositionNotFoundException debug position exp
      */
     public int getFirstValidDebugPos() throws DebugPositionNotFoundException {
         // BEGIN line is not a valid debug pos, so add 1
@@ -132,6 +135,7 @@ public class SourceCodeService implements IService {
      * get total and base diff line
      *
      * @return int the diff line
+     * @throws DebugPositionNotFoundException not found exp
      */
     public int getBeginTotalAndBaseDiff() throws DebugPositionNotFoundException {
         return getBeignfTotalCode() - getBeignOfBaseCode();
@@ -141,6 +145,7 @@ public class SourceCodeService implements IService {
      * get base code being pos
      *
      * @return int the begin line 
+     * @throws DebugPositionNotFoundException not found exp
      */
     public int getBeignOfBaseCode() throws DebugPositionNotFoundException {
         return this.baseCodeDesc.getBeginPosition();
@@ -150,6 +155,7 @@ public class SourceCodeService implements IService {
      * get total code being pos
      *
      * @return int the begin line 
+     * @throws DebugPositionNotFoundException not found exp
      */
     public int getBeignfTotalCode() throws DebugPositionNotFoundException {
         return this.totalCodeDesc.getBeginPosition();
@@ -164,7 +170,9 @@ public class SourceCodeService implements IService {
      * @since 2020/11/21
      */
     public static class CodeDescription {
-        // invalid position
+        /**
+         *  invalid position
+         */
         public static final int INVALID_POSITION = -1;
         private String code;
         private List<String> codeList;
@@ -178,8 +186,8 @@ public class SourceCodeService implements IService {
         /**
          * get the begin line
          *
-         * @throws DebugPositionNotFoundException the not found exp
          * @return int the begin line 
+         * @throws DebugPositionNotFoundException the not found exp
          */
         public int getBeginPosition() throws DebugPositionNotFoundException {
             if (beginPosition == INVALID_POSITION) {
