@@ -65,12 +65,12 @@ public class ErrorAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
     @Override
     public String getTypeLabel(Annotation annotation) {
         if (annotation instanceof AnnotationWithLineNumber) {
-            ErrorAnnotation.getTypelabel();
+            return ((AnnotationWithLineNumber) annotation)
+                    .getAnnotationType()
+                    .getTypeLabel();
         } else {
             return super.getTypeLabel(annotation);
         }
-
-        return null;
     }
 
     /**

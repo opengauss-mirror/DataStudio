@@ -42,6 +42,13 @@ public interface IDebugService extends IService {
     void end();
 
     /**
+     * init debug
+     *
+     * @return void
+     */
+    void init();
+    
+    /**
      * step into run
      *
      * @return Optional<PositionVo> the breakpoint line position

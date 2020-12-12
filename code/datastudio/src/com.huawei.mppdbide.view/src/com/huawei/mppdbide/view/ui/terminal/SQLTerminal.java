@@ -2075,7 +2075,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
         // First disconnect partitioner and set and connect again
         IDocumentPartitioner documentPartitioner = ((IDocumentExtension3) sourceEditor.getDocument())
                 .getDocumentPartitioner(SQLPartitionScanner.SQL_PARTITIONING);
-        if (documentPartitioner == null) {
+        if (documentPartitioner != null) {
             if (documentPartitioner instanceof SQLDocumentPartitioner) {
                 SQLDocumentPartitioner sqlPartitioner = (SQLDocumentPartitioner) documentPartitioner;
                 sqlPartitioner.clearScanner();

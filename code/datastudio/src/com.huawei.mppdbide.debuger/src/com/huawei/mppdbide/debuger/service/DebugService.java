@@ -24,6 +24,7 @@ import com.huawei.mppdbide.common.IConnection;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.postgresql.core.NoticeListener;
 
+import java.lang.Thread.State;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,7 +80,6 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
 
     public DebugService() {
         eventQueueThread.addHandler(this);
-        eventQueueThread.start();
         msgChainHelper = new MsgChainHelper(this);
     }
 
@@ -370,7 +370,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public boolean disposeBreakpoint(DebugConstants.DebugOpt debugOpt,
             PositionVo positionVo) throws SQLException {
         if (positionVo.func == null || positionVo.func.intValue() == 0) {
-            positionVo.func = new Long(functionVo.oid);
+            positionVo.func = Long.valueOf(functionVo.oid);
         }
 
         List<Object> inputParams = Arrays.asList(
@@ -511,6 +511,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      */
     @Override
     public void begin(List<?> args) throws SQLException {
+        init();
         prepareDebug();
         startDebug(args);
         attachDebug();
@@ -607,5 +608,12 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     @Override
     public void addServerExistListener(EventHander handler) {
         eventQueueThread.addHandler(handler);
+    }
+
+    @Override
+    public void init() {
+        if (eventQueueThread.getState() == State.NEW) {
+            eventQueueThread.start();
+        }
     }
 }

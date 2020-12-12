@@ -295,4 +295,9 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
             }
         }
     }
+
+    @Override
+    public void init() {
+        debugService.init();
+    }
 }

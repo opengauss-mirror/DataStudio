@@ -149,6 +149,7 @@ public class DebugerFunctionTest extends BasicJDBCTestCaseAdapter {
         queryService = serviceFactory.getQueryService();
         functionVo = queryService.queryFunction(funcDescAddTest.proname);
         debugService = serviceFactory.getDebugService(functionVo);
+        debugService.init();
         debugService.prepareDebug();
         debugService.noticeReceived(new SQLWarning(PrepareMsgChian.PREPARE_SUCCESS + " SERVER "));
         debugService.noticeReceived(new SQLWarning(ServerPortMsgChain.SERVER_PORT_MATCH + "0"));
