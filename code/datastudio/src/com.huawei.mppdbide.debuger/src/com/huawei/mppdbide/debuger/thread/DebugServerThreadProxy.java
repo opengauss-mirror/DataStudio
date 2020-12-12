@@ -23,7 +23,7 @@ public class DebugServerThreadProxy {
     private static final int DEFAULT_WAIT_TIME = 2000; // ms
     private static final int DEFAULT_WAIT_PER_COUNT = 10; // ms
     private static final int DEFAULT_MAX_THREADS = 2;
-    private int runCount = 1;// the max run count
+    private int runCount = 1; // the max run count
 
     private ThreadPoolExecutor executor = new ThreadPoolExecutor(
             DEFAULT_MAX_THREADS,

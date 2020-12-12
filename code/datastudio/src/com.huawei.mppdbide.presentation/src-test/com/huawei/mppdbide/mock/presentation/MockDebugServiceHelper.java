@@ -3,7 +3,7 @@
  */
 
 
-package com.huawei.mppdbide.bl.mock.debug;
+package com.huawei.mppdbide.mock.presentation;
 
 import java.util.ArrayList;
 import java.util.Arrays;

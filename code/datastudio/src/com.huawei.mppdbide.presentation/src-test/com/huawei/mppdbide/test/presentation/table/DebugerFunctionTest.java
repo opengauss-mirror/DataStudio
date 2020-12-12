@@ -3,7 +3,11 @@
  */
 
 
-package com.huawei.mppdbide.bl.test.debug;
+package com.huawei.mppdbide.test.presentation.table;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 import java.sql.SQLWarning;
@@ -18,13 +22,6 @@ import org.junit.Test;
 
 import com.huawei.mppdbide.adapter.gauss.DBConnection;
 import com.huawei.mppdbide.bl.contentassist.ContentAssistProcesserData;
-import com.huawei.mppdbide.bl.mock.debug.CommonLLTUtils;
-import com.huawei.mppdbide.bl.mock.debug.CommonLLTUtilsHelper;
-import com.huawei.mppdbide.bl.mock.debug.GaussMockPreparedStatementToHang;
-import com.huawei.mppdbide.bl.mock.debug.MockConnectionStubPS;
-import com.huawei.mppdbide.bl.mock.debug.MockDebugServiceHelper;
-import com.huawei.mppdbide.bl.mock.debug.MockDebugServiceHelper.FunctionDesc;
-import com.huawei.mppdbide.bl.mock.debug.MockStatementToHang;
 import com.huawei.mppdbide.bl.preferences.BLPreferenceManager;
 import com.huawei.mppdbide.bl.preferences.IBLPreference;
 import com.huawei.mppdbide.bl.serverdatacache.ColumnMetaData;
@@ -64,12 +61,15 @@ import com.huawei.mppdbide.debuger.vo.FunctionVo;
 import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
+import com.huawei.mppdbide.mock.presentation.CommonLLTUtils;
+import com.huawei.mppdbide.mock.presentation.MockDebugServiceHelper;
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
 import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.mockrunner.jdbc.BasicJDBCTestCaseAdapter;
 import com.mockrunner.jdbc.PreparedStatementResultSetHandler;
+import com.mockrunner.jdbc.StatementResultSetHandler;
 import com.mockrunner.mock.jdbc.MockConnection;
 
 /**
@@ -83,9 +83,12 @@ import com.mockrunner.mock.jdbc.MockConnection;
  */
 public class DebugerFunctionTest extends BasicJDBCTestCaseAdapter {
     MockConnection                    connection               = null;
+    Database                 connectionProfile        = null;
     DebugObjects                      debugObject              = null;
     DebugObjects                      nestedDebugObject        = null;
+    StatementResultSetHandler         statementHandler          = null;
     PreparedStatementResultSetHandler preparedstatementHandler = null;
+    StatementResultSetHandler         estatementHandler         = null;
     ServerConnectionInfo serverInfo = null;
     ConnectionProfileId profileId = null;
     
@@ -111,40 +114,39 @@ public class DebugerFunctionTest extends BasicJDBCTestCaseAdapter {
     public void setUp() throws Exception
     {
         super.setUp();
-        CommonLLTUtilsHelper.runLinuxFilePermissionInstance();
-        IBLPreference sysPref = new MockDebugBLPreferenceImpl();
-        BLPreferenceManager.getInstance().setBLPreference(sysPref);
-        MockDebugBLPreferenceImpl.setDsEncoding("UTF-8");
-        MockDebugBLPreferenceImpl.setFileEncoding("UTF-8");
-        MockStatementToHang.resetHangQueries();
-        GaussMockPreparedStatementToHang.resetHangqueries();
-        connection = new MockConnectionStubPS(false);
-        preparedstatementHandler = connection.getPreparedStatementResultSetHandler();
+        CommonLLTUtils.runLinuxFilePermissionInstance();
+        connection = new MockConnection();
         MPPDBIDELoggerUtility.setArgs(null);
         getJDBCMockObjectFactory().getMockDriver().setupConnection(connection);
+        CommonLLTUtils.mockConnection(getJDBCMockObjectFactory().getMockDriver());
+        preparedstatementHandler = connection
+                .getPreparedStatementResultSetHandler();
+        statementHandler = connection.getStatementResultSetHandler();
+
         CommonLLTUtils.prepareProxyInfo(preparedstatementHandler);
-        CommonLLTUtilsHelper.mockConnection(getJDBCMockObjectFactory().getMockDriver());
-        
+        CommonLLTUtils.createTableSpaceRS(preparedstatementHandler);
         connProfCache = DBConnProfCache.getInstance();
+        JobCancelStatus status = new JobCancelStatus();
+        status.setCancel(false);
+        IBLPreference sysPref = new MockPresentationBLPreferenceImpl();
+        BLPreferenceManager.getInstance().setBLPreference(sysPref);
+        MockPresentationBLPreferenceImpl.setDsEncoding("UTF-8");
+        MockPresentationBLPreferenceImpl.setFileEncoding("UTF-8");
 
         ServerConnectionInfo serverInfo = new ServerConnectionInfo();
         serverInfo.setConectionName("TestConnectionName");
         serverInfo.setServerIp("");
-        serverInfo.setServerPort(5432);
         serverInfo.setDriverName("FusionInsight LibrA");
+        serverInfo.setServerPort(5432);
         serverInfo.setDatabaseName("Gauss");
         serverInfo.setUsername("myusername");
         serverInfo.setPrd("mypassword".toCharArray());
         serverInfo.setSavePrdOption(SavePrdOptions.DO_NOT_SAVE);
         serverInfo.setPrivilegeBasedObAccess(true);
-        ConnectionProfileManagerImpl.getInstance().getDiskUtility().setOsCurrentUserFolderPath(".");
-        ConnectionProfileManagerImpl.getInstance().generateSecurityFolderInsideProfile(serverInfo);
         // serverInfo.setSslPassword("12345");
         // serverInfo.setServerType(DATABASETYPE.GAUSS);
-        CommonLLTUtils.createTableSpaceRS(preparedstatementHandler);
-
-        JobCancelStatus status = new JobCancelStatus();
-        status.setCancel(false);
+        ConnectionProfileManagerImpl.getInstance().getDiskUtility().setOsCurrentUserFolderPath(".");
+        ConnectionProfileManagerImpl.getInstance().generateSecurityFolderInsideProfile(serverInfo);
         profileId = connProfCache.initConnectionProfile(serverInfo, status);
         database = connProfCache.getDbForProfileId(profileId);
         data = new ContentAssistProcesserData(database);
@@ -210,9 +212,7 @@ public class DebugerFunctionTest extends BasicJDBCTestCaseAdapter {
         queryService = null;
         preparedstatementHandler.clearPreparedStatements();
         preparedstatementHandler.clearThrowsSQLException();
-        MockStatementToHang.resetHangQueries();
-        GaussMockPreparedStatementToHang.resetHangqueries();
-        database = null;
+        connectionProfile = null;
         
         Iterator<Server> itr = DBConnProfCache.getInstance().getServers().iterator();
         
@@ -354,6 +354,15 @@ public class DebugerFunctionTest extends BasicJDBCTestCaseAdapter {
         }
     }
     
+    public static class FunctionDesc {
+        public String proname;
+        public List<Object> params;
+        public FunctionDesc(String proname, List<Object> params) {
+            this.proname = proname;
+            this.params = params;
+        }
+    }
+
     private void getAllDatabaseObjects()
     {
         // MockViewUtils.DropView(preparedstatementHandler, "mytestview1");
