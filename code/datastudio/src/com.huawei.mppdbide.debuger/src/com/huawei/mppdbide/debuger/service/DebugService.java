@@ -370,7 +370,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public boolean disposeBreakpoint(DebugConstants.DebugOpt debugOpt,
             PositionVo positionVo) throws SQLException {
         if (positionVo.func == null || positionVo.func.intValue() == 0) {
-            positionVo.func = Long.valueOf(functionVo.oid);
+            positionVo.func = functionVo.oid;
         }
 
         List<Object> inputParams = Arrays.asList(

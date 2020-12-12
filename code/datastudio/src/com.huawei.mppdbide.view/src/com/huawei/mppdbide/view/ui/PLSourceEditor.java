@@ -806,7 +806,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     public void refresh() {
 
         // When no object is shown on editor gracefully ignore.
-        if (null == this.debugObject && !isActivated()) {
+        if (this.debugObject == null && !isActivated()) {
             return;
         }
 
@@ -1120,7 +1120,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         }
 
         private boolean validCheck(int line) {
-            if (line == INVALID_LINE || null == debugObject) {
+            if (line == INVALID_LINE || debugObject == null) {
                 return false;
             }
             return true;
