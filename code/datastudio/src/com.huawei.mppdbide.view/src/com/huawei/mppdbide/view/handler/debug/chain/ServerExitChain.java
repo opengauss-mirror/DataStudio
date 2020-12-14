@@ -11,6 +11,7 @@ import com.huawei.mppdbide.debuger.event.Event.EventMessage;
 import com.huawei.mppdbide.debuger.service.chain.IMsgChain;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
+import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugResultTask;
 
 /**
  * Title: class
@@ -22,6 +23,8 @@ import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
  * @since 09,12,2020
  */
 public class ServerExitChain extends IMsgChain {
+    private boolean isResultUpdated = false;
+
     @Override
     public boolean matchMsg(Event event) {
         return event.getMsg() == EventMessage.ON_EXIT;
@@ -35,6 +38,9 @@ public class ServerExitChain extends IMsgChain {
             MPPDBIDELoggerUtility.info("debug already exit: result:" + event.getAddition());
         }
         Display.getDefault().asyncExec(new UpdateDebugPositionTask(-1));
+        if (!isResultUpdated) {
+            isResultUpdated = true;
+            Display.getDefault().asyncExec(new UpdateDebugResultTask(event));
+        }
     }
-
 }

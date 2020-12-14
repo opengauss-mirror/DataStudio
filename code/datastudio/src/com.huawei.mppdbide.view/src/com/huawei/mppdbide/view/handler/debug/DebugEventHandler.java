@@ -23,10 +23,10 @@ import com.huawei.mppdbide.view.handler.debug.chain.ServerRunStepChain;
  * @version [openGauss DataStudio 1.0.1, 08,12,2020]
  * @since 08,12,2020
  */
-public class TestEventHandler implements EventHander {
+public class DebugEventHandler implements EventHander {
     private IMsgChain disposeChain = null;
 
-    public TestEventHandler() {
+    public DebugEventHandler() {
         disposeChain = new ServerBeginRunChain();
 
         IMsgChain stepRun = new ServerRunStepChain();
