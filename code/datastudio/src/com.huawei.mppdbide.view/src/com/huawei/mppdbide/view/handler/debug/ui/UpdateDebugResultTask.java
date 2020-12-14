@@ -26,6 +26,7 @@ public class UpdateDebugResultTask implements Runnable {
     public UpdateDebugResultTask(Event event) {
         this.event = event;
     }
+    
     @Override
     public void run() {
         PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
