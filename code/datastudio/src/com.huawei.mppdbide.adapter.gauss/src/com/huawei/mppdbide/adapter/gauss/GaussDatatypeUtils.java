@@ -147,4 +147,13 @@ public class GaussDatatypeUtils {
 
         return datatype.isSupported();
     }
+
+    /**
+     * Gets the datatype hashmap.
+     *
+     * @return HashMap<Integer, Datatype> the datatype map
+     */
+    public static HashMap<Integer, Datatype> getDataTypeHashMap() {
+        return datatypeMap;
+    }
 }
