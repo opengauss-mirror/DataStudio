@@ -229,10 +229,10 @@ public class AnnotationManager {
      */
     public void removeAnnotationAtLine(int lineAtOffset) {
         AnnotationModel fAnnotnModel = getAnnotationModel();
-        Iterator iter = fAnnotnModel.getAnnotationIterator();
+        Iterator<Annotation> iter = fAnnotnModel.getAnnotationIterator();
         while (iter.hasNext()) {
-            Annotation annotation = (Annotation) iter.next();
-            if (ErrorAnnotation.STRATEGY_ID.equals(annotation.getType())) {
+            Annotation annotation = iter.next();
+            if (annotation instanceof ErrorAnnotation) {
                 ErrorAnnotation errorAnnotation = (ErrorAnnotation) annotation;
                 if (errorAnnotation.getLine() == lineAtOffset) {
                     fAnnotnModel.removeAnnotation(errorAnnotation);

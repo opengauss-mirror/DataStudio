@@ -4,6 +4,8 @@
 
 package com.huawei.mppdbide.view.core.sourceeditor;
 
+import java.util.Optional;
+
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.ImageUtilities;
 import org.eclipse.swt.SWT;
@@ -35,10 +37,8 @@ public class PLAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
      */
     @Override
     public String getTypeLabel(Annotation annotation) {
-        if (annotation instanceof ErrorPositionAnnotation) {
-            return ErrorPositionAnnotation.getTypelabel();
-        } else if (annotation instanceof ErrorAnnotation) {
-            return ErrorAnnotation.getTypelabel();
+        if (annotation instanceof AnnotationWithLineNumber) {
+            return ((AnnotationWithLineNumber)annotation).getAnnotationType().getTypeLabel();
         } else {
             return super.getTypeLabel(annotation);
         }
@@ -52,12 +52,9 @@ public class PLAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
      */
     @Override
     public int getLayer(Annotation annotation) {
-        if (annotation instanceof ErrorPositionAnnotation) {
-            return ErrorPositionAnnotation.getLayer();
-        } else if (annotation instanceof ErrorAnnotation) {
-            return ErrorAnnotation.getLayer();
+        if (annotation instanceof AnnotationWithLineNumber) {
+            return ((AnnotationWithLineNumber)annotation).getAnnotationType().getLayer();
         }
-
         return super.getLayer(annotation);
     }
 
@@ -71,15 +68,13 @@ public class PLAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
      */
     @Override
     public void paint(Annotation annotation, GC gc, Canvas canvas, Rectangle bounds) {
-        Image paintImage = null;
-        if (annotation instanceof ErrorPositionAnnotation) {
-            paintImage = ((ErrorPositionAnnotation) annotation).getImage();
-        } else if (annotation instanceof ErrorAnnotation) {
-            paintImage = ((ErrorAnnotation) annotation).getImage();
+        Optional<Image> paintImage = Optional.empty();
+        if (annotation instanceof AnnotationWithLineNumber) {
+            paintImage = ((AnnotationWithLineNumber) annotation).getImage();
         }
 
-        if (null != paintImage) {
-            ImageUtilities.drawImage(paintImage, gc, canvas, bounds, SWT.CENTER, SWT.CENTER);
+        if (paintImage.isPresent()) {
+            ImageUtilities.drawImage(paintImage.get(), gc, canvas, bounds, SWT.CENTER, SWT.CENTER);
         } else {
             super.paint(annotation, gc, canvas, bounds);
         }
@@ -94,12 +89,9 @@ public class PLAnnotationMarkerAccess extends DefaultMarkerAnnotationAccess {
      */
     @Override
     public boolean isPaintable(Annotation annotation) {
-        if (annotation instanceof ErrorPositionAnnotation) {
-            return ((ErrorPositionAnnotation) annotation).getImage() != null;
-        } else if (annotation instanceof ErrorAnnotation) {
-            return ((ErrorAnnotation) annotation).getImage() != null;
+        if (annotation instanceof AnnotationWithLineNumber) {
+            return ((AnnotationWithLineNumber) annotation).getImage().isPresent();
         }
-
         return super.isPaintable(annotation);
     }
 

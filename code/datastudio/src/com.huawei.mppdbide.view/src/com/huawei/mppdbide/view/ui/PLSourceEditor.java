@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -47,6 +48,9 @@ import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IAnnotationAccess;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.Clipboard;
@@ -55,6 +59,8 @@ import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -95,6 +101,8 @@ import com.huawei.mppdbide.utils.messaging.MessageQueue;
 import com.huawei.mppdbide.view.core.ConsoleCoreWindow;
 import com.huawei.mppdbide.view.core.ConsoleMessageWindow;
 import com.huawei.mppdbide.view.core.sourceeditor.AnnotationHover;
+import com.huawei.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
+import com.huawei.mppdbide.view.core.sourceeditor.DebugPositionAnnotation;
 import com.huawei.mppdbide.view.core.sourceeditor.ErrorAnnotation;
 import com.huawei.mppdbide.view.core.sourceeditor.ErrorPositionAnnotation;
 import com.huawei.mppdbide.view.core.sourceeditor.PLAnnotationMarkerAccess;
@@ -103,8 +111,11 @@ import com.huawei.mppdbide.view.core.sourceeditor.SQLDocumentPartitioner;
 import com.huawei.mppdbide.view.core.sourceeditor.SQLEditorPlugin;
 import com.huawei.mppdbide.view.core.sourceeditor.SQLPartitionScanner;
 import com.huawei.mppdbide.view.core.sourceeditor.SQLSourceViewerConfig;
+import com.huawei.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationType;
 import com.huawei.mppdbide.view.handler.ExecuteEditorItem;
 import com.huawei.mppdbide.view.handler.HandlerUtilities;
+import com.huawei.mppdbide.view.handler.debug.DebugHandlerUtils;
+import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 import com.huawei.mppdbide.view.prefernces.PreferenceWrapper;
 import com.huawei.mppdbide.view.terminal.executioncontext.FuncProcEditorTerminalExecutionContext;
 import com.huawei.mppdbide.view.ui.autosave.AbstractAutoSaveObject;
@@ -251,7 +262,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
 
     /**
      * sets the debug input value list
-     * 
+     *
      * @return the debug input value list
      */
     public ArrayList<DefaultParameter> getDebugInputList() {
@@ -398,6 +409,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         viewer.addPainter(fAnnotationPainter);
         viewer.addTextPresentationListener(fAnnotationPainter);
         createAnnotationHover();
+        fAnnotationRuler.getControl().addMouseListener(new SourceEditorMouseListener());
 
         handlePendingActionOnActivation((PLSourceEditor) part.getObject());
     }
@@ -510,7 +522,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
 
         fCompositeRuler = new CompositeRuler(PLSourceEditorCore.SPACE_BETWEEN_RULER);
         fCompositeRuler.addDecorator(0, annotationRuler());
-        fAnnotationRuler.addAnnotationType(ErrorAnnotation.getStrategyid());
+
         LineNumberRulerColumn lineNumColumn = new LineNumberRulerColumn();
         lineNumColumn.setForeground(new Color(Display.getDefault(), 104, 99, 94));
 
@@ -691,13 +703,13 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      * @return the annotation painter
      */
     private AnnotationPainter getAnnotationPainter() {
-        fAnnotationPainter = new AnnotationPainter(sourceEditor.getSourceViewer(), fAnnotationAccess);
-        fAnnotationPainter.addHighlightAnnotationType(ErrorPositionAnnotation.getStrategyid());
         Display display = Display.getDefault();
-
-        fAnnotationPainter.addAnnotationType(ErrorAnnotation.getStrategyid());
-        fAnnotationPainter.setAnnotationTypeColor(ErrorAnnotation.getStrategyid(),
-                new Color(Display.getDefault(), ErrorAnnotation.getErrorRgb()));
+        fAnnotationPainter = new AnnotationPainter(sourceEditor.getSourceViewer(), fAnnotationAccess);
+        for (AnnotationType annotationType: AnnotationType.values()) {
+            String strategy = annotationType.getStrategy();
+            fAnnotationPainter.addHighlightAnnotationType(strategy);
+            fAnnotationPainter.setAnnotationTypeColor(strategy, new Color(display, annotationType.getRGB()));
+        }
         return fAnnotationPainter;
     }
 
@@ -794,7 +806,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     public void refresh() {
 
         // When no object is shown on editor gracefully ignore.
-        if (null == this.debugObject && !isActivated()) {
+        if (this.debugObject == null && !isActivated()) {
             return;
         }
 
@@ -1075,6 +1087,167 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     }
 
     /**
+     * The listener interface for receiving sourceEditorMouse events. The class
+     * that is interested in processing a sourceEditorMouse event implements
+     * this interface, and the object created with that class is registered with
+     * a component using the component's
+     * <code>addSourceEditorMouseListener<code> method. When the
+     * sourceEditorMouse event occurs, that object's appropriate method is
+     * invoked. SourceEditorMouseEvent
+     */
+    private class SourceEditorMouseListener implements MouseListener {
+        private static final int INVALID_LINE = -1;
+        private boolean isDoubleClickedBefore = false;
+
+        @Override
+        public void mouseDoubleClick(MouseEvent e) {
+            int line = fAnnotationRuler.getLineOfLastMouseButtonActivity();
+            /**
+             * No action performed when, 1. Line number is beyond end of
+             * procedure 2. Already an breakpoint operation is in progress for
+             * this Line number 3. If line number falls in PL header or footer.
+             */
+            if (!validCheck(line)) {
+                return;
+            }
+            MPPDBIDELoggerUtility.info("double clicked!");
+            isDoubleClickedBefore = true;
+        }
+
+        @Override
+        public void mouseDown(MouseEvent e) {
+            // Skip the handling
+        }
+
+        private boolean validCheck(int line) {
+            if (line == INVALID_LINE || debugObject == null) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public void mouseUp(MouseEvent e) {
+            int line = fAnnotationRuler.getLineOfLastMouseButtonActivity();
+            if (!validCheck(line)) {
+                return;
+            }
+            MPPDBIDELoggerUtility.info("mouseUp clicked!");
+
+            Optional<BreakpointAnnotation> annotation = findAnnotation(line);
+            if (isDoubleClickedBefore) {
+                isDoubleClickedBefore = false;
+                doubleClickRun(annotation, line);
+            } else {
+                singleClickRun(annotation, line);
+            }
+        }
+    }
+
+    private void doubleClickRun(Optional<BreakpointAnnotation> annotation, int line) {
+        if (!annotation.isPresent()) {
+            try {
+                BreakpointAnnotation annotationNew = createBreakpoint(line, true);
+                DebugServiceHelper.getInstance().notifyBreakPointStatus(
+                        annotationNew,
+                        true);
+            } catch (BadLocationException badLocationExp) {
+                MPPDBIDELoggerUtility.error("invalid set position");
+            }
+        } else {
+            deleteBreakpoint(line, annotation.get());
+            DebugServiceHelper.getInstance().notifyBreakPointStatus(
+                    annotation.get(),
+                    false);
+        }
+    }
+
+    private void singleClickRun(Optional<BreakpointAnnotation> annotation, int line) {
+        if (annotation.isPresent()) {
+            try {
+                BreakpointAnnotation bpAnnotation = changeBreakPoint(
+                        line,
+                        annotation.get()
+                        );
+                DebugServiceHelper.getInstance().notifyBreakPointChange(bpAnnotation);
+            } catch (BadLocationException e1) {
+                MPPDBIDELoggerUtility.error("invalid set position");
+            }
+        }
+    }
+
+    private BreakpointAnnotation createBreakpoint(int line, boolean isEnable) throws BadLocationException {
+        BreakpointAnnotation annotation = new BreakpointAnnotation("[" + (line + 1), line);
+        annotation.setEnable(isEnable);
+        fAnnotationModel.addAnnotation(annotation,
+                new Position(sourceEditor.getDocument().getLineOffset(line))
+                );
+        return annotation;
+    }
+
+    private void deleteBreakpoint(int line, BreakpointAnnotation annotation) {
+        fAnnotationModel.removeAnnotation(annotation);
+    }
+
+    private BreakpointAnnotation changeBreakPoint(
+            int line,
+            BreakpointAnnotation breakpointAnnotation)
+                    throws BadLocationException {
+        fAnnotationModel.removeAnnotation(breakpointAnnotation);
+        return createBreakpoint(line, !breakpointAnnotation.getEnable());
+    }
+
+    /**
+     * description: remove debug position
+     */
+    public void removeDebugPosition() {
+        Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
+        List<Annotation> needRemoveAnnotations = new ArrayList<Annotation>(1);
+        while (annoIterator.hasNext()) {
+            Annotation annotation = annoIterator.next();
+            if (annotation instanceof DebugPositionAnnotation) {
+                needRemoveAnnotations.add(annotation);
+            }
+        }
+        for (Annotation anno: needRemoveAnnotations) {
+            fAnnotationModel.removeAnnotation(anno);
+        }
+    }
+
+    /**
+     * description: create debug position annotation
+     * 
+     * @param line the debug pos line
+     * @throws BadLocationException
+     */
+    public void createDebugPosition(int line) throws BadLocationException {
+        DebugPositionAnnotation annotation = new DebugPositionAnnotation(line);
+        fAnnotationModel.addAnnotation(annotation,
+                new Position(sourceEditor.getDocument().getLineOffset(line))
+                );
+    }
+
+    /**
+     * Search for any annotation for given line.
+     *
+     * @param line the line
+     * @return the annotation
+     */
+    private Optional<BreakpointAnnotation> findAnnotation(int line) {
+        Iterator<Annotation> annotations = fAnnotationModel.getAnnotationIterator();
+        boolean annotationsHasNext = annotations.hasNext();
+        Annotation annotation = null;
+        while (annotationsHasNext) {
+            annotation = annotations.next();
+            if (annotation instanceof BreakpointAnnotation && line == ((BreakpointAnnotation) annotation).getLine()) {
+                return Optional.of((BreakpointAnnotation)annotation);
+            }
+            annotationsHasNext = annotations.hasNext();
+        }
+        return Optional.empty();
+    }
+
+    /**
      * Create an annotation Ruler to show breakpoint information.
      *
      * @return the annotation ruler column
@@ -1082,7 +1255,9 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     private AnnotationRulerColumn annotationRuler() {
         fAnnotationRuler = new AnnotationRulerColumn(fAnnotationModel, PLSourceEditorCore.ANNOTATION_RULER_WIDTH,
                 getAnnotationAccess());
-        fAnnotationRuler.addAnnotationType(ErrorPositionAnnotation.getStrategyid());
+        for (AnnotationType annotationType: AnnotationType.values()) {
+            fAnnotationRuler.addAnnotationType(annotationType.getStrategy());
+        }
         return fAnnotationRuler;
     }
 
@@ -1371,7 +1546,6 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      * @param endsAfter the ends after
      */
     public void removeFunctErrorsInSelectedRange(int off, int length, boolean startsBefore, boolean endsAfter) {
-        @SuppressWarnings("unchecked")
         Iterator<Annotation> annotationIterator = fAnnotationModel.getAnnotationIterator(off, length, startsBefore,
                 endsAfter);
         Annotation anno = null;

@@ -18,7 +18,6 @@ import com.huawei.mppdbide.bl.serverdatacache.connectioninfo.conif.IServerConnec
  * @version [DataStudio 6.5.1, 17 May, 2019]
  * @since 17 May, 2019
  */
-
 public interface IConnectionProfile {
 
     /**

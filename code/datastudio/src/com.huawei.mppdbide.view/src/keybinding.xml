@@ -186,4 +186,47 @@
 		<description>KEY_BINDING_TOGGLE_BLOCK_COMMENTS_DESC</description>
 		<defaultkey>CTRL+SHIFT+/</defaultkey>
 	</keybinding>
+
+   <keybinding>
+        <commandid>com.huawei.mppdbide.command.id.startdebug</commandid>
+        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_START_DEBUG</commandname>
+        <command>editor.shortcutmapper.startdebug</command>
+        <description>KEY_BINDING_COMMENTS_DESC_START_DEBUG</description>
+        <defaultkey>F11</defaultkey>
+   </keybinding>
+   <keybinding>
+        <commandid>com.huawei.mppdbide.command.id.terminate</commandid>
+        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_TERNIMATE_DEBUG</commandname>
+        <command>editor.shortcutmapper.stopdebug</command>
+        <description>KEY_BINDING_COMMENTS_DESC_TERNIMATE_DEBUG</description>
+        <defaultkey>CTRL+F2</defaultkey>
+   </keybinding>
+   <keybinding>
+        <commandid>com.huawei.mppdbide.command.id.stepin</commandid>
+        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_STEPIN_DEBUG</commandname>
+        <command>editor.shortcutmapper.stepindebug</command>
+        <description>KEY_BINDING_COMMENTS_DESC_STEPIN_DEBUG</description>
+        <defaultkey>F5</defaultkey>
+    </keybinding>
+   <keybinding>
+        <commandid>com.huawei.mppdbide.command.id.stepout</commandid>
+        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_STEPOUT_DEBUG</commandname>
+        <command>editor.shortcutmapper.stepout</command>
+        <description>KEY_BINDING_COMMENTS_DESC_STEPOUT_DEBUG</description>
+        <defaultkey>F7</defaultkey>
+    </keybinding>
+   <keybinding>
+        <commandid>com.huawei.mppdbide.command.id.stepover</commandid>
+        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_STEPOVER_DEBUG</commandname>
+        <command>editor.shortcutmapper.stepover</command>
+        <description>KEY_BINDING_COMMENTS_DESC_STEPOVER_DEBUG</description>
+        <defaultkey>F6</defaultkey>
+    </keybinding>
+   <keybinding>
+        <commandid>com.huawei.mppdbide.command.id.continue</commandid>
+        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_CONTINUE_DEBUG</commandname>
+        <command>editor.shortcutmapper.continue</command>
+        <description>KEY_BINDING_COMMENTS_DESC_CONTINUE_DEBUG</description>
+        <defaultkey>F8</defaultkey>
+    </keybinding>
 </keys>

@@ -81,23 +81,25 @@ public class AnnotationHover implements IAnnotationHover, ITextHover {
     @Override
     public String getHoverInfo(ISourceViewer sourceViewer, int lineNumber) {
         List<String> hoverStr = new ArrayList<String>();
-        Iterator<?> iterator = fAnnotationModel.getAnnotationIterator();
+        Iterator<Annotation> iterator = fAnnotationModel.getAnnotationIterator();
         Annotation annotation = null;
         boolean doNotOverride = false;
         boolean iteratorHasNext = iterator.hasNext();
         while (iteratorHasNext) {
-            annotation = (Annotation) iterator.next();
+            annotation = iterator.next();
             if (annotation instanceof AnnotationWithLineNumber) {
                 AnnotationWithLineNumber annotationWithLineNumber = (AnnotationWithLineNumber) annotation;
-                if (annotation instanceof ErrorAnnotation) {
+                if (annotation instanceof BreakpointAnnotation) {
+                    if (!doNotOverride && lineNumber == annotationWithLineNumber.getLine()) {
+                        hoverStr.add(annotation.getText());
+                    }
+                } else {
                     if (lineNumber + 1 == annotationWithLineNumber.getLine()) {
-                        hoverStr.add(((ErrorAnnotation) annotation).getText());
+                        hoverStr.add(annotation.getText());
                     }
-                } else if (annotation instanceof ErrorPositionAnnotation) {
-                    if (lineNumber == annotationWithLineNumber.getLine()) {
-                        hoverStr.add(((ErrorPositionAnnotation) annotation).getText());
+                    if (annotationWithLineNumber instanceof ErrorPositionAnnotation) {
+                        doNotOverride = true;
                     }
-                    doNotOverride = true;
                 }
             }
             iteratorHasNext = iterator.hasNext();

@@ -778,7 +778,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
         if (iter != null) {
             while (iter.hasNext()) {
                 Annotation annotation = (Annotation) iter.next();
-                if (ErrorAnnotation.STRATEGY_ID.equals(annotation.getType())) {
+                if (annotation instanceof ErrorAnnotation) {
                     ErrorAnnotation errorAnnotation = (ErrorAnnotation) annotation;
                     if (errorAnnotation.getLine() == lineAtOffset && !enteredPressed) {
                         fAnnotationModel.removeAnnotation(errorAnnotation);
@@ -941,7 +941,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * @param endsAfter the ends after
      */
     public void removeErrorsInSelectedRange(int off, int length, boolean startsBefore, boolean endsAfter) {
-        @SuppressWarnings("unchecked")
         Iterator<Annotation> annotationIterator = fAnnotationModel.getAnnotationIterator(off, length, startsBefore,
                 endsAfter);
         Annotation anno = null;
@@ -1019,16 +1018,11 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
 
             while (ite.hasNext()) {
                 annotation = (Annotation) ite.next();
-                switch (annotation.getType()) {
-                    case ErrorAnnotation.STRATEGY_ID: {
-                        cnt = ((ErrorAnnotation) annotation).getLine();
-                        if (lineNumber + 1 == cnt) {
-                            hoverStr.add(((ErrorAnnotation) annotation).getText());
-                        }
-                        break;
+                if (annotation instanceof ErrorAnnotation) {
+                    cnt = ((ErrorAnnotation) annotation).getLine();
+                    if (lineNumber + 1 == cnt) {
+                        hoverStr.add(((ErrorAnnotation) annotation).getText());
                     }
-                    default:
-                        break;
                 }
             }
             StringBuilder hoverInfo = new StringBuilder();
@@ -1230,7 +1224,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
             Clipboard clipboard = new Clipboard(Display.getDefault());
             TextTransfer textTransfer = TextTransfer.getInstance();
             String textData = (String) clipboard.getContents(textTransfer);
-            boolean togglePaste = null != textData && !"".equals(textData);
+            boolean togglePaste = textData != null && !"".equals(textData);
 
             toggelExecuteStmt = getToggleExecuteStmt(uiEle, terminal);
             menuExecutionPlan.setEnabled(getExecutionPlanEnableState(terminal));
@@ -1800,7 +1794,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
             public void widgetSelected(SelectionEvent e) {
                 DBConnection dbConnection = getTermConnection().getConnection();
                 try {
-                    if (null != dbConnection && dbConnection.isTransactionOpen(getServerVersion())) {
+                    if (dbConnection != null && dbConnection.isTransactionOpen(getServerVersion())) {
                         if (DSViewDataManager.getInstance().isShowCommitConfirmation()) {
                             manualCommit(dbConnection);
                         } else {
@@ -2081,7 +2075,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
         // First disconnect partitioner and set and connect again
         IDocumentPartitioner documentPartitioner = ((IDocumentExtension3) sourceEditor.getDocument())
                 .getDocumentPartitioner(SQLPartitionScanner.SQL_PARTITIONING);
-        if (null != documentPartitioner) {
+        if (documentPartitioner != null) {
             if (documentPartitioner instanceof SQLDocumentPartitioner) {
                 SQLDocumentPartitioner sqlPartitioner = (SQLDocumentPartitioner) documentPartitioner;
                 sqlPartitioner.clearScanner();

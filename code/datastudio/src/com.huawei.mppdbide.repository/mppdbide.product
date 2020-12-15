@@ -38,7 +38,6 @@
 
    <plugins>
       <plugin id="com.huawei.mppdbide.adapter.gauss"/>
-      <plugin id="com.huawei.mppdbide.adapter.gmdb"/>
       <plugin id="com.huawei.mppdbide.bl"/>
       <plugin id="com.huawei.mppdbide.view"/>
    </plugins>

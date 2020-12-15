@@ -37,5 +37,6 @@ Export-Package: com.huawei.mppdbide.presentation,
 Require-Bundle: com.huawei.mppdbide.bl,
  com.huawei.mppdbide.util,
  org.apache.commons.lang3;bundle-version="3.1.0",
- Common-collection;bundle-version="1.0.0"
+ Common-collection;bundle-version="1.0.0",
+ com.huawei.mppdbide.debuger;bundle-version="1.0.0"
 Bundle-ClassPath: .

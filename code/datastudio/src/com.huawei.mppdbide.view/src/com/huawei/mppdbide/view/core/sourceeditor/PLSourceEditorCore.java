@@ -52,6 +52,8 @@ import org.eclipse.jface.text.source.IOverviewRuler;
 import org.eclipse.jface.text.source.ISharedTextColors;
 import org.eclipse.jface.text.source.OverviewRuler;
 import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -90,6 +92,7 @@ import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.core.SelectMenuItem;
+import com.huawei.mppdbide.view.handler.debug.DebugHandlerUtils;
 import com.huawei.mppdbide.view.prefernces.DSFormatterPreferencePage;
 import com.huawei.mppdbide.view.prefernces.FormatterPreferenceKeys;
 import com.huawei.mppdbide.view.prefernces.IAutoCompletePreference;
@@ -652,6 +655,10 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
             int start = doc.getLineOffset(lineOffset);
             int length = doc.getLineLength(lineOffset);
             viewer.revealRange(start, length);
+            if (viewer instanceof ProjectionViewer) {
+                ProjectionViewer projectionViewer = (ProjectionViewer)viewer;
+                projectionViewer.getProjectionAnnotationModel().expandAll(start, length);
+            }
             viewer.setSelectedRange(start, 0);
 
         } catch (BadLocationException exception) {
@@ -1784,10 +1791,10 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
             int startLine = textSel.getStartLine() + 1;
             int endLine = textSel.getEndLine() + 1;
             for (int index = startLine; index <= endLine; index++) {
-                Iterator iter = fAnnotationModel.getAnnotationIterator();
+                Iterator<Annotation> iter = fAnnotationModel.getAnnotationIterator();
                 while (iter.hasNext()) {
-                    Annotation annotation = (Annotation) iter.next();
-                    if (ErrorAnnotation.STRATEGY_ID.equals(annotation.getType())) {
+                    Annotation annotation = iter.next();
+                    if (annotation instanceof ErrorAnnotation) {
                         ErrorAnnotation errorAnnotation = (ErrorAnnotation) annotation;
                         if (errorAnnotation.getLine() == index) {
                             fAnnotationModel.removeAnnotation(errorAnnotation);
