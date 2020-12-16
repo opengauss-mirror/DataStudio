@@ -57,6 +57,7 @@ public class IndexMetaData extends BatchDropServerObject implements GaussOLAPDBM
     private boolean isLoaded;
     private static final String DROP_QUERY = "DROP INDEX IF EXISTS ";
     private IndexManager indexManager;
+    private String indexType;
 
     /**
      * Instantiates a new index meta data.
@@ -321,6 +322,24 @@ public class IndexMetaData extends BatchDropServerObject implements GaussOLAPDBM
     }
 
     /**
+     * Gets the index type.
+     *
+     * @return the index type
+     */
+    public String getIndexType() {
+        return this.indexType;
+    }
+
+    /**
+     * Sets the index type.
+     *
+     * @param indexType the new index type
+     */
+    public void setIndexType(String indexType) {
+        this.indexType = indexType;
+    }
+
+    /**
      * Gets the access method.
      *
      * @return the access method
@@ -415,7 +434,7 @@ public class IndexMetaData extends BatchDropServerObject implements GaussOLAPDBM
         qry.append(") ");
 
         if (table instanceof PartitionTable) {
-            qry.append("LOCAL ");
+            appendIndexType(qry);
         }
 
         appendFillFactor(qry);
@@ -500,6 +519,17 @@ public class IndexMetaData extends BatchDropServerObject implements GaussOLAPDBM
 
     private boolean isQSimpleObjectName(String columnExpr) {
         return !ServerObject.isQualifiedSimpleObjectName(columnExpr) && !columnExpr.contains("(");
+    }
+
+    /**
+     * Append index type.
+     *
+     * @param qry the qry
+     */
+    private void appendIndexType(StringBuilder qry) {
+        if (null != this.indexType) {
+            qry.append(getIndexType()).append(" ");
+        }
     }
 
     /**

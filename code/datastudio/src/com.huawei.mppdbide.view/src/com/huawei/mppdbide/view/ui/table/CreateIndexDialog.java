@@ -18,6 +18,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import com.huawei.mppdbide.bl.serverdatacache.IndexMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.PartitionMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.PartitionTable;
 import com.huawei.mppdbide.bl.serverdatacache.Server;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.TableValidatorRules;
@@ -109,7 +111,11 @@ public class CreateIndexDialog extends Dialog implements IDialogWorkerInteractio
         super(parent);
         this.tableMetaData = tbl;
 
-        ui = new IndexUI(this.tableMetaData, server);
+        if (this.tableMetaData instanceof PartitionTable) {
+            ui = new IndexUIPartitionTable(this.tableMetaData, server);
+        } else {
+            ui = new IndexUI(this.tableMetaData, server);
+        }
         setDefaultImage(IconUtility.getIconImage(IiconPath.ICO_INDEX, this.getClass()));
         this.validatorRules = new TableValidatorRules(tableMetaData);
         this.uIValidator = new TableUIValidator(ui, null, validatorRules, null, null);

@@ -786,10 +786,11 @@ public class PropertiesTest extends BasicJDBCTestCaseAdapter
             Server server = new Server(serverInfo);
             Database database = new Database(server, 2, "Gauss");
 
+            ArrayList<Object> list = new ArrayList<Object>();
             SQLException sqlException = new SQLException("Throwing SQL exception intentionally.", "57PSQLException");
             preparedstatementHandler.prepareThrowsSQLException(
                     "SELECT  oid as oid, datname AS name, pg_encoding_to_char(encoding) as encoding, datallowconn as allow_conn, datconnlimit as max_conn_limit, (select spcname from pg_tablespace where oid=dattablespace) as  default_tablespace, datcollate as collation, datctype as char_type from pg_database where oid = 2;",
-                    sqlException);
+                    sqlException, list);
             database.connectToServer();
             PropertyHandlerCore core = new PropertyHandlerCore(database);
             core.getTermConnection().setConnection(database.getConnectionManager().getFreeConnection());
@@ -1277,11 +1278,11 @@ public class PropertiesTest extends BasicJDBCTestCaseAdapter
             IPropertyDetail getproperty = core.getproperty();
             IObjectPropertyData iObjectPropertyData = getproperty.objectproperties().get(0);
             Object value = iObjectPropertyData.getAllFetchedRows().get(4).getValue(1);
-            fail("not expected");
+            assertEquals("127.0.0.1", value);
         }
         catch (DatabaseOperationException e)
         {
-            System.out.println("as expected");
+            e.printStackTrace();
         }
         catch (OutOfMemoryError e)
         {

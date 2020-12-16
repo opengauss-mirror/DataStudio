@@ -1005,8 +1005,9 @@ public void test_view_funProc_matchCase(){
 
         formSearchQuery
                 .addRow(new Object[] {1, "abc", "3", "PUBLIC", "r", "n", null});
+        ArrayList<Object> list = new ArrayList<Object>();
         preparedstatementHandler.prepareThrowsSQLException(Query,new SQLException(
-                "Throwing SQL exception intentionally.", "57PSQLException"));
+                "Throwing SQL exception intentionally.", "57PSQLException"), list);
 
         try
         {
@@ -1114,8 +1115,9 @@ public void test_view_funProc_matchCase(){
         formSearchQuery2.addColumn("nsname");
 
         formSearchQuery2.addRow(new Object[] {1,"abdfghj","3",1,null,0,null,null,null,"f","sql","PUBLIC"});
+        ArrayList<Object> list = new ArrayList<Object>();
         preparedstatementHandler.prepareThrowsSQLException(Query,new SQLException(
-                "Throwing SQL exception intentionally.", "57PSQLException"));
+                "Throwing SQL exception intentionally.", "57PSQLException"), list);
         
         try
         {

@@ -80,6 +80,11 @@ public class IndexUI {
     protected Button btnUniqueIndex;
 
     /**
+     * The cmb index type.
+     */
+    protected Combo cmbIndexType;
+
+    /**
      * The cmb access method.
      */
     protected Combo cmbAccessMethod;
@@ -246,11 +251,12 @@ public class IndexUI {
 
     private void createUpperComposite(Composite comp) {
         Composite upperComposite = new Composite(comp, SWT.NONE);
-        upperComposite.setLayout(new GridLayout(4, false));
+        upperComposite.setLayout(new GridLayout(5, false));
         GridData upperCompositeGD = new GridData(SWT.FILL, SWT.NONE, true, true);
         upperComposite.setLayoutData(upperCompositeGD);
 
         createIndexComposite(upperComposite);
+        createIndexType(upperComposite);
         createAMCombo(upperComposite);
         createTablespace(upperComposite);
         createFillFactor(upperComposite);
@@ -811,6 +817,14 @@ public class IndexUI {
     }
 
     /**
+     * Creates the index type method
+     *
+     * @param comp the comp
+     */
+    protected void createIndexType(Composite comp) {
+    }
+
+    /**
      * Creates the AM combo.Access Method
      *
      * @param comp the comp
@@ -912,6 +926,18 @@ public class IndexUI {
     }
 
     /**
+     * Update index type object.
+     */
+    public void updateIndexTypeObject() {
+        if (cmbIndexType == null) {
+            return;
+        }
+        cmbIndexType.removeAll();
+        cmbIndexType.add("GLOBAL");
+        cmbIndexType.add("LOCAL");
+    }
+
+    /**
      * Update tablespace object.
      */
     public void updateTablespaceObject() {
@@ -925,6 +951,23 @@ public class IndexUI {
             tablespaceOids.add(tablespace.getOid());
             hasNext = tableSpaceItr.hasNext();
         }
+    }
+
+    /**
+     * Gets the selected index type.
+     *
+     * @return the selected index type
+     */
+    private String getSelectedIndexType() {
+        if (cmbIndexType == null) {
+            return "";
+        } 
+        int indx = cmbIndexType.getSelectionIndex();
+        String [] indexTypeStrings = {"GLOBAL", "LOCAL"};
+        if (indx >= 0 && indx <= 1) {
+            return indexTypeStrings[indx];
+        }
+        return "";
     }
 
     /**
@@ -1023,6 +1066,9 @@ public class IndexUI {
         index.setIndexedColumns(indexCols);
         index.setWhereExpr(txtWhereExpr.getText().trim());
 
+        String indexType = getSelectedIndexType();
+        if(indexType != null)
+            index.setIndexType(indexType);
         return index;
     }
 
@@ -1094,6 +1140,7 @@ public class IndexUI {
         updateAMCombo();
         updateTablespaceObject();
         updateAvailableCols();
+        updateIndexTypeObject();
         this.indexCols = new ArrayList<IndexedColumnExpr>(4);
 
         rePopulateAvailCols();
@@ -1126,6 +1173,10 @@ public class IndexUI {
         updateTablespaceObject();
         if (null != idx.getTablespace()) {
             cmbTablespace.setText(idx.getTablespace().getName());
+        }
+        updateIndexTypeObject();
+        if (null != idx.getIndexType()) {
+            cmbIndexType.setText(idx.getIndexType());
         }
         // end DTS2016012708124
         this.indexCols = idx.getIndexedColumns();
