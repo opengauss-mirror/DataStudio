@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import com.huawei.mppdbide.debuger.debug.DebugConstants;
 import com.huawei.mppdbide.debuger.debug.DebugConstants.DebugOpt;
+import com.huawei.mppdbide.debuger.exception.DebugExitException;
+import com.huawei.mppdbide.debuger.exception.DebugPositionNotFoundException;
 import com.huawei.mppdbide.debuger.vo.FunctionVo;
 import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.debuger.vo.SessionVo;
@@ -101,5 +103,14 @@ public class DebugerConstantTest {
         variableVo.isnotnull = new Boolean(true);
         assertNotEquals(VariableVo.title(), "");
         assertNotEquals(variableVo.formatSelf(), "");
+    }
+    
+    @Test
+    public void testDebugException() {
+        DebugExitException exitExp = new DebugExitException();
+        assertEquals(DebugExitException.DEBUG_EXIT, exitExp.getMessage());
+        
+        DebugPositionNotFoundException notFoundPosExp = new DebugPositionNotFoundException();
+        assertEquals("debug_position_not_found", notFoundPosExp.getMessage());
     }
 }

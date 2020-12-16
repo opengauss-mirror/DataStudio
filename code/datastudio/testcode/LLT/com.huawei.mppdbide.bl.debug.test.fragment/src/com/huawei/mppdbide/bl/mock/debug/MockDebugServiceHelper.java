@@ -85,6 +85,16 @@ public class MockDebugServiceHelper {
         mockOneRow(sql, columns, args);
     }
     
+    public void mockSourceCode(String sql, String sourceCode) {
+        mockOneRow(sql, new String[] {"pldbg_get_source"}, new Object[] {sourceCode});
+    }
+    
+    public void mockTotalSourceCode(String sql, int headline, String totlaSourceCode) {
+        mockOneRow(sql,
+                new String[] {"headerlines", "definition"},
+                new Object[] {new Integer(headline), totlaSourceCode});
+    }
+    
     private void mockOneRow(String sql, String[] columns, Object[] oneRow) {
         ResultColumnHelper helper = new ResultColumnHelper(columns);
         helper.addRow(oneRow);
