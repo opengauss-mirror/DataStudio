@@ -328,7 +328,7 @@ public class PropertiesTableImpl implements IServerObjectProperties {
      * @return the string
      */
     private String formConsColToDisplay(String colIndexes) {
-        String colNames = colIndexes;
+        String colNames = colIndexes.substring(1, colIndexes.length() - 1);
         List<String> splittedColNames = Arrays.asList(colNames.split(","));
         StringBuilder str = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
         List<ColumnMetaData> colMetadataList = table.getColumnMetaDataList();
