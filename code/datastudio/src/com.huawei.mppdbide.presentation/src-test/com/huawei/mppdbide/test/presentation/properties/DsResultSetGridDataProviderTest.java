@@ -1231,7 +1231,7 @@ public class DsResultSetGridDataProviderTest extends BasicJDBCTestCaseAdapter
                 + " where tbl.relkind = 'r' and tbl.relnamespace = 6 UNION SELECT"
                 + " c.relname AS relname FROM pg_class c WHERE (c.relkind = 'f' :: char)"
                 + " and c.relnamespace = 6 UNION SELECT c.relname AS relname "
-                + "FROM pg_class c WHERE (c.relkind = 'v' :: char) and c.relnamespace = 6"
+                + "FROM pg_class c WHERE (c.relkind = 'v' :: char or c.relkind = 'm' :: char) and c.relnamespace = 6"
                 + "  UNION SELECT pr.proname relname FROM pg_proc pr JOIN pg_type typ ON"
                 + " typ.oid = prorettype JOIN pg_namespace typns ON typns.oid = typ.typnamespace"
                 + " JOIN pg_language lng ON lng.oid = prolang and pronamespace = 6 and"
@@ -1241,6 +1241,7 @@ public class DsResultSetGridDataProviderTest extends BasicJDBCTestCaseAdapter
         fetchAllRS.addRow(new Object[] {"table1"});
         fetchAllRS.addRow(new Object[] {"function1"});
         fetchAllRS.addRow(new Object[] {"view1"});
+        fetchAllRS.addRow(new Object[] {"materview1"});
         preparedstatementHandler.prepareResultSet(all, fetchAllRS);
 
         String funcProc = "SELECT pr.proname relname FROM pg_proc pr JOIN pg_type typ "
@@ -1261,11 +1262,12 @@ public class DsResultSetGridDataProviderTest extends BasicJDBCTestCaseAdapter
         fetchtableRS.addRow(new Object[] {"table1"});
         preparedstatementHandler.prepareResultSet(table, fetchtableRS);
 
-        String view = "SELECT c.relname AS relname FROM pg_class c WHERE (c.relkind = 'v' :: char)"
+        String view = "SELECT c.relname AS relname FROM pg_class c WHERE (c.relkind = 'v' :: char or c.relkind = 'm' :: char)"
                 + " and c.relnamespace = 6 ";
         MockResultSet fetchviewRS = preparedstatementHandler.createResultSet();
         fetchviewRS.addColumn("relname");
         fetchviewRS.addRow(new Object[] {"view1"});
+        fetchviewRS.addRow(new Object[] {"materview1"});
         preparedstatementHandler.prepareResultSet(view, fetchviewRS);
 
         DBConnection conn;
