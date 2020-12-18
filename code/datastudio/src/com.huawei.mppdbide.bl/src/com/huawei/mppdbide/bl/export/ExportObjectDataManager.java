@@ -120,8 +120,8 @@ public class ExportObjectDataManager {
             this.stmt = getExportConn().createStatement();
             rs = stmt.executeQuery(seqMaxQry);
             while (rs.next()) {
-                maxValue = rs.getInt("max_value");
-                minValue = rs.getInt("min_value");
+                maxValue = rs.getLong("max_value");
+                minValue = rs.getLong("min_value");
                 called = rs.getBoolean("is_called");
             }
             nextVal = getSeqNextValue(seqObject);
