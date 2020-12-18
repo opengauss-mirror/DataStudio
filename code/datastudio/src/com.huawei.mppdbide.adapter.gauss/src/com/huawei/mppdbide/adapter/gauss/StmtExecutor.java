@@ -794,6 +794,11 @@ public class StmtExecutor {
             }
             return "";
         } catch (SQLException excep) {
+            // this main MOT error
+            String specialExpMsg = "current transaction is aborted, commands ignored";
+            if (excep.getMessage().contains(specialExpMsg)) {
+                return "";
+            }
             GaussUtils.handleCriticalException(excep);
             throw new DatabaseOperationException(IMessagesConstants.ERR_GUI_RESULT_SET_INVALID, excep);
         }

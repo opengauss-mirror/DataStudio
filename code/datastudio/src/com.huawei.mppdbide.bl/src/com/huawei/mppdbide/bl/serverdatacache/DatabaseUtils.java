@@ -232,7 +232,7 @@ public interface DatabaseUtils {
                 isCallableStmt = true;
             }
 
-            QueryResult queryResult = new QueryResult(stmt, conn, true);
+            QueryResult queryResult = new QueryResult(stmt, conn, false);
             if (null != materializer) {
                 // Better to materialize the query result before transaction
                 // rollback.

@@ -97,10 +97,10 @@ public class QueryExecutionOrchestrator {
             }
             // DTS2018121905432
             catch (DatabaseOperationException exception) {
-                if (exception.getServerMessage().contains(
-                        MessageConfigLoader.getProperty(IMessagesConstants.CURSOR_FAILURE_SQL_ERROR) + " = XX000")) {
+                String serverMsg = exception.getServerMessage();
+                String matchTitle = MessageConfigLoader.getProperty(IMessagesConstants.CURSOR_FAILURE_SQL_ERROR);
+                if (serverMsg.contains(matchTitle) && serverMsg.contains("000")) {
                     Display.getDefault().syncExec(new Runnable() {
-
                         /**
                          * run
                          */
