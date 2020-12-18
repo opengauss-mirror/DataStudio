@@ -214,7 +214,7 @@ public class ResultTab extends CTabItem implements IDSListener, IResultTab {
 
         try {
             ResultSet rs = gdp.getQueryResults().getResultsSet();
-            if (rs != null) {
+            if (rs != null && !rs.isClosed()) {
                 rsmd = rs.getMetaData();
             }
             this.tableName = JSQLParserUtils.getQualifiedTableName(summary.getQuery());

@@ -931,16 +931,6 @@
 		                     value="com.huawei.mppdbide.bl.serverdatacache.TableMetaData">
 		               </instanceof>
 		            </or>
-		            <not>
-                 <or>
-                    <instanceof
-                          value="com.huawei.mppdbide.bl.serverdatacache.ForeignTable">
-                    </instanceof>
-                    <instanceof
-                          value="com.huawei.mppdbide.bl.serverdatacache.ForeignPartitionTable">
-                    </instanceof>
-                 </or>
-                    </not>
 		         </iterate>
 		    </with>
       </definition>

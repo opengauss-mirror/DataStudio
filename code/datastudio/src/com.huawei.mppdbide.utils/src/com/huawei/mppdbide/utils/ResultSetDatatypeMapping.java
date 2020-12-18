@@ -192,11 +192,7 @@ public final class ResultSetDatatypeMapping {
     }
 
     private static Object handleDoubleDataTypeValue(ResultSet rs, int columnIndex) throws SQLException {
-        if ("money".equals(rs.getMetaData().getColumnTypeName(columnIndex))) {
-            return rs.getString(columnIndex);
-        } else {
-            return rs.getObject(columnIndex);
-        }
+        return rs.getObject(columnIndex);
     }
 
     private static Object handleOtherDataTypeValue(ResultSet rs, int columnIndex) throws SQLException {

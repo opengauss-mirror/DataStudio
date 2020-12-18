@@ -128,6 +128,9 @@ public class ForeignTable extends TableMetaData {
                     ftab = ForeignPartitionTable.convertToForeignPartitionTable(rs, ns);
                 } else {
                     ftOptions = rs.getString("ftoptions");
+                    if (ftOptions == null) {
+                        ftOptions = "";
+                    }
                     if (ftOptions.contains("format=orc")) {
                         ftab = new ForeignTable(ns, OBJECTTYPE.FOREIGN_TABLE_HDFS);
                     } else {

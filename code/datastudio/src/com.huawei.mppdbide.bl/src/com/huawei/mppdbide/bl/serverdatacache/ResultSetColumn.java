@@ -230,8 +230,6 @@ public class ResultSetColumn {
         setPrecision(resultStmt.getPrecision(index));
         setScale(resultStmt.getScale(index));
         setMaxLength(resultStmt.getMaxLength(index));
-        setComment(columnComment.get(resultStmt.getSchemaName(index) + resultStmt.getTableName(index)
-                + MPPDBIDEConstants.COLUMN_KEY_SIGN + resultStmt.getColumnName(index)));
     }
 
     /**
