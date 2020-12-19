@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
+import com.huawei.mppdbide.bl.serverdatacache.ConstraintType;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.TableValidatorRules;
 import com.huawei.mppdbide.view.utils.UIMandatoryAttribute;
@@ -209,7 +210,8 @@ public class TableUIValidator {
                     String text = item.getText(1);
                     String text1 = item.getText(2);
 
-                    if (text.contains("[]") || text1.contains("UNIQUE")) {
+                    if (text.contains("[]")
+                            || text1.contains(ConstraintType.UNIQUE_KEY_CONSTRSINT.strType)) {
                         columnUI.getColumnUITable().remove(i);
                         this.tableMetadata.getColumnMetaDataList().remove(i);
                         distribution.getTableHmAvailableCols().remove(i);
@@ -235,10 +237,6 @@ public class TableUIValidator {
      * @param value the value
      */
     private void constraintsComponents(Composite compositeConstraints, boolean value) {
-        Control[] cmpConstraints = compositeConstraints.getChildren();
-        enableDisableFieldsComponents(cmpConstraints, value);
-        Control[] grpCons = constraintUI.getGrpAddConstrains().getChildren();
-        enableDisableFieldsComponents(grpCons, value);
         constraintUI.addConstraintComponent(value, this.tableMetadata);
     }
 

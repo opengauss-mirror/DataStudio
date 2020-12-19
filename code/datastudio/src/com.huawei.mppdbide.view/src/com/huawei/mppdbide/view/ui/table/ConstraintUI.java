@@ -6,10 +6,13 @@ package com.huawei.mppdbide.view.ui.table;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.CellEditor.LayoutData;
@@ -99,6 +102,7 @@ public class ConstraintUI {
     private Label lblAvailColumns;
     private StackLayout layout;
     private Composite overLayComposite;
+    private TableOrientation orientation = TableOrientation.ROW;
 
     /**
      * Sets the UI labels color gray.
@@ -358,7 +362,6 @@ public class ConstraintUI {
         cmbConstraintType.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_COMBO_CONSTRAINTUI_CONSTRAINT_TYPE_001");
         cmbConstraintType.addSelectionListener(new ConstraintTypeSelectionListener());
         populateConstraintType();
-        cmbConstraintType.select(0);
 
         Composite nameComposite = new Composite(nameTypeComposite, SWT.NONE);
         nameComposite.setLayout(new GridLayout(1, false));
@@ -887,11 +890,22 @@ public class ConstraintUI {
      * Populate constraint type.
      */
     private void populateConstraintType() {
-        if (!this.db.getServer().versionAfter930()) {
-            cmbConstraintType.setItems(new String[] {"CHECK", "UNIQUE", "PRIMARY KEY"});
+        List<ConstraintType> validConstraintTypes = new ArrayList<ConstraintType>(1);
+        if (orientation == TableOrientation.COLUMN) {
+            validConstraintTypes.add(ConstraintType.PARTIAL_CLUSTER_KEY);
         } else {
-            cmbConstraintType.setItems(new String[] {"CHECK", "UNIQUE", "PRIMARY KEY", "FOREIGN KEY"});
+            validConstraintTypes.add(ConstraintType.CHECK_CONSTRSINT);
+            validConstraintTypes.add(ConstraintType.UNIQUE_KEY_CONSTRSINT);
+            validConstraintTypes.add(ConstraintType.PRIMARY_KEY_CONSTRSINT);
+            if (this.db.getServer().versionAfter930()) {
+                validConstraintTypes.add(ConstraintType.FOREIGN_KEY_CONSTRSINT);
+            }
         }
+
+        String[] items = validConstraintTypes.stream()
+                .map(cntType -> cntType.strType)
+                .toArray(String[]::new);
+        cmbConstraintType.setItems(items);
         cmbConstraintType.select(0);
     }
 
@@ -918,8 +932,10 @@ public class ConstraintUI {
             }
         }
 
-        switch (cmbConstraintType.getText()) {
-            case "CHECK": {
+        ConstraintType constraintType = ConstraintType.strTypeConvert(
+                cmbConstraintType.getText());
+        switch (constraintType) {
+            case CHECK_CONSTRSINT: {
                 if (textCheckConsExpr.getText().isEmpty()) {
                     return null;
                 }
@@ -927,15 +943,16 @@ public class ConstraintUI {
                 cons.setCheckConstraintExpr(textCheckConsExpr.getText());
                 break;
             }
-            case "UNIQUE":
-            case "PRIMARY KEY": {
+            case UNIQUE_KEY_CONSTRSINT:
+            case PRIMARY_KEY_CONSTRSINT:
+            case PARTIAL_CLUSTER_KEY: {
                 if (tablePukSelCols.getItemCount() <= 0) {
                     return null;
                 }
                 cons = getPrimaryOrUniqueConstraint(isConstraintUpdate, name);
                 break;
             }
-            case "FOREIGN KEY": {
+            case FOREIGN_KEY_CONSTRSINT: {
                 if (tableForeignCols.getItemCount() <= 0) {
                     return null;
                 }
@@ -966,7 +983,8 @@ public class ConstraintUI {
             public String formConstraintString() {
                 StringBuilder sb = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
                 appendQuery(sb);
-                sb.append("FOREIGN KEY (");
+                sb.append(contype.strType);
+                sb.append(" (");
                 sb.append(ServerObject.getQualifiedObjectName(columnName));
                 sb.append(") REFERENCES ");
                 sb.append(ServerObject.getQualifiedObjectName(namespace));
@@ -993,10 +1011,7 @@ public class ConstraintUI {
         String columnList = null;
         boolean condeferrable = false;
         boolean condeferred = false;
-        ConstraintType type = ConstraintType.PRIMARY_KEY_CONSTRSINT;
-        if ("UNIQUE".equals(cmbConstraintType.getText())) {
-            type = ConstraintType.UNIQUE_KEY_CONSTRSINT;
-        }
+        ConstraintType type = ConstraintType.strTypeConvert(cmbConstraintType.getText());
         cons = new ConstraintMetaData(0, name, type);
         String tableSpace = null;
 
@@ -1018,19 +1033,21 @@ public class ConstraintUI {
      * Sets the composite visibility.
      */
     private void setCompositeVisibility() {
-        switch (cmbConstraintType.getText()) {
-            case "CHECK": {
+        ConstraintType constraintType = ConstraintType.strTypeConvert(cmbConstraintType.getText());
+        switch (constraintType) {
+            case CHECK_CONSTRSINT: {
                 layout.topControl = compositeCheck;
                 overLayComposite.layout();
                 break;
             }
-            case "UNIQUE":
-            case "PRIMARY KEY": {
+            case UNIQUE_KEY_CONSTRSINT:
+            case PRIMARY_KEY_CONSTRSINT:
+            case PARTIAL_CLUSTER_KEY: {
                 layout.topControl = compositePkeyUnique;
                 overLayComposite.layout();
                 break;
             }
-            case "FOREIGN KEY": {
+            case FOREIGN_KEY_CONSTRSINT: {
                 layout.topControl = compositeForeign;
                 overLayComposite.layout();
                 break;
@@ -1047,7 +1064,8 @@ public class ConstraintUI {
      * @return true, if is check constraint selected
      */
     public boolean isCheckConstraintSelected() {
-        return "CHECK".equals(cmbConstraintType.getText());
+        return ConstraintType.CHECK_CONSTRSINT.strType
+                .equals(cmbConstraintType.getText());
     }
 
     /**
@@ -1239,28 +1257,19 @@ public class ConstraintUI {
      * @param table object
      */
     public void addConstraintComponent(boolean value, TableMetaData table) {
-        getCmbConstraintType().setEnabled(value);
-        getTextTblConstraintName().setEnabled(value);
+        orientation = value ? TableOrientation.ROW : TableOrientation.COLUMN;
+        populateConstraintType();
+        setCompositeVisibility();
         if (!value) {
-            getDeco().hide();
-            getDeco1().hide();
-            getCmbConstraintType().select(0);
-
             getTextTblConstraintName().setText("");
-
             // clear the table UI component having index expressions
-            if (null != getConstraintUITable()) {
-                getConstraintUITable().removeAll();
-                clearConstraintData();
-                // clear the constraint list in tablemetatda to reform query in
-                // sql preview
-                table.getConstraintMetaDataList().clear();
-
-            }
-        } else {
-            getDeco().show();
-            getDeco1().show();
-            setUILabelsColorBlack();
+           if (null != getConstraintUITable()) {
+               getConstraintUITable().removeAll();
+               clearConstraintData();
+               // clear the constraint list in tablemetatda to reform query in
+               // sql preview
+               table.getConstraintMetaDataList().clear();
+           }
         }
     }
 }
