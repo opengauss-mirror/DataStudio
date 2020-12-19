@@ -4,18 +4,10 @@
 
 package com.huawei.mppdbide.view.ui.table;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
@@ -27,7 +19,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -1263,12 +1254,12 @@ public class ConstraintUI {
         if (!value) {
             getTextTblConstraintName().setText("");
             // clear the table UI component having index expressions
-           if (null != getConstraintUITable()) {
-               getConstraintUITable().removeAll();
-               clearConstraintData();
-               // clear the constraint list in tablemetatda to reform query in
-               // sql preview
-               table.getConstraintMetaDataList().clear();
+            if (getConstraintUITable() != null) {
+                getConstraintUITable().removeAll();
+                clearConstraintData();
+                // clear the constraint list in tablemetatda to reform query in
+                // sql preview
+                table.getConstraintMetaDataList().clear();
            }
         }
     }

@@ -32,10 +32,10 @@ public enum ConstraintType {
     ConstraintType(String strType) {
         this.strType = strType;
     }
-    
+
     /**
      * convert string to constraint type
-     * 
+     *
      * @param strType to convert string
      * @return ConstaintType the constraint type
      * */
