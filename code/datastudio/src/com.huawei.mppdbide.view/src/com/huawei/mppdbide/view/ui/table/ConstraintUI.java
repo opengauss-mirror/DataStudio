@@ -1260,7 +1260,7 @@ public class ConstraintUI {
                 // clear the constraint list in tablemetatda to reform query in
                 // sql preview
                 table.getConstraintMetaDataList().clear();
-           }
+            }
         }
     }
 }

@@ -112,7 +112,7 @@ public class TableUIValidator {
         } else {
             indexUI.setUILabelsColorBlack();
         }
-        if (null != indexExprTable) {
+        if (indexExprTable != null) {
             indexExprTable.removeAll();
             // clear the indexmetadata to update the sql preview
             this.tableMetadata.getIndexes().clear();
