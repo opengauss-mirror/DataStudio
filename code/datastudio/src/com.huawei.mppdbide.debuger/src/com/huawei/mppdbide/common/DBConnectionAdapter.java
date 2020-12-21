@@ -26,6 +26,10 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
  * @since 19 Sep, 2019
  */
 public class DBConnectionAdapter implements IConnection {
+    /**
+     * the default of debug function operation timeout
+     */
+    private static final int DEFAULT_DEBUG_QUERY_TIMEOUT = 5;
     private DBConnection conn;
     private NoticeListener listener;
 
@@ -67,6 +71,7 @@ public class DBConnectionAdapter implements IConnection {
             List<Object> params) throws SQLException {
         String sql = DebugConstants.getSql(debugOpt);
         PreparedStatement ps = getStatement(sql);
+        ps.setQueryTimeout(DEFAULT_DEBUG_QUERY_TIMEOUT);
         for (int i = 1 ; i < params.size() + 1 ; i ++) {
             ps.setObject(i, params.get(i - 1));
         }

@@ -9,15 +9,9 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 
 import com.huawei.mppdbide.bl.serverdatacache.ForeignTable;
-import com.huawei.mppdbide.bl.serverdatacache.PartitionTable;
-import com.huawei.mppdbide.bl.serverdatacache.TableOrientation;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ConstraintList;
-import com.huawei.mppdbide.utils.IMessagesConstants;
-import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.view.handler.IHandlerUtilities;
 import com.huawei.mppdbide.view.ui.table.AddConstraint;
-import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
-import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
 
 /**
  * 
@@ -43,15 +37,7 @@ public class AddConstraintHandler {
         ConstraintList constraintList = IHandlerUtilities.getSelectedConstraintGroup();
         if (constraintList != null) {
             AddConstraint addColumnDlg = new AddConstraint(shell, constraintList.getParent());
-            if (constraintList.getParent().getOrientation() == TableOrientation.COLUMN) {
-                MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.INFORMATION, true,
-                        MessageConfigLoader
-                                .getProperty(IMessagesConstants.CONSTRAINT_INDEXES_HANDLER_NOT_SUPPORTED_TITLE),
-                        MessageConfigLoader
-                                .getProperty(IMessagesConstants.CONSTRAINT_HANDLER_FOR_COLUMN_ORIENTATION_BODY));
-            } else {
-                addColumnDlg.open();
-            }
+            addColumnDlg.open();
         }
     }
 

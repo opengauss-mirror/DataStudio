@@ -14,6 +14,7 @@ import com.huawei.mppdbide.debuger.exception.DebugExitException;
 import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
+import com.huawei.mppdbide.debuger.vo.VersionVo;
 
 /**
  * Title: IDebugService for use
@@ -25,6 +26,14 @@ import com.huawei.mppdbide.debuger.vo.VariableVo;
  * @since 2020-12-08
  */
 public interface IDebugService extends IService {
+    /**
+     * get version of debug, if any error or null mains not support debug
+     *
+     * @return Optional<VersionVo> the version vo
+     * @throws SQLException sql error
+     */
+    Optional<VersionVo> version() throws SQLException;
+
     /**
      * begin debug
      *

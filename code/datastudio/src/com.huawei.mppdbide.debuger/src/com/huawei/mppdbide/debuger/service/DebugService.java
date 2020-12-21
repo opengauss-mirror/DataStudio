@@ -20,6 +20,7 @@ import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.debuger.vo.SessionVo;
 import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
+import com.huawei.mppdbide.debuger.vo.VersionVo;
 import com.huawei.mppdbide.common.IConnection;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.postgresql.core.NoticeListener;
@@ -393,7 +394,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * set server connection
      *
-     * @param IConnection connection
+     * @param serverConn connection to set of server
      * @return void
      */
     public void setServerConn(IConnection serverConn) {
@@ -404,7 +405,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * set client connection
      *
-     * @param IConnection connection
+     * @param clientConn connection
      * @return void
      */
     public void setClientConn(IConnection clientConn) {
@@ -458,7 +459,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     /**
      * handle event
      *
-     * @param Event event to handle
+     * @param event event to handle
      * @return void
      */
     @Override
@@ -500,6 +501,18 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
         serverState.stateLocked();
         sessionVo.result = result;
         serverThreadProxy.start();
+    }
+
+    @Override
+    public Optional<VersionVo> version() throws SQLException {
+        try (ResultSet rs = serverConn.getDebugOptPrepareStatement(
+                DebugConstants.DebugOpt.DEBUG_VERSION,
+                new ArrayList<>(1)).executeQuery()) {
+            if (rs.next()) {
+                return Optional.ofNullable(ParseVo.parse(rs, VersionVo.class));
+            }
+            return Optional.empty();
+        }
     }
 
     /**

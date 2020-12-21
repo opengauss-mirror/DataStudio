@@ -15,6 +15,8 @@ import com.huawei.mppdbide.debuger.service.ServiceFactory;
 import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.service.WrappedDebugService;
 import com.huawei.mppdbide.debuger.vo.FunctionVo;
+import com.huawei.mppdbide.utils.IMessagesConstants;
+import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
 
 /**
@@ -28,12 +30,12 @@ import com.huawei.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
  */
 public class DebugServiceHelper {
     private static DebugServiceHelper debugServiceHelper = new DebugServiceHelper();
-    private IDebugObject debugObject;
-    private ServiceFactory serviceFactory;
-    private WrappedDebugService debugService;
-    private FunctionVo functionVo;
-    private QueryService queryService;
-    private SourceCodeService codeService;
+    private IDebugObject debugObject = null;
+    private ServiceFactory serviceFactory = null;
+    private WrappedDebugService debugService = null;
+    private FunctionVo functionVo = null;
+    private QueryService queryService = null;
+    private SourceCodeService codeService = null;
 
     private DebugServiceHelper() {
     }
@@ -56,8 +58,8 @@ public class DebugServiceHelper {
      */
     public boolean createServiceFactory(IDebugObject debugObject) throws SQLException {
         if (!isCommonDatabase(debugObject)) {
-            this.debugObject = debugObject;
             serviceFactory = new ServiceFactory(new DBConnectionProvider(debugObject.getDatabase()));
+            checkSupportDebug();
             queryService = serviceFactory.getQueryService();
             functionVo = queryService.queryFunction(debugObject.getName());
             debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));
@@ -65,9 +67,10 @@ public class DebugServiceHelper {
             debugService.addHandler(new UiEventHandler());
             codeService = serviceFactory.getCodeService();
             codeService.setBaseCode(queryService.getSourceCode(functionVo.oid).get().getSourceCode());
-            codeService.setTotalCode(this.debugObject.getSourceCode().getCode());
+            codeService.setTotalCode(debugObject.getSourceCode().getCode());
+            this.debugObject = debugObject;
         }
-        return true;
+        return debugService == null;
     }
 
     /**
@@ -172,5 +175,27 @@ public class DebugServiceHelper {
     public boolean canStepDebugRun() {
         return debugService != null
                 && debugService.isRunning();
+    }
+
+    /**
+     * check is support debug, if false throw SQLException
+     *
+     * @throws SQLException the throws exception
+     */
+    public void checkSupportDebug() throws SQLException {
+        if (!this.serviceFactory.isSupportDebug()) {
+            throw new SQLException("server not support debuger!") {
+                /**
+                 * get the default serial ID
+                 */
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public String getLocalizedMessage() {
+                    return MessageConfigLoader.getProperty(
+                            IMessagesConstants.DEBUG_NOT_SUPPORT_WARN);
+                }
+            };
+        }
     }
 }

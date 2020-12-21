@@ -19,6 +19,7 @@ import com.huawei.mppdbide.debuger.exception.DebugExitException;
 import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
+import com.huawei.mppdbide.debuger.vo.VersionVo;
 
 /**
  * Title: DebugerFunctionTest for use
@@ -117,6 +118,20 @@ public class DebugerFunctionTest extends DebugerJdbcTestCaseBase {
             } catch (DebugExitException e) {
                 assertTrue(true);
             }
+        }
+    }
+    
+    @Test
+    public void testSupportDebugVersion() {
+        mockHelper.mockDebugVersion(DebugConstants.getSql(DebugOpt.DEBUG_VERSION));
+        try {
+            VersionVo versionVo = debugService.version().get();
+            assertEquals(versionVo.serverversionstr, "server_version");
+            assertEquals(versionVo.serverprocessid.longValue(), 1L);
+            assertEquals(versionVo.proxyapiver.intValue(), 1);
+            assertEquals(versionVo.serverversionnum.intValue(), 1);
+        } catch (SQLException sqlExp) {
+            fail("can\'t run here!");
         }
     }
     

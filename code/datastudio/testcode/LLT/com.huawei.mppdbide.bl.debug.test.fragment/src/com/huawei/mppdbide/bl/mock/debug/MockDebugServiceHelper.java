@@ -75,6 +75,14 @@ public class MockDebugServiceHelper {
     public void mockPrepareDebug(String sql) {
         mockHelper(sql, new ResultColumnHelper());
     }
+
+    public void mockDebugVersion(String sql) {
+        String[] columns = new String[] {"serverversionstr", "serverversionnum",
+            "proxyapiver", "serverprocessid"};
+        Object[] oneRow = new Object[] {"server_version", new Integer(1),
+            new Integer(1), new Long(1)};
+        mockOneRow(sql, columns, oneRow);
+    }
     
     public void mockFunctionVo(String sql, Object[] args) {
         String[] columns = new String[] {"oid", "proname", "proretset",
