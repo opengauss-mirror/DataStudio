@@ -18,5 +18,37 @@ package com.huawei.mppdbide.bl.serverdatacache;
  */
 
 public enum ConstraintType {
-    CHECK_CONSTRSINT, UNIQUE_KEY_CONSTRSINT, PRIMARY_KEY_CONSTRSINT, FOREIGN_KEY_CONSTRSINT, EXCLUSION_CONSTRSINT
+    CHECK_CONSTRSINT("CHECK"),
+    UNIQUE_KEY_CONSTRSINT("UNIQUE"),
+    PRIMARY_KEY_CONSTRSINT("PRIMARY KEY"),
+    FOREIGN_KEY_CONSTRSINT("FOREIGN KEY"),
+    PARTIAL_CLUSTER_KEY("PARTIAL CLUSTER KEY"),
+    EXCLUSION_CONSTRSINT("EXCULSION KEY");
+    /**
+     * strType of Constraint type
+     */
+    public final String strType;
+
+    ConstraintType(String strType) {
+        this.strType = strType;
+    }
+
+    /**
+     * convert string to constraint type
+     *
+     * @param strType to convert string
+     * @return ConstaintType the constraint type
+     * */
+    public static ConstraintType strTypeConvert(String strType) {
+        try {
+            return ConstraintType.valueOf(strType);
+        } catch (IllegalArgumentException | NullPointerException validExp) {
+            for (ConstraintType constraintType: ConstraintType.values()) {
+                if (constraintType.strType.equals(strType)) {
+                    return constraintType;
+                }
+            }
+            return EXCLUSION_CONSTRSINT;
+        }
+    }
 }

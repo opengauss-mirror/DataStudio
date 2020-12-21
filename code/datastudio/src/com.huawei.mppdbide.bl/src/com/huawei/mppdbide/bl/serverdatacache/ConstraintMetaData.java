@@ -23,14 +23,16 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
  */
 
 public class ConstraintMetaData extends BatchDropServerObject implements GaussOLAPDBMSObject {
+    /**
+     * this is the constraint type
+     */
+    protected ConstraintType contype;
 
     /*
      * c is check constraint f is foreign key constraint p is primary key
      * constraint u is unique constraint x is exclusion constraint
      */
-
     private ConstraintQueryBuilder queryBuilder = null;
-    private ConstraintType contype;
     private String expr;
     private String consDef;
     private TableMetaData table;
@@ -301,7 +303,8 @@ public class ConstraintMetaData extends BatchDropServerObject implements GaussOL
                     return formCheckConstraint(query);
                 }
                 case PRIMARY_KEY_CONSTRSINT:
-                case UNIQUE_KEY_CONSTRSINT: {
+                case UNIQUE_KEY_CONSTRSINT:
+                case PARTIAL_CLUSTER_KEY: {
                     return formPrimaryUniqueConstraint(query);
                 }
                 case FOREIGN_KEY_CONSTRSINT: {
@@ -362,7 +365,8 @@ public class ConstraintMetaData extends BatchDropServerObject implements GaussOL
          * @return the string
          */
         private String formPrimaryUniqueConstraint(StringBuilder query) {
-            query.append((contype == ConstraintType.PRIMARY_KEY_CONSTRSINT) ? "PRIMARY KEY (" : "UNIQUE (");
+            query.append(contype.strType);
+            query.append(" (");
             if (columnList != null) {
                 query.append(columnList);
             }
@@ -390,7 +394,8 @@ public class ConstraintMetaData extends BatchDropServerObject implements GaussOL
          * @return the string
          */
         private String formCheckConstraint(StringBuilder query) {
-            query.append("CHECK (");
+            query.append(contype.strType);
+            query.append(" (");
             if (expr != null) {
                 query.append(expr.trim());
 
