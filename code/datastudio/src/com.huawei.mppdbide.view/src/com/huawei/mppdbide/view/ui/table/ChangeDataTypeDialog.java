@@ -261,6 +261,7 @@ public class ChangeDataTypeDialog extends Dialog {
         createScaleComposite(inputComp);
 
         createTypeDescriptorComposite(compositeColumns);
+        createTypeConversionTipComposite(compositeColumns);
 
         comboClmDataSchema.addSelectionListener(addComboClmDataSchemaSelectionListener(db));
         comboClmDataType.addModifyListener(addComboClmDataTypeModifyListener(db));
@@ -297,6 +298,15 @@ public class ChangeDataTypeDialog extends Dialog {
         GridData lblDescriptionOfDatatypeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         lblDescriptionOfDatatype.setLayoutData(lblDescriptionOfDatatypeGD);
         lblDescriptionOfDatatype.setText("");
+    }
+
+    private void createTypeConversionTipComposite(Composite compositeColumns) {
+        Label datatypeConversionTip = new Label(compositeColumns, SWT.NONE);
+        GridData datatypeConversionTipGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        datatypeConversionTipGD.horizontalIndent = 10;
+        datatypeConversionTip.setLayoutData(datatypeConversionTipGD);
+        datatypeConversionTip.setText(MessageConfigLoader.getProperty(IMessagesConstants.DATA_TYPE_CONVERSION_TIP));
+        datatypeConversionTip.pack();
     }
 
     private void createScaleComposite(Composite compositeColumns) {

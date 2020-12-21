@@ -1049,6 +1049,7 @@ public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
     String UNABLE_TO_SET_COL_VAL = "UNABLE_TO_SET_COL_VAL";
     String ERR_WHILE_STNG_COL_VAL = "ERR_WHILE_STNG_COL_VAL";
 
+    String DATA_TYPE_CONVERSION_TIP = "DATA_TYPE_CONVERSION_TIP";
     String UPDATE_DATA_TYPE = "UPDATE_DATA_TYPE";
     String TYPE_DES = "TYPE_DES";
     String CURRENT_DATA_TYPE = "CURRENT_DATA_TYPE";
