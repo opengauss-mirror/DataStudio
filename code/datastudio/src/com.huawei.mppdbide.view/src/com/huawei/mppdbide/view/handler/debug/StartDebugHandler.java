@@ -30,6 +30,7 @@ import com.huawei.mppdbide.view.uidisplay.UIDisplayUtil;
 import com.huawei.mppdbide.view.utils.UIElement;
 import com.huawei.mppdbide.view.utils.consts.UIConstants;
 import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
+import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
 
 /**
  * Title: class
@@ -68,14 +69,23 @@ public class StartDebugHandler {
         plSourceEditor.setEditable(false);
         try {
             serviceHelper.createServiceFactory(plSourceEditor.getDebugObject());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlExp) {
+            MPPDBIDELoggerUtility.warn("create servicefactory with error:" + sqlExp.getMessage());
+            Display.getDefault().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    MPPDBIDEDialogs.generateOKMessageDialog(
+                            MESSAGEDIALOGTYPE.WARNING,
+                            true,
+                            "start debug warning",
+                            sqlExp.getLocalizedMessage());
+                }
+            });
             return;
         }
         plSourceEditor.setExecuteInProgress(true);
         plSourceEditor.enabledisableTextWidget(false);
         debugUtils.showAllDebugView(true);
-        debugUtils.setDebugStart(true);
         startInputParamDialog();
     }
 
@@ -120,6 +130,7 @@ public class StartDebugHandler {
                 debugParams = getDebugParams(serverParams);
             }
             serviceHelper.getDebugService().begin(debugParams);
+            debugUtils.setDebugStart(true);
         } catch (DatabaseCriticalException exception) {
             UIDisplayFactoryProvider.getUIDisplayStateIf().handleDBCriticalError(exception, debugObject.getDatabase());
             return;

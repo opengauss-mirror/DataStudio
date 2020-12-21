@@ -19,6 +19,7 @@ import com.huawei.mppdbide.debuger.exception.DebugExitException;
 import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
+import com.huawei.mppdbide.debuger.vo.VersionVo;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 import com.huawei.mppdbide.debuger.event.Event.EventMessage;
@@ -39,6 +40,11 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
 
     public WrappedDebugService(DebugService debugService) {
         this.debugService = debugService;
+    }
+
+    @Override
+    public Optional<VersionVo> version() throws SQLException {
+        return debugService.version();
     }
 
     /**
