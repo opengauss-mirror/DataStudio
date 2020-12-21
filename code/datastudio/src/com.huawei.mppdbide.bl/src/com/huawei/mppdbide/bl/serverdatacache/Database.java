@@ -546,6 +546,10 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
                 cloneToDifferentDatatype((Namespace) servObj, datatypesToBeDisplayed[index][0],
                         datatypesToBeDisplayed[index][1], defaultDatatypes);
             }
+            String[] serialDataTypeList = DatabaseUtils.getSerialDatatypeList();
+            for (int index = 0; index < serialDataTypeList.length; index++) {
+                addSerialDatatype((Namespace) servObj, serialDataTypeList[index], defaultDatatypes);
+            }
             /* Frequently used dataType to be maintained here */
         }
 
@@ -619,6 +623,19 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
         }
         TypeMetaData newType = type.getCloneObjWithName(newName);
 
+        datatypes.addItem(newType);
+    }
+
+    /**
+     * Add serial data type.
+     *
+     * @param ns the ns
+     * @param name the name
+     * @param datatypes the datatypes
+     */
+    protected void addSerialDatatype(Namespace ns, String name, ObjectList<TypeMetaData> datatypes) {
+        int oid = DatabaseUtils.SERIAL_DATA_TYPE_OID;
+        TypeMetaData newType = new TypeMetaData(oid, name, ns);
         datatypes.addItem(newType);
     }
 

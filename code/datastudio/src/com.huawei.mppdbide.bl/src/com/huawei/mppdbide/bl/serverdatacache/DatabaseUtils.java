@@ -41,6 +41,10 @@ import com.huawei.mppdbide.utils.messaging.MessageQueue;
  */
 
 public interface DatabaseUtils {
+    /**
+     * Serial data type oid
+     */
+    static final int SERIAL_DATA_TYPE_OID = -1;
 
     /**
      * Check cancel status and abort.
@@ -553,6 +557,16 @@ public interface DatabaseUtils {
             {"timetz", "time with time zone"}, {"timestamptz", "timestamp with time zone"}, {"tsquery", null},
             {"tsvector", null}, {"txid_snapshot", null}, {"uuid", null}, {"varbit", null}, {"xml", null}};
         return defaultDatatype;
+    }
+
+    /**
+     * Gets the serial datatype list.
+     *
+     * @return String[] the serial datatype list
+     */
+    static String[] getSerialDatatypeList() {
+        String[] serialDatatype = {"smallserial", "serial", "bigserial"};
+        return serialDatatype;
     }
 
     /**
