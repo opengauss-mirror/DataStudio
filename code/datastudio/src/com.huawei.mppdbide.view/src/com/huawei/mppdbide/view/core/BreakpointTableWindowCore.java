@@ -14,6 +14,8 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 
 import com.huawei.mppdbide.debuger.vo.BreakpointList;
 import com.huawei.mppdbide.debuger.vo.BreakpointVo;
+import com.huawei.mppdbide.utils.IMessagesConstants;
+import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 
 /**
  * Title: class
@@ -25,16 +27,26 @@ import com.huawei.mppdbide.debuger.vo.BreakpointVo;
  */
 public class BreakpointTableWindowCore extends TableWindowCore<BreakpointVo> {
     private static enum TitleDesc {
-        LINE_NUM("行号"),
-        STATEMENT("语句"),
-        ENABLE("语句");
+        LINE_NUM(IMessagesConstants.DEBUG_BREAKPOINT_LINE_NUM),
+        STATEMENT(IMessagesConstants.DEBUG_BREAKPOINT_STATEMENT),
+        ENABLE(IMessagesConstants.DEBUG_BREAKPOINT_ENABLE);
 
         /**
          * Title Description
          */
-        public final String desc;
+        private final String desc;
+
         TitleDesc(String title) {
             this.desc = title;
+        }
+
+        /**
+         * Gets the desc
+         *
+         * @return String the desc
+         */
+        public String getDesc() {
+            return MessageConfigLoader.getProperty(desc);
         }
     }
 
@@ -47,7 +59,7 @@ public class BreakpointTableWindowCore extends TableWindowCore<BreakpointVo> {
     protected List<String> getTitle() {
         return Arrays.asList(TitleDesc.values())
                 .stream()
-                .map(desc -> desc.desc)
+                .map(desc -> desc.getDesc())
                 .collect(Collectors.toList());
     }
 

@@ -14,6 +14,8 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 
 import com.huawei.mppdbide.adapter.gauss.GaussDatatypeUtils;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
+import com.huawei.mppdbide.utils.IMessagesConstants;
+import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 
 /**
@@ -26,16 +28,26 @@ import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
  */
 public class VariableTableWindowCore extends TableWindowCore<VariableVo> {
     private static enum TitleDesc {
-        VARIABLE("变量"),
-        VALUE("值"),
-        DATA_TYPE("数据类型");
+        VARIABLE(IMessagesConstants.DEBUG_VARIABLE_VARIABLE),
+        VALUE(IMessagesConstants.DEBUG_VARIABLE_VALUE),
+        DATA_TYPE(IMessagesConstants.DEBUG_VARIABLE_DATA_TYPE);
 
         /**
          * Title Description
          */
-        public final String desc;
+        private final String desc;
+
         TitleDesc(String title) {
             this.desc = title;
+        }
+
+        /**
+         * Gets the desc
+         *
+         * @return String the desc
+         */
+        public String getDesc() {
+            return MessageConfigLoader.getProperty(desc);
         }
     }
 
@@ -47,7 +59,7 @@ public class VariableTableWindowCore extends TableWindowCore<VariableVo> {
     protected List<String> getTitle() {
         return Arrays.asList(TitleDesc.values())
                 .stream()
-                .map(desc -> desc.desc)
+                .map(desc -> desc.getDesc())
                 .collect(Collectors.toList());
     }
 

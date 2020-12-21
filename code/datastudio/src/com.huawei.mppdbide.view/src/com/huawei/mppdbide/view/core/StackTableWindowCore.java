@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 
 import com.huawei.mppdbide.debuger.vo.StackVo;
+import com.huawei.mppdbide.utils.IMessagesConstants;
+import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 
 /**
@@ -25,15 +27,25 @@ import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
  */
 public class StackTableWindowCore extends TableWindowCore<StackVo> {
     private static enum TitleDesc {
-        INVOKING_LEVEL("调用层级"),
-        FUNCTION_INFO("函数信息");
+        INVOKING_LEVEL(IMessagesConstants.DEBUG_STACK_INVOKING_LEVEL),
+        FUNCTION_INFO(IMessagesConstants.DEBUG_STACK_FUNCTION_INFO);
 
         /**
          * Title Description
          */
-        public final String desc;
+        private final String desc;
+
         TitleDesc(String title) {
             this.desc = title;
+        }
+
+        /**
+         * Gets the desc
+         *
+         * @return String the desc
+         */
+        public String getDesc() {
+            return MessageConfigLoader.getProperty(desc);
         }
     }
 
@@ -46,7 +58,7 @@ public class StackTableWindowCore extends TableWindowCore<StackVo> {
     protected List<String> getTitle() {
         return Arrays.asList(TitleDesc.values())
                 .stream()
-                .map(desc -> desc.desc)
+                .map(desc -> desc.getDesc())
                 .collect(Collectors.toList());
     }
 
