@@ -1470,7 +1470,7 @@ public class CommonLLTUtils
         partitionConstraintRS.addColumn("const_def");
         partitionConstraintRS.addRow(new Object[] {1, 1, 1, "ConstraintName",
                 "ConstraintType", false, false, false, 1, 1, "", "", "", "",
-                "1", "1", ""});
+                "{1}", "1", ""});
         preparedstatementHandler.prepareResultSet(
                 CommonLLTUtils.GET_PARTITION_CONSTRAINTS,
                 partitionConstraintRS);
@@ -2597,7 +2597,7 @@ MockResultSet colmetadataRS = preparedstatementHandler
         propconstraintRS.addColumn("tablespace");
         propconstraintRS.addRow(new Object[] {1, 1, 1, "ConstraintName",
                 "ConstraintType", false, false, false, 1, 1, "", "", "", "",
-                "1", "1", "", "constraint_tablespace"});
+                "{1}", "1", "", "constraint_tablespace"});
         preparedstatementHandler.prepareResultSet(
                 CommonLLTUtils.GET_ALL_CONSTRAINTS, propconstraintRS);
     }
