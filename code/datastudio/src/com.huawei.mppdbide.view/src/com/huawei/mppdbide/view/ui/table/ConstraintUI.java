@@ -182,7 +182,18 @@ public class ConstraintUI {
      * @param db2 the db 2
      */
     public ConstraintUI(Database db2) {
+        this(db2, TableOrientation.ROW);
+    }
+
+    /**
+     * instatiates a new constraint UI
+     *
+     * @param db2 the db 2
+     * @param orientation the table orientation
+     */
+    public ConstraintUI(Database db2, TableOrientation orientation) {
         this.db = db2;
+        this.orientation = orientation;
     }
 
     /**
@@ -230,7 +241,6 @@ public class ConstraintUI {
         compositeCheck.setLayout(new GridLayout(1, false));
         GridData compositeCheckGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         compositeCheck.setLayoutData(compositeCheckGD);
-        layout.topControl = compositeCheck;
 
         compositePkeyUnique = new Composite(overLayComposite, SWT.NONE);
         compositePkeyUnique.setLayout(new GridLayout(1, false));
@@ -238,6 +248,12 @@ public class ConstraintUI {
         compositePkeyUnique.setLayoutData(compositePkeyUniqueGD);
         
         compositeForeign = createForeignComposite(overLayComposite);
+
+        if (orientation == TableOrientation.ROW) {
+            layout.topControl = compositeCheck;
+        } else {
+            layout.topControl = compositePkeyUnique;
+        }
 
         addUiOnCheckSelection(compositeConstraints);
         addUiForUniqueKeySelection();

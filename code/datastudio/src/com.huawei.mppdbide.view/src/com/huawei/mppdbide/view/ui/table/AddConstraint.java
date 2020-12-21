@@ -101,7 +101,8 @@ public class AddConstraint extends Dialog implements IDialogWorkerInteraction {
 
         getCurrentShell(parent);
 
-        constraintUI = new ConstraintUI(tableMetaData.getNamespace().getDatabase());
+        constraintUI = new ConstraintUI(tableMetaData.getNamespace().getDatabase(),
+                tableMetaData.getOrientation());
 
         Composite mainComposite = new Composite(currentShell, SWT.NONE);
         mainComposite.setLayout(new GridLayout(1, false));
