@@ -30,12 +30,12 @@ import com.huawei.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
  */
 public class DebugServiceHelper {
     private static DebugServiceHelper debugServiceHelper = new DebugServiceHelper();
-    private IDebugObject debugObject;
-    private ServiceFactory serviceFactory;
-    private WrappedDebugService debugService;
-    private FunctionVo functionVo;
-    private QueryService queryService;
-    private SourceCodeService codeService;
+    private IDebugObject debugObject = null;
+    private ServiceFactory serviceFactory = null;
+    private WrappedDebugService debugService = null;
+    private FunctionVo functionVo = null;
+    private QueryService queryService = null;
+    private SourceCodeService codeService = null;
 
     private DebugServiceHelper() {
     }
@@ -59,7 +59,7 @@ public class DebugServiceHelper {
     public boolean createServiceFactory(IDebugObject debugObject) throws SQLException {
         if (!isCommonDatabase(debugObject)) {
             serviceFactory = new ServiceFactory(new DBConnectionProvider(debugObject.getDatabase()));
-            checkSupportDebug(); 
+            checkSupportDebug();
             queryService = serviceFactory.getQueryService();
             functionVo = queryService.queryFunction(debugObject.getName());
             debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));

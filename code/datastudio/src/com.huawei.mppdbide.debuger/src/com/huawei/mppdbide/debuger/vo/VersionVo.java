@@ -16,15 +16,27 @@ import com.huawei.mppdbide.debuger.annotation.DumpFiled;
  * @since 2020-12-21
  */
 public class VersionVo {
+    /**
+     * this is version str
+     */
     @DumpFiled
     public String serverversionstr;
 
+    /**
+     * this is version number
+     */
     @DumpFiled
     public Integer serverversionnum;
 
+    /**
+     * this is proxy api version
+     */
     @DumpFiled
     public Integer proxyapiver;
 
+    /**
+     * this is server process id
+     */
     @DumpFiled
     public Long serverprocessid;
 }
