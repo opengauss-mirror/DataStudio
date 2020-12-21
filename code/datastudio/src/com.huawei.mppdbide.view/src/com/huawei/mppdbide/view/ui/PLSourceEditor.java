@@ -234,6 +234,23 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     private MPart tab;
 
     /**
+     * Gets the breakpoint annotation list.
+     *
+     * @return List<BreakpointAnnotation> the breakpoint annotation list
+     */
+    public List<BreakpointAnnotation> getBreakpointAnnotation() {
+        List<BreakpointAnnotation> breakpointAnnotationList = new ArrayList<BreakpointAnnotation>();
+        Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
+        while (annoIterator.hasNext()) {
+            Annotation annotation = annoIterator.next();
+            if (annotation instanceof BreakpointAnnotation) {
+                breakpointAnnotationList.add((BreakpointAnnotation)annotation);
+            }
+        }
+        return breakpointAnnotationList;
+    }
+
+    /**
      * Checks if is execute in progress.
      *
      * @return true, if is execute in progress
@@ -806,7 +823,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     public void refresh() {
 
         // When no object is shown on editor gracefully ignore.
-        if (this.debugObject == null && !isActivated()) {
+        if (null == this.debugObject && !isActivated()) {
             return;
         }
 
@@ -1120,7 +1137,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         }
 
         private boolean validCheck(int line) {
-            if (line == INVALID_LINE || debugObject == null) {
+            if (line == INVALID_LINE || null == debugObject) {
                 return false;
             }
             return true;

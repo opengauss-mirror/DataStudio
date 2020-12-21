@@ -62,6 +62,7 @@ public class DebugServiceHelper {
             functionVo = queryService.queryFunction(debugObject.getName());
             debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));
             debugService.addHandler(new DebugEventHandler());
+            debugService.addHandler(new UiEventHandler());
             codeService = serviceFactory.getCodeService();
             codeService.setBaseCode(queryService.getSourceCode(functionVo.oid).get().getSourceCode());
             codeService.setTotalCode(this.debugObject.getSourceCode().getCode());
