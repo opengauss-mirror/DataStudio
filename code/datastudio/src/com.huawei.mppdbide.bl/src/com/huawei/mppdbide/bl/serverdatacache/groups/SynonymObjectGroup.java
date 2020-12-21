@@ -42,7 +42,7 @@ public class SynonymObjectGroup extends OLAPObjectGroup<SynonymMetaData> {
     private static final String QUERY_FOR_ALL_FOREIGN_TABLES_BY_NAMESPACE_ID = "SELECT c.relname AS relname"
             + " FROM pg_class c WHERE (c.relkind = 'f' :: char) and c.relnamespace = %d";
     private static final String QUERY_BY_SCHEMA_ID = "SELECT c.relname AS relname FROM pg_class c "
-            + "WHERE (c.relkind = 'v' :: char) and c.relnamespace = %d ";
+            + "WHERE (c.relkind = 'v' :: char or c.relkind = 'm' :: char) and c.relnamespace = %d ";
     private static final String QUERY_FOR_ALL_FUNCTIONS_BY_NAMESPACE_ID = "SELECT pr.proname relname "
             + "FROM pg_proc pr JOIN pg_type typ ON typ.oid = prorettype JOIN pg_namespace typns "
             + "ON typns.oid = typ.typnamespace JOIN pg_language lng ON lng.oid = prolang "
