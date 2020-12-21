@@ -30,6 +30,7 @@ import com.huawei.mppdbide.debuger.vo.FunctionVo;
 import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.debuger.vo.SourceCodeVo;
 import com.huawei.mppdbide.debuger.vo.TotalSourceCodeVo;
+import com.huawei.mppdbide.debuger.vo.VersionVo;
 import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
 
 /**
@@ -128,6 +129,30 @@ public class DebugerFactoryServiceTest extends DebugerJdbcTestCaseBase {
         assertEquals(EventMessage.valueOf("ON_EXIT"), EventMessage.ON_EXIT);
     }
     
+    @Test
+    public void testNotSupportDebugVersion() {
+        try {
+            assertFalse(serviceFactory.isSupportDebug());
+        } catch (NullPointerException nullExp) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testSupportDebugVersion() {
+        mockHelper.mockDebugVersion(DebugConstants.getSql(DebugOpt.DEBUG_VERSION));
+        assertTrue(serviceFactory.isSupportDebug());
+        try {
+            VersionVo versionVo = serviceFactory.getVersion().get();
+            assertEquals(versionVo.serverversionstr, "server_version");
+            assertEquals(versionVo.serverprocessid.longValue(), 1L);
+            assertEquals(versionVo.proxyapiver.intValue(), 1);
+            assertEquals(versionVo.serverversionnum.intValue(), 1);
+        } catch (SQLException sqlExp) {
+            fail("can\'t run here!");
+        }
+    }
+
     @Test
     public void testQueryService() throws SQLException {
         assertNotNull(queryService.getFunctionDao());

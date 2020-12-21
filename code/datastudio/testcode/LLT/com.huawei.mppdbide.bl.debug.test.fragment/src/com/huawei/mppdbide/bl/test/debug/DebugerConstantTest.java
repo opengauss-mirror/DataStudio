@@ -22,6 +22,7 @@ import com.huawei.mppdbide.debuger.vo.SourceCodeVo;
 import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.debuger.vo.TotalSourceCodeVo;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
+import com.huawei.mppdbide.debuger.vo.VersionVo;
 
 /**
  * Title: DebugerDebugOptTest for use
@@ -103,6 +104,16 @@ public class DebugerConstantTest {
         variableVo.isnotnull = new Boolean(true);
         assertNotEquals(VariableVo.title(), "");
         assertNotEquals(variableVo.formatSelf(), "");
+    }
+
+    @Test
+    public void testVoCreate1() {
+        VersionVo testVo = new VersionVo();
+        testVo.proxyapiver = new Integer(1);
+        testVo.serverprocessid = new Long(1);
+        testVo.serverversionnum = new Integer(1);
+        testVo.serverversionstr = "";
+        assertNotNull(testVo);
     }
     
     @Test
