@@ -206,7 +206,7 @@
         <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_STEPIN_DEBUG</commandname>
         <command>editor.shortcutmapper.stepindebug</command>
         <description>KEY_BINDING_COMMENTS_DESC_STEPIN_DEBUG</description>
-        <defaultkey>F5</defaultkey>
+        <defaultkey>CTRL+F5</defaultkey>
     </keybinding>
    <keybinding>
         <commandid>com.huawei.mppdbide.command.id.stepout</commandid>
