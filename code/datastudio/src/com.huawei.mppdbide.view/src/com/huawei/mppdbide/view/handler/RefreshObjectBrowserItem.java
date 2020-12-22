@@ -807,6 +807,7 @@ public class RefreshObjectBrowserItem {
 
         MPPDBIDELoggerUtility.perf(MPPDBIDEConstants.GUI, ILogger.PERF_REFRESH_CONNPROF, true);
         NamespaceUtils.fetchAllSystemNamespaces(db);
+        db.fetchAllDatatypes();
 
         MPPDBIDELoggerUtility.perf(MPPDBIDEConstants.GUI, ILogger.PERF_REFRESH_CONNPROF, false);
 
