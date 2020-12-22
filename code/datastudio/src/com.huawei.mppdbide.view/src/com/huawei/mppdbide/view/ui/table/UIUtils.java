@@ -137,6 +137,9 @@ public final class UIUtils {
         scaleMap.put("uuid", false);
         scaleMap.put("varbit", false);
         scaleMap.put("xml", false);
+        scaleMap.put("smallserial", false);
+        scaleMap.put("serial", false);
+        scaleMap.put("bigserial", false);
         // mapping orc data types
         initalizeScaleMapperForORC();
 
@@ -213,6 +216,9 @@ public final class UIUtils {
         precisionMap.put("uuid", false);
         precisionMap.put("varbit", true);
         precisionMap.put("xml", false);
+        precisionMap.put("smallserial", false);
+        precisionMap.put("serial", false);
+        precisionMap.put("bigserial", false);
         // for orc datatype
         initializePrecisionMapperForORC();
     }
