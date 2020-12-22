@@ -853,7 +853,7 @@ public class TableMetaData extends BatchDropServerObject implements GaussOLAPDBM
     private void setTablePersistence(ResultSet rs) throws SQLException {
         String persistence;
         persistence = rs.getString("relpersistence");
-        if ("t".equals(persistence)) {
+        if ("t".equals(persistence) || "g".equals(persistence)) {
             this.setTempTable(true);
         } else if ("u".equals(persistence)) {
             this.setUnLoggedTable(true);
