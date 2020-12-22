@@ -510,7 +510,7 @@ public class PropertiesTableImpl implements IServerObjectProperties {
     private TableType getEnumTableType(String tbltype) {
         if ("u".equals(tbltype)) {
             return TableType.UNLOGGED;
-        } else if ("t".equals(tbltype)) {
+        } else if ("t".equals(tbltype) || "g".equals(tbltype)) {
             return TableType.TEMPORARY;
         } else {
             return TableType.PERMANENT;
