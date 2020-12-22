@@ -54,14 +54,31 @@ public abstract class TableWindowCore<T> {
      * Create column.
      */
     protected void createColumns() {
+        Table table = tableViewer.getTable();
+        autoColWidth(table);
+        copyText(table);
         List<String> titles = getTitle();
         for (int i = 0; i < titles.size(); i ++) {
-            tableInfoColumn = new TableViewerColumn(tableViewer, SWT.NULL, i);
-            tableInfoColumn.getColumn().setWidth(200);
+            tableInfoColumn = new TableViewerColumn(tableViewer, SWT.FILL, i);
             tableInfoColumn.getColumn().setText(titles.get(i));
             tableInfoColumn.setLabelProvider(getProvider(i));
         }
     }
+
+    /**
+     * Copy text.
+     *
+     * @param table the table
+     */
+    protected void copyText(final Table table) {
+    }
+
+    /**
+     * Abstract method for auto column width.
+     *
+     * @param table the table
+     */
+    protected abstract void autoColWidth(final Table table);
 
     /**
      * Abstract method for getting column title.

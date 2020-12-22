@@ -4,6 +4,9 @@
 
 package com.huawei.mppdbide.view.core;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 import com.huawei.mppdbide.adapter.gauss.GaussDatatypeUtils;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
@@ -56,6 +67,7 @@ public class VariableTableWindowCore extends TableWindowCore<VariableVo> {
      *
      * @return List<String> the column title list
      */
+    @Override
     protected List<String> getTitle() {
         return Arrays.asList(TitleDesc.values())
                 .stream()
@@ -69,6 +81,7 @@ public class VariableTableWindowCore extends TableWindowCore<VariableVo> {
      * @param index the index of the column
      * @return ColumnLabelProvider the column label provider for column index
      */
+    @Override
     protected ColumnLabelProvider getProvider(int index) {
         return new CurColumnLabelProvider(TitleDesc.values()[index]);
     }
@@ -78,6 +91,7 @@ public class VariableTableWindowCore extends TableWindowCore<VariableVo> {
      *
      * @return List<VariableVo> the list element
      */
+    @Override
     protected List<VariableVo> getListElement() {
         try {
             return DebugServiceHelper.getInstance().getDebugService().getVariables();
@@ -124,7 +138,7 @@ public class VariableTableWindowCore extends TableWindowCore<VariableVo> {
             case VALUE:
                 result = variableVo.value.toString();
                 if ("NULL".equals(result)) {
-                    result = "";
+                    result = "<NULL>";
                 }
                 break;
             case DATA_TYPE:
@@ -136,5 +150,52 @@ public class VariableTableWindowCore extends TableWindowCore<VariableVo> {
             }
             return result;
         }
+    }
+
+    /**
+     * Auto column width.
+     *
+     * @param table the table
+     */
+    @Override
+    protected void autoColWidth(final Table table) {
+        table.addControlListener(new ControlAdapter() {
+            /**
+             * Sent when the size (width, height) of a control changes.
+             *
+             * @param e an event containing information about the resize
+             */
+            public void controlResized(final ControlEvent e) {
+                for (int i = 0; i < table.getColumnCount(); i++) {
+                    table.getColumn(i).setWidth((table.getSize().x / table.getColumnCount()));
+                }
+            }
+        });
+    }
+
+    /**
+     * Copy text.
+     *
+     * @param table the table
+     */
+    @Override
+    protected void copyText(final Table table) {
+        table.addMouseListener(new MouseAdapter() {
+            /**
+             * Sent when a mouse button is pressed.
+             *
+             * @param e an event containing information about the mouse button press
+             */
+            public void mouseDown(MouseEvent event) {
+                Point pt = new Point(event.x, event.y);
+                final TableItem item = table.getItem(pt);
+                if (item == null) {
+                    return;
+                }
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                StringSelection contents = new StringSelection(item.getText(0));
+                clipboard.setContents(contents, null);
+            }
+        });
     }
 }

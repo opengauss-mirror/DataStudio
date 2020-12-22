@@ -11,7 +11,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_chYg7ZPqEeOwspWUd5Ul7A" elementId="com.huawei.mppdbide.partsashcontainer.id.sub" containerData="65" horizontal="true">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_chYg7pPqEeOwspWUd5Ul7A" elementId="com.huawei.mppdbide.partsashcontainer.id.sub.editor.console" containerData="70">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_chYg7pPqEeOwspWUd5Ul7A" elementId="com.huawei.mppdbide.partsashcontainer.id.sub.editor.console" containerData="75">
           <children xsi:type="basic:PartStack" xmi:id="_chYg75PqEeOwspWUd5Ul7A" elementId="com.huawei.mppdbide.partstack.id.editor" containerData="75">
             <tags>NoMove</tags>
             <children xsi:type="basic:Part" xmi:id="_wU7-ALYqEeaYfrGH7Oeg6g" elementId="com.huawei.mppdbide.view.part.donotdeletemepart" toBeRendered="false" visible="false" label="Do not delete this part">
@@ -19,7 +19,7 @@
             </children>
           </children>
         </children>
-        <children xsi:type="basic:PartSashContainer" xmi:id="_kw6PkDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partsashcontainer.id.sub.alldebug" visible="false" containerData="35">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_kw6PkDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partsashcontainer.id.sub.alldebug" visible="false" containerData="25">
           <children xsi:type="basic:PartStack" xmi:id="_rt8TIDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.stack" containerData="">
             <children xsi:type="basic:Part" xmi:id="_3JGu4DKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.part.id.stack" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.ui.StackTableWindow" label="%viewmenu.label.stack" iconURI="" tooltip="%viewmenu.tooltip.stack"/>
           </children>
@@ -29,7 +29,7 @@
           <children xsi:type="basic:PartStack" xmi:id="_ukJrQDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.variable" containerData="">
             <children xsi:type="basic:Part" xmi:id="_BZovED7cEeuhAfRDQ0StdA" elementId="com.huawei.mppdbide.part.id.variable" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.ui.VariableTableWindow" label="%viewmenu.label.variable" tooltip="%viewmenu.tooltip.variable"/>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_vqV3QDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.monitor" containerData="">
+          <children xsi:type="basic:PartStack" xmi:id="_vqV3QDKwEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.partstack.id.monitor" visible="false" containerData="">
             <children xsi:type="basic:Part" xmi:id="_Gd-ysD7cEeuhAfRDQ0StdA" elementId="com.huawei.mppdbide.part.id.monitor" label="%viewmenu.label.monitor" tooltip="%viewmenu.tooltip.monitor"/>
           </children>
         </children>

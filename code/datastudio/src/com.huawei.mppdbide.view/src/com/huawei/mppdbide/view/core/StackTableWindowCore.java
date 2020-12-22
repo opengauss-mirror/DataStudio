@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.widgets.Table;
 
 import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.utils.IMessagesConstants;
@@ -26,6 +29,8 @@ import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
  * @since 04,12,2020
  */
 public class StackTableWindowCore extends TableWindowCore<StackVo> {
+    private static final int COLUMN0_WIDTH = 80;
+
     private static enum TitleDesc {
         INVOKING_LEVEL(IMessagesConstants.DEBUG_STACK_INVOKING_LEVEL),
         FUNCTION_INFO(IMessagesConstants.DEBUG_STACK_FUNCTION_INFO);
@@ -133,5 +138,25 @@ public class StackTableWindowCore extends TableWindowCore<StackVo> {
             }
             return result;
         }
+    }
+
+    /**
+     * Auto column width.
+     *
+     * @param table the table
+     */
+    @Override
+    protected void autoColWidth(final Table table) {
+        table.addControlListener(new ControlAdapter() {
+            /**
+             * Sent when the size (width, height) of a control changes.
+             *
+             * @param e an event containing information about the resize
+             */
+            public void controlResized(final ControlEvent e) {
+                table.getColumn(0).setWidth(COLUMN0_WIDTH);
+                table.getColumn(1).setWidth(table.getSize().x - COLUMN0_WIDTH);
+            }
+        });
     }
 }
