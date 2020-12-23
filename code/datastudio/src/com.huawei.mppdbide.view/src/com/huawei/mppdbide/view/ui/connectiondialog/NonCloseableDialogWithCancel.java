@@ -80,7 +80,7 @@ public final class NonCloseableDialogWithCancel extends Dialog {
          */
         Composite composite = (Composite) super.createDialogArea(parent1);
         composite.setLayout(new GridLayout(1, false));
-        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         createLabel(composite);
 
         progressIndicator = new ProgressIndicator(composite);
