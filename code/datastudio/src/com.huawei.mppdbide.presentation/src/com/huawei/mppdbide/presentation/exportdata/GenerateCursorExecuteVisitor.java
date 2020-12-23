@@ -39,7 +39,6 @@ public class GenerateCursorExecuteVisitor implements ICursorExecuteRecordVisitor
     private Path path;
     private String encoding;
     private long totalRows;
-    private StringBuffer outPutInsertSql = null;
     private FileOutputStream fileOutPutStream = null;
     private OutputStreamWriter filewriter;
     private GenerateCursorExecuteUtil cursorExecuteUtil;
@@ -55,7 +54,6 @@ public class GenerateCursorExecuteVisitor implements ICursorExecuteRecordVisitor
     public GenerateCursorExecuteVisitor(Path path, String encoding, boolean isOLAP, String tableNames) {
         this.path = path;
         this.encoding = encoding;
-        outPutInsertSql = new StringBuffer("");
         cursorExecuteUtil = new GenerateCursorExecuteUtil(tableNames, encoding, isOLAP);
     }
 
@@ -106,7 +104,7 @@ public class GenerateCursorExecuteVisitor implements ICursorExecuteRecordVisitor
             fileOutPutStream = new FileOutputStream(path.toFile());
             filewriter = new OutputStreamWriter(fileOutPutStream, encoding);
 
-            filewriter.write(outPutInsertSql.toString());
+            filewriter.write(cursorExecuteUtil.getOutPutInsertSql().toString());
 
         } catch (Exception exception) {
             MPPDBIDELoggerUtility.error(
@@ -149,8 +147,7 @@ public class GenerateCursorExecuteVisitor implements ICursorExecuteRecordVisitor
      * Clean up file content.
      */
     public void cleanUpFileContent() {
-        outPutInsertSql = null;
-
+        cursorExecuteUtil.cleanOutputInsertSql();
     }
 
     /**

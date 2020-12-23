@@ -212,7 +212,7 @@ public class GenerateCursorExecuteUtil {
      * cleanOutputInsertSql clean sql
      */
     public void cleanOutputInsertSql() {
-        outPutInsertSql = null;
+        outPutInsertSql = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
     }
 
 }
