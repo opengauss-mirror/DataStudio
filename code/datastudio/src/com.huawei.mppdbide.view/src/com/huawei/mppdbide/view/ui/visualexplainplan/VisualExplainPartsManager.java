@@ -111,7 +111,6 @@ public final class VisualExplainPartsManager {
 
     private String getExisitingWindowPartId() {
         StringBuilder sb = new StringBuilder(getVisualPlanWindowId());
-        sb.append(windowId);
         return sb.toString();
     }
 
