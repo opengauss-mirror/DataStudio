@@ -263,7 +263,7 @@ public abstract class AbstractImportTableData {
                 return;
             }
             String statusMsg = MessageConfigLoader.getProperty(IMessagesConstants.ERR_IMPORT_TABLE_TO_CSV_HANDLER,
-                    servObj.getNamespace().getName(), servObj.getName());
+                    servObj.getNamespace().getName(), "." + servObj.getName());
             String msg = exception.getServerMessage();
             if (null == msg) {
                 msg = exception.getDBErrorMessage();
@@ -277,7 +277,7 @@ public abstract class AbstractImportTableData {
                 ObjectBrowserStatusBarProvider.getStatusBar().displayMessage(Message.getError(
                         MessageConfigLoader.getProperty(IMessagesConstants.CANCEL_IMPORT_SUCCES_CONSOLE_MESSAGE)));
             } else {
-                MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.INFORMATION, true, getWindowImage(),
+                MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.ERROR, true, getWindowImage(),
                         MessageConfigLoader.getProperty(IMessagesConstants.CANCEL_IMPORT_FAIL_DAILOG_TITLE),
                         MessageConfigLoader.getProperty(IMessagesConstants.ERR_IMPORT_TABLE_TO_CSV_HANDLER,
                                 MPPDBIDEConstants.LINE_SEPARATOR, msg),
