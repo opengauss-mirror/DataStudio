@@ -19,7 +19,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
-import com.huawei.mppdbide.view.utils.UIElement;
 import com.huawei.mppdbide.view.utils.consts.UIConstants;
 import com.huawei.mppdbide.view.utils.icon.IconUtility;
 import com.huawei.mppdbide.view.utils.icon.IiconPath;
@@ -37,6 +36,16 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * @since 17 May, 2019
  */
 public class TextCellDialog extends Dialog {
+    /**
+     * the default style text ui width
+     */
+    public static final int STYLE_TEXT_DEFAULT_WIDTH = 600;
+
+    /**
+     * the default style text ui height
+     */
+    public static final int STYLE_TEXT_DEFAULT_HEIGHT = 300;
+
     private String textValue;
     private StyledText styledText;
 
@@ -72,11 +81,14 @@ public class TextCellDialog extends Dialog {
         Composite topComp = new Composite(parent, SWT.NONE);
         topComp.setLayout(new RowLayout());
         new Label(topComp, SWT.NONE).setText(
-                MessageConfigLoader.getProperty(IMessagesConstants.RESULT_WINDOW_TEXT_CELL_VALUE_DIALOG_TITLE));
+                MessageConfigLoader.getProperty(
+                        IMessagesConstants.RESULT_WINDOW_TEXT_CELL_VALUE_DIALOG_TITLE)
+                );
         RowData tableNameTextGridData = new RowData();
-        tableNameTextGridData.width = Dialog.DIALOG_DEFAULT_BOUNDS;
-        tableNameTextGridData.height = Dialog.DIALOG_DEFAULT_BOUNDS;
-        styledText = new StyledText(topComp, SWT.READ_ONLY | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+        tableNameTextGridData.width = STYLE_TEXT_DEFAULT_WIDTH;
+        tableNameTextGridData.height = STYLE_TEXT_DEFAULT_HEIGHT;
+        int style = SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL;
+        styledText = new StyledText(topComp, style);
         styledText.setBlockSelection(false);
         styledText.setCursor(parent.getDisplay().getSystemCursor(SWT.CURSOR_IBEAM));
         styledText.setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
