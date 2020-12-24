@@ -411,6 +411,8 @@ public class DataGrid {
     private RightClickShowMenuConfiguration rightClickShowMenuconfiguration;
     private NatTableBorderOverlayPainter borderOverlayPainter;
     private MouseListener mouseListenerForSort;
+    private int currentScrolledRow = 0;
+    private int pageRowSize = 0;
 
     /**
      * Instantiates a new data grid.
@@ -2872,7 +2874,30 @@ public class DataGrid {
             menuItemProvider = null;
             showsetNullItemProvider = null;
         }
-
     }
 
+    /**
+     * update scrolled row info and page size
+     *
+     * @param position the ui position
+     * @param pageRowSize the page size
+     */
+    public void updateScrolledInfo(int position, int pageRowSize) {
+        this.currentScrolledRow = selectionLayer.getRowPositionByY(position);
+        this.pageRowSize = pageRowSize;
+    }
+
+    /**
+     *  return current scrolled row
+     */
+    public int getCurScrolledRow() {
+        return this.currentScrolledRow;
+    }
+
+    /**
+     * return current need setted scroll row
+     */
+    public int getCurrentScrolledBeginRow() {
+        return currentScrolledRow + pageRowSize - 1;
+    }
 }

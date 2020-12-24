@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
@@ -43,8 +42,6 @@ import com.huawei.mppdbide.presentation.edittabledata.IDSGridEditDataRow;
 import com.huawei.mppdbide.presentation.grid.IDSGridColumnProvider;
 import com.huawei.mppdbide.presentation.grid.IDSGridDataProvider;
 import com.huawei.mppdbide.presentation.grid.IDSGridDataRow;
-import com.huawei.mppdbide.utils.ConvertTimeStampValues;
-import com.huawei.mppdbide.utils.ConvertTimeValues;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
@@ -66,7 +63,6 @@ import com.huawei.mppdbide.view.component.grid.GridSearchArea;
 import com.huawei.mppdbide.view.component.grid.GridUIUtils;
 import com.huawei.mppdbide.view.component.grid.TextScrollEventDataLoadListener;
 import com.huawei.mppdbide.view.handler.IHandlerUtilities;
-import com.huawei.mppdbide.view.prefernces.PreferenceWrapper;
 import com.huawei.mppdbide.view.ui.dialog.TextCellDialog;
 import com.huawei.mppdbide.view.ui.terminal.SQLTerminal;
 import com.huawei.mppdbide.view.utils.BottomStatusBar;
@@ -199,6 +195,15 @@ public class DataText {
         addListenerMourseClick();
         addListenerKeyClick();
         loadTextData();
+    }
+
+    /**
+     * set the begin show index line
+     *
+     * @param index
+     */
+    public void setTopIndex(int index) {
+        styledText.setTopIndex(index + 2);
     }
 
     private void addListenerKeyClick() {

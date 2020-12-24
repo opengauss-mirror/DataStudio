@@ -67,6 +67,7 @@ public abstract class GridAndTextScrollEventDataLoadListener implements Listener
     @Override
     public void handleEvent(Event event) {
         ScrollBar bar = (ScrollBar) event.widget;
+        updateScrolledPosition(bar.getSelection(), bar.getPageIncrement(), bar.getIncrement());
         if (bar.getSelection() + bar.getThumb() == bar.getMaximum()) {
             triggerLoadMoreRecords(false);
         }
@@ -83,6 +84,15 @@ public abstract class GridAndTextScrollEventDataLoadListener implements Listener
             triggerLoadMoreRecords(true);
         }
     }
+
+    /**
+     * update scrolled position
+     *
+     * @param position the ui scrolled position
+     * @param pageIncrement the page increment
+     * @param increment the one row increment
+     */
+    public abstract void updateScrolledPosition(int position, int pageIncrement, int increment);
 
     /**
      * Checks if is last row selected.

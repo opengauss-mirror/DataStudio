@@ -19,6 +19,7 @@ import org.eclipse.nebula.widgets.nattable.layer.event.ILayerEvent;
 import org.eclipse.nebula.widgets.nattable.selection.event.CellSelectionEvent;
 import org.eclipse.nebula.widgets.nattable.selection.event.ColumnSelectionEvent;
 import org.eclipse.nebula.widgets.nattable.selection.event.RowSelectionEvent;
+import org.eclipse.nebula.widgets.nattable.viewport.command.ShowRowInViewportCommand;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -1900,6 +1901,9 @@ public class GridToolbar implements Observer {
                 dataText.doHideText(dataText.getTextParent());
                 dataText.doHideText(dataText.getSearchParent());
                 dsGridComponent.showStatusBar();
+                dataGrid.getDataGrid().doCommand(new ShowRowInViewportCommand(
+                        dataGrid.getCurrentScrolledBeginRow())
+                        );
             }
 
             @Override
@@ -1946,6 +1950,7 @@ public class GridToolbar implements Observer {
                     dataText.doShowText(dataText.getTextParent());
                 }
                 dsGridComponent.showStatusBar();
+                dataText.setTopIndex(dataGrid.getCurScrolledRow());
             }
 
             @Override
