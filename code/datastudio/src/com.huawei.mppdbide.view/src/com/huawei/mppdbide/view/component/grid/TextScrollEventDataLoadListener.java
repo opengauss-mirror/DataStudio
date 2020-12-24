@@ -101,4 +101,9 @@ public class TextScrollEventDataLoadListener extends GridAndTextScrollEventDataL
         super.onPreDestroy();
         this.datatext = null;
     }
+
+    @Override
+    public void updateScrolledPosition(int position, int pageIncrement, int increment) {
+        datatext.updateScrolledInfo();
+    }
 }

@@ -1901,8 +1901,10 @@ public class GridToolbar implements Observer {
                 dataText.doHideText(dataText.getTextParent());
                 dataText.doHideText(dataText.getSearchParent());
                 dsGridComponent.showStatusBar();
+                int scrolledRowIndex = dataText.getTopIndex();
+                dataGrid.updateScrolledInfo(scrolledRowIndex, -1);
                 dataGrid.getDataGrid().doCommand(new ShowRowInViewportCommand(
-                        dataGrid.getCurrentScrolledBeginRow())
+                        dataGrid.getCurrentScrolledBeginRow(scrolledRowIndex))
                         );
             }
 

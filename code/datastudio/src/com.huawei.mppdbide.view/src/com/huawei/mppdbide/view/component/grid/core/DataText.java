@@ -153,6 +153,7 @@ public class DataText {
     private int loadedRowCnt;
 
     private List<DSResultSetGridDataRow> cursorGridRowList;
+    private int scrolledRow = 0;
 
     /**
      * Instantiates a new data text.
@@ -203,7 +204,19 @@ public class DataText {
      * @param index
      */
     public void setTopIndex(int index) {
-        styledText.setTopIndex(index + 2);
+        scrolledRow = index;
+        styledText.setTopIndex(scrolledRow + 2);
+    }
+
+    /**
+     * return current text mode scrolled row
+     */
+    public int getTopIndex() {
+        return scrolledRow;
+    }
+
+    public void updateScrolledInfo() {
+        scrolledRow = styledText.getTopIndex() - 2;
     }
 
     private void addListenerKeyClick() {
@@ -1840,6 +1853,7 @@ public class DataText {
             try {
                 if (null != styledText) {
                     styledText.setText(String.valueOf(obj));
+                    styledText.setTopIndex(scrolledRow + 2);
                     if (isInitDataTextFlag() && styledText.getLineCount() > FIRST_ROW_LINE) {
                         int start = (styledText.getLine(0).length() + System.lineSeparator().length()) * 2;
                         setHigtLight(start, colWidths[0], SWT.COLOR_GRAY);

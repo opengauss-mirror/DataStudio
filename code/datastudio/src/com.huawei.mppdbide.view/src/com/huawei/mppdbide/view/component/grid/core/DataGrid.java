@@ -2883,8 +2883,12 @@ public class DataGrid {
      * @param pageRowSize the page size
      */
     public void updateScrolledInfo(int position, int pageRowSize) {
-        this.currentScrolledRow = selectionLayer.getRowPositionByY(position);
-        this.pageRowSize = pageRowSize;
+        if (pageRowSize > 0) {
+            this.currentScrolledRow = selectionLayer.getRowPositionByY(position);
+            this.pageRowSize = pageRowSize;
+        } else {
+            this.currentScrolledRow = position;
+        }
     }
 
     /**
@@ -2896,8 +2900,10 @@ public class DataGrid {
 
     /**
      * return current need setted scroll row
+     *
+     * @param scrolledRow the row to scroll to
      */
-    public int getCurrentScrolledBeginRow() {
-        return currentScrolledRow + pageRowSize - 1;
+    public int getCurrentScrolledBeginRow(int scrolledRow) {
+        return scrolledRow + pageRowSize - 1;
     }
 }
