@@ -2893,6 +2893,8 @@ public class DataGrid {
 
     /**
      *  return current scrolled row
+     *
+     *  @return int the scrolled row
      */
     public int getCurScrolledRow() {
         return this.currentScrolledRow;
@@ -2902,6 +2904,7 @@ public class DataGrid {
      * return current need setted scroll row
      *
      * @param scrolledRow the row to scroll to
+     * @return then grid mode scrolled row
      */
     public int getCurrentScrolledBeginRow(int scrolledRow) {
         return scrolledRow + pageRowSize - 1;

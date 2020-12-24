@@ -201,7 +201,7 @@ public class DataText {
     /**
      * set the begin show index line
      *
-     * @param index
+     * @param index then row of styletext
      */
     public void setTopIndex(int index) {
         scrolledRow = index;
@@ -210,11 +210,16 @@ public class DataText {
 
     /**
      * return current text mode scrolled row
+     *
+     * @return int the scrolled row
      */
     public int getTopIndex() {
         return scrolledRow;
     }
 
+    /**
+     * update scrolled line info
+     */
     public void updateScrolledInfo() {
         scrolledRow = styledText.getTopIndex() - 2;
     }
