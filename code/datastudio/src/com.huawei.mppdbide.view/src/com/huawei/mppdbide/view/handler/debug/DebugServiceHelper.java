@@ -184,18 +184,33 @@ public class DebugServiceHelper {
      */
     public void checkSupportDebug() throws SQLException {
         if (!this.serviceFactory.isSupportDebug()) {
-            throw new SQLException("server not support debuger!") {
-                /**
-                 * get the default serial ID
-                 */
-                private static final long serialVersionUID = 1L;
+            throw new DebugNotSupportException("server not support debuger!");
+        }
+    }
 
-                @Override
-                public String getLocalizedMessage() {
-                    return MessageConfigLoader.getProperty(
-                            IMessagesConstants.DEBUG_NOT_SUPPORT_WARN);
-                }
-            };
+    /**
+     * Title: if server not support debug, this error will be throw
+     * Description: The Class DebugEditorItem.
+     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
+     *
+     * @author z00588921
+     * @version [openGauss DataStudio 1.0.1, 25,12,2020]
+     * @since 25,12,2020
+     */
+    private static class DebugNotSupportException extends SQLException {
+        public DebugNotSupportException(String message) {
+            super(message);
+        }
+
+        /**
+         * get the default serial ID
+         */
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public String getLocalizedMessage() {
+            return MessageConfigLoader.getProperty(
+                    IMessagesConstants.DEBUG_NOT_SUPPORT_WARN);
         }
     }
 }
