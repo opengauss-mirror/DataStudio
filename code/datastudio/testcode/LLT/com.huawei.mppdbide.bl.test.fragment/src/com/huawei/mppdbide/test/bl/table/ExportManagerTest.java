@@ -177,7 +177,8 @@ public class ExportManagerTest extends BasicJDBCTestCaseAdapter
         }
         catch (DatabaseOperationException e)
         {
-            assertEquals("Export process failed.\nReason: Setting file permission failed.", e.getMessage());
+            assertTrue(e.getServerMessage().contains("Export process failed."));
+            assertTrue(e.getServerMessage().contains(path.toUpperCase()));
         }
         catch (DatabaseCriticalException e)
         {

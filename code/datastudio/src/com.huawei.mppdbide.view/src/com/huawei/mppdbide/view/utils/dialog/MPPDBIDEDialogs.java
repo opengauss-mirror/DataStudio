@@ -480,7 +480,7 @@ public abstract class MPPDBIDEDialogs {
             childStatus = new Status(IStatus.WARNING, pluginId, errStr + MPPDBIDEConstants.SPACE_CHAR);
         } else if (exception instanceof MPPDBIDEException) {
             childStatus = new Status(IStatus.WARNING, pluginId,
-                    ((MPPDBIDEException) exception).getDBErrorMessage() + MPPDBIDEConstants.SPACE_CHAR);
+                    ((MPPDBIDEException) exception).getServerMessage() + MPPDBIDEConstants.SPACE_CHAR);
         } else {
             childStatus = new Status(IStatus.WARNING, pluginId,
                     exception.getLocalizedMessage() + MPPDBIDEConstants.SPACE_CHAR);
