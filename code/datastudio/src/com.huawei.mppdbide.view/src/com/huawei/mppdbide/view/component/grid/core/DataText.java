@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
@@ -43,8 +42,6 @@ import com.huawei.mppdbide.presentation.edittabledata.IDSGridEditDataRow;
 import com.huawei.mppdbide.presentation.grid.IDSGridColumnProvider;
 import com.huawei.mppdbide.presentation.grid.IDSGridDataProvider;
 import com.huawei.mppdbide.presentation.grid.IDSGridDataRow;
-import com.huawei.mppdbide.utils.ConvertTimeStampValues;
-import com.huawei.mppdbide.utils.ConvertTimeValues;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
@@ -66,7 +63,6 @@ import com.huawei.mppdbide.view.component.grid.GridSearchArea;
 import com.huawei.mppdbide.view.component.grid.GridUIUtils;
 import com.huawei.mppdbide.view.component.grid.TextScrollEventDataLoadListener;
 import com.huawei.mppdbide.view.handler.IHandlerUtilities;
-import com.huawei.mppdbide.view.prefernces.PreferenceWrapper;
 import com.huawei.mppdbide.view.ui.dialog.TextCellDialog;
 import com.huawei.mppdbide.view.ui.terminal.SQLTerminal;
 import com.huawei.mppdbide.view.utils.BottomStatusBar;
@@ -157,6 +153,7 @@ public class DataText {
     private int loadedRowCnt;
 
     private List<DSResultSetGridDataRow> cursorGridRowList;
+    private int scrolledRow = 0;
 
     /**
      * Instantiates a new data text.
@@ -199,6 +196,32 @@ public class DataText {
         addListenerMourseClick();
         addListenerKeyClick();
         loadTextData();
+    }
+
+    /**
+     * set the begin show index line
+     *
+     * @param index then row of styletext
+     */
+    public void setTopIndex(int index) {
+        scrolledRow = index;
+        styledText.setTopIndex(scrolledRow + 2);
+    }
+
+    /**
+     * return current text mode scrolled row
+     *
+     * @return int the scrolled row
+     */
+    public int getTopIndex() {
+        return scrolledRow;
+    }
+
+    /**
+     * update scrolled line info
+     */
+    public void updateScrolledInfo() {
+        scrolledRow = styledText.getTopIndex() - 2;
     }
 
     private void addListenerKeyClick() {
@@ -1835,6 +1858,7 @@ public class DataText {
             try {
                 if (null != styledText) {
                     styledText.setText(String.valueOf(obj));
+                    styledText.setTopIndex(scrolledRow + 2);
                     if (isInitDataTextFlag() && styledText.getLineCount() > FIRST_ROW_LINE) {
                         int start = (styledText.getLine(0).length() + System.lineSeparator().length()) * 2;
                         setHigtLight(start, colWidths[0], SWT.COLOR_GRAY);

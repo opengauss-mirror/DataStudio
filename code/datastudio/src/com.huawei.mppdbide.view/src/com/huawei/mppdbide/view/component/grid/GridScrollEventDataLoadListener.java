@@ -98,4 +98,10 @@ public class GridScrollEventDataLoadListener extends GridAndTextScrollEventDataL
         this.dataGrid = null;
         this.viewportLayer = null;
     }
+
+    @Override
+    public void updateScrolledPosition(int position, int pageIncrement, int increment) {
+        int pageRowSize = pageIncrement / increment ;
+        dataGrid.updateScrolledInfo(position, pageRowSize);
+    }
 }
