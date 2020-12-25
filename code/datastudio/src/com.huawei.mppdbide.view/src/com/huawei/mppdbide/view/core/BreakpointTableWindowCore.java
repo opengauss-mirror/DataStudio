@@ -6,11 +6,16 @@ package com.huawei.mppdbide.view.core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.widgets.Table;
 
 import com.huawei.mppdbide.debuger.vo.BreakpointList;
 import com.huawei.mppdbide.debuger.vo.BreakpointVo;
@@ -82,11 +87,14 @@ public class BreakpointTableWindowCore extends TableWindowCore<BreakpointVo> {
     @Override
     protected List<BreakpointVo> getListElement() {
         Map<Integer, BreakpointVo> breakpointList = BreakpointList.getInstance();
-        List<BreakpointVo> breakpointVoList = new ArrayList<BreakpointVo>();
-        for (Map.Entry<Integer, BreakpointVo> entry : breakpointList.entrySet()) {
-            breakpointVoList.add(entry.getValue());
-        }
-        return breakpointVoList;
+        List<BreakpointVo> sortedBreakpointList = breakpointList.entrySet()
+                .stream()
+                .sorted((entry1, entry2) -> {
+                    return entry1.getKey().compareTo(entry2.getKey());
+                })
+                .map(entry -> entry.getValue())
+                .collect(Collectors.toList());
+        return sortedBreakpointList;
     }
 
     /**
@@ -135,5 +143,33 @@ public class BreakpointTableWindowCore extends TableWindowCore<BreakpointVo> {
             }
             return result;
         }
+    }
+
+    /**
+     * Auto column width.
+     *
+     * @param table the table
+     */
+    @Override
+    protected void autoColWidth(final Table table) {
+        table.addControlListener(new ControlAdapter() {
+            /**
+             * Sent when the size (width, height) of a control changes.
+             *
+             * @param e an event containing information about the resize
+             */
+            public void controlResized(final ControlEvent e) {
+                table.getColumn(0).setWidth(50);
+                int oldTableWidth = 0;
+                for (int i = 1; i < table.getColumnCount(); i++) {
+                    oldTableWidth += table.getColumn(i).getWidth();
+                }
+                for (int i = 1; i < table.getColumnCount(); i++) {
+                    int oldWidth = table.getColumn(i).getWidth();
+                    table.getColumn(i).setWidth((table.getSize().x - table.getColumn(0).getWidth() - oldTableWidth)
+                            / (table.getColumnCount() - 1) + oldWidth);
+                }
+            }
+        });
     }
 }
