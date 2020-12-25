@@ -61,7 +61,6 @@ public final class VisualExplainPartsManager {
     private static volatile VisualExplainPartsManager selfObject;
     private static final Object LOCK = new Object();
     private final Object instanceLock = new Object();
-    private int windowId = 0;
 
     private VisualExplainPartsManager() {
     }
