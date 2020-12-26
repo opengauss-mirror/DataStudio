@@ -14,9 +14,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.huawei.mppdbide.adapter.gauss.DBConnection;
 import com.huawei.mppdbide.bl.mock.debug.DebugerJdbcTestCaseBase;
 import com.huawei.mppdbide.common.DBConnectionAdapter;
 import com.huawei.mppdbide.common.GaussManager;
+import com.huawei.mppdbide.common.IConnectionDisconnect;
 import com.huawei.mppdbide.debuger.dao.FunctionDao;
 import com.huawei.mppdbide.debuger.debug.DebugConstants;
 import com.huawei.mppdbide.debuger.debug.DebugConstants.DebugOpt;
@@ -69,9 +71,7 @@ public class DebugerFactoryServiceTest extends DebugerJdbcTestCaseBase {
     public void testDbConnectionAdapter() throws MPPDBIDEException, SQLException {
         FunctionDao dao = new FunctionDao();
         String sql = dao.getSql(funcDescAddTest.proname);
-        DBConnectionAdapter adapter = new DBConnectionAdapter(
-                database.getConnectionManager().getFreeConnection()
-                );
+        DBConnectionAdapter adapter = getConnectionAdapter();
         PreparedStatement ps = adapter.getStatement(sql);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
@@ -89,9 +89,7 @@ public class DebugerFactoryServiceTest extends DebugerJdbcTestCaseBase {
     public void testGaussManager() throws MPPDBIDEException, SQLException {
         FunctionDao dao = new FunctionDao();
         String sql = dao.getSql(funcDescAddTest.proname);
-        DBConnectionAdapter adapter = new DBConnectionAdapter(
-                database.getConnectionManager().getFreeConnection()
-                );
+        DBConnectionAdapter adapter = getConnectionAdapter();
         PreparedStatement ps = adapter.getStatement(sql);
         GaussManager.INSTANCE.addNoticeListener(ps);
         ResultSet rs = ps.executeQuery();
@@ -104,6 +102,19 @@ public class DebugerFactoryServiceTest extends DebugerJdbcTestCaseBase {
             adapter.close();
             fail("query failed!");
         }
+    }
+    
+    private DBConnectionAdapter getConnectionAdapter() throws MPPDBIDEException {
+       return new DBConnectionAdapter(
+               database.getConnectionManager().getFreeConnection(),
+               new IConnectionDisconnect<DBConnection>() {
+                   public void releaseConnection(DBConnection connection) {
+                       database
+                       .getConnectionManager()
+                       .releaseAndDisconnection(connection);
+                   }
+               }
+            );
     }
     
     @Test

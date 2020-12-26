@@ -43,6 +43,7 @@ import com.huawei.mppdbide.bl.serverdatacache.connectioninfo.ServerConnectionInf
 import com.huawei.mppdbide.bl.serverdatacache.savepsswordoption.SavePrdOptions;
 import com.huawei.mppdbide.common.DBConnectionAdapter;
 import com.huawei.mppdbide.common.IConnection;
+import com.huawei.mppdbide.common.IConnectionDisconnect;
 import com.huawei.mppdbide.common.IConnectionProvider;
 import com.huawei.mppdbide.debuger.dao.FunctionDao;
 import com.huawei.mppdbide.debuger.debug.DebugConstants;
@@ -166,7 +167,14 @@ public class DebugerFunctionTest extends BasicJDBCTestCaseAdapter {
                 DBConnection dbConn;
                 try {
                     dbConn = database.getConnectionManager().getFreeConnection();
-                    return Optional.of(new DBConnectionAdapter(dbConn));
+                    return Optional.of(new DBConnectionAdapter(
+                            dbConn,
+                            new IConnectionDisconnect<DBConnection>() {
+                                @Override
+                                public void releaseConnection(DBConnection connection) {
+                                    database.getConnectionManager().releaseConnection(connection);
+                                }
+                            }));
                 } catch (MPPDBIDEException e) {
                 }
                 return Optional.empty();
