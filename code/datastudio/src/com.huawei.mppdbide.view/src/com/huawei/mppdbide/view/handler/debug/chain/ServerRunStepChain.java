@@ -54,7 +54,7 @@ public class ServerRunStepChain extends IMsgChain {
 
     private void updateCurDebugLine(DebugAddtionMsg msg) {
         int line = msg.getPositionVo().get().linenumber;
-        Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine(line))); 
+        Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine(line)));
     }
 
     private void showErrorDialog(Exception exp) {
@@ -71,6 +71,7 @@ public class ServerRunStepChain extends IMsgChain {
             });
         }
     }
+
     private int getCurLine(int breakPointLine) {
         SourceCodeService codeService = serviceHelper.getCodeService();
         try {
