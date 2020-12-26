@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.huawei.mppdbide.bl.serverdatacache.groups.UserRoleObjectGroup;
+import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
@@ -656,8 +657,14 @@ public class UserRole extends BatchDropServerObject implements GaussOLAPDBMSObje
 
     @Override
     public String getDropQuery(boolean isCascade) {
-        StringBuilder query = new StringBuilder(DROP_QUERY);
+        StringBuilder query = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
+        query.append("DROP ");
+        query.append(this.getRolCanLogin() ? "USER " : "ROLE ");
+        query.append("IF EXISTS ");
         query.append(this.getDisplayName());
+        if (isCascade) {
+            query.append(this.getRolCanLogin() ? MPPDBIDEConstants.CASCADE : "");
+        }
         return query.toString();
     }
 
