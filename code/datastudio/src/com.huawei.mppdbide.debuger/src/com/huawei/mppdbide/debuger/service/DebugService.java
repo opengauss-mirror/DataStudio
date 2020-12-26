@@ -11,6 +11,7 @@ import com.huawei.mppdbide.debuger.exception.DebugExitException;
 import com.huawei.mppdbide.debuger.service.chain.MsgChainHelper;
 import com.huawei.mppdbide.debuger.annotation.ParseVo;
 import com.huawei.mppdbide.debuger.debug.DebugConstants;
+import com.huawei.mppdbide.debuger.debug.DebugConstants.DebugOpt;
 import com.huawei.mppdbide.debuger.debug.DebugState;
 import com.huawei.mppdbide.debuger.thread.DebugServerRunable;
 import com.huawei.mppdbide.debuger.thread.DebugServerThreadProxy;
@@ -245,7 +246,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      */
     @Override
     public Optional<PositionVo> stepOut() throws SQLException, DebugExitException {
-        throw new SQLException("not support method");
+        return getPositionVo(DebugOpt.STEP_OUT);
     }
 
     /**
@@ -273,6 +274,9 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
             DebugConstants.DebugOpt debugOpt
             ) throws SQLException, DebugExitException {
         clientState.running();
+        if (debugOpt == DebugOpt.STEP_OUT) {
+            throw new SQLException("not support method!");
+        }
         List<Object> inputParams = Arrays.asList(sessionVo.clientPort);
         try (ResultSet rs = clientConn.getDebugOptPrepareStatement(
                 debugOpt,

@@ -68,19 +68,13 @@ public class StartDebugHandler {
         plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
         plSourceEditor.setEditable(false);
         try {
-            serviceHelper.createServiceFactory(plSourceEditor.getDebugObject());
+            if (!serviceHelper.createServiceFactory(plSourceEditor.getDebugObject())) {
+                showMsg("create debug service failed!");
+                return;
+            }
         } catch (SQLException sqlExp) {
             MPPDBIDELoggerUtility.warn("create servicefactory with error:" + sqlExp.getMessage());
-            Display.getDefault().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    MPPDBIDEDialogs.generateOKMessageDialog(
-                            MESSAGEDIALOGTYPE.WARNING,
-                            true,
-                            "start debug warning",
-                            sqlExp.getLocalizedMessage());
-                }
-            });
+            showMsg(sqlExp.getLocalizedMessage());
             return;
         }
         plSourceEditor.setExecuteInProgress(true);
@@ -91,6 +85,19 @@ public class StartDebugHandler {
 
     private void startInputParamDialog() {
         new InputParamsJob("input dialog", null, this).schedule();
+    }
+
+    private void showMsg(String msg) {
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                MPPDBIDEDialogs.generateOKMessageDialog(
+                        MESSAGEDIALOGTYPE.WARNING,
+                        true,
+                        "start debug warning",
+                        msg);
+            }
+        });
     }
 
     /**

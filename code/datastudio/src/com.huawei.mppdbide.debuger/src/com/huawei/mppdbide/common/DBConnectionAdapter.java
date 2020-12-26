@@ -31,10 +31,14 @@ public class DBConnectionAdapter implements IConnection {
      */
     private static final int DEFAULT_DEBUG_QUERY_TIMEOUT = 5;
     private DBConnection conn;
+    private IConnectionDisconnect<DBConnection> disconnect;
     private NoticeListener listener;
 
-    public DBConnectionAdapter(DBConnection conn) {
+    public DBConnectionAdapter(
+            DBConnection conn,
+            IConnectionDisconnect<DBConnection> disconnect) {
         this.conn = conn;
+        this.disconnect = disconnect;
     }
 
     /**
@@ -86,7 +90,7 @@ public class DBConnectionAdapter implements IConnection {
     @Override
     public void close() throws SQLException {
         if (this.conn != null) {
-            this.conn.disconnect();
+            this.disconnect.releaseConnection(conn);
             this.conn = null;
         }
     }

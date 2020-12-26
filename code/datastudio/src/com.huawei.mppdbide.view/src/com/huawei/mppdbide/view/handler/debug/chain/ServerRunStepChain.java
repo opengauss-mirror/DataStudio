@@ -4,22 +4,21 @@
 
 package com.huawei.mppdbide.view.handler.debug.chain;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import org.eclipse.swt.widgets.Display;
 
 import com.huawei.mppdbide.debuger.event.DebugAddtionMsg;
 import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.event.DebugAddtionMsg.State;
 import com.huawei.mppdbide.debuger.event.Event.EventMessage;
+import com.huawei.mppdbide.debuger.exception.DebugExitException;
 import com.huawei.mppdbide.debuger.exception.DebugPositionNotFoundException;
 import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.service.chain.IMsgChain;
-import com.huawei.mppdbide.debuger.vo.VariableVo;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
+import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
+import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
 
 /**
  * Title: class
@@ -43,19 +42,33 @@ public class ServerRunStepChain extends IMsgChain {
         Object additionObj = event.getAddition().get();
         if (additionObj instanceof DebugAddtionMsg) {
             DebugAddtionMsg msg = (DebugAddtionMsg) additionObj;
-            if (msg.getState() == State.END && !event.hasException()) {
-                try {
-                    List<VariableVo> variableVos = serviceHelper.getDebugService().getVariables();
-                    MPPDBIDELoggerUtility.debug(VariableVo.title());
-                    for (VariableVo vo: variableVos) {
-                        MPPDBIDELoggerUtility.debug(vo.formatSelf());
-                    }
-                    int line = msg.getPositionVo().get().linenumber;
-                    Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine(line)));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            if (msg.getState() == State.END) {
+                if (!event.hasException()) {
+                    updateCurDebugLine(msg);
+                } else {
+                    showErrorDialog(event.getException());
                 }
             }
+        }
+    }
+
+    private void updateCurDebugLine(DebugAddtionMsg msg) {
+        int line = msg.getPositionVo().get().linenumber;
+        Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine(line)));
+    }
+
+    private void showErrorDialog(Exception exp) {
+        if (!(exp instanceof DebugExitException)) {
+            Display.getDefault().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    MPPDBIDEDialogs.generateOKMessageDialog(
+                            MESSAGEDIALOGTYPE.WARNING,
+                            true,
+                            "debug step warning",
+                            exp.getLocalizedMessage());
+                }
+            });
         }
     }
 

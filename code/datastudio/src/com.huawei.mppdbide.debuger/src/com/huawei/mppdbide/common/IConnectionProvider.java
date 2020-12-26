@@ -16,5 +16,10 @@ import java.util.Optional;
  * @since 19 Sep, 2019
  */
 public interface IConnectionProvider {
+    /**
+     * desrciption: get free connection from database
+     *
+     * @return Optional<IConnection> the connection
+     */
     Optional<IConnection> getFreeConnection();
 }
