@@ -48,8 +48,7 @@ public abstract class BaseDebugStepHandler {
                 MPPDBIDELoggerUtility.error("current position is" + positionVo.get().formatSelf());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            MPPDBIDELoggerUtility.error("step have some error!");
+            MPPDBIDELoggerUtility.error("step have some error!" + e.getLocalizedMessage());
         } catch (DebugExitException e) {
             MPPDBIDELoggerUtility.error("debug end!");
         }

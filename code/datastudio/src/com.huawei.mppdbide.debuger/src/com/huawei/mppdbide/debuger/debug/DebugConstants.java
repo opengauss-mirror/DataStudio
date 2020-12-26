@@ -40,6 +40,7 @@ public class DebugConstants {
         ATTACH_SESSION("pldbg_attach_to_port", 1),
         STEP_INTO("pldbg_step_into", 1),
         STEP_OVER("pldbg_step_over", 1),
+        STEP_OUT("pldbg_step_out", 1),
         CONTINUE_EXEC("pldbg_continue", 1),
         ABORT_TARGET("pldbg_abort_target", 1),
         GET_VARIABLES("pldbg_get_variables", 1),

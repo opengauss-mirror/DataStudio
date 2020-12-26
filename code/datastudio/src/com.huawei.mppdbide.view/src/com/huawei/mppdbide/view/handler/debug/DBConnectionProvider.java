@@ -6,9 +6,11 @@ package com.huawei.mppdbide.view.handler.debug;
 
 import java.util.Optional;
 
+import com.huawei.mppdbide.adapter.gauss.DBConnection;
 import com.huawei.mppdbide.bl.serverdatacache.Database;
 import com.huawei.mppdbide.common.DBConnectionAdapter;
 import com.huawei.mppdbide.common.IConnection;
+import com.huawei.mppdbide.common.IConnectionDisconnect;
 import com.huawei.mppdbide.common.IConnectionProvider;
 import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
 
@@ -21,7 +23,8 @@ import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
  * @version [openGauss DataStudio 1.0.1, 04,12,2020]
  * @since 04,12,2020
  */
-public class DBConnectionProvider implements IConnectionProvider {
+public class DBConnectionProvider implements IConnectionProvider,
+                                IConnectionDisconnect<DBConnection> {
     private Database db;
 
     public DBConnectionProvider(Database db) {
@@ -38,11 +41,17 @@ public class DBConnectionProvider implements IConnectionProvider {
         try {
             return Optional.of(
                     new DBConnectionAdapter(
-                            db.getConnectionManager().getFreeConnection()
+                            db.getConnectionManager().getFreeConnection(),
+                            this
                         )
                     );
         } catch (MPPDBIDEException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public void releaseConnection(DBConnection connection) {
+        db.getConnectionManager().releaseAndDisconnection(connection);
     }
 }

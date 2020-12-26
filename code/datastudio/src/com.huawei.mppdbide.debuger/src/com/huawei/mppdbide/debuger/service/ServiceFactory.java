@@ -16,6 +16,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -63,7 +64,7 @@ public class ServiceFactory {
     public boolean isSupportDebug() {
         try {
             return getVersion().isPresent();
-        } catch (SQLException sqlExp) {
+        } catch (SQLException | NoSuchElementException notSupportExp) {
             return false;
         }
     }

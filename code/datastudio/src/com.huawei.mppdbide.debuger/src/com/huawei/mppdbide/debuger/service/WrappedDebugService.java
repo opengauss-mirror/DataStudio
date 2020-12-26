@@ -87,6 +87,11 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         return runDebugRunStep(DebugOpt.CONTINUE_EXEC);
     }
 
+    @Override
+    public Optional<PositionVo> stepOut() throws SQLException, DebugExitException {
+        return runDebugRunStep(DebugOpt.STEP_OUT);
+    }
+
     /**
      * step run debug step
      *
@@ -139,7 +144,6 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         debugService.closeService();
     }
 
-
     @Override
     public void end() {
         try {
@@ -154,19 +158,11 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
         }
     }
 
-
-    @Override
-    public Optional<PositionVo> stepOut() throws SQLException, DebugExitException {
-        return debugService.stepOut();
-    }
-
-
     @Override
     public Optional<PositionVo> getPositionVo(DebugOpt debugOpt)
             throws SQLException, DebugExitException {
         return debugService.getPositionVo(debugOpt);
     }
-
 
     @Override
     public List<VariableVo> getVariables() throws SQLException {

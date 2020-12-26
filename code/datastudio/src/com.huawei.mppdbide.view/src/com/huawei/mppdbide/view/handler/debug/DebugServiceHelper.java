@@ -57,6 +57,9 @@ public class DebugServiceHelper {
      * @throws SQLException the execute sql exception
      */
     public boolean createServiceFactory(IDebugObject debugObject) throws SQLException {
+        if (debugObject == null) {
+            return false;
+        }
         if (!isCommonDatabase(debugObject)) {
             serviceFactory = new ServiceFactory(new DBConnectionProvider(debugObject.getDatabase()));
             checkSupportDebug();
@@ -70,7 +73,7 @@ public class DebugServiceHelper {
             codeService.setTotalCode(debugObject.getSourceCode().getCode());
             this.debugObject = debugObject;
         }
-        return debugService == null;
+        return debugService != null;
     }
 
     /**
@@ -161,8 +164,14 @@ public class DebugServiceHelper {
      */
     public void closeService() {
         if (this.debugObject != null) {
-            debugService.end();
-            queryService.closeService();
+            if (debugService != null) {
+                debugService.end();
+                debugService = null;
+            }
+            if (queryService != null) {
+                queryService.closeService();
+                queryService = null;
+            }
             this.debugObject = null;
         }
     }
