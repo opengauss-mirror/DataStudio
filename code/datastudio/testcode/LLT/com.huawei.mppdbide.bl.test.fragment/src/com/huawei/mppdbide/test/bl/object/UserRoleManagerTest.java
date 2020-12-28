@@ -686,12 +686,17 @@ public class UserRoleManagerTest extends BLTestAdapter
             userRole.setUserGroupName("Test123");
             userRole.setBeginTime("1:33");
             userRole.setUntilTime("3:45");
+            userRole.setRolCanLogin(true);
             assertTrue(userRole.getAll());
             assertTrue(userRole.getClear());
             assertEquals(23,userRole.getSpinnerPreSize());
             assertEquals("Test",userRole.getCmbResoucePoolName());
             assertEquals("Test123",userRole.getUserGroupName());
-            assertEquals("DROP ROLE IF EXISTS \"Chris\"",userRole.getDropQuery(true));
+            assertEquals("DROP USER IF EXISTS \"Chris\" CASCADE", userRole.getDropQuery(true));
+            assertEquals("DROP USER IF EXISTS \"Chris\"", userRole.getDropQuery(false));
+            userRole.setRolCanLogin(false);
+            assertEquals("DROP ROLE IF EXISTS \"Chris\"", userRole.getDropQuery(true));
+            assertEquals("DROP ROLE IF EXISTS \"Chris\"", userRole.getDropQuery(false));
             
             UserRole userRole1 = new UserRole();
             userRole1.setName("Chris1");
