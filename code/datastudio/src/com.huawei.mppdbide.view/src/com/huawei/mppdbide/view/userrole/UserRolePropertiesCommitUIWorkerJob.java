@@ -158,7 +158,13 @@ public class UserRolePropertiesCommitUIWorkerJob extends DBOperationUIWorkerJob 
             }
         });
         if (executeFlag) {
-            ((DSObjectPropertiesGridDataProvider) this.dataProvider).commitUserRoleProperty(this.conn, previewSqls);
+            try {
+                ((DSObjectPropertiesGridDataProvider) this.dataProvider).commitUserRoleProperty(this.conn, previewSqls);
+            } catch (final DatabaseOperationException dbOperationException) {
+                this.eventData.getEventTable()
+                        .sendEvent(new DSEvent(IDSGridUIListenable.LISTEN_TYPE_GRID_DATA_EDITED, dataProvider));
+                throw dbOperationException;
+            }
         } else {
             this.eventData.getEventTable()
                     .sendEvent(new DSEvent(IDSGridUIListenable.LISTEN_TYPE_GRID_DATA_EDITED, dataProvider));
