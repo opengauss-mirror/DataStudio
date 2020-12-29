@@ -112,7 +112,7 @@ public class ExportManager implements IExportManager {
             MPPDBIDELoggerUtility.error(
                     MessageConfigLoader.getProperty(IMessagesConstants.EXPORT_FAIL_PROCESS_INTRUPTED_FOR_OBJ, ""), exp);
             throw new DatabaseOperationException(IMessagesConstants.EXPORT_FAIL_PROCESS_INTRUPTED_FOR_OBJ,
-                    exp.getDBErrorMessage());
+                    exp.getServerMessage());
         } catch (IOException exp) {
             MPPDBIDELoggerUtility
                     .error(MessageConfigLoader.getProperty(IMessagesConstants.EXPORT_FAIL_DISK_WRITE_ERROR), exp);
