@@ -8,6 +8,7 @@ import com.huawei.mppdbide.adapter.gauss.DBConnection;
 import com.huawei.mppdbide.bl.IServerObjectBatchOperations;
 import com.huawei.mppdbide.bl.serverdatacache.ServerObject;
 import com.huawei.mppdbide.presentation.grid.IDSGridDataRow;
+import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
 import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 import com.huawei.mppdbide.utils.messaging.MessageQueue;
@@ -110,7 +111,16 @@ public class BatchDropDataRow implements IDSGridDataRow {
      * @param serverMessage the server message
      */
     public void updateError(String serverMessage) {
-        values[ERROR_IDX] = serverMessage;
+        if (!(serverMessage.contains("  Detail") && serverMessage.contains("  Hint"))) {
+            values[ERROR_IDX] = serverMessage;
+            return;
+        }
+        int index1 = serverMessage.indexOf("  Detail");
+        int index2 = serverMessage.indexOf("  Hint");
+        StringBuilder sb = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
+        sb.append(serverMessage.substring(0, index1));
+        sb.append(serverMessage.substring(index2));
+        values[ERROR_IDX] = sb.toString();
     }
 
     /**
