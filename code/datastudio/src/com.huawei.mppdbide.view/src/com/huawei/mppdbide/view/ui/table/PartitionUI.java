@@ -393,6 +393,9 @@ public class PartitionUI {
         Label lblPartitionName = new Label(partitionNameComposite, SWT.NONE);
         lblPartitionName.setText(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_TAB_PATITION_NAME));
         lblPartitionName.pack();
+        decofk = new ControlDecoration(lblPartitionName, SWT.TOP | SWT.LEFT);
+        Image image = IconUtility.getIconImage(IiconPath.MANDATORY_FIELD, this.getClass());
+        decofk.setImage(image);
 
         txtPartitionName = new Text(partitionNameComposite, SWT.BORDER);
         GridData txtPartitionNameGD = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -409,6 +412,8 @@ public class PartitionUI {
         lblPartitionValueGD.horizontalSpan = 2;
         lblPartitionValue.setLayoutData(lblPartitionValueGD);
         lblPartitionValue.pack();
+        decofk = new ControlDecoration(lblPartitionValue, SWT.TOP | SWT.LEFT);
+        decofk.setImage(image);
 
         txtPartitionValue = new Text(partitionValueComposite, SWT.BORDER | SWT.READ_ONLY);
         GridData txtPartitionValueGD = new GridData(SWT.FILL, SWT.FILL, true, true);
