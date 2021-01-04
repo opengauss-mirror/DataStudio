@@ -4,14 +4,12 @@
 
 package com.huawei.mppdbide.view.ui;
 
-import javax.inject.Inject;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.swt.widgets.Composite;
-
-import com.huawei.mppdbide.view.core.TableWindowCore;
+import com.huawei.mppdbide.view.ui.debug.DebugBaseTableComposite;
+import com.huawei.mppdbide.view.ui.debug.DebugTableEventHandler;
+import com.huawei.mppdbide.view.ui.debug.IDebugSourceData;
 
 /**
  * Title: class
@@ -21,47 +19,41 @@ import com.huawei.mppdbide.view.core.TableWindowCore;
  * @version [openGauss DataStudio 1.0.1, 04,12,2020]
  * @since 04,12,2020
  */
-public class WindowBase<T> {
+public abstract class WindowBase<T> implements DebugTableEventHandler {
     /**
-     * the instance of table window core base
+     * the tableComposite
      */
-    protected TableWindowCore<T> tableWindowCore;
-    @Inject
-    private EPartService partService;
-
-    /**
-     * Instantiates a new window base.
-     */
-    public WindowBase() {
-    }
-
-    /**
-     * Creates the part control.
-     *
-     * @param parent the parent
-     * @param modelService the model service
-     * @param application the application
-     */
-    @Inject
-    public void createPartControl(Composite parent, EModelService modelService, MApplication application) {
-        // Which ever control is being created first, it has to set the
-        // partService and modelService to UIElement. those will be used on
-        // further calls.
-        IDEStartup.getInstance().init(partService, modelService, application);
-        tableWindowCore.createPartControl(parent, partService);
-    }
+    protected DebugBaseTableComposite tableComposite;
 
     /**
      * Clear.
      */
     public void clear() {
-        tableWindowCore.clear();
+        tableComposite.removeAllData();
     }
 
     /**
      * Refresh.
      */
     public void refresh() {
-        tableWindowCore.refresh();
+        List<IDebugSourceData> datas = getDataList()
+                .stream()
+                .map(var -> baseVoToSourceData(var))
+                .collect(Collectors.toList());
+        tableComposite.resetAllData(datas);
     }
+
+    /**
+     * description: get data list
+     *
+     * @return List<T> the data list
+     */
+    protected abstract List<T> getDataList();
+
+    /**
+     * description: convert objVo to IDebugSourceData
+     * @param objVo the T type
+     * @return the IDebugSourceData
+     */
+    protected abstract IDebugSourceData baseVoToSourceData(T objVo);
 }

@@ -6,7 +6,6 @@ package com.huawei.mppdbide.view.handler.debug.ui;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 
-import com.huawei.mppdbide.debuger.event.DebugAddtionMsg;
 import com.huawei.mppdbide.view.ui.WindowBase;
 import com.huawei.mppdbide.view.utils.UIElement;
 

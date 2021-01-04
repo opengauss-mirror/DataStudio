@@ -7,7 +7,6 @@ package com.huawei.mppdbide.view.handler.debug.ui;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 
 import com.huawei.mppdbide.view.ui.BreakpointTableWindow;
-import com.huawei.mppdbide.view.ui.WindowBase;
 import com.huawei.mppdbide.view.utils.UIElement;
 
 /**
