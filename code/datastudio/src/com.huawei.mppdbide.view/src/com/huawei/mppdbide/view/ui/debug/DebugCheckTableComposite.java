@@ -123,7 +123,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
             "icon_breakpoint-delete_all.png",
         };
         IntStream.range(0, toolItemsTipText.length).forEach(idx -> {
-            ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
+            ToolItem toolItem = new ToolItem(tmpToolBar, SWT.NONE);
             toolItem.setText("");
             toolItem.setToolTipText(toolItemsTipText[idx]);
             toolItem.addSelectionListener(new ToolBaseSelectionAdapter(toolItemsEvent[idx], this));
