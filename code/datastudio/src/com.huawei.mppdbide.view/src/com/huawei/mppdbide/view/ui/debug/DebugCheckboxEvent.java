@@ -19,5 +19,7 @@ public enum DebugCheckboxEvent {
     DISABLE,
     DELETE,
     DELETE_ALL,
+    SELECT_ALL,
+    DE_SELECT_ALL,
     DOUBLE_CLICK;
 }

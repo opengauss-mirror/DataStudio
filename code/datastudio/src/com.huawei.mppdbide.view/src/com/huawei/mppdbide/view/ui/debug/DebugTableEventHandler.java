@@ -20,7 +20,8 @@ public interface DebugTableEventHandler {
     /**
      * description: if item clicked, this func will be called!
      *
-     * @param selectItems the select item which is instanceof IDebugSourceData
+     * @param selectItems the select item which is instanceof IDebugSourceData,
+     * if no value, selectItems is empty not null
      */
     void selectHandler(List<Object> selectItems, DebugCheckboxEvent event);
 }

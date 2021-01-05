@@ -53,4 +53,9 @@ public interface IDebugSourceData {
     default boolean isEditable(int titleIndex) {
         return true;
     }
+
+    /**
+     * description: get total title index length
+     */
+    int getTitleSize();
 }

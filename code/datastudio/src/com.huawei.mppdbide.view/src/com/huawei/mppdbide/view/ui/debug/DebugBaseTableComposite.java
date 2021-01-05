@@ -223,7 +223,7 @@ public class DebugBaseTableComposite extends Composite {
      *
      * @return Optional<List<?>> the data list
      */
-    protected Optional<List<?>> getDataList() {
+    public Optional<List<?>> getDataList() {
         Object inputs = getTableViewer().getInput();
         if (inputs instanceof List<?>) {
             return Optional.of((List<?>) inputs);

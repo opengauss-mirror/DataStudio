@@ -48,4 +48,9 @@ public abstract class ListDebugSourceDataAdapter implements IDebugSourceData {
         }
         return dataArrays.get(titleIndex);
     }
+
+    @Override
+    public int getTitleSize() {
+        return dataArrays.size() + (isShowOrder() ? 1 : 0);
+    }
 }
