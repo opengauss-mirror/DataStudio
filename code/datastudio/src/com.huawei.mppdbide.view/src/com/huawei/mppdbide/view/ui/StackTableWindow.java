@@ -35,6 +35,7 @@ import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
 public class StackTableWindow extends WindowBase<StackVo> {
     /**
      * create UI controls
+     *
      * @param parent the parent control
      */
     @PostConstruct

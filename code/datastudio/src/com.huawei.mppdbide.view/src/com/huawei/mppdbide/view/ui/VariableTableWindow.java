@@ -36,6 +36,7 @@ import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
 public class VariableTableWindow extends WindowBase<VariableVo> {
     /**
      * description: create UI controls
+     *
      * @param parent the parent control
      */
     @PostConstruct

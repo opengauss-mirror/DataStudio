@@ -56,6 +56,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
 
     /**
      * Create the composite.
+     *
      * @param parent the parent
      * @param style the style
      */
@@ -82,28 +83,8 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
             }
         });
 
-        toolBar = new ToolBar(sashForm, SWT.FLAT | SWT.RIGHT);
+        toolBar = createToolBar(sashForm);
 
-        String[] toolItemsTipText = new String[] {"Enable", "Disable", "Remove", "RemoveAll"};
-        DebugCheckboxEvent[] toolItemsEvent = new DebugCheckboxEvent[] {
-            DebugCheckboxEvent.ENABLE,
-            DebugCheckboxEvent.DISABLE,
-            DebugCheckboxEvent.DELETE,
-            DebugCheckboxEvent.DELETE_ALL};
-        String[] toolItemsImagePath = new String[] {
-            "icon_breakpoint-enabled.png",
-            "icon_breakpoint-disabled.png",
-            "icon_breakpoint-delete.png",
-            "icon_breakpoint-delete_all.png",
-        };
-        IntStream.range(0, toolItemsTipText.length).forEach(idx -> {
-            ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
-            toolItem.setText("");
-            toolItem.setToolTipText(toolItemsTipText[idx]);
-            toolItem.addSelectionListener(new ToolBaseSelectionAdapter(toolItemsEvent[idx], this));
-            String tmpIconPath = "debug" + File.separator + toolItemsImagePath[idx];
-            toolItem.setImage(IconUtility.getIconImage(tmpIconPath, this.getClass()));
-        });
         Composite composite = new Composite(sashForm, SWT.H_SCROLL | SWT.V_SCROLL);
         composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -124,6 +105,32 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
         Menu menu = createMenu(table);
         table.setMenu(menu);
         sashForm.setWeights(new int[] {1, 10});
+    }
+
+    private ToolBar createToolBar(SashForm sashForm) {
+        ToolBar toolBar = new ToolBar(sashForm, SWT.FLAT | SWT.RIGHT);
+
+        String[] toolItemsTipText = new String[] {"Enable", "Disable", "Remove", "RemoveAll"};
+        DebugCheckboxEvent[] toolItemsEvent = new DebugCheckboxEvent[] {
+            DebugCheckboxEvent.ENABLE,
+            DebugCheckboxEvent.DISABLE,
+            DebugCheckboxEvent.DELETE,
+            DebugCheckboxEvent.DELETE_ALL};
+        String[] toolItemsImagePath = new String[] {
+            "icon_breakpoint-enabled.png",
+            "icon_breakpoint-disabled.png",
+            "icon_breakpoint-delete.png",
+            "icon_breakpoint-delete_all.png",
+        };
+        IntStream.range(0, toolItemsTipText.length).forEach(idx -> {
+            ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
+            toolItem.setText("");
+            toolItem.setToolTipText(toolItemsTipText[idx]);
+            toolItem.addSelectionListener(new ToolBaseSelectionAdapter(toolItemsEvent[idx], this));
+            String tmpIconPath = "debug" + File.separator + toolItemsImagePath[idx];
+            toolItem.setImage(IconUtility.getIconImage(tmpIconPath, this.getClass()));
+        }); 
+        return toolBar;
     }
 
     private Menu createMenu(Table table) {
@@ -155,9 +162,10 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
 
         MenuItem mntmDeSelectAll = new MenuItem(menu, SWT.NONE);
         mntmDeSelectAll.addSelectionListener(new ToolBaseSelectionAdapter(DebugCheckboxEvent.DE_SELECT_ALL, this));
-        mntmDeSelectAll.setText("DeSelectAll"); 
+        mntmDeSelectAll.setText("DeSelectAll");
         return menu;
     }
+
     /**
      * description: get toolbar object
      *
@@ -228,8 +236,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
         private List<IDebugSourceData> getSelectItems(Object source) {
             List<?> items = new ArrayList<Object>(1);
             if (!(source instanceof MenuItem)) {
-                Object[] checkItems = checkComposite.getCheckboxTableViewer().getCheckedElements();
-                items = Arrays.asList(checkItems);
+                items = Arrays.asList(checkComposite.getCheckboxTableViewer().getCheckedElements());
             } else {
                 MenuItem sourceItem = (MenuItem) source;
                 Object needSelectItem = sourceItem.getData(TableMenuAdapter.ITEM_ENABLE_SELECT);
@@ -239,10 +246,10 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
                     Optional<List<?>> datas = checkComposite.getDataList();
                     if (datas.isPresent()) {
                         items =  datas.get();
-                    }   
+                    }
                 }
             }
-            
+
             return items.stream().map(item -> {
                     if (item instanceof IDebugSourceData) {
                         return (IDebugSourceData) item;

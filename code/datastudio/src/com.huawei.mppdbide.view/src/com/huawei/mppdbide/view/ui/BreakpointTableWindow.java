@@ -34,6 +34,7 @@ import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
 public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
     /**
      * description: create UI controls
+     *
      * @param parent the ui parent control
      */
     @PostConstruct
