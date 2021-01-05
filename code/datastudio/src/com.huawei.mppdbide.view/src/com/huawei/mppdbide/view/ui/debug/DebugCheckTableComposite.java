@@ -108,7 +108,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
     }
 
     private ToolBar createToolBar(SashForm sashForm) {
-        ToolBar toolBar = new ToolBar(sashForm, SWT.FLAT | SWT.RIGHT);
+        ToolBar tmpToolBar = new ToolBar(sashForm, SWT.FLAT | SWT.RIGHT);
 
         String[] toolItemsTipText = new String[] {"Enable", "Disable", "Remove", "RemoveAll"};
         DebugCheckboxEvent[] toolItemsEvent = new DebugCheckboxEvent[] {
@@ -129,8 +129,8 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
             toolItem.addSelectionListener(new ToolBaseSelectionAdapter(toolItemsEvent[idx], this));
             String tmpIconPath = "debug" + File.separator + toolItemsImagePath[idx];
             toolItem.setImage(IconUtility.getIconImage(tmpIconPath, this.getClass()));
-        }); 
-        return toolBar;
+        });
+        return tmpToolBar;
     }
 
     private Menu createMenu(Table table) {

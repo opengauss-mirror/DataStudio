@@ -136,12 +136,7 @@ public class DebugBaseTableComposite extends Composite {
         if (!inputOptional.isPresent()) {
             newInputs = new ArrayList<Object>(1);
         } else {
-            List<?> inputLists = inputOptional.get();
-            if (inputLists instanceof List) {
-                newInputs = (List<Object>) inputOptional.get();
-            } else {
-                newInputs = new ArrayList<Object>(1);
-            }
+            newInputs = (List<Object>) inputOptional.get();
         }
         data.setDataOrder(newInputs.size());
         newInputs.add(data);
