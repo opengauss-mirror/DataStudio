@@ -7,7 +7,7 @@ package com.huawei.mppdbide.view.ui.debug;
 
 /**
  * Title: DebugCheckboxEvent for use
- * Description: 
+ * Description: the event enum
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921

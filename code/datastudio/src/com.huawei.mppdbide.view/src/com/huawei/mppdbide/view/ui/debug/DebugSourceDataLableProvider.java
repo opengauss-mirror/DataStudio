@@ -9,7 +9,6 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 
 /**
  * Title: DebugSourceDataLableProvider for use
- * Description: 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -18,6 +17,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
  */
 public class DebugSourceDataLableProvider extends ColumnLabelProvider {
     private int titleIndex;
+
     public DebugSourceDataLableProvider(int titleIndex) {
         this.titleIndex = titleIndex;
     }

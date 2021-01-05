@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 /**
  * Title: DebugControlAdapter for use
- * Description: 
+ * Description:  the control adapter
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -36,6 +36,7 @@ public class DebugControlAdapter extends ControlAdapter {
         this.table = table;
         this.header = header;
     }
+
     @Override
     public void controlResized(ControlEvent e) {
         Point point = table.getSize();

@@ -52,6 +52,7 @@ public abstract class WindowBase<T> implements DebugTableEventHandler {
 
     /**
      * description: convert objVo to IDebugSourceData
+     *
      * @param objVo the T type
      * @return the IDebugSourceData
      */

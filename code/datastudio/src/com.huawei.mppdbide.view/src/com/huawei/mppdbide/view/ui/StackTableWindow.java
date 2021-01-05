@@ -33,6 +33,10 @@ import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
  * @since 04,12,2020
  */
 public class StackTableWindow extends WindowBase<StackVo> {
+    /**
+     * create UI controls
+     * @param parent the parent control
+     */
     @PostConstruct
     public void createControls(Composite parent) {
         tableComposite = new DebugBaseTableComposite(parent, 0);
@@ -55,7 +59,11 @@ public class StackTableWindow extends WindowBase<StackVo> {
     }
 
     private static class StackSourceData extends ListDebugSourceDataAdapter {
+        /**
+         * the input stackVo object
+         */
         protected StackVo stackVo;
+
         public StackSourceData(StackVo stackVo) {
             super();
             this.stackVo = stackVo;
@@ -94,8 +102,8 @@ public class StackTableWindow extends WindowBase<StackVo> {
         public List<Integer> getTitleSizeScales() {
             return Arrays.asList(3, 7);
         }
-        
     }
+
     private static enum TitleDesc {
         INVOKING_LEVEL(IMessagesConstants.DEBUG_STACK_INVOKING_LEVEL),
         FUNCTION_INFO(IMessagesConstants.DEBUG_STACK_FUNCTION_INFO);
@@ -118,8 +126,8 @@ public class StackTableWindow extends WindowBase<StackVo> {
             return MessageConfigLoader.getProperty(desc);
         }
     }
+
     @Override
-    public void selectHandler(List<Object> selectItems, DebugCheckboxEvent event) {
-        
+    public void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event) {
     }
 }

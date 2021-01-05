@@ -32,6 +32,10 @@ import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
  * @since 04,12,2020
  */
 public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
+    /**
+     * description: create UI controls
+     * @param parent the ui parent control
+     */
     @PostConstruct
     public void createControls(Composite parent) {
         tableComposite = new DebugCheckTableComposite(parent, 0);
@@ -55,7 +59,7 @@ public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
                 .map(entry -> entry.getValue())
                 .collect(Collectors.toList());
         return sortedBreakpointList;
-    }        
+    }
 
     private static class BreakpointSourceData extends ListDebugSourceDataAdapter {
         public BreakpointSourceData(BreakpointVo breakpointVo) {
@@ -119,6 +123,6 @@ public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
     }
 
     @Override
-    public void selectHandler(List<Object> selectItems, DebugCheckboxEvent event) {
+    public void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event) {
     }
 }

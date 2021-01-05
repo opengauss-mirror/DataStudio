@@ -11,7 +11,6 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 
 /**
  * Title: ListStructuredContentProvider for use
- * Description: 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921

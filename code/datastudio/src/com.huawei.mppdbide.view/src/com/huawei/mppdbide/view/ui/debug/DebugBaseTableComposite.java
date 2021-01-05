@@ -58,6 +58,7 @@ public class DebugBaseTableComposite extends Composite {
 
     /**
      * Create the composite.
+     *
      * @param parent the parent
      * @param style the style
      */
@@ -72,26 +73,27 @@ public class DebugBaseTableComposite extends Composite {
      */
     protected void initUi() {
         setLayout(new FillLayout(SWT.VERTICAL));
-        
+
         SashForm sashForm = new SashForm(this, SWT.VERTICAL);
-        
+
         Composite composite = new Composite(sashForm, SWT.H_SCROLL | SWT.V_SCROLL);
         composite.setLayout(new FillLayout(SWT.HORIZONTAL));
-        
+
         tableViewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION);
-        sashForm.setWeights(new int[] {10}); 
+        sashForm.setWeights(new int[] {10});
     }
 
     /**
      * description:common init ui, this after initUi, not recommand override this
      */
     protected void commonInitUi() {
-        TableViewer tableViewer = getTableViewer();
-        table = tableViewer.getTable();
+        TableViewer viewer = getTableViewer();
+        table = viewer.getTable();
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
-        tableViewer.setContentProvider(new ListStructuredContentProvider());
-        tableViewer.addDoubleClickListener(new IDoubleClickListener() {
+        viewer.setContentProvider(new ListStructuredContentProvider());
+        viewer.addDoubleClickListener(new IDoubleClickListener() {
+            @Override
             public void doubleClick(DoubleClickEvent event) {
                 if (eventHandler == null) {
                     return;
@@ -100,13 +102,19 @@ public class DebugBaseTableComposite extends Composite {
                     return;
                 }
                 IStructuredSelection select = (IStructuredSelection) event.getSelection();
-                eventHandler.selectHandler(Arrays.asList(select.getFirstElement()), DebugCheckboxEvent.DOUBLE_CLICK);
+                Object selectObj = select.getFirstElement();
+                if (selectObj instanceof IDebugSourceData) {
+                    eventHandler.selectHandler(Arrays.asList((IDebugSourceData) selectObj),
+                            DebugCheckboxEvent.DOUBLE_CLICK);
+                }
             }
-        }); 
+        });
     }
 
     /**
      * get table viewer object
+     *
+     * @return TableViewer the viewer
      */
     public TableViewer getTableViewer() {
         return tableViewer;
@@ -151,7 +159,7 @@ public class DebugBaseTableComposite extends Composite {
         boolean isRemoved = false;
         Optional<List<?>> inputOptional = getDataList();
         if (inputOptional.isPresent()) {
-            List<?> inputs = (List<?>) inputOptional.get();
+            List<?> inputs = inputOptional.get();
             isRemoved = inputs.remove(data);
             resetOrder(inputs);
             getTableViewer().refresh();
@@ -170,7 +178,7 @@ public class DebugBaseTableComposite extends Composite {
     /**
      * description: reset all data
      *
-     * @param dataList
+     * @param dataList the set data list
      */
     public void resetAllData(List<IDebugSourceData> dataList) {
         getTableViewer().setInput(dataList);
@@ -180,7 +188,7 @@ public class DebugBaseTableComposite extends Composite {
 
     /**
      * description: create column by data header
-     * 
+     *
      * @param header the column header
      */
     public void createColumns(IDebugSourceDataHeader header) {
@@ -189,12 +197,12 @@ public class DebugBaseTableComposite extends Composite {
         }
         isColumnTitleCreated = true;
         List<String> titles = header.getTitles();
-        TableViewer tableViewer = getTableViewer();
+        TableViewer viewer = getTableViewer();
         IntStream.iterate(0, seed -> seed + 1).limit(titles.size()).forEach(idx -> {
-            TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
+            TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
             column.getColumn().setWidth(DEFAULT_COLUMN_WIDTH);
             column.getColumn().setText(titles.get(idx));
-            column.setEditingSupport(new DebugEditingSupport(tableViewer, idx));
+            column.setEditingSupport(new DebugEditingSupport(viewer, idx));
             column.setLabelProvider(new DebugSourceDataLableProvider(idx));
         });
         table.addControlListener(new DebugControlAdapter(table, header));
@@ -202,8 +210,8 @@ public class DebugBaseTableComposite extends Composite {
 
     /**
      * description: add event handler
-     * 
-     * @param handler
+     *
+     * @param handler the event handler
      */
     public void setTableHandler(DebugTableEventHandler handler) {
         this.eventHandler = handler;
@@ -233,6 +241,7 @@ public class DebugBaseTableComposite extends Composite {
 
     /**
      * description: reset the order
+     *
      * @param inputsList the list to be ordered
      */
     protected void resetOrder(List<?> inputsList) {
@@ -240,8 +249,9 @@ public class DebugBaseTableComposite extends Composite {
             return;
         }
         IntStream.range(0, inputsList.size()).forEach(idx -> {
-            if (inputsList.get(idx) instanceof IDebugSourceData) {
-                ((IDebugSourceData) inputsList.get(idx)).setDataOrder(idx);
+            Object inputItem = inputsList.get(idx);
+            if (inputItem instanceof IDebugSourceData) {
+                ((IDebugSourceData) inputItem).setDataOrder(idx);
             }
         });
     }

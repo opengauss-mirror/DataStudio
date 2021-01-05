@@ -15,7 +15,6 @@ import org.eclipse.swt.events.KeyEvent;
 
 /**
  * Title: DebugEditingSupport for use
- * Description: 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -24,6 +23,7 @@ import org.eclipse.swt.events.KeyEvent;
  */
 public class DebugEditingSupport extends EditingSupport {
     private int index;
+
     public DebugEditingSupport(ColumnViewer viewer, int index) {
         super(viewer);
         this.index = index;
@@ -40,10 +40,12 @@ public class DebugEditingSupport extends EditingSupport {
 
     @Override
     protected CellEditor getCellEditor(Object element) {
-        if (!(getViewer() instanceof TableViewer)) {
+        ColumnViewer viewer = getViewer();
+        if (!(viewer instanceof TableViewer)) {
             return null;
         }
-        TextCellEditor cellEditor = new TextCellEditor(((TableViewer)getViewer()).getTable()) {
+        TableViewer tableViewer = (TableViewer) viewer;
+        TextCellEditor cellEditor = new TextCellEditor(tableViewer.getTable()) {
             @Override
             protected void keyReleaseOccured(KeyEvent keyEvent) {
                 if (!((keyEvent.stateMask & SWT.CTRL) != 0

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -46,8 +47,13 @@ import org.eclipse.swt.events.MouseEvent;
  * @since 17 May, 2019
  */
 public class DebugCheckTableComposite extends DebugBaseTableComposite {
+    /**
+     * the tool bar
+     */
     protected ToolBar toolBar;
+
     private CheckboxTableViewer checkboxTableViewer;
+
     /**
      * Create the composite.
      * @param parent the parent
@@ -57,28 +63,27 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
         super(parent, style);
     }
 
-
     /**
      * description: this is check table special create ui
      */
     @Override
     protected void initUi() {
         setLayout(new FillLayout(SWT.VERTICAL));
-        
+
         SashForm sashForm = new SashForm(this, SWT.VERTICAL);
         sashForm.addControlListener(new ControlAdapter() {
             @Override
-            public void controlResized(ControlEvent e) {
-                if (e.getSource() instanceof SashForm) {
-                    SashForm sf = (SashForm) e.getSource();
+            public void controlResized(ControlEvent crlEvent) {
+                if (crlEvent.getSource() instanceof SashForm) {
+                    SashForm sf = (SashForm) crlEvent.getSource();
                     int scaleBase = (int)(new Double(sf.getSize().y) / 25 - 0.5);
-                    sf.setWeights(new int[] {1, scaleBase <= 1? 1: scaleBase - 1});
+                    sf.setWeights(new int[] {1, scaleBase <= 1 ? 1 : scaleBase - 1});
                 }
             }
         });
-        
+
         toolBar = new ToolBar(sashForm, SWT.FLAT | SWT.RIGHT);
-        
+
         String[] toolItemsTipText = new String[] {"Enable", "Disable", "Remove", "RemoveAll"};
         DebugCheckboxEvent[] toolItemsEvent = new DebugCheckboxEvent[] {
             DebugCheckboxEvent.ENABLE,
@@ -101,7 +106,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
         });
         Composite composite = new Composite(sashForm, SWT.H_SCROLL | SWT.V_SCROLL);
         composite.setLayout(new FillLayout(SWT.HORIZONTAL));
-        
+
         checkboxTableViewer = CheckboxTableViewer.newCheckList(composite, SWT.BORDER | SWT.FULL_SELECTION);
         Table table = checkboxTableViewer.getTable();
         table.addMouseListener(new MouseAdapter() {
@@ -115,44 +120,48 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
         });
         checkboxTableViewer.setAllGrayed(true);
         checkboxTableViewer.setAllChecked(true);
-        
+
+        Menu menu = createMenu(table);
+        table.setMenu(menu);
+        sashForm.setWeights(new int[] {1, 10});
+    }
+
+    private Menu createMenu(Table table) {
         Menu menu = new Menu(table);
         menu.addMenuListener(new TableMenuAdapter());
-        table.setMenu(menu);
-        
+
         MenuItem mntmEnable = new MenuItem(menu, SWT.NONE);
         mntmEnable.addSelectionListener(new ToolBaseSelectionAdapter(DebugCheckboxEvent.ENABLE, this));
         mntmEnable.setText("Enable");
         mntmEnable.setData(TableMenuAdapter.ITEM_ENABLE_SELECT, 1);
-        
+
         MenuItem mntmDisable = new MenuItem(menu, SWT.NONE);
         mntmDisable.addSelectionListener(new ToolBaseSelectionAdapter(DebugCheckboxEvent.DISABLE, this));
         mntmDisable.setText("Disable");
         mntmDisable.setData(TableMenuAdapter.ITEM_ENABLE_SELECT, 1);
-        
+
         MenuItem mntmRemove = new MenuItem(menu, SWT.NONE);
         mntmRemove.addSelectionListener(new ToolBaseSelectionAdapter(DebugCheckboxEvent.DELETE, this));
         mntmRemove.setText("Remove");
         mntmRemove.setData(TableMenuAdapter.ITEM_ENABLE_SELECT, 1);
-        
+
         MenuItem mntmRemoveAll = new MenuItem(menu, SWT.NONE);
         mntmRemoveAll.addSelectionListener(new ToolBaseSelectionAdapter(DebugCheckboxEvent.DELETE_ALL, this));
         mntmRemoveAll.setText("RemoveAll");
-        
+
         MenuItem mntmSelectAll = new MenuItem(menu, SWT.NONE);
         mntmSelectAll.addSelectionListener(new ToolBaseSelectionAdapter(DebugCheckboxEvent.SELECT_ALL, this));
         mntmSelectAll.setText("SelectAll");
 
         MenuItem mntmDeSelectAll = new MenuItem(menu, SWT.NONE);
         mntmDeSelectAll.addSelectionListener(new ToolBaseSelectionAdapter(DebugCheckboxEvent.DE_SELECT_ALL, this));
-        mntmDeSelectAll.setText("DeSelectAll");
-        sashForm.setWeights(new int[] {1, 10});
+        mntmDeSelectAll.setText("DeSelectAll"); 
+        return menu;
     }
-
     /**
      * description: get toolbar object
-     * 
-     * @return
+     *
+     * @return ToolBar the tool bar
      */
     public ToolBar getToolBar() {
         return toolBar;
@@ -170,7 +179,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
 
     /**
      * description: get checkbox viewer
-     * 
+     *
      * @return CheckBoxTableViewer the viewer
      */
     public CheckboxTableViewer getCheckboxTableViewer() {
@@ -184,8 +193,8 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
         public static final String ITEM_ENABLE_SELECT = "need_select_item";
 
         @Override
-        public void menuShown(MenuEvent e) {
-            Object sourceObj = e.getSource();
+        public void menuShown(MenuEvent menuEvent) {
+            Object sourceObj = menuEvent.getSource();
             if (sourceObj instanceof Menu) {
                 Menu menu = (Menu) sourceObj;
                 Arrays.asList(menu.getItems()).stream().forEach(item -> {
@@ -198,54 +207,66 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
                         }
                     } else {
                         enable = DebugCheckTableComposite.this
-                                .getDataList().orElse(new ArrayList<IDebugSourceData>(1)).size() > 0;
+                                .getDataList()
+                                .orElse(new ArrayList<IDebugSourceData>(1)).size() > 0;
                     }
                     item.setEnabled(enable);
                 });
             }
-        } 
+        }
     }
 
     private static class ToolBaseSelectionAdapter extends SelectionAdapter {
         private DebugCheckboxEvent event;
         private DebugCheckTableComposite checkComposite;
+
         public ToolBaseSelectionAdapter(DebugCheckboxEvent event, DebugCheckTableComposite checkComposite) {
             this.event = event;
             this.checkComposite = checkComposite;
         }
 
-        private Object[] getSelectItems(Object source) {
+        private List<IDebugSourceData> getSelectItems(Object source) {
+            List<?> items = new ArrayList<Object>(1);
             if (!(source instanceof MenuItem)) {
-                return checkComposite.getCheckboxTableViewer().getCheckedElements();
+                Object[] checkItems = checkComposite.getCheckboxTableViewer().getCheckedElements();
+                items = Arrays.asList(checkItems);
+            } else {
+                MenuItem sourceItem = (MenuItem) source;
+                Object needSelectItem = sourceItem.getData(TableMenuAdapter.ITEM_ENABLE_SELECT);
+                if (needSelectItem != null) {
+                    items = Arrays.asList(checkComposite.getTableViewer().getStructuredSelection().getFirstElement());
+                } else {
+                    Optional<List<?>> datas = checkComposite.getDataList();
+                    if (datas.isPresent()) {
+                        items =  datas.get();
+                    }   
+                }
             }
-
-            MenuItem sourceItem = (MenuItem) source;
-            Object needSelectItem = sourceItem.getData(TableMenuAdapter.ITEM_ENABLE_SELECT);
-            if (needSelectItem != null) {
-                return new Object[] {checkComposite.getTableViewer().getStructuredSelection().getFirstElement()};
-            }
-            Optional<List<?>> datas = checkComposite.getDataList();
-            if (datas.isPresent()) {
-                return datas.get().toArray();
-            }
-            return null;
+            
+            return items.stream().map(item -> {
+                    if (item instanceof IDebugSourceData) {
+                        return (IDebugSourceData) item;
+                    } else {
+                        return null;
+                    }
+                }).filter(item -> item != null).collect(Collectors.toList());
         }
 
         @Override
-        public void widgetSelected(SelectionEvent e) {
-            Object source = e.getSource();
+        public void widgetSelected(SelectionEvent selectEvent) {
+            Object source = selectEvent.getSource();
             DebugTableEventHandler handler = checkComposite.getTableEventHandler();
             if (handler == null) {
                 return;
             }
-            Object[] items = getSelectItems(source);
+            List<IDebugSourceData> items = getSelectItems(source);
             if (items != null) {
                 if (event == DebugCheckboxEvent.SELECT_ALL) {
                     checkComposite.getCheckboxTableViewer().setAllChecked(true);
                 } else if (event == DebugCheckboxEvent.DE_SELECT_ALL) {
                     checkComposite.getCheckboxTableViewer().setAllChecked(false);
                 } else {
-                    checkComposite.getTableEventHandler().selectHandler(Arrays.asList(items), event);
+                    checkComposite.getTableEventHandler().selectHandler(items, event);
                 }
             }
         }

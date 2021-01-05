@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * Title: DebugTableEventHandler for use
- * Description: 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -22,6 +21,7 @@ public interface DebugTableEventHandler {
      *
      * @param selectItems the select item which is instanceof IDebugSourceData,
      * if no value, selectItems is empty not null
+     * @param event the event
      */
-    void selectHandler(List<Object> selectItems, DebugCheckboxEvent event);
+    void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event);
 }

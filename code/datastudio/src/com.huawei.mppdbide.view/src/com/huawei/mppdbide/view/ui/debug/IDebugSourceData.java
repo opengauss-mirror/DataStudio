@@ -7,7 +7,6 @@ package com.huawei.mppdbide.view.ui.debug;
 
 /**
  * Title: IDebugSourceData for use
- * Description: 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -56,6 +55,8 @@ public interface IDebugSourceData {
 
     /**
      * description: get total title index length
+     *
+     * @return int the title size
      */
     int getTitleSize();
 }

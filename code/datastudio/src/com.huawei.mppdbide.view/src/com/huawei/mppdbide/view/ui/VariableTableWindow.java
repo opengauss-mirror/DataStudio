@@ -34,6 +34,10 @@ import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
  * @since 04,12,2020
  */
 public class VariableTableWindow extends WindowBase<VariableVo> {
+    /**
+     * description: create UI controls
+     * @param parent the parent control
+     */
     @PostConstruct
     public void createControls(Composite parent) {
         tableComposite = new DebugBaseTableComposite(parent, 0);
@@ -74,6 +78,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
             dataArrays.add(getVariableValue());
             dataArrays.add(getType());
         }
+
         @Override
         public boolean isShowOrder() {
             return false;
@@ -148,6 +153,6 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
     }
 
     @Override
-    public void selectHandler(List<Object> selectItems, DebugCheckboxEvent event) {
+    public void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event) {
     }
 }

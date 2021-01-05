@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * Title: ListDebugSourceDataAdapter for use
- * Description: 
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
@@ -27,7 +26,7 @@ public abstract class ListDebugSourceDataAdapter implements IDebugSourceData {
      * the array data
      */
     protected List<Object> dataArrays = new ArrayList<Object>(1);
-    
+
     @Override
     public void setDataOrder(int order) {
         this.orderIndex = order;
@@ -40,13 +39,14 @@ public abstract class ListDebugSourceDataAdapter implements IDebugSourceData {
 
     @Override
     public Object getValue(int titleIndex) {
+        int dataIndex = titleIndex;
         if (isShowOrder()) {
             if (titleIndex == 0) {
                 return this.orderIndex;
             }
-            titleIndex -= 1;
+            dataIndex -= 1;
         }
-        return dataArrays.get(titleIndex);
+        return dataArrays.get(dataIndex);
     }
 
     @Override
