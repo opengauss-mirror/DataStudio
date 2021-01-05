@@ -23,7 +23,7 @@ public abstract class WindowBase<T> implements DebugTableEventHandler {
     /**
      * the tableComposite
      */
-    protected DebugBaseTableComposite tableComposite;
+    protected DebugBaseTableComposite tableComposite = null;
 
     /**
      * Clear.

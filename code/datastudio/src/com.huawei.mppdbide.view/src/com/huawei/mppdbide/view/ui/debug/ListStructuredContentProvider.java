@@ -23,6 +23,6 @@ public class ListStructuredContentProvider implements IStructuredContentProvider
         if (inputElement instanceof List) {
             return ((List<?>) inputElement).toArray();
         }
-        return null;
+        return new Object[0];
     }
 }
