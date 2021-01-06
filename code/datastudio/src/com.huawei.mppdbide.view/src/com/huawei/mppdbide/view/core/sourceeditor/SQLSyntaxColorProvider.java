@@ -43,7 +43,7 @@ public class SQLSyntaxColorProvider {
     /**
      * use for debug position highlight
      */
-    public static final RGB DEBUG_POSITION = new RGB(120, 66, 197);
+    public static final RGB DEBUG_POSITION = new RGB(0xfc, 0xfc, 0x00);
 
     /**
      * The Constant SQL_MULTI_LINE_COMMENT.

@@ -26,8 +26,8 @@ import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugResultTask;
  */
 public class ServerExitChain extends IMsgChain {
     private boolean isResultUpdated = false;
-    DebugHandlerUtils debugUtils = DebugHandlerUtils.getInstance();
-    DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
+    private DebugHandlerUtils debugUtils = DebugHandlerUtils.getInstance();
+    private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
 
     @Override
     public boolean matchMsg(Event event) {

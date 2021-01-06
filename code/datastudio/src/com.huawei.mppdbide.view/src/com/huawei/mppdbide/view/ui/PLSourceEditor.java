@@ -1208,8 +1208,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      * @param color the color
      */
     public void setLineBackgroudColor(int line, Color color) {
-        SourceViewer viewer = sourceEditor.getSourceViewer();
-        viewer.getTextWidget().setLineBackground(line, 1, color);
+        sourceEditor.getSourceViewer().getTextWidget().setLineBackground(line, 1, color);
     }
 
     private void singleClickRun(Optional<BreakpointAnnotation> annotation, int line) {
@@ -1252,7 +1251,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      */
     public void removeDebugPosition() {
         Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
-        List<DebugPositionAnnotation> needRemoveAnnotations = 
+        List<DebugPositionAnnotation> needRemoveAnnotations =
                 new ArrayList<DebugPositionAnnotation>(1);
         while (annoIterator.hasNext()) {
             Annotation annotation = annoIterator.next();
