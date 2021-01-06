@@ -302,4 +302,14 @@ public class WrappedDebugService implements IDebugService, IHandlerManger {
     public void init() {
         debugService.init();
     }
+
+    @Override
+    public boolean isRollback() {
+        return debugService.isRollback();
+    }
+
+    @Override
+    public void setRollback(boolean isRollback) {
+        debugService.setRollback(isRollback);
+    }
 }

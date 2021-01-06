@@ -6,6 +6,8 @@ package com.huawei.mppdbide.view.handler.debug;
 
 import java.sql.SQLException;
 
+import org.eclipse.jface.preference.PreferenceStore;
+
 import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
 import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.event.IHandlerManger;
@@ -16,8 +18,10 @@ import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.service.WrappedDebugService;
 import com.huawei.mppdbide.debuger.vo.FunctionVo;
 import com.huawei.mppdbide.utils.IMessagesConstants;
+import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
+import com.huawei.mppdbide.view.prefernces.PreferenceWrapper;
 
 /**
  * Title: class
@@ -72,6 +76,9 @@ public class DebugServiceHelper {
             codeService.setBaseCode(queryService.getSourceCode(functionVo.oid).get().getSourceCode());
             codeService.setTotalCode(debugObject.getSourceCode().getCode());
             this.debugObject = debugObject;
+        }
+        if (debugService != null) {
+            debugService.setRollback(getRollbackPreference());
         }
         return debugService != null;
     }
@@ -197,6 +204,13 @@ public class DebugServiceHelper {
         }
     }
 
+    private static boolean getRollbackPreference() {
+        PreferenceStore store = PreferenceWrapper.getInstance().getPreferenceStore();
+        if (store != null) {
+            return store.getBoolean(MPPDBIDEConstants.DEBUG_PREFERENCE_IF_ROLLBACK);
+        }
+        return false;
+    }
     /**
      * Title: if server not support debug, this error will be throw
      * Description: The Class DebugEditorItem.

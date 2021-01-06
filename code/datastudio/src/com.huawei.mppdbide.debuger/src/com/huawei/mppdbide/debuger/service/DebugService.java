@@ -73,6 +73,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     private IConnection clientConn;
     private FunctionVo functionVo;
     private MsgChainHelper msgChainHelper;
+    private boolean isRollback = false;
     private SessionVo sessionVo = new SessionVo();
     private final Object waitLock = new int[0];
     private DebugState serverState = new DebugState();
@@ -131,12 +132,17 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * @throws SQLException the exp
      */
     public ResultSet serverDebugCallBack(List<?> args) throws SQLException {
-        String sql = DebugConstants.getSql(functionVo.proname, args.size());
-        PreparedStatement ps = serverConn.getStatement(sql);
-        for (int i = 1 ; i < args.size() + 1; i ++) {
-            ps.setObject(i, args.get(i - 1));
+        try {
+            serverCallBackBegin();
+            String sql = DebugConstants.getSql(functionVo.proname, args.size());
+            PreparedStatement ps = serverConn.getStatement(sql);
+            for (int i = 1 ; i < args.size() + 1; i ++) {
+                ps.setObject(i, args.get(i - 1));
+            }
+            return ps.executeQuery();
+        } finally {
+            serverCallBackEnd();
         }
-        return ps.executeQuery();
     }
 
     /**
@@ -631,6 +637,34 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     public void init() {
         if (eventQueueThread.getState() == State.NEW) {
             eventQueueThread.start();
+        }
+    }
+
+    @Override
+    public boolean isRollback() {
+        return isRollback;
+    }
+
+    @Override
+    public void setRollback(boolean isRollback) {
+        this.isRollback = isRollback;
+    }
+
+    private void serverCallBackBegin() throws SQLException {
+        serverExecuteInner("begin;");
+    }
+
+    private void serverCallBackEnd() throws SQLException {
+        if (isRollback()) {
+            serverExecuteInner("rollback;");
+        } else {
+            serverExecuteInner("commit;");
+        }
+    }
+
+    private void serverExecuteInner(String sql) throws SQLException {
+        try (PreparedStatement ps = serverConn.getStatement(sql)) {
+            ps.execute();
         }
     }
 }

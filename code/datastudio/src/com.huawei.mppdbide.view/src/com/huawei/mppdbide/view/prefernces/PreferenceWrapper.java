@@ -165,6 +165,7 @@ public final class PreferenceWrapper {
         ERPreferencePage.setDefaultPreferences(preferenceStore);
         DateTimePreferencePage.setDefaultPreferences(preferenceStore);
         ObjectBrowserPreferncePage.setDefaultPreferences(preferenceStore);
+        DebugPreferencePage.setAllDefault(preferenceStore);
     }
 
     /**

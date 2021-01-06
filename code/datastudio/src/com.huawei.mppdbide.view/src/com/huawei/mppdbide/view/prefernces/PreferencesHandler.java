@@ -120,9 +120,17 @@ public class PreferencesHandler {
         preferenceManager.addToRoot(getResultManagementNode());
         preferenceManager.addToRoot(getExportManagementNode());
         preferenceManager.addToRoot(getDateTimeManagementNode());
+        preferenceManager.addToRoot(getDebugPreferenceNode());
 
         return preferenceManager;
 
+    }
+
+    private IPreferenceNode getDebugPreferenceNode() {
+        String id = MessageConfigLoader.getProperty(IMessagesConstants.DEBUG_PREFREENCE_ID);
+        PreferenceNode debugNode = new PreferenceNode(id,
+                new DebugPreferencePage(id));
+        return debugNode;
     }
 
     private IPreferenceNode getDateTimeManagementNode() {
