@@ -59,18 +59,18 @@ public interface IDebugService extends IService {
 
     /**
      * description: is need roll back
-     * 
+     *
      * @return boolean true if need roll back
      */
     boolean isRollback();
 
     /**
      * description: set roll back flag
-     * 
+     *
      * @param isRollback true if need roll back
      */
-
     void setRollback(boolean isRollback);
+
     /**
      * step into run
      *

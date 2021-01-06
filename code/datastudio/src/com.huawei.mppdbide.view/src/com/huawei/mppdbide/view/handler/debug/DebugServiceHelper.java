@@ -211,6 +211,7 @@ public class DebugServiceHelper {
         }
         return false;
     }
+
     /**
      * Title: if server not support debug, this error will be throw
      * Description: The Class DebugEditorItem.

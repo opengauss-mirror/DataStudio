@@ -40,7 +40,7 @@ public class DebugPreferencePage extends PreferencePage {
     protected Control createContents(Composite parent) {
         Composite current = new Composite(parent, 0);
         current.setLayout(new RowLayout(SWT.VERTICAL));
-        
+
         btnIfRollback = new Button(current, SWT.CHECK);
         btnIfRollback.setText(MessageConfigLoader.getProperty(IMessagesConstants.DEBUG_PREFREENCE_WHEN_ROLLBACK));
         btnIfRollback.addSelectionListener(new SelectionAdapter() {
@@ -64,7 +64,7 @@ public class DebugPreferencePage extends PreferencePage {
     protected void performApply() {
         PreferenceWrapper wrapper = PreferenceWrapper.getInstance();
         PreferenceStore store = wrapper.getPreferenceStore();
-        if (null != store) {
+        if (store != null) {
             boolean isRollback = btnIfRollback.getSelection();
             setRollback(store, isRollback);
         }
@@ -104,7 +104,8 @@ public class DebugPreferencePage extends PreferencePage {
 
     /**
      * description: set the all debug default preference
-     * @param store
+     *
+     * @param store  the save instance
      */
     public static void setAllDefault(IPreferenceStore store) {
         store.setDefault(MPPDBIDEConstants.DEBUG_PREFERENCE_IF_ROLLBACK, false);
