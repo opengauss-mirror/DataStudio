@@ -37,6 +37,7 @@ import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
@@ -48,6 +49,7 @@ import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IAnnotationAccess;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -64,6 +66,7 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -111,6 +114,7 @@ import com.huawei.mppdbide.view.core.sourceeditor.SQLDocumentPartitioner;
 import com.huawei.mppdbide.view.core.sourceeditor.SQLEditorPlugin;
 import com.huawei.mppdbide.view.core.sourceeditor.SQLPartitionScanner;
 import com.huawei.mppdbide.view.core.sourceeditor.SQLSourceViewerConfig;
+import com.huawei.mppdbide.view.core.sourceeditor.SQLSyntaxColorProvider;
 import com.huawei.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationType;
 import com.huawei.mppdbide.view.handler.ExecuteEditorItem;
 import com.huawei.mppdbide.view.handler.HandlerUtilities;
@@ -1179,6 +1183,35 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         }
     }
 
+    /**
+     * description: use for debug position highlight color
+     *
+     * @param line the highlight line
+     */
+    public void highlightLine(int line) {
+        setLineBackgroudColor(line, SQLSyntaxColorProvider.DEBUG_POSITION_COLOR);
+    }
+
+    /**
+     * description: use for debug position disable highlight color
+     *
+     * @param line the disable highlight line
+     */
+    public void deHighlightLine(int line) {
+        setLineBackgroudColor(line, SQLSyntaxColorProvider.BACKGROUND_COLOR);
+    }
+
+    /**
+     * set backgroud color of line
+     *
+     * @param line the line
+     * @param color the color
+     */
+    public void setLineBackgroudColor(int line, Color color) {
+        SourceViewer viewer = sourceEditor.getSourceViewer();
+        viewer.getTextWidget().setLineBackground(line, 1, color);
+    }
+
     private void singleClickRun(Optional<BreakpointAnnotation> annotation, int line) {
         if (annotation.isPresent()) {
             try {
@@ -1219,15 +1252,17 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      */
     public void removeDebugPosition() {
         Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
-        List<Annotation> needRemoveAnnotations = new ArrayList<Annotation>(1);
+        List<DebugPositionAnnotation> needRemoveAnnotations = 
+                new ArrayList<DebugPositionAnnotation>(1);
         while (annoIterator.hasNext()) {
             Annotation annotation = annoIterator.next();
             if (annotation instanceof DebugPositionAnnotation) {
-                needRemoveAnnotations.add(annotation);
+                needRemoveAnnotations.add((DebugPositionAnnotation) annotation);
             }
         }
-        for (Annotation anno: needRemoveAnnotations) {
+        for (DebugPositionAnnotation anno: needRemoveAnnotations) {
             fAnnotationModel.removeAnnotation(anno);
+            deHighlightLine(anno.getLine());
         }
     }
 
@@ -1242,6 +1277,8 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         fAnnotationModel.addAnnotation(annotation,
                 new Position(sourceEditor.getDocument().getLineOffset(line))
                 );
+        sourceEditor.goToLineNumber(line);
+        highlightLine(line);
     }
 
     /**

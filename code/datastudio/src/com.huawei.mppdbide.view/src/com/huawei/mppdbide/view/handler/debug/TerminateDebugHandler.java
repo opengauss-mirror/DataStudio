@@ -31,7 +31,8 @@ public class TerminateDebugHandler {
      */
     @CanExecute
     public boolean canExecute() {
-        return debugUtils.canTerminateDebug();
+        PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
+        return plSourceEditor != null;
     }
 
     /**
@@ -46,6 +47,7 @@ public class TerminateDebugHandler {
         PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
         if (plSourceEditor != null) {
             plSourceEditor.setEditable(true);
+            plSourceEditor.setExecuteInProgress(false);
         }
         debugUtils.setDebugStart(false);
         serviceHelper.closeService();
