@@ -71,6 +71,7 @@ public class EncryptionUtil {
      * Encrypt.
      *
      * @param strToEncrypt the str to encrypt
+     * @return boolean true if success
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
@@ -86,6 +87,7 @@ public class EncryptionUtil {
      * Encrypt.
      *
      * @param strToEncrypt the str to encrypt
+     * @param boolean true if success
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
