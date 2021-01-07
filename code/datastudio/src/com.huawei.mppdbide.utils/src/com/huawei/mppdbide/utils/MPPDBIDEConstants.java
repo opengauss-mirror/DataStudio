@@ -473,4 +473,9 @@ public interface MPPDBIDEConstants {
             + "(select|insert|delete|update)";
 
     String BINARY_FILE_FORMAT = "Binary";
+
+    /**
+     * this for debug rollback config
+     */
+    String DEBUG_PREFERENCE_IF_ROLLBACK = "debug.rollback";
 }

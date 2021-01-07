@@ -165,6 +165,12 @@ public class DebugerFactoryServiceTest extends DebugerJdbcTestCaseBase {
     }
 
     @Test
+    public void testRollbackTest() {
+        debugService.setRollback(true);
+        assertEquals(true, debugService.isRollback());
+    }
+
+    @Test
     public void testQueryService() throws SQLException {
         assertNotNull(queryService.getFunctionDao());
         assertNotNull(queryService.getConn());
