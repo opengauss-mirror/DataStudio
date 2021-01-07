@@ -78,7 +78,6 @@ public class StartDebugHandler {
             return;
         }
         plSourceEditor.setExecuteInProgress(true);
-        plSourceEditor.enabledisableTextWidget(false);
         debugUtils.showAllDebugView(true);
         startInputParamDialog();
     }

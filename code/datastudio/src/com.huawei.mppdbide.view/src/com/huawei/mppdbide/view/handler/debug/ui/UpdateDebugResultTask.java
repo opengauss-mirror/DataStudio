@@ -33,6 +33,9 @@ public class UpdateDebugResultTask implements Runnable {
         if (plSourceEditor == null) {
             return;
         }
+        plSourceEditor.setEditable(true);
+        plSourceEditor.setExecuteInProgress(false);
+
         ResultTabManager resultTabManager = plSourceEditor.getResultManager();
         resultTabManager.createConsole();
         String resultMsg = "";
