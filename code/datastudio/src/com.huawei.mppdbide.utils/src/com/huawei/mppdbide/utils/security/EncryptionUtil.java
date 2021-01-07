@@ -128,7 +128,8 @@ public class EncryptionUtil {
      */
     public final String encryptString(char[] strToEncrypt, String encodingCharSet) throws UnsupportedEncodingException,
             IllegalBlockSizeException, BadPaddingException, DataStudioSecurityException {
-        return Base64.encodeBase64String(encryptByteArray(getBytes(strToEncrypt, encodingCharSet)));
+        String result = Base64.encodeBase64String(encryptByteArray(getBytes(strToEncrypt, encodingCharSet)));
+        return result;
     }
 
     /**
@@ -186,7 +187,9 @@ public class EncryptionUtil {
         cb.put(chars);
         cb.flip();
         ByteBuffer bb = cs.encode(cb);
-        return bb.array();
+        byte[] result = new byte[bb.limit()];
+        bb.get(result, 0, result.length);
+        return result;
     }
 
     /**
@@ -203,5 +206,32 @@ public class EncryptionUtil {
         bb.flip();
         CharBuffer cb = cs.decode(bb);
         return cb.array();
+    }
+
+    /**
+     * description: remove space from chars
+     *
+     * @param chars the char array to dispose
+     * @return char[] remove space array
+     */
+    public static char[] trimChars(char[] chars) {
+        int startPos = 0;
+        int endPos = chars.length - 1;
+        for (; startPos < chars.length ; startPos ++) {
+            if (!Character.isSpaceChar(chars[startPos])) {
+                break;
+            }
+        }
+        for (; endPos > startPos; endPos -= 1) {
+            if (!Character.isSpaceChar(chars[startPos])) {
+                break;
+            }
+        }
+        if (endPos <= startPos) {
+            return new char[0];
+        }
+        char[] results = new char[endPos - startPos + 1];
+        System.arraycopy(chars, startPos, results, 0, results.length);
+        return results;
     }
 }

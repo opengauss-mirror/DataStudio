@@ -237,7 +237,9 @@ public final class SecureUtil {
 
             // Set the WK for prd Encryption
             getAesAlgorithmUtil().setKey(decryption.getDecryptedString());
-            encryption.encrypt(prd);
+            char[] trimChars = EncryptionUtil.trimChars(prd);
+            encryption.encrypt(trimChars);
+            clearPassword(trimChars);
         } catch (IOException exe) {
             MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_DS_SECURITY_ERROR), exe);
             throw new DataStudioSecurityException(IMessagesConstants.ERR_DS_SECURITY_ERROR, exe);
