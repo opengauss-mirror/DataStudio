@@ -195,9 +195,7 @@ public class GaussConnection implements IDBConnectionWrapper {
         Properties properties = new Properties();
 
         properties.setProperty("user", serverInformation.getDsUsername());
-        String prd = new String(serverInformation.getPrd());
-        properties.setProperty("password", prd);
-        prd = null;
+        properties.setProperty("password", new String(serverInformation.getPrd()));
         properties.setProperty("allowEncodingChanges", "true");
         String dsEncoding = BLPreferenceManager.getInstance().getBLPreference().getDSEncoding();
         if (dsEncoding.isEmpty()) {

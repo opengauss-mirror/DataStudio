@@ -7,6 +7,7 @@ package com.huawei.mppdbide.utils.security;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -234,12 +235,9 @@ public final class SecureUtil {
             getAesAlgorithmUtil().setKey(this.strRootKey);
             decryption.decrypt(this.strWorkKey);
 
-            // Read Actual DB prd for Encryption
-            String prdToEncrypt = new String(prd);
             // Set the WK for prd Encryption
             getAesAlgorithmUtil().setKey(decryption.getDecryptedString());
-            encryption.encrypt(prdToEncrypt.trim());
-
+            encryption.encrypt(prd);
         } catch (IOException exe) {
             MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_DS_SECURITY_ERROR), exe);
             throw new DataStudioSecurityException(IMessagesConstants.ERR_DS_SECURITY_ERROR, exe);
@@ -542,5 +540,24 @@ public final class SecureUtil {
             clearProfilePrd[i] = 0;
         }
         MemoryCleaner.cleanUpMemory();
+    }
+
+    /**
+     * description: clean key of string info
+     *
+     * @param key then clean String key
+     */
+    public static void cleanKeyString(String key) {
+        if (key == null || "".equals(key)) {
+            return;
+        }
+        try {
+            Field valueFieldOfString = String.class.getDeclaredField("value");
+            valueFieldOfString.setAccessible(true);
+            char[] value = (char[]) valueFieldOfString.get(key);
+            clearPassword(value);
+        } catch (NoSuchFieldException | IllegalAccessException fieldExp) {
+            MPPDBIDELoggerUtility.warn("clear key string failed!");
+        }
     }
 }
