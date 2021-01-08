@@ -5,6 +5,9 @@
 package com.huawei.mppdbide.utils.security;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -68,6 +71,7 @@ public class EncryptionUtil {
      * Encrypt.
      *
      * @param strToEncrypt the str to encrypt
+     * @return boolean true if success
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
@@ -80,11 +84,27 @@ public class EncryptionUtil {
     }
 
     /**
+     * Encrypt.
+     *
+     * @param strToEncrypt the str to encrypt
+     * @return boolean true if success
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     * @throws IllegalBlockSizeException the illegal block size exception
+     * @throws BadPaddingException the bad padding exception
+     * @throws DataStudioSecurityException the data studio security exception
+     */
+    public final boolean encrypt(char[] strToEncrypt) throws UnsupportedEncodingException, IllegalBlockSizeException,
+            BadPaddingException, DataStudioSecurityException {
+        setEncryptedString(encryptString(strToEncrypt, "UTF-8"));
+        return true; // return for tests
+    }
+
+    /**
      * Encrypt string.
      *
      * @param strToEncrypt the str to encrypt
      * @param encodingCharSet the encoding char set
-     * @return returns encrypted string
+     * @return String encrypted string
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
@@ -96,10 +116,27 @@ public class EncryptionUtil {
     }
 
     /**
+     * Encrypt string.
+     *
+     * @param strToEncrypt the str to encrypt
+     * @param encodingCharSet the encoding char set
+     * @return String encrypted string
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     * @throws IllegalBlockSizeException the illegal block size exception
+     * @throws BadPaddingException the bad padding exception
+     * @throws DataStudioSecurityException the data studio security exception
+     */
+    public final String encryptString(char[] strToEncrypt, String encodingCharSet) throws UnsupportedEncodingException,
+            IllegalBlockSizeException, BadPaddingException, DataStudioSecurityException {
+        String result = Base64.encodeBase64String(encryptByteArray(getBytes(strToEncrypt, encodingCharSet)));
+        return result;
+    }
+
+    /**
      * Encrypt byte array.
      *
      * @param bytesToEncrypt the bytes to encrypt
-     * @return the byte[]
+     * @return byte[] then byte[]
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
@@ -135,5 +172,66 @@ public class EncryptionUtil {
         }
 
         return cipher.doFinal(bytesToEncrypt);
+    }
+
+    /**
+     * description: convert char[] to bytes[]
+     *
+     * @param chars the input chars
+     * @param encodeCharSet the convert charset
+     * @return byte[] the byte array
+     */
+    public static byte[] getBytes(char[] chars, String encodeCharSet) {
+        Charset cs = Charset.forName(encodeCharSet);
+        CharBuffer cb = CharBuffer.allocate(chars.length);
+        cb.put(chars);
+        cb.flip();
+        ByteBuffer bb = cs.encode(cb);
+        byte[] result = new byte[bb.limit()];
+        bb.get(result, 0, result.length);
+        return result;
+    }
+
+    /**
+     * description: convert byte[] to char[]
+     *
+     * @param bytes the input bytes
+     * @param encodeCharSet the convert charset
+     * @return char[] the char array
+     */
+    public static char[] getChars(byte[] bytes, String encodeCharset) {
+        Charset cs = Charset.forName(encodeCharset);
+        ByteBuffer bb = ByteBuffer.allocate(bytes.length);
+        bb.put(bytes);
+        bb.flip();
+        CharBuffer cb = cs.decode(bb);
+        return cb.array();
+    }
+
+    /**
+     * description: remove space from chars
+     *
+     * @param chars the char array to dispose
+     * @return char[] remove space array
+     */
+    public static char[] trimChars(char[] chars) {
+        int startPos = 0;
+        int endPos = chars.length - 1;
+        for (; startPos < chars.length ; startPos ++) {
+            if (!Character.isSpaceChar(chars[startPos])) {
+                break;
+            }
+        }
+        for (; endPos > startPos; endPos -= 1) {
+            if (!Character.isSpaceChar(chars[startPos])) {
+                break;
+            }
+        }
+        if (endPos <= startPos) {
+            return new char[0];
+        }
+        char[] results = new char[endPos - startPos + 1];
+        System.arraycopy(chars, startPos, results, 0, results.length);
+        return results;
     }
 }

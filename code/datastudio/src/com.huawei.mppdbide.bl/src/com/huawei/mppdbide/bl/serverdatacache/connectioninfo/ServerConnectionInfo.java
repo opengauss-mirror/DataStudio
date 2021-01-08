@@ -506,9 +506,7 @@ public class ServerConnectionInfo implements IServerConnectionInfo {
     public Properties composeProperty(String driverName) {
         Properties properties = new Properties();
         properties.setProperty("user", getDsUsername());
-        String prds = new String(getPrd());
-        properties.setProperty("password", prds);
-        prds = null;
+        properties.setProperty("password", new String(getPrd()));
         properties.setProperty("allowEncodingChanges", "true");
         String dsEncoding = BLPreferenceManager.getInstance().getBLPreference().getDSEncoding();
         if (dsEncoding.isEmpty()) {

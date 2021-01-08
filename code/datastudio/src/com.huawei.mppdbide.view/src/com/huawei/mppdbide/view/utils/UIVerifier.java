@@ -35,9 +35,9 @@ public abstract class UIVerifier {
         txtInput.addVerifyListener(new VerifyListener() {
             @Override
             public void verifyText(VerifyEvent event) {
-                String text = ((Text) event.widget).getText() + event.text;
                 try {
-                    if (text.length() > textLimit) {
+                    int textLength = ((Text) event.widget).getTextChars().length + event.text.length();
+                    if (textLength > textLimit) {
                         event.doit = false;
                     }
                 } catch (NumberFormatException numberFormatException) {

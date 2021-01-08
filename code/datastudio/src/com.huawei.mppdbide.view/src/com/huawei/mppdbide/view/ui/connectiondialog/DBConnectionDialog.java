@@ -2736,7 +2736,7 @@ public class DBConnectionDialog extends ConnectionDialog {
             info.setDatabaseName("");
         }
         info.setUsername(gaussUserName.getText());
-        info.setPrd(gaussPrd.getText().toCharArray());
+        info.setPrd(gaussPrd.getTextChars());
         info.setDriverName(dbTypeCombo.getItem(dbTypeCombo.getSelectionIndex()));
 
         info.setSavePrdOption(savePswdOptions.getSelectionIndex(), getEnablePermanentPasswordSaveOption());
@@ -2746,7 +2746,7 @@ public class DBConnectionDialog extends ConnectionDialog {
         info.setClientSSLKey(clSSLKeyFilePathText.getText());
         info.setRootCertificate(rootCertFilePathText.getText());
         info.setSSLMode(sslModeOptions.getItem(sslModeOptions.getSelectionIndex()));
-        info.setSSLPrd(sslPrd.getText().toCharArray());
+        info.setSSLPrd(sslPrd.getTextChars());
 
         info.setSchemaInclusionList(new LinkedHashSet<String>(getSchemaInclusionList()));
         info.setSchemaExclusionList(new LinkedHashSet<String>(getschemaExclusionList()));
@@ -2864,9 +2864,7 @@ public class DBConnectionDialog extends ConnectionDialog {
         gaussHostAddr.setText(info.getServerIp().trim());
         gaussHostPort.setText(Integer.toString(info.getServerPort()));
         gaussUserName.setText(info.getDsUsername());
-        String prd = new String(info.getPrd());
-        gaussPrd.setText(prd);
-        prd = null;
+        gaussPrd.setTextChars(info.getPrd());
         savePswdOptions.select(getComboSelectionIndex(info.getSavePrdOption()));
     }
 
