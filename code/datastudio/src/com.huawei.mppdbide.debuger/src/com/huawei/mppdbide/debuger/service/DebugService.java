@@ -128,7 +128,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * when server backthread started, this will callback
      *
      * @param args input args to function
-     * @return ResultSet the function result
+     * @return Optional<Object> the function result
      * @throws SQLException the exp
      */
     public Optional<Object> serverDebugCallBack(List<?> args) throws SQLException {

@@ -64,14 +64,12 @@ public class DebugBaseTableComposite extends Composite {
      */
     public DebugBaseTableComposite(Composite parent, int style) {
         super(parent, style);
-        initUi();
-        commonInitUi();
     }
 
     /**
      * description: init Ui, if subclass have special, override this function
      */
-    protected void initUi() {
+    public void initUi() {
         setLayout(new FillLayout(SWT.VERTICAL));
 
         SashForm sashForm = new SashForm(this, SWT.VERTICAL);
@@ -81,6 +79,7 @@ public class DebugBaseTableComposite extends Composite {
 
         tableViewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION);
         sashForm.setWeights(new int[] {10});
+        commonInitUi();
     }
 
     /**
@@ -254,5 +253,9 @@ public class DebugBaseTableComposite extends Composite {
                 ((IDebugSourceData) inputItem).setDataOrder(idx);
             }
         });
+    }
+
+    @Override
+    protected void checkSubclass() {
     }
 }
