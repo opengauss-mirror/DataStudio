@@ -169,6 +169,23 @@
             </count>
          </with>
       </definition>
+       <definition
+            id="com.huawei.objectbrowser.popupmenu.startdebug.id.expression">
+         <with
+               variable="org.eclipse.ui.selection">
+            <count value="1"/>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <instanceof
+                     value="com.huawei.mppdbide.bl.serverdatacache.DebugObjects">
+               </instanceof>
+            </iterate>
+            <count
+                  value="1">
+            </count>
+         </with>
+      </definition>
       <definition
             id="com.huawei.objectbrowser.popupmenu.properties.id.expression">
          <with

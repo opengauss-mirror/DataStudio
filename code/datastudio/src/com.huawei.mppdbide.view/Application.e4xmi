@@ -444,6 +444,9 @@
       <children xsi:type="menu:HandledMenuItem" xmi:id="_XDUt8LJHEeaeLLh_12d-Bg" elementId="com.huawei.objectbrowser.popupmenu.id.viewsource" label="%objectbrowser.popupmenu.label.viewsource" tooltip="%objectbrowser.popupmenu.tooltip.viewsource" mnemonics="%objectbrowser.popupmenu.mnemonics.viewsource" command="_OPqDcLJIEeaeLLh_12d-Bg">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_xqbvcLJHEeaeLLh_12d-Bg" coreExpressionId="com.huawei.objectbrowser.popupmenu.viewsource.id.expression"/>
       </children>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_tw3rkE44EeuYmLcZHFICSg" elementId="com.huawei.objectbrowser.popupmenu.id.startdebug" label="%objectbrowser.popupmenu.label.startdebug" tooltip="%objectbrowser.popupmenu.tooltip.startdebug" mnemonics="%objectbrowser.popupmenu.mnemonics.startdebug" command="_qQEP4C-PEeu3vZBI81hPmA">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_vlwwoE44EeuYmLcZHFICSg" coreExpressionId="com.huawei.objectbrowser.popupmenu.startdebug.id.expression"/>
+      </children>
       <children xsi:type="menu:HandledMenuItem" xmi:id="_chYg55PqEeOwspWUd5Ul7A" elementId="com.huawei.objectbrowser.popupmenu.id.dropdebugobject" label="%objectbrowser.popupmenu.label.dropdebugobject" tooltip="%objectbrowser.popupmenu.tooltip.dropdebugobject" mnemonics="%objectbrowser.popupmenu.mnemonics.dropdebugobject" command="_yQZCsEujEeOxYYqXfkt1Gw">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_chYg6JPqEeOwspWUd5Ul7A" coreExpressionId="com.huawei.objectbrowser.popupmenu.dropdebugobject.id.expression"/>
       </children>
