@@ -14,9 +14,12 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.widgets.Composite;
 
+import com.huawei.mppdbide.debuger.exception.DebugPositionNotFoundException;
+import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.vo.StackVo;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
+import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 import com.huawei.mppdbide.view.ui.debug.DebugBaseTableComposite;
 import com.huawei.mppdbide.view.ui.debug.DebugCheckboxEvent;
@@ -71,6 +74,7 @@ public class StackTableWindow extends WindowBase<StackVo> {
             this.stackVo = stackVo;
             dataArrays.add(getLevel());
             dataArrays.add(targetName());
+            dataArrays.add(getLineNum());
         }
 
         @Override
@@ -89,6 +93,19 @@ public class StackTableWindow extends WindowBase<StackVo> {
             }
             return result;
         }
+
+        private String getLineNum() {
+            int codeLine = stackVo.linenumber;
+            DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
+            SourceCodeService codeService = serviceHelper.getCodeService();
+            int showLine = -1;
+            try {
+                showLine = codeService.codeLine2ShowLine(codeLine);
+            } catch (DebugPositionNotFoundException dbgExp) {
+                MPPDBIDELoggerUtility.error("get breakpoint line failed!" + dbgExp.getMessage());
+            }
+            return String.valueOf(++showLine);
+        }
     }
 
     private static class StackSourceDataHeader implements IDebugSourceDataHeader {
@@ -102,13 +119,14 @@ public class StackTableWindow extends WindowBase<StackVo> {
 
         @Override
         public List<Integer> getTitleSizeScales() {
-            return Arrays.asList(3, 7);
+            return Arrays.asList(2, 5, 2);
         }
     }
 
     private static enum TitleDesc {
         INVOKING_LEVEL(IMessagesConstants.DEBUG_STACK_INVOKING_LEVEL),
-        FUNCTION_INFO(IMessagesConstants.DEBUG_STACK_FUNCTION_INFO);
+        FUNCTION_INFO(IMessagesConstants.DEBUG_STACK_FUNCTION_INFO),
+        CURRENT_LINE_NUM(IMessagesConstants.DEBUG_STACK_CURRENT_LINE_NUM);
 
         /**
          * Title Description
