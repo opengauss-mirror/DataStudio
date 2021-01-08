@@ -77,7 +77,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
             public void controlResized(ControlEvent crlEvent) {
                 if (crlEvent.getSource() instanceof SashForm) {
                     SashForm sf = (SashForm) crlEvent.getSource();
-                    int scaleBase = (int)(new Double(sf.getSize().y) / 25 - 0.5);
+                    int scaleBase = (int)((double) sf.getSize().y / 25 - 0.5);
                     sf.setWeights(new int[] {1, scaleBase <= 1 ? 1 : scaleBase - 1});
                 }
             }
