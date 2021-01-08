@@ -87,7 +87,7 @@ public class EncryptionUtil {
      * Encrypt.
      *
      * @param strToEncrypt the str to encrypt
-     * @param boolean true if success
+     * @return boolean true if success
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
@@ -104,7 +104,7 @@ public class EncryptionUtil {
      *
      * @param strToEncrypt the str to encrypt
      * @param encodingCharSet the encoding char set
-     * @return returns encrypted string
+     * @return String encrypted string
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
@@ -120,7 +120,7 @@ public class EncryptionUtil {
      *
      * @param strToEncrypt the str to encrypt
      * @param encodingCharSet the encoding char set
-     * @return returns encrypted string
+     * @return String encrypted string
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
@@ -136,7 +136,7 @@ public class EncryptionUtil {
      * Encrypt byte array.
      *
      * @param bytesToEncrypt the bytes to encrypt
-     * @return the byte[]
+     * @return byte[] then byte[]
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws IllegalBlockSizeException the illegal block size exception
      * @throws BadPaddingException the bad padding exception
