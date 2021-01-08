@@ -41,7 +41,8 @@ public class BreakpointChain extends IMsgChain {
     public boolean matchMsg(Event event) {
         return event.getMsg() == EventMessage.BREAKPOINT_ADD
                 || event.getMsg() == EventMessage.BREAKPOINT_DELETE
-                || event.getMsg() == EventMessage.BREAKPOINT_CHANGE;
+                || event.getMsg() == EventMessage.BREAKPOINT_CHANGE
+                || event.getMsg() == EventMessage.CANCEL_HIGHLIGHT;
     }
 
     /**
@@ -51,6 +52,14 @@ public class BreakpointChain extends IMsgChain {
      */
     @Override
     protected void disposeMsg(Event event) {
+        if (event.getMsg() == EventMessage.CANCEL_HIGHLIGHT) {
+            PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
+            int lineNum = event.getIntegerAddition();
+            plSourceEditor.deHighlightLine(lineNum);
+            PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore();
+            sourceEditor.setHighlightLineNum(-1);
+            return;
+        }
         Object additionObj = event.getAddition().get();
         if (additionObj instanceof BreakpointAnnotation) {
             BreakpointAnnotation annotation = (BreakpointAnnotation) additionObj;

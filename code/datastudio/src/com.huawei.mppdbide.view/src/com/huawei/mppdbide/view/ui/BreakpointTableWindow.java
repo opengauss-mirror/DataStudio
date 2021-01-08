@@ -17,11 +17,13 @@ import com.huawei.mppdbide.debuger.vo.BreakpointList;
 import com.huawei.mppdbide.debuger.vo.BreakpointVo;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
+import com.huawei.mppdbide.view.core.sourceeditor.PLSourceEditorCore;
 import com.huawei.mppdbide.view.ui.debug.DebugCheckTableComposite;
 import com.huawei.mppdbide.view.ui.debug.DebugCheckboxEvent;
 import com.huawei.mppdbide.view.ui.debug.IDebugSourceData;
 import com.huawei.mppdbide.view.ui.debug.IDebugSourceDataHeader;
 import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
+import com.huawei.mppdbide.view.utils.UIElement;
 
 /**
  * Title: class
@@ -126,5 +128,18 @@ public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
 
     @Override
     public void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event) {
+        if (event == DebugCheckboxEvent.DOUBLE_CLICK) {
+            selectItems.stream().forEach(item -> {
+                int lineNum = Integer.parseInt(item.getValue(0).toString());
+                PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
+                PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore();
+                int beforeLineNum = sourceEditor.getHighlightLineNum();
+                if (beforeLineNum != -1) {
+                    plSourceEditor.deHighlightLine(beforeLineNum);
+                }
+                plSourceEditor.highlightBreakpointLine(lineNum - 1);
+                sourceEditor.setHighlightLineNum(lineNum - 1);
+            });
+        }
     }
 }

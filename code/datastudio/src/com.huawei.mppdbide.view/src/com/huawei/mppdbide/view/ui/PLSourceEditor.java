@@ -1193,6 +1193,15 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     }
 
     /**
+    * description: use for debug breakpoint highlight color
+    *
+    * @param line the highlight line
+    */
+    public void highlightBreakpointLine(int line) {
+        setLineBackgroudColor(line, SQLSyntaxColorProvider.DEBUG_BREAKPOINT_POSITION_COLOR);
+    }
+
+    /**
      * description: use for debug position disable highlight color
      *
      * @param line the disable highlight line

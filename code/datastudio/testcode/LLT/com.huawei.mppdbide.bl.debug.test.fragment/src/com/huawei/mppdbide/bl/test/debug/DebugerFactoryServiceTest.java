@@ -136,7 +136,7 @@ public class DebugerFactoryServiceTest extends DebugerJdbcTestCaseBase {
         assertNotNull(event.getStringAddition());
         assertNotNull(event.toString());
         assertFalse(event.hasException());
-        assertTrue(EventMessage.values().length ==  8);
+        assertTrue(EventMessage.values().length == 9);
         assertEquals(EventMessage.valueOf("ON_EXIT"), EventMessage.ON_EXIT);
     }
     
