@@ -204,7 +204,8 @@ public class DebugBaseTableComposite extends Composite {
             column.setEditingSupport(new DebugEditingSupport(viewer, idx));
             column.setLabelProvider(new DebugSourceDataLableProvider(idx));
         });
-        table.addControlListener(new DebugControlAdapter(table, header));
+        Table curTable = getTableViewer().getTable();
+        curTable.addControlListener(new DebugControlAdapter(curTable, header));
     }
 
     /**
