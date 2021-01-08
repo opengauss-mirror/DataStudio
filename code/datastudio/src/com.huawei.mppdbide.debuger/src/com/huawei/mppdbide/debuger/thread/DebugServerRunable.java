@@ -8,9 +8,9 @@ import com.huawei.mppdbide.debuger.event.Event;
 import com.huawei.mppdbide.debuger.service.DebugService;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Title: the DebugServerRunable class
@@ -37,10 +37,9 @@ public class DebugServerRunable implements Runnable {
         Event event;
         Object retValue = null;
         Exception exp = null;
-        try (ResultSet rs = debugService.serverDebugCallBack(debugParams)) {
-            if (rs.next()) {
-                retValue = rs.getObject(1);
-            }
+        try {
+            Optional<Object> optionalObj = debugService.serverDebugCallBack(debugParams);
+            retValue = optionalObj.orElse(null);
         } catch (SQLException sqlExp) {
             exp = sqlExp;
         }

@@ -68,7 +68,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
      * description: this is check table special create ui
      */
     @Override
-    protected void initUi() {
+    public void initUi() {
         setLayout(new FillLayout(SWT.VERTICAL));
 
         SashForm sashForm = new SashForm(this, SWT.VERTICAL);
@@ -77,7 +77,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
             public void controlResized(ControlEvent crlEvent) {
                 if (crlEvent.getSource() instanceof SashForm) {
                     SashForm sf = (SashForm) crlEvent.getSource();
-                    int scaleBase = (int)(new Double(sf.getSize().y) / 25 - 0.5);
+                    int scaleBase = (int)((double) sf.getSize().y / 25 - 0.5);
                     sf.setWeights(new int[] {1, scaleBase <= 1 ? 1 : scaleBase - 1});
                 }
             }
@@ -105,6 +105,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
         Menu menu = createMenu(table);
         table.setMenu(menu);
         sashForm.setWeights(new int[] {1, 10});
+        commonInitUi();
     }
 
     private ToolBar createToolBar(SashForm sashForm) {

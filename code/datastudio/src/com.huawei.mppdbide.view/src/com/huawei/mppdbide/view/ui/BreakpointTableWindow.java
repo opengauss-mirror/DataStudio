@@ -40,6 +40,7 @@ public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
     @PostConstruct
     public void createControls(Composite parent) {
         tableComposite = new DebugCheckTableComposite(parent, 0);
+        tableComposite.initUi();
         tableComposite.createColumns(new BreakpointHeader());
         tableComposite.setTableHandler(this);
     }

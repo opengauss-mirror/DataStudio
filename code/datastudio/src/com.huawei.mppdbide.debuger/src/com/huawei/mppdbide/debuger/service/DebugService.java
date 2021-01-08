@@ -128,10 +128,10 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * when server backthread started, this will callback
      *
      * @param args input args to function
-     * @return ResultSet the function result
+     * @return Optional<Object> the function result
      * @throws SQLException the exp
      */
-    public ResultSet serverDebugCallBack(List<?> args) throws SQLException {
+    public Optional<Object> serverDebugCallBack(List<?> args) throws SQLException {
         try {
             serverCallBackBegin();
             String sql = DebugConstants.getSql(functionVo.proname, args.size());
@@ -139,7 +139,12 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
             for (int i = 1 ; i < args.size() + 1; i ++) {
                 ps.setObject(i, args.get(i - 1));
             }
-            return ps.executeQuery();
+            try(ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.ofNullable(rs.getObject(1));
+                }
+                return Optional.empty();
+            }
         } finally {
             serverCallBackEnd();
         }

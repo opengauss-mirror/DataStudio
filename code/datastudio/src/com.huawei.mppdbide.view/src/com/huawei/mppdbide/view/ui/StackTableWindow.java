@@ -41,6 +41,7 @@ public class StackTableWindow extends WindowBase<StackVo> {
     @PostConstruct
     public void createControls(Composite parent) {
         tableComposite = new DebugBaseTableComposite(parent, 0);
+        tableComposite.initUi();
         tableComposite.createColumns(new StackSourceDataHeader());
         tableComposite.setTableHandler(this);
     }
