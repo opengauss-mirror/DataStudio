@@ -2264,7 +2264,7 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
             searchStartPosition = -1;
         }
 
-        if (-1 != lastSearchReturnIndex) {
+        if (lastSearchReturnIndex != -1) {
             ITextSelection selection = (ITextSelection) textViewer.getSelection();
             searchStartPosition = selection.getOffset();
             if (isFwdSearch) {

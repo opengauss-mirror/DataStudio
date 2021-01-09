@@ -1207,6 +1207,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      * description: use for delete breakpoint response based on the line
      *
      * @param line the breakpoint line
+     * @param order the order for different breakpoint response
      */
     public void breakpointResponse (int line, int order) {
         Optional<BreakpointAnnotation> annotation = findAnnotation(line);
@@ -1220,7 +1221,6 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     }
 
     private void highlightBreakpoint (int lineNum) {
-        PLSourceEditorCore sourceEditor = getSourceEditorCore();
         int beforeLineNum = sourceEditor.getHighlightLineNum();
         if (beforeLineNum != -1) {
             if (beforeLineNum == getdebugPositionLine()) {

@@ -134,7 +134,7 @@ public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
                 String enableOrDisable = item.getValue(2).toString();
                 return enableOrDisable.equals(isDisable);
             }
-            return true; 
+            return true;
         }).forEach(item -> {
             int lineNum = Integer.parseInt(item.getValue(0).toString());
             PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
@@ -146,7 +146,7 @@ public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
             } else {
                 order = 2;
             }
-            plSourceEditor.breakpointResponse(lineNum -1, order);
+            plSourceEditor.breakpointResponse(lineNum - 1, order);
         });
     }
 }

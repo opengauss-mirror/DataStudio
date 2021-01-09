@@ -34,7 +34,7 @@ public enum DebugCheckboxEvent {
 
     /**
      * Gets the code
-     * 
+     *
      *
      * @return int the code
      */
