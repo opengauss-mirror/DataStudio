@@ -128,18 +128,25 @@ public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
 
     @Override
     public void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event) {
-        if (event == DebugCheckboxEvent.DOUBLE_CLICK) {
-            selectItems.stream().forEach(item -> {
-                int lineNum = Integer.parseInt(item.getValue(0).toString());
-                PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
-                PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore();
-                int beforeLineNum = sourceEditor.getHighlightLineNum();
-                if (beforeLineNum != -1) {
-                    plSourceEditor.deHighlightLine(beforeLineNum);
-                }
-                plSourceEditor.highlightBreakpointLine(lineNum - 1);
-                sourceEditor.setHighlightLineNum(lineNum - 1);
-            });
-        }
+        selectItems.stream().filter(item -> {
+            if ((DebugCheckboxEvent.ALL.getCode() & event.getCode()) <= 0x03) {
+                String isDisable = String.valueOf(event.getCode() == 0x03);
+                String enableOrDisable = item.getValue(2).toString();
+                return enableOrDisable.equals(isDisable);
+            }
+            return true; 
+        }).forEach(item -> {
+            int lineNum = Integer.parseInt(item.getValue(0).toString());
+            PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
+            int order = -1;
+            if ((DebugCheckboxEvent.ALL.getCode() & event.getCode()) <= 0x03) {
+                order = 0;
+            } else if ((DebugCheckboxEvent.ALL.getCode() & event.getCode()) <= 0x0C) {
+                order = 1;
+            } else {
+                order = 2;
+            }
+            plSourceEditor.breakpointResponse(lineNum -1, order);
+        });
     }
 }

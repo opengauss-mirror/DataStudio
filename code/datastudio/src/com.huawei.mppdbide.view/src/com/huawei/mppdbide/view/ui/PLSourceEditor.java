@@ -1184,6 +1184,32 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     }
 
     /**
+     * description: use for delete breakpoint response based on the line
+     *
+     * @param line the breakpoint line
+     */
+    public void breakpointResponse (int line, int order) {
+        Optional<BreakpointAnnotation> annotation = findAnnotation(line);
+        if (order == 0) {
+            singleClickRun(annotation, line);
+        } else if (order == 1) {
+            doubleClickRun(annotation, line);
+        } else {
+            highlightBreakpoint(line);
+        }
+    }
+
+    private void highlightBreakpoint (int lineNum) {
+        PLSourceEditorCore sourceEditor = getSourceEditorCore();
+        int beforeLineNum = sourceEditor.getHighlightLineNum();
+        if (beforeLineNum != -1) {
+            deHighlightLine(beforeLineNum);
+        }
+        sourceEditor.setHighlightLineNum(lineNum);
+        highlightBreakpointLine(lineNum);
+    }
+
+    /**
      * description: use for debug position highlight color
      *
      * @param line the highlight line
