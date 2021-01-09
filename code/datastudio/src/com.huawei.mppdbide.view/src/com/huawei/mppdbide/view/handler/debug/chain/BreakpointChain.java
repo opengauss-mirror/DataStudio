@@ -56,6 +56,9 @@ public class BreakpointChain extends IMsgChain {
             PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
             int lineNum = event.getIntegerAddition();
             plSourceEditor.deHighlightLine(lineNum);
+            if (lineNum != -1 && lineNum == plSourceEditor.getdebugPositionLine()) {
+                plSourceEditor.highlightLine(lineNum);
+            }
             PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore();
             sourceEditor.setHighlightLineNum(-1);
             return;

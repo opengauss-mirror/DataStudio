@@ -237,6 +237,26 @@ public class PLSourceEditor extends AbstractAutoSaveObject
 
     private MPart tab;
 
+    private int debugPositionLine = -1;
+
+    /**
+     * Sets the debug position line.
+     *
+     * @param line the debug position line
+     */
+    public void setDebugPositionLine (int line) {
+        this.debugPositionLine = line;
+    }
+
+    /**
+     * Gets the debug position line.
+     *
+     * @return int the debug position line
+     */
+    public int getdebugPositionLine () {
+        return this.debugPositionLine;
+    }
+
     /**
      * Gets the breakpoint annotation list.
      *
@@ -1203,7 +1223,11 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         PLSourceEditorCore sourceEditor = getSourceEditorCore();
         int beforeLineNum = sourceEditor.getHighlightLineNum();
         if (beforeLineNum != -1) {
-            deHighlightLine(beforeLineNum);
+            if (beforeLineNum == getdebugPositionLine()) {
+                highlightLine(beforeLineNum);
+            } else {
+                deHighlightLine(beforeLineNum);
+            }
         }
         sourceEditor.setHighlightLineNum(lineNum);
         highlightBreakpointLine(lineNum);
@@ -1313,6 +1337,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 );
         sourceEditor.goToLineNumber(line);
         highlightLine(line);
+        setDebugPositionLine(line);
     }
 
     /**
