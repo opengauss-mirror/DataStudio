@@ -237,6 +237,26 @@ public class PLSourceEditor extends AbstractAutoSaveObject
 
     private MPart tab;
 
+    private int debugPositionLine = -1;
+
+    /**
+     * Sets the debug position line.
+     *
+     * @param line the debug position line
+     */
+    public void setDebugPositionLine (int line) {
+        this.debugPositionLine = line;
+    }
+
+    /**
+     * Gets the debug position line.
+     *
+     * @return int the debug position line
+     */
+    public int getdebugPositionLine () {
+        return this.debugPositionLine;
+    }
+
     /**
      * Gets the breakpoint annotation list.
      *
@@ -1184,12 +1204,51 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     }
 
     /**
+     * description: use for delete breakpoint response based on the line
+     *
+     * @param line the breakpoint line
+     * @param order the order for different breakpoint response
+     */
+    public void breakpointResponse (int line, int order) {
+        Optional<BreakpointAnnotation> annotation = findAnnotation(line);
+        if (order == 0) {
+            singleClickRun(annotation, line);
+        } else if (order == 1) {
+            doubleClickRun(annotation, line);
+        } else {
+            highlightBreakpoint(line);
+        }
+    }
+
+    private void highlightBreakpoint (int lineNum) {
+        int beforeLineNum = sourceEditor.getHighlightLineNum();
+        if (beforeLineNum != -1) {
+            if (beforeLineNum == getdebugPositionLine()) {
+                highlightLine(beforeLineNum);
+            } else {
+                deHighlightLine(beforeLineNum);
+            }
+        }
+        sourceEditor.setHighlightLineNum(lineNum);
+        highlightBreakpointLine(lineNum);
+    }
+
+    /**
      * description: use for debug position highlight color
      *
      * @param line the highlight line
      */
     public void highlightLine(int line) {
         setLineBackgroudColor(line, SQLSyntaxColorProvider.DEBUG_POSITION_COLOR);
+    }
+
+    /**
+    * description: use for debug breakpoint highlight color
+    *
+    * @param line the highlight line
+    */
+    public void highlightBreakpointLine(int line) {
+        setLineBackgroudColor(line, SQLSyntaxColorProvider.DEBUG_BREAKPOINT_POSITION_COLOR);
     }
 
     /**
@@ -1278,6 +1337,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 );
         sourceEditor.goToLineNumber(line);
         highlightLine(line);
+        setDebugPositionLine(line);
     }
 
     /**

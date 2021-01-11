@@ -68,6 +68,9 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
@@ -93,6 +96,7 @@ import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.core.SelectMenuItem;
 import com.huawei.mppdbide.view.handler.debug.DebugHandlerUtils;
+import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 import com.huawei.mppdbide.view.prefernces.DSFormatterPreferencePage;
 import com.huawei.mppdbide.view.prefernces.FormatterPreferenceKeys;
 import com.huawei.mppdbide.view.prefernces.IAutoCompletePreference;
@@ -232,6 +236,8 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         NOKEY, AUTO_SUGGEST, CODE_TEMPLATE, KEY_AUTO_SUGGEST, INSERT_AUTO_SUGGEST
     };
 
+    private int highlightLineNum = -1;
+
     /**
      * Instantiates a new PL source editor core.
      *
@@ -249,7 +255,24 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         preferenceStore = PreferenceWrapper.getInstance().getPreferenceStore();
         preferenceStore.addPropertyChangeListener(this);
         jobsAssociatedToTerminal = new ArrayList<UIWorkerJob>(5);
+    }
 
+    /**
+     * Set highlight line num
+     *
+     * @param lineNum the highlight line num
+     */
+    public void setHighlightLineNum (int lineNum) {
+        this.highlightLineNum = lineNum;
+    }
+
+    /**
+     * Get highlight line num
+     *
+     * @return int the highlight line num
+     */
+    public int getHighlightLineNum () {
+        return this.highlightLineNum;
     }
 
     /**
@@ -546,6 +569,7 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
      * Sets the document.
      *
      * @param document the new document
+     * @param fileSizeInMB the file size in MB
      */
     public void setDocument(final IDocument document, double fileSizeInMB) {
         if (null != this.doc) {
@@ -719,9 +743,13 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         viewer.addPostSelectionChangedListener(new PostEditorSelectionChangedListener());
         viewer.addSelectionChangedListener(new EditorSelectionChangedListener());
         viewer.appendVerifyKeyListener(appendViewerVerifyKeyListener());
-
         viewer.getTextWidget().addKeyListener(addViewerKeyListener());
-
+        viewer.getTextWidget().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDown(MouseEvent e) {
+                cancelHighlight();
+            }
+        });
         viewer.getTextWidget().addVerifyKeyListener(new VerifyKeyListener() {
             @Override
             public void verifyKey(VerifyEvent event) {
@@ -742,7 +770,6 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         });
 
         viewer.addTextListener(new ITextListener() {
-
             @Override
             public void textChanged(TextEvent event) {
                 if (!disableCommentIndentUndo) {
@@ -750,7 +777,13 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
                 }
             }
         });
+    }
 
+    private void cancelHighlight () {
+        int lineNum = getHighlightLineNum();
+        if (lineNum != -1) {
+            DebugServiceHelper.getInstance().notifyCancelHighlight(lineNum);
+        }
     }
 
     private KeyListener addViewerKeyListener() {
@@ -2231,7 +2264,7 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
             searchStartPosition = -1;
         }
 
-        if (-1 != lastSearchReturnIndex) {
+        if (lastSearchReturnIndex != -1) {
             ITextSelection selection = (ITextSelection) textViewer.getSelection();
             searchStartPosition = selection.getOffset();
             if (isFwdSearch) {
@@ -2340,7 +2373,6 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
     private void reconfigureTabWidth() {
         if (viewer.getTextWidget() != null) {
             viewer.getTextWidget().setTabs(config.getTabWidth(viewer));
-
         }
     }
 
@@ -2404,7 +2436,7 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
 
     /**
      * get the selected query
-     * 
+     *
      * @return the selected query
      */
     public String getSelectedQry() {

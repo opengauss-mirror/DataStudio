@@ -165,6 +165,18 @@ public class DebugServiceHelper {
     }
 
     /**
+     * description: notify cancel highlight
+     *
+     * @param annotation the breakpoint status
+     * @param add true if add else if delete
+     * @return void
+     */
+    public void notifyCancelHighlight(int lineNum) {
+        EventMessage msg = EventMessage.CANCEL_HIGHLIGHT;
+        debugService.notifyAllHandler(new Event(msg, lineNum));
+    }
+
+    /**
      * description: close service
      *
      * @return void

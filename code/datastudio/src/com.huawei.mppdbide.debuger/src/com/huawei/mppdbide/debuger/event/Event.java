@@ -34,7 +34,8 @@ public class Event {
         DEBUG_END,
         BREAKPOINT_ADD,
         BREAKPOINT_DELETE,
-        BREAKPOINT_CHANGE;
+        BREAKPOINT_CHANGE,
+        CANCEL_HIGHLIGHT;
     }
 
     private static AtomicInteger autoId = new AtomicInteger();
@@ -95,6 +96,18 @@ public class Event {
             return (String) this.addition;
         }
         return addition.toString();
+    }
+
+    /**
+     * get addition integer msg
+     *
+     * @return int auto convert addtion object to Integer object
+     */
+    public int getIntegerAddition() {
+        if (this.addition instanceof Integer) {
+            return (Integer) this.addition;
+        }
+        return -1;
     }
 
     /**

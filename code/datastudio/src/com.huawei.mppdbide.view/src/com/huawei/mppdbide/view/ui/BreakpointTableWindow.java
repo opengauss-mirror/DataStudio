@@ -17,11 +17,13 @@ import com.huawei.mppdbide.debuger.vo.BreakpointList;
 import com.huawei.mppdbide.debuger.vo.BreakpointVo;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
+import com.huawei.mppdbide.view.core.sourceeditor.PLSourceEditorCore;
 import com.huawei.mppdbide.view.ui.debug.DebugCheckTableComposite;
 import com.huawei.mppdbide.view.ui.debug.DebugCheckboxEvent;
 import com.huawei.mppdbide.view.ui.debug.IDebugSourceData;
 import com.huawei.mppdbide.view.ui.debug.IDebugSourceDataHeader;
 import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
+import com.huawei.mppdbide.view.utils.UIElement;
 
 /**
  * Title: class
@@ -126,5 +128,25 @@ public class BreakpointTableWindow extends WindowBase<BreakpointVo> {
 
     @Override
     public void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event) {
+        selectItems.stream().filter(item -> {
+            if ((DebugCheckboxEvent.ALL.getCode() & event.getCode()) <= 0x03) {
+                String isDisable = String.valueOf(event.getCode() == 0x03);
+                String enableOrDisable = item.getValue(2).toString();
+                return enableOrDisable.equals(isDisable);
+            }
+            return true;
+        }).forEach(item -> {
+            int lineNum = Integer.parseInt(item.getValue(0).toString());
+            PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
+            int order = -1;
+            if ((DebugCheckboxEvent.ALL.getCode() & event.getCode()) <= 0x03) {
+                order = 0;
+            } else if ((DebugCheckboxEvent.ALL.getCode() & event.getCode()) <= 0x0C) {
+                order = 1;
+            } else {
+                order = 2;
+            }
+            plSourceEditor.breakpointResponse(lineNum - 1, order);
+        });
     }
 }

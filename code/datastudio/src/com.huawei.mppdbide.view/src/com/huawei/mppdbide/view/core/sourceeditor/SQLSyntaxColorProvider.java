@@ -46,6 +46,11 @@ public class SQLSyntaxColorProvider {
     public static final RGB DEBUG_POSITION = new RGB(0xfc, 0xfc, 0x00);
 
     /**
+     * use for debug position highlight
+     */
+    public static final RGB DEBUG_BREAKPOINT_POSITION  = new RGB(20, 70, 20);
+
+    /**
      * The Constant SQL_MULTI_LINE_COMMENT.
      */
     public static final RGB SQL_MULTI_LINE_COMMENT = new RGB(70, 130, 180);
@@ -61,6 +66,13 @@ public class SQLSyntaxColorProvider {
     public static final Color DEBUG_POSITION_COLOR = new Color(
             Display.getCurrent(),
             DEBUG_POSITION);
+
+    /**
+     * use for debug breakpoint position highlight
+     */
+    public static final Color DEBUG_BREAKPOINT_POSITION_COLOR = new Color(
+            Display.getCurrent(),
+            DEBUG_BREAKPOINT_POSITION);
 
     private static RGB sqlSingleLineComment = null;
     private static RGB defaultt = null;
