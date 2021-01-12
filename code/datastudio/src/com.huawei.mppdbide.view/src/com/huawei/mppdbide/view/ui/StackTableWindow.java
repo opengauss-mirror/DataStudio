@@ -26,6 +26,7 @@ import com.huawei.mppdbide.view.ui.debug.DebugCheckboxEvent;
 import com.huawei.mppdbide.view.ui.debug.IDebugSourceData;
 import com.huawei.mppdbide.view.ui.debug.IDebugSourceDataHeader;
 import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
+import com.huawei.mppdbide.view.utils.UIElement;
 
 /**
  * Title: class
@@ -149,5 +150,20 @@ public class StackTableWindow extends WindowBase<StackVo> {
 
     @Override
     public void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event) {
+        if (event.getCode() == 0x10) {
+            selectItems.stream().forEach(item -> {
+                int lineNum = -1;
+                DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
+                SourceCodeService codeService = serviceHelper.getCodeService();
+                try {
+                    lineNum = codeService.getBeginDebugCodeLine();
+                } catch (DebugPositionNotFoundException debugExp) {
+                    MPPDBIDELoggerUtility.error("receive invalid position:" + debugExp.toString());
+                    return;
+                }
+                PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
+                plSourceEditor.highlightStack(lineNum);
+            });
+        }
     }
 }
