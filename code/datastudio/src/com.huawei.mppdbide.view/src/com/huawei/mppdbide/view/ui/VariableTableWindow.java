@@ -12,7 +12,14 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 import com.huawei.mppdbide.adapter.gauss.GaussDatatypeUtils;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
@@ -35,6 +42,32 @@ import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
  */
 public class VariableTableWindow extends WindowBase<VariableVo> {
     /**
+     * description: the max number of the variables
+     */
+    private static final int VARIABLES_MAX_NUM = 20;
+
+    /**
+     * description: the variable values list of last frame
+     */
+    private static ArrayList<String> variableValues = new ArrayList<String>();
+
+    /**
+     * description: clear variable values
+     */
+    public static void clearVariableValues () {
+        variableValues.clear();
+    }
+
+    /**
+     * description: initialize variable values
+     */
+    public static void initializeVariableValues () {
+        for (int i = 0; i < VARIABLES_MAX_NUM; i++) {
+            variableValues.add("<NULL>");
+        }
+    }
+
+    /**
      * description: create UI controls
      *
      * @param parent the parent control
@@ -45,6 +78,29 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
         tableComposite.initUi();
         tableComposite.createColumns(new VariableSourceDataHeader());
         tableComposite.setTableHandler(this);
+        Table table = tableComposite.getTableViewer().getTable();
+        initializeVariableValues();
+        table.addPaintListener(new PaintListener() {
+            /**
+             * Sent when a paint event occurs for the control.
+             *
+             * @param event an event containing information about the paint
+             */
+            @Override
+            public void paintControl(PaintEvent event) {
+                Color color = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY);
+                if (table.getItems().length > 0) {
+                    for (int i = 0; i < table.getItems().length; i++) {
+                        String newValue = table.getItems()[i].getText(1);
+                        String oldValue = variableValues.get(i);
+                        if (!newValue.equals(oldValue)) {
+                            table.getItems()[i].setBackground(color);
+                            variableValues.set(i, newValue);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override
