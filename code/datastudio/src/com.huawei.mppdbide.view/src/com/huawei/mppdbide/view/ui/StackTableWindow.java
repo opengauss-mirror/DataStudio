@@ -150,7 +150,7 @@ public class StackTableWindow extends WindowBase<StackVo> {
 
     @Override
     public void selectHandler(List<IDebugSourceData> selectItems, DebugCheckboxEvent event) {
-        if (event.getCode() == 0x10) {
+        if (event == DebugCheckboxEvent.DOUBLE_CLICK) {
             selectItems.stream().forEach(item -> {
                 int lineNum = -1;
                 DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();

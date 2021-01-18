@@ -48,12 +48,12 @@ public class SQLSyntaxColorProvider {
     /**
      * use for debug breakpoint position highlight
      */
-    public static final RGB DEBUG_BREAKPOINT_POSITION  = new RGB(20, 70, 20);
+    public static final RGB DEBUG_BREAKPOINT_POSITION = new RGB(0xfc, 0xfc, 0x00);
 
     /**
      * use for debug stack first line position highlight
      */
-    public static final RGB DEBUG_STACK_POSITION = new RGB(60, 100, 20);
+    public static final RGB DEBUG_STACK_POSITION = new RGB(0xfc, 0xfc, 0x00);
 
     /**
      * The Constant SQL_MULTI_LINE_COMMENT.
