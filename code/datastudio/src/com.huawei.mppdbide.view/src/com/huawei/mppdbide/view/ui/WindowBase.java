@@ -30,6 +30,8 @@ public abstract class WindowBase<T> implements DebugTableEventHandler {
      */
     public void clear() {
         tableComposite.removeAllData();
+        VariableTableWindow.clearVariableValues();
+        VariableTableWindow.initializeVariableValues();
     }
 
     /**
