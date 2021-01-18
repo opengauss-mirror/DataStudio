@@ -1236,6 +1236,24 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     }
 
     /**
+     * description: use for highlight stack first line
+     *
+     * @param line the highlight line
+     */
+    public void highlightStack (int lineNum) {
+        int beforeLineNum = sourceEditor.getHighlightLineNum();
+        if (beforeLineNum != -1) {
+            if (beforeLineNum == getdebugPositionLine()) {
+                highlightLine(beforeLineNum);
+            } else {
+                deHighlightLine(beforeLineNum);
+            }
+        }
+        sourceEditor.setHighlightLineNum(lineNum);
+        highlightStackFirstLine(lineNum);
+    }
+
+    /**
      * description: use for debug position highlight color
      *
      * @param line the highlight line
@@ -1245,12 +1263,21 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     }
 
     /**
-    * description: use for debug breakpoint highlight color
-    *
-    * @param line the highlight line
-    */
+     * description: use for debug breakpoint highlight color
+     *
+     * @param line the highlight line
+     */
     public void highlightBreakpointLine(int line) {
         setLineBackgroudColor(line, SQLSyntaxColorProvider.DEBUG_BREAKPOINT_POSITION_COLOR);
+    }
+
+    /**
+     * description: use for debug stack firsy line highlight color
+     *
+     * @param line the highlight line
+     */
+    public void highlightStackFirstLine(int line) {
+        setLineBackgroudColor(line, SQLSyntaxColorProvider.DEBUG_STACK_POSITION_COLOR);
     }
 
     /**
