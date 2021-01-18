@@ -9,9 +9,11 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+
 import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
 import com.huawei.mppdbide.eclipse.dependent.EclipseInjections;
 import com.huawei.mppdbide.view.handler.IHandlerUtilities;
+import com.huawei.mppdbide.view.prefernces.PreferenceWrapper;
 import com.huawei.mppdbide.view.ui.PLSourceEditor;
 import com.huawei.mppdbide.view.utils.UIElement;
 
@@ -104,6 +106,7 @@ public class DebugHandlerUtils {
      */
     @SuppressWarnings("restriction")
     public void initDebugSourceView() {
+        PreferenceWrapper.getInstance().getPreferenceStore().setValue("sqlterminal.folding", false);
         String viewCommand = "com.huawei.mppdbide.command.id.viewsourceobjectbrowseritem";
         ECommandService commandService = EclipseInjections.getInstance().getCommandService();
         EHandlerService handlerService = EclipseInjections.getInstance().getHandlerService();

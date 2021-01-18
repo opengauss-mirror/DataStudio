@@ -132,7 +132,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
      * @since 04,01,2021
      */
     private static class VariableSourceData extends ListDebugSourceDataAdapter {
-        private final String SYSTEM_PARAMETER_STRING = "__gsdb_sql_cursor_attri_";
+        private static final String SYSTEM_PARAMETER_STRING = "__gsdb_sql_cursor_attri_";
 
         private VariableVo variableVo;
 
