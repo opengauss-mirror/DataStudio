@@ -636,7 +636,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
             MPPDBIDELoggerUtility.error("Error while refershing debug object ", e1);
             Display.getDefault().asyncExec(new RefreshFaildDisplay(e1));
             ObjectBrowser ob = UIElement.getInstance().getObjectBrowserModel();
-            if (null != ob) {
+            if (ob != null) {
                 ob.refreshObject(debugObj);
             }
 
@@ -689,7 +689,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         this.termConnection.setDatabase(debugObject.getDatabase());
 
         try {
-            if (null == sourceEditor.getDocument() || sourceEditor.getDocument().getLength() <= 0
+            if (sourceEditor.getDocument() == null || sourceEditor.getDocument().getLength() <= 0
                     || debugObject.isChanged(debugObject.getLatestSouceCode().getCode())
                     || ((debugObject.getLang() != null)
                             && (debugObject.getLang().equals("c") || debugObject.getLang().equals("plpgsql")))) {
@@ -1226,10 +1226,12 @@ public class PLSourceEditor extends AbstractAutoSaveObject
             if (beforeLineNum == getdebugPositionLine()) {
                 highlightLine(beforeLineNum);
             } else {
+                sourceEditor.goToLineNumber(beforeLineNum);
                 deHighlightLine(beforeLineNum);
             }
         }
         sourceEditor.setHighlightLineNum(lineNum);
+        sourceEditor.goToLineNumber(lineNum);
         highlightBreakpointLine(lineNum);
     }
 

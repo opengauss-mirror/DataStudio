@@ -14,6 +14,7 @@ import com.huawei.mppdbide.view.handler.debug.DebugHandlerUtils;
 import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
 import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugResultTask;
+import com.huawei.mppdbide.view.handler.debug.ui.UpdateHighlightLineNumTask;
 
 /**
  * Title: class
@@ -42,6 +43,7 @@ public class ServerExitChain extends IMsgChain {
             MPPDBIDELoggerUtility.info("debug already exit: result:" + event.getAddition());
         }
         Display.getDefault().asyncExec(new UpdateDebugPositionTask(-1));
+        Display.getDefault().asyncExec(new UpdateHighlightLineNumTask());
         if (!isResultUpdated) {
             isResultUpdated = true;
             Display.getDefault().asyncExec(new UpdateDebugResultTask(event));
