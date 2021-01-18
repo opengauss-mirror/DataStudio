@@ -8,13 +8,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.widgets.Composite;
 
 import com.huawei.mppdbide.adapter.gauss.GaussDatatypeUtils;
+import com.huawei.mppdbide.bl.serverdatacache.DefaultParameter;
+import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
 import com.huawei.mppdbide.debuger.vo.VariableVo;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
@@ -24,6 +28,7 @@ import com.huawei.mppdbide.view.ui.debug.DebugCheckboxEvent;
 import com.huawei.mppdbide.view.ui.debug.IDebugSourceData;
 import com.huawei.mppdbide.view.ui.debug.IDebugSourceDataHeader;
 import com.huawei.mppdbide.view.ui.debug.ListDebugSourceDataAdapter;
+import com.huawei.mppdbide.view.utils.UIElement;
 
 /**
  * Title: class
@@ -71,6 +76,8 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
      * @since 04,01,2021
      */
     private static class VariableSourceData extends ListDebugSourceDataAdapter {
+        private final String SYSTEM_PARAMETER_STRING = "__gsdb_sql_cursor_attri_";
+
         private VariableVo variableVo;
 
         public VariableSourceData(VariableVo vo) {
@@ -79,6 +86,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
             dataArrays.add(vo.name);
             dataArrays.add(getVariableValue());
             dataArrays.add(getType());
+            dataArrays.add(getParamType());
         }
 
         @Override
@@ -98,6 +106,34 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
             int typeCode = variableVo.dtype.intValue();
             String type = GaussDatatypeUtils.getDataTypeHashMap().get(typeCode).getTypename();
             return type;
+        }
+
+        private String getParamType() {
+            PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
+            IDebugObject debugObject = plSourceEditor.getDebugObject();
+            ArrayList<DefaultParameter> inParamsList = debugObject
+                    .getDatabase()
+                    .getServer()
+                    .getDefaulParametertMap()
+                    .get(debugObject.getOid());
+            ArrayList<DefaultParameter> outParamsList = debugObject.getOutParameters();
+            List<DefaultParameter> matchedParam = Stream.concat(inParamsList.stream(), outParamsList.stream())
+                    .filter(param -> {
+                        if (param.getDefaultParameterName().equals(variableVo.name)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }).collect(Collectors.toList());
+            String paramType = "";
+            if (matchedParam.size() != 0) {
+                paramType = matchedParam.get(0).getDefaultParameterMode().toString().toLowerCase(Locale.ENGLISH);
+            } else if (variableVo.name.contains(SYSTEM_PARAMETER_STRING)) {
+                paramType = "system";
+            } else {
+                paramType = "temp";
+            }
+            return paramType;
         }
     }
 
@@ -121,7 +157,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
 
         @Override
         public List<Integer> getTitleSizeScales() {
-            return Arrays.asList(4, 4, 2);
+            return Arrays.asList(1, 1, 1, 1);
         }
     }
 
@@ -137,7 +173,9 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
     private static enum TitleDesc {
         VARIABLE(IMessagesConstants.DEBUG_VARIABLE_VARIABLE),
         VALUE(IMessagesConstants.DEBUG_VARIABLE_VALUE),
-        DATA_TYPE(IMessagesConstants.DEBUG_VARIABLE_DATA_TYPE);
+        DATA_TYPE(IMessagesConstants.DEBUG_VARIABLE_DATA_TYPE),
+        PARAM_TYPE(IMessagesConstants.DEBUG_VARIABLE_PARAM_TYPE);
+
         private final String desc;
 
         TitleDesc(String title) {
