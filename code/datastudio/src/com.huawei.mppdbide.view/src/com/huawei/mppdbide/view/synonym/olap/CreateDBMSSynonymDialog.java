@@ -833,7 +833,7 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     private void addErrorMsgUI(Composite composite) {
         errorMsgTxt = new Text(composite, SWT.BOLD | SWT.READ_ONLY | SWT.BORDER | SWT.WRAP);
         GridData errorMsgTxtgd = new GridData(SWT.FILL, SWT.FILL, true, false);
-        errorMsgTxtgd.heightHint = 30;
+        errorMsgTxtgd.heightHint = 35;
         errorMsgTxt.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
         errorMsgTxt.setLayoutData(errorMsgTxtgd);
         errorMsgTxt.setVisible(false);
