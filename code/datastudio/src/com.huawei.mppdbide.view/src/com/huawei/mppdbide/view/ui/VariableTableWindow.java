@@ -93,7 +93,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
              */
             @Override
             public void paintControl(PaintEvent event) {
-                Color color = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY);
+                Color color = Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
                 if (table.getItems().length > 0) {
                     for (int i = 0; i < table.getItems().length; i++) {
                         String newValue = table.getItems()[i].getText(1);
@@ -132,7 +132,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
      * @since 04,01,2021
      */
     private static class VariableSourceData extends ListDebugSourceDataAdapter {
-        private final String SYSTEM_PARAMETER_STRING = "__gsdb_sql_cursor_attri_";
+        private static final String SYSTEM_PARAMETER_STRING = "__gsdb_sql_cursor_attri_";
 
         private VariableVo variableVo;
 
@@ -213,7 +213,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
 
         @Override
         public List<Integer> getTitleSizeScales() {
-            return Arrays.asList(1, 1, 1, 1);
+            return Arrays.asList(4, 4, 2, 2);
         }
     }
 
