@@ -31,6 +31,7 @@ public class CustomStringUtility {
 
     private static final String OPENGAUSS = "openGauss";
     private static final String OPENGAUSS_VERSION_REGEX = "(?i)(openGauss)\\s+([^\\s]+)";
+    private static final String OPENGAUSS_POSTGRESQL_VERSION = "PostgreSQL 9.2.4 (GaussDB Kernel V500R001C20 build )";
 
     /**
      * Removes the delemeters.
@@ -199,6 +200,8 @@ public class CustomStringUtility {
         Matcher matchOpenGauss = Pattern.compile(OPENGAUSS_VERSION_REGEX).matcher(version);
         if (matchOpenGauss.find()) {
             return matchOpenGauss.group();
+        } else if (version.contains(OPENGAUSS_POSTGRESQL_VERSION)) {
+            return OPENGAUSS_POSTGRESQL_VERSION;
         } else {
             return OPENGAUSS;
         }
