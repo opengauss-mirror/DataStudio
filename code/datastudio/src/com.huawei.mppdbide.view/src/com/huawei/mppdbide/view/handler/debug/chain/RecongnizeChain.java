@@ -59,18 +59,15 @@ public class RecongnizeChain extends IMsgChain {
      */
     @Override
     protected void disposeMsg(Event event) {
-        Optional<Object> optionalObject = event.getAddition();
-        if (!optionalObject.isPresent()) {
-            return;
-        }
-        Object eventObject = optionalObject.get();
-        if (!(eventObject instanceof DebugAddtionMsg)) {
+        Object eventObject = event.getAddition().orElse(null);
+        if (eventObject == null || !(eventObject instanceof DebugAddtionMsg)) {
             return;
         }
         DebugAddtionMsg msg = (DebugAddtionMsg) eventObject;
         if (msg.getState() == State.END && !event.hasException()) {
             PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
-            List<BreakpointAnnotation> breakpointAnnotationList = plSourceEditor.getBreakpointAnnotation();
+            List<BreakpointAnnotation> breakpointAnnotationList =
+                    plSourceEditor.getBreakpointAnnotation();
             BreakpointList.initialInstance();
             Map<Integer, BreakpointVo> breakpointList = BreakpointList.getInstance();
             try {
@@ -105,7 +102,7 @@ public class RecongnizeChain extends IMsgChain {
     }
 
     private String getLineStatement(PLSourceEditor plSourceEditor, int line) {
-        PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore(); 
+        PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore();
         try {
             IRegion iRegin = sourceEditor.getDocument().getLineInformation(line);
             int offset = iRegin.getOffset();
