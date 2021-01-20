@@ -5,6 +5,7 @@
 package com.huawei.mppdbide.view.handler.debug;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import org.eclipse.jface.preference.PreferenceStore;
 
@@ -17,6 +18,7 @@ import com.huawei.mppdbide.debuger.service.ServiceFactory;
 import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.service.WrappedDebugService;
 import com.huawei.mppdbide.debuger.vo.FunctionVo;
+import com.huawei.mppdbide.debuger.vo.SourceCodeVo;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
@@ -73,7 +75,12 @@ public class DebugServiceHelper {
             debugService.addHandler(new DebugEventHandler());
             debugService.addHandler(new UiEventHandler());
             codeService = serviceFactory.getCodeService();
-            codeService.setBaseCode(queryService.getSourceCode(functionVo.oid).get().getSourceCode());
+            Optional<SourceCodeVo> sourceCode = queryService.getSourceCode(functionVo.oid);
+            if (sourceCode.isPresent()) {
+                codeService.setBaseCode(sourceCode.get().getSourceCode());
+            } else {
+                throw new SQLException("get source code failed!");
+            }
             codeService.setTotalCode(debugObject.getSourceCode().getCode());
             this.debugObject = debugObject;
         }

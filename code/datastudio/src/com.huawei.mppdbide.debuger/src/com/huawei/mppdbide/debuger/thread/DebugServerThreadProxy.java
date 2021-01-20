@@ -99,6 +99,7 @@ public class DebugServerThreadProxy {
                 Thread.sleep(DEFAULT_WAIT_PER_COUNT);
             } catch (InterruptedException e) {
                 MPPDBIDELoggerUtility.warn("wait executor shutdown have error:" + e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }
         return false;

@@ -178,6 +178,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
                 waitLock.wait(DEFAULT_WAIT_LOCK_TIME);
             } catch (InterruptedException intExp) {
                 MPPDBIDELoggerUtility.debug("wait has error!!!! err=" + intExp.toString());
+                Thread.currentThread().interrupt();
             }
         }
 
