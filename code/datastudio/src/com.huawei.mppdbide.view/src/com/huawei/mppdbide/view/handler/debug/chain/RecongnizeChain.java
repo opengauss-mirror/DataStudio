@@ -70,7 +70,6 @@ public class RecongnizeChain extends IMsgChain {
         DebugAddtionMsg msg = (DebugAddtionMsg) eventObject;
         if (msg.getState() == State.END && !event.hasException()) {
             PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
-            PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore();
             List<BreakpointAnnotation> breakpointAnnotationList = plSourceEditor.getBreakpointAnnotation();
             BreakpointList.initialInstance();
             Map<Integer, BreakpointVo> breakpointList = BreakpointList.getInstance();
@@ -78,11 +77,7 @@ public class RecongnizeChain extends IMsgChain {
                 for (int i = 0; i < breakpointAnnotationList.size(); i++) {
                     BreakpointAnnotation annotation = breakpointAnnotationList.get(i);
                     int line = annotation.getLine();
-                    String statement = null;
-                    IRegion iRegin = sourceEditor.getDocument().getLineInformation(line);
-                    int offset = iRegin.getOffset();
-                    int length = iRegin.getLength();
-                    statement = sourceEditor.getDocument().get(offset, length);
+                    String statement = getLineStatement(plSourceEditor, line);
                     BreakpointVo breakpointVo;
                     line++;
                     if (breakpointAnnotationList.get(i).getEnable()) {
@@ -92,16 +87,13 @@ public class RecongnizeChain extends IMsgChain {
                         DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
                         SourceCodeService codeService = serviceHelper.getCodeService();
                         codeLine = codeService.showLine2CodeLine(annotation.getLine());
-                        PositionVo positionVo = new PositionVo(null, codeLine, null);
                         WrappedDebugService debugService = serviceHelper.getDebugService();
-                        debugService.setBreakPoint(positionVo);
+                        debugService.setBreakPoint(new PositionVo(null, codeLine, null));
                     } else {
                         breakpointVo = new BreakpointVo(line, statement, false);
                         breakpointList.put(line, breakpointVo);
                     }
                 }
-            } catch (BadLocationException e) {
-                MPPDBIDELoggerUtility.warn("dispose breakpoint failed!" + e.getMessage());
             } catch (DebugPositionNotFoundException dbgExp) {
                 MPPDBIDELoggerUtility.error("get breakpoint line failed!" + dbgExp.getMessage());
             } catch (SQLException e) {
@@ -110,5 +102,18 @@ public class RecongnizeChain extends IMsgChain {
             BreakpointList.setBreakpointList(breakpointList);
             Display.getDefault().syncExec(new RefreshAll());
         }
+    }
+
+    private String getLineStatement(PLSourceEditor plSourceEditor, int line) {
+        PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore(); 
+        try {
+            IRegion iRegin = sourceEditor.getDocument().getLineInformation(line);
+            int offset = iRegin.getOffset();
+            int length = iRegin.getLength();
+            return sourceEditor.getDocument().get(offset, length);
+        } catch (BadLocationException e) {
+            MPPDBIDELoggerUtility.warn("dispose breakpoint failed!" + e.getMessage());
+        }
+        return "";
     }
 }
