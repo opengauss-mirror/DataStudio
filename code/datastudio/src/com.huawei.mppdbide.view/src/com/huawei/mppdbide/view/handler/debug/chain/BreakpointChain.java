@@ -5,6 +5,7 @@
 package com.huawei.mppdbide.view.handler.debug.chain;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IRegion;
@@ -64,10 +65,11 @@ public class BreakpointChain extends IMsgChain {
             return;
         }
 
-        if (!event.getAddition().isPresent()) {
+        Optional<Object> optional = event.getAddition();
+        if (!optional.isPresent()) {
             return;
         }
-        Object additionObj = event.getAddition().get();
+        Object additionObj = optional.get();
         if (additionObj instanceof BreakpointAnnotation) {
             BreakpointAnnotation annotation = (BreakpointAnnotation) additionObj;
             int line = annotation.getLine();

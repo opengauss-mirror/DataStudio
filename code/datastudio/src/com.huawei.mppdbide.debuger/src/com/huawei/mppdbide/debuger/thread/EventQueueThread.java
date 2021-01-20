@@ -40,7 +40,6 @@ public class EventQueueThread extends Thread implements IHandlerManger {
                 Thread.sleep(DEFAULT_EVENT_SLEEP);
                 notifyAllHandler(event);
             } catch (InterruptedException e) {
-                e.printStackTrace();
                 Thread.currentThread().interrupt();
             }
         }
