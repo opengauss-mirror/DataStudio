@@ -41,6 +41,7 @@ public class EventQueueThread extends Thread implements IHandlerManger {
                 notifyAllHandler(event);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
         MPPDBIDELoggerUtility.debug("event queue exit!");
@@ -72,6 +73,7 @@ public class EventQueueThread extends Thread implements IHandlerManger {
                 sleep(DEFAULT_EVENT_SLEEP);
             } catch (InterruptedException e) {
                 MPPDBIDELoggerUtility.warn("sleep have error!");
+                Thread.currentThread().interrupt();
             }
             count -= 1;
         }

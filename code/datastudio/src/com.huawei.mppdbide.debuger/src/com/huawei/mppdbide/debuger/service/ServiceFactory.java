@@ -39,9 +39,10 @@ public class ServiceFactory {
      * description: get query service
      *
      * @return QueryService the query service
+     * @throws SQLException the sql exception
      */
-    public QueryService getQueryService() {
-        return createQueryService(provider.getFreeConnection().get());
+    public QueryService getQueryService() throws SQLException {
+        return createQueryService(provider.getValidFreeConnection());
     }
 
     /**
@@ -49,11 +50,12 @@ public class ServiceFactory {
      *
      * @param functionVo the functionVo
      * @return DebugService debug service
+     * @throws SQLException the null connection sqlexception
      */
-    public DebugService getDebugService(FunctionVo functionVo) {
+    public DebugService getDebugService(FunctionVo functionVo) throws SQLException {
         return createDebugService(functionVo,
-                provider.getFreeConnection().get(),
-                provider.getFreeConnection().get());
+                provider.getValidFreeConnection(),
+                provider.getValidFreeConnection());
     }
 
     /**
@@ -76,7 +78,7 @@ public class ServiceFactory {
      * @throws SQLException sql error
      */
     public Optional<VersionVo> getVersion() throws SQLException  {
-        IConnection conn = provider.getFreeConnection().get();
+        IConnection conn = provider.getValidFreeConnection();
         try (ResultSet rs = conn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.DEBUG_VERSION,
                 new ArrayList<>(1)).executeQuery()) {

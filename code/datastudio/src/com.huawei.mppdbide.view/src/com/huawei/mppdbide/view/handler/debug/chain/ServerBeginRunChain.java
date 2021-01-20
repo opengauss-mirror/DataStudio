@@ -36,8 +36,9 @@ public class ServerBeginRunChain extends IMsgChain {
 
     @Override
     protected void disposeMsg(Event event) {
-        Object additionObj = event.getAddition().get();
-        if (additionObj instanceof DebugAddtionMsg) {
+        Object additionObj = event.getAddition().orElse(null);
+        if (additionObj != null &&
+                additionObj instanceof DebugAddtionMsg) {
             DebugAddtionMsg msg = (DebugAddtionMsg) additionObj;
             if (msg.getState() == State.END && !event.hasException()) {
                 Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine()));

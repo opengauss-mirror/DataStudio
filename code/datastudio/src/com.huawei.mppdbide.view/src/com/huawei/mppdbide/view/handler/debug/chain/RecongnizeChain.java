@@ -7,6 +7,7 @@ package com.huawei.mppdbide.view.handler.debug.chain;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IRegion;
@@ -58,10 +59,15 @@ public class RecongnizeChain extends IMsgChain {
      */
     @Override
     protected void disposeMsg(Event event) {
-        if (!(event.getAddition().get() instanceof DebugAddtionMsg)) {
+        Optional<Object> optionalObject = event.getAddition();
+        if (!optionalObject.isPresent()) {
             return;
         }
-        DebugAddtionMsg msg = (DebugAddtionMsg) event.getAddition().get();
+        Object eventObject = optionalObject.get();
+        if (!(eventObject instanceof DebugAddtionMsg)) {
+            return;
+        }
+        DebugAddtionMsg msg = (DebugAddtionMsg) eventObject;
         if (msg.getState() == State.END && !event.hasException()) {
             PLSourceEditor plSourceEditor = UIElement.getInstance().getVisibleSourceViewer();
             PLSourceEditorCore sourceEditor = plSourceEditor.getSourceEditorCore();

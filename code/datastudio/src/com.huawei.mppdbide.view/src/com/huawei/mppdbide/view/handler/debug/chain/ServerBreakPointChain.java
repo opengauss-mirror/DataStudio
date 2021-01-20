@@ -38,8 +38,9 @@ public class ServerBreakPointChain extends IMsgChain {
 
     @Override
     protected void disposeMsg(Event event) {
-        Object additionObj = event.getAddition().get();
-        if (additionObj instanceof BreakpointAnnotation) {
+        Object additionObj = event.getAddition().orElse(null);
+        if (additionObj != null &&
+                additionObj instanceof BreakpointAnnotation) {
             BreakpointAnnotation annotation = (BreakpointAnnotation) additionObj;
             WrappedDebugService debugService = serviceHelper.getDebugService();
             try {

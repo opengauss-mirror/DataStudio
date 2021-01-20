@@ -95,9 +95,4 @@ public class FunctionVo {
      */
     @DumpFiled
     public String prosrc;
-
-    /**
-     *  all input param desc
-     */
-    public Boolean allInputParam;
 }

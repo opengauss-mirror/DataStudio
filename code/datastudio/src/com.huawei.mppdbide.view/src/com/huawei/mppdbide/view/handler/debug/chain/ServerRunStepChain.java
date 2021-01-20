@@ -14,6 +14,7 @@ import com.huawei.mppdbide.debuger.exception.DebugExitException;
 import com.huawei.mppdbide.debuger.exception.DebugPositionNotFoundException;
 import com.huawei.mppdbide.debuger.service.SourceCodeService;
 import com.huawei.mppdbide.debuger.service.chain.IMsgChain;
+import com.huawei.mppdbide.debuger.vo.PositionVo;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.handler.debug.DebugServiceHelper;
 import com.huawei.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
@@ -39,8 +40,9 @@ public class ServerRunStepChain extends IMsgChain {
 
     @Override
     protected void disposeMsg(Event event) {
-        Object additionObj = event.getAddition().get();
-        if (additionObj instanceof DebugAddtionMsg) {
+        Object additionObj = event.getAddition().orElse(null);
+        if (additionObj != null &&
+                additionObj instanceof DebugAddtionMsg) {
             DebugAddtionMsg msg = (DebugAddtionMsg) additionObj;
             if (msg.getState() == State.END) {
                 if (!event.hasException()) {
@@ -53,7 +55,10 @@ public class ServerRunStepChain extends IMsgChain {
     }
 
     private void updateCurDebugLine(DebugAddtionMsg msg) {
-        int line = msg.getPositionVo().get().linenumber;
+        int line = msg
+                .getPositionVo()
+                .orElse(new PositionVo(null, -1, null))
+                .linenumber;
         Display.getDefault().syncExec(new UpdateDebugPositionTask(getCurLine(line)));
     }
 

@@ -4,6 +4,8 @@
 
 package com.huawei.mppdbide.view.handler.debug.chain;
 
+import java.util.Optional;
+
 import org.eclipse.swt.widgets.Display;
 
 import com.huawei.mppdbide.debuger.event.DebugAddtionMsg;
@@ -40,10 +42,15 @@ public class RefreshChain extends IMsgChain {
      */
     @Override
     protected void disposeMsg(Event event) {
-        if (!(event.getAddition().get() instanceof DebugAddtionMsg)) {
+        Optional<Object> optional = event.getAddition();
+        if (!optional.isPresent()) {
             return;
         }
-        DebugAddtionMsg msg = (DebugAddtionMsg) event.getAddition().get();
+        Object eventObject = optional.get();
+        if (!(eventObject instanceof DebugAddtionMsg)) {
+            return;
+        }
+        DebugAddtionMsg msg = (DebugAddtionMsg) eventObject;
         if (msg.getState() == State.END && !event.hasException()) {
             Display.getDefault().syncExec(new UpdateStackVariable());
         }

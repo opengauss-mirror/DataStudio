@@ -63,6 +63,10 @@ public class BreakpointChain extends IMsgChain {
             sourceEditor.setHighlightLineNum(-1);
             return;
         }
+
+        if (!event.getAddition().isPresent()) {
+            return;
+        }
         Object additionObj = event.getAddition().get();
         if (additionObj instanceof BreakpointAnnotation) {
             BreakpointAnnotation annotation = (BreakpointAnnotation) additionObj;

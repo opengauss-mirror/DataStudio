@@ -4,6 +4,7 @@
 
 package com.huawei.mppdbide.common;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -22,4 +23,18 @@ public interface IConnectionProvider {
      * @return Optional<IConnection> the connection
      */
     Optional<IConnection> getFreeConnection();
+
+    /**
+     * desrciption: get free valid connection from database
+     *
+     * @return IConnection the connection
+     * @throws SQLException the null connection exception
+     */
+    default IConnection getValidFreeConnection() throws SQLException {
+        Optional<IConnection> conn = getFreeConnection();
+        if (conn.isPresent()) {
+            return conn.get();
+        }
+        throw new SQLException("get free connection failed!");
+    }
 }
