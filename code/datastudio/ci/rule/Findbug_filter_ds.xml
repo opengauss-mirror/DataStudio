@@ -2172,4 +2172,104 @@
       	<Class name="com.huawei.mppdbide.bl.serverdatacache.ViewMetaData$ViewManager" />
 		<Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING" />
 	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.bl.export.ExportManager" />
+		<Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.bl.serverdatacache.IndexMetaData$IndexManager" />
+		<Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.bl.serverdatacache.ObjectParameter" />
+		<Bug pattern="NM_CONFUSING" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.bl.serverdatacache.Server" />
+		<Bug pattern="NM_CONFUSING" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.bl.serverdatacache.Server" />
+		<Bug pattern="UC_USELESS_CONDITION" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.bl.serverdatacache.connectioninfo.SSLServerConnectionInfo" />
+		<Bug pattern="NM_CONFUSING" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.utils.security.SecureUtil" />
+		<Bug pattern="DP_DO_INSIDE_DO_PRIVILEGED" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.component.grid.GridToolbar$33" />
+		<Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.component.grid.core.DSUnstructuredDataTableDataEditor$1" />
+		<Bug pattern="NP_LOAD_OF_KNOWN_NULL_VALUE" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.component.grid.core.Animation$4" />
+		<Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.core.ParameterInputDialog$2" />
+		<Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.core.sourceeditor.SQLObjectLinkDetector" />
+		<Bug pattern="UC_USELESS_CONDITION" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.filesave.SaveReloadSQLQueries$LoadSqlJob" />
+		<Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.handler.ConnectToDB" />
+		<Bug pattern="UC_USELESS_CONDITION" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.handler.GoToLine" />
+		<Bug pattern="UC_USELESS_CONDITION" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.init.LifeCycleManager" />
+		<Bug pattern="UC_USELESS_CONDITION" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.ui.ObjectBrowser$1" />
+		<Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.ui.ObjectBrowserFilterTree$2" />
+		<Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.ui.connectiondialog.AbstractDialog" />
+		<Bug pattern="NM_CONFUSING" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.ui.connectiondialog.DBConnectionDialog$15" />
+		<Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.ui.erd.ERHandler$FillERPresentation" />
+		<Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.view.utils.UIElement$3" />
+		<Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.common.DBConnectionAdapter" />
+		<Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.debuger.service.DebugService" />
+		<Bug pattern="UW_UNCOND_WAIT" />
+	 </Match>
+	 <Match>
+      	<Class name="com.huawei.mppdbide.debuger.service.DebugService" />
+		<Bug pattern="WA_NOT_IN_LOOP" />
+	 </Match>
 </FindBugsFilter>

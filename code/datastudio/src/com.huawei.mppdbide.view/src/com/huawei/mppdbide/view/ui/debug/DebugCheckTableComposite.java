@@ -72,16 +72,7 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
         setLayout(new FillLayout(SWT.VERTICAL));
 
         SashForm sashForm = new SashForm(this, SWT.VERTICAL);
-        sashForm.addControlListener(new ControlAdapter() {
-            @Override
-            public void controlResized(ControlEvent crlEvent) {
-                if (crlEvent.getSource() instanceof SashForm) {
-                    SashForm sf = (SashForm) crlEvent.getSource();
-                    int scaleBase = (int)((double) sf.getSize().y / 25 - 0.5);
-                    sf.setWeights(new int[] {1, scaleBase <= 1 ? 1 : scaleBase - 1});
-                }
-            }
-        });
+        sashForm.addControlListener(new ToolControlAdapter());
 
         toolBar = createToolBar(sashForm);
 
@@ -276,6 +267,17 @@ public class DebugCheckTableComposite extends DebugBaseTableComposite {
                 } else {
                     checkComposite.getTableEventHandler().selectHandler(items, event);
                 }
+            }
+        }
+    }
+
+    private static class ToolControlAdapter extends ControlAdapter {
+        @Override
+        public void controlResized(ControlEvent crlEvent) {
+            if (crlEvent.getSource() instanceof SashForm) {
+                SashForm sf = (SashForm) crlEvent.getSource();
+                int scaleBase = (int)((double) sf.getSize().y / 25 - 0.5);
+                sf.setWeights(new int[] {1, scaleBase <= 1 ? 1 : scaleBase - 1});
             }
         }
     }

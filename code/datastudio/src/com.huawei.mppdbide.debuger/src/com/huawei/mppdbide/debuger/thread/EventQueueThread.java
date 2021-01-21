@@ -53,7 +53,10 @@ public class EventQueueThread extends Thread implements IHandlerManger {
      * @return void
      */
     public void add(Event event) {
-        queue.offer(event);
+        boolean flag = queue.offer(event);
+        if (!flag) {
+            MPPDBIDELoggerUtility.debug("event add failed!");
+        }
     }
 
     /**

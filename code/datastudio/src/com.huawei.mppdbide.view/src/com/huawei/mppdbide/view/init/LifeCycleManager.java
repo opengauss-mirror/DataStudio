@@ -662,7 +662,7 @@ public class LifeCycleManager {
 
             if (!focusOnFirstResult) {
                 ((UserPreference) UserPreference.getInstance()).setFocusOnFirstResult(false);
-            } else if (focusOnFirstResult) {
+            } else {
                 ((UserPreference) UserPreference.getInstance()).setFocusOnFirstResult(true);
             }
         }
@@ -965,7 +965,7 @@ public class LifeCycleManager {
              * because, value can contain = character
              */
             int splitPos = arg.indexOf("=");
-            if (-1 != splitPos) {
+            if (splitPos != -1) {
                 connParamMap.put(arg.substring(0, splitPos), arg.substring(splitPos + 1, arg.length()));
             }
         }
