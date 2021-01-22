@@ -11,6 +11,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.widgets.Composite;
 
 /**
  * Title: DebugEditingSupport for use
@@ -44,15 +45,7 @@ public class DebugEditingSupport extends EditingSupport {
             return null;
         }
         TableViewer tableViewer = (TableViewer) viewer;
-        TextCellEditor cellEditor = new TextCellEditor(tableViewer.getTable()) {
-            @Override
-            protected void keyReleaseOccured(KeyEvent keyEvent) {
-                if (!((keyEvent.stateMask & SWT.CTRL) != 0
-                        && (keyEvent.keyCode == 'c'))) {
-                    keyEvent.doit = false;
-                }
-            }
-        };
+        TextCellEditor cellEditor = new ToolTextCellEditor(tableViewer.getTable());
         return cellEditor;
     }
 
@@ -66,5 +59,19 @@ public class DebugEditingSupport extends EditingSupport {
             return data.isEditable(index);
         }
         return true;
+    }
+
+    private static class ToolTextCellEditor extends TextCellEditor {
+        public ToolTextCellEditor(Composite parent) {
+            super(parent);
+        }
+
+        @Override
+        protected void keyReleaseOccured(KeyEvent keyEvent) {
+            if (!((keyEvent.stateMask & SWT.CTRL) != 0
+                    && (keyEvent.keyCode == 'c'))) {
+                keyEvent.doit = false;
+            }
+        }
     }
 }

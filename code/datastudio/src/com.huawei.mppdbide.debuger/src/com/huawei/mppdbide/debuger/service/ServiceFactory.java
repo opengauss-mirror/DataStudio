@@ -13,6 +13,7 @@ import com.huawei.mppdbide.common.IConnectionProvider;
 import com.huawei.mppdbide.debuger.vo.VersionVo;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -79,13 +80,15 @@ public class ServiceFactory {
      */
     public Optional<VersionVo> getVersion() throws SQLException  {
         IConnection conn = provider.getValidFreeConnection();
-        try (ResultSet rs = conn.getDebugOptPrepareStatement(
+        try (PreparedStatement ps = conn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.DEBUG_VERSION,
-                new ArrayList<>(1)).executeQuery()) {
-            if (rs.next()) {
-                return Optional.ofNullable(ParseVo.parse(rs, VersionVo.class));
+                new ArrayList<>(1))) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.ofNullable(ParseVo.parse(rs, VersionVo.class));
+                }
+                return Optional.empty();
             }
-            return Optional.empty();
         } finally {
             try {
                 conn.close();

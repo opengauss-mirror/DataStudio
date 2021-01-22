@@ -13,6 +13,7 @@ import com.huawei.mppdbide.debuger.vo.TotalSourceCodeVo;
 import com.huawei.mppdbide.common.IConnection;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -29,8 +30,8 @@ import java.util.Optional;
  * @since 2020/11/17
  */
 public class QueryService implements IService {
-    private IConnection conn;
-    private FunctionDao functionDao;
+    private IConnection conn = null;
+    private FunctionDao functionDao = null;
 
     /**
      * query function vo
@@ -40,11 +41,13 @@ public class QueryService implements IService {
      * @throws SQLException sql exp
      */
     public FunctionVo queryFunction(String proname) throws SQLException {
-        try (ResultSet rs = conn.getStatement(functionDao.getSql(proname)).executeQuery()) {
-            if (rs.next()) {
-                return functionDao.parse(rs);
+        try (PreparedStatement ps = conn.getStatement(functionDao.getSql(proname))) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return functionDao.parse(rs);
+                }
+                throw new SQLException("proname:" + proname + " not found!");
             }
-            throw new SQLException("proname:" + proname + " not found!");
         }
     }
 
@@ -79,14 +82,14 @@ public class QueryService implements IService {
             DebugConstants.DebugOpt debugOpt,
             Class<T> clazz) throws SQLException {
         List<Object> inputParams = Arrays.asList(oid);
-        try (ResultSet rs = conn.getDebugOptPrepareStatement(
-                debugOpt,
-                inputParams
-                ).executeQuery()) {
-            if (rs.next()) {
-                return Optional.of(ParseVo.parse(rs, clazz));
+        try (PreparedStatement ps = conn.getDebugOptPrepareStatement(
+                debugOpt, inputParams)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(ParseVo.parse(rs, clazz));
+                }
+                return Optional.empty();
             }
-            return Optional.empty();
         }
     }
 

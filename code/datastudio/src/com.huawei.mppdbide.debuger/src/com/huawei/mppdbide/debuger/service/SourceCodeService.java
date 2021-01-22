@@ -25,8 +25,8 @@ public class SourceCodeService implements IService {
      *  the offset of show code and base code
      */
     public static final int CODE_BASE_OFFSET = 1;
-    private CodeDescription baseCodeDesc;
-    private CodeDescription totalCodeDesc;
+    private CodeDescription baseCodeDesc = null;
+    private CodeDescription totalCodeDesc = null;
 
     /**
      * close service

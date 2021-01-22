@@ -42,7 +42,6 @@ public class ParseVo {
                     name = f.getName();
                 }
                 name2Field.put(name, f);
-                f.setAccessible(true);
             }
         }
         return name2Field;
