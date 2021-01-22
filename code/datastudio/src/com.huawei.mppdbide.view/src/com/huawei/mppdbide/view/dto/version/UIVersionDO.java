@@ -22,8 +22,8 @@ public class UIVersionDO {
     private static final String RELEASE_NAME = "Data Studio ";
     private static final int VERSION = 1;
     private static final String DOT = ".";
-    private static final int SUB_VERSION = 0;
-    private static final int SUB_SUB_VERSION = 1;
+    private static final int SUB_VERSION = 1;
+    private static final int SUB_SUB_VERSION = 0;
     private static final String MINOR_VERSION = "";
 
     /**
