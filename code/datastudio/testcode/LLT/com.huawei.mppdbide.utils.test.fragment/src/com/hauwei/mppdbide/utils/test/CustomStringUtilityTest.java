@@ -131,6 +131,15 @@ public class CustomStringUtilityTest
     }
     
     @Test
+    public void test_cutsom_String_Utility_parseServerVersion_3()
+    {
+        String unparsedServerVersionString = "PostgreSQL 9.2.4 (GaussDB Kernel V500R001C20 build ) compiled at 2021-01-11 21:30:21 commit 0 last mr  debug on x86_64-unknown-linux-gnu, compiled by g++ (GCC) 7.3.0, -bit";
+        String parsedServerVersionString = CustomStringUtility.parseServerVersion(unparsedServerVersionString);
+        assertEquals("PostgreSQL 9.2.4 (GaussDB Kernel V500R001C20 build )",
+                parsedServerVersionString);
+    }
+    
+    @Test
     public void test_server_typeString() {
         String originalString = "PostgreSQL 9.2.4 (openGauss 1.0 build e2c0f862) compiled at 2020-04-29 10:27:47 commit 2144 last mr 131 debug on aarch64-unknown-linux-gnu, compiled by g++ (GCC) 8.2.0, 64-bit";
         String trimmedVersion = CustomStringUtility.getFullServerVersionString(originalString);

@@ -1200,6 +1200,11 @@ public class Server implements IConnectionProfile, GaussOLAPDBMSObject {
      * @return boolean true if after 930 else false
      */
     public boolean versionAfter930() {
+        String serverVersionString = getServerVersion(true);
+        String compareTrimVersionFor1230 = "PostgreSQL 9.2.4 (GaussDB Kernel V500R001C20 build )";
+        if (serverVersionString.equals(compareTrimVersionFor1230)) {
+            return true;
+        }
         String compareTrimVersion = "openGauss 1.0.0";
         String trimVersion = getServerVersion(true).substring(0, compareTrimVersion.length());
         if (trimVersion.compareTo(compareTrimVersion) > 0) {
