@@ -72,8 +72,8 @@ public class DebugServiceHelper {
             queryService = serviceFactory.getQueryService();
             functionVo = queryService.queryFunction(debugObject.getName());
             debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));
-            debugService.addHandler(new DebugEventHandler());
             debugService.addHandler(new UiEventHandler());
+            debugService.addHandler(new DebugEventHandler());
             codeService = serviceFactory.getCodeService();
             Optional<SourceCodeVo> sourceCode = queryService.getSourceCode(functionVo.oid);
             if (sourceCode.isPresent()) {
