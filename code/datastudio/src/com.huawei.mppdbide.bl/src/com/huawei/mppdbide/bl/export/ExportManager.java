@@ -343,7 +343,7 @@ public class ExportManager implements IExportManager {
             int count = 0;
             Path createdFilePath = createTemporaryFile(basepath, workingDir, paths, count);
             isPretendBom(createdFilePath);
-            exportDDLUsingSystemTable(type, objects, encryptedPwd, createdFilePath, false);
+            exportDDLUsingSystemTable(type, objects, encryptedPwd, createdFilePath, isTablespaceOption);
             return paths;
         } catch (DatabaseOperationException | DatabaseCriticalException exp) {
             deleteTempFiles(paths);
@@ -496,19 +496,20 @@ public class ExportManager implements IExportManager {
             }
         }
     }
-    
+
     private void addDefaultTablespaceForTable(Path createdFilePath, boolean isTablespaceOption,
             TableMetaData tableObject, String fileEncodingName, DBConnection conn)
             throws DatabaseCriticalException, DatabaseOperationException, UnsupportedEncodingException, IOException {
         if (isTablespaceOption) {
             String tablespaceName = tableObject.getTablespaceForTable(conn);
-            String query = String.format(Locale.ENGLISH, "SET default_tablespace = %s ;",
-                    (tablespaceName == null || tablespaceName.isEmpty()) ? "\'\'" : tablespaceName)
+            String query = String.format(Locale.ENGLISH, "SET default_tablespace = %s;",
+                    (tablespaceName == null || tablespaceName.isEmpty()) ?
+                            tableObject.getDatabase().getDBDefaultTblSpc() : tablespaceName)
                     + MPPDBIDEConstants.LINE_SEPARATOR;
             Files.write(createdFilePath, query.getBytes(fileEncodingName), StandardOpenOption.APPEND);
         }
     }
-    
+
     private void addSetSchemaQuery(Path createdFilePath, Namespace ns, String fileEncodingName)
             throws UnsupportedEncodingException, IOException {
         String query = String.format(Locale.ENGLISH, "%sSET search_path = %s ;%s", MPPDBIDEConstants.LINE_SEPARATOR,
