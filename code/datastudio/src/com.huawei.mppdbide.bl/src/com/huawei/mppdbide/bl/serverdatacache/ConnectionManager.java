@@ -535,7 +535,6 @@ public class ConnectionManager {
                 encodingDetail.updateEncodingProp(driverspecific);
             }
             connObjects[index].connectViaDriver(driverspecific, url);
-            SecureUtil.cleanKeyString(driverspecific.getProperty("password"));
             driverspecific.setProperty("password", "");
             driverspecific.remove("password");
         }
