@@ -218,6 +218,7 @@ public class DSFormatterPreferencePage extends PreferencePage {
         GridData rightMarginSpinnerGD = new GridData(SWT.FILL, SWT.FILL, true, false);
         rightMarginSpinner.setLayoutData(rightMarginSpinnerGD);
         setSpinnerMaxValueListner(rightMarginSpinner, RIGHT_MARGIN_LIMIT);
+        rightMarginSpinner.setEnabled(false);
         rightMarginSpinner.setSelection(preferenceStore.getInt(FormatterPreferenceKeys.GEN_RIGHT_MARGIN_PREF));
         rightMarginSpinner.addSelectionListener(getFormatterSelectionListener());
         rightMarginSpinner.addSelectionListener(getMarginPaintSelectionListener());

@@ -36,6 +36,7 @@ import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
 import com.huawei.mppdbide.utils.exceptions.UnknownException;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
+import com.huawei.mppdbide.utils.security.SecureUtil;
 
 /**
  * 
@@ -506,6 +507,7 @@ public class ConnectionManager {
                 connObjects[j1].disconnect();
             }
         }
+        SecureUtil.cleanKeyString(props.getProperty("password"));
         props.setProperty("password", "");
         props.remove("password");
     }
@@ -533,6 +535,7 @@ public class ConnectionManager {
                 encodingDetail.updateEncodingProp(driverspecific);
             }
             connObjects[index].connectViaDriver(driverspecific, url);
+            SecureUtil.cleanKeyString(driverspecific.getProperty("password"));
             driverspecific.setProperty("password", "");
             driverspecific.remove("password");
         }

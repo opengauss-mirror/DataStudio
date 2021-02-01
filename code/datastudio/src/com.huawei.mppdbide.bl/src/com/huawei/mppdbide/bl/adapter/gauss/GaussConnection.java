@@ -30,6 +30,7 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.utils.messaging.MessageQueue;
+import com.huawei.mppdbide.utils.security.SecureUtil;
 
 /**
  * 
@@ -237,8 +238,10 @@ public class GaussConnection implements IDBConnectionWrapper {
         try {
             doConnect(con, properties, url);
         } finally {
+            SecureUtil.cleanKeyString(properties.getProperty("password"));
             properties.setProperty("password", "");
             properties.remove("password");
+            SecureUtil.cleanKeyString(properties.getProperty("sslpassword"));
             properties.setProperty("sslpassword", "");
             properties.remove("sslpassword");
             serverInformation.clearPasrd();

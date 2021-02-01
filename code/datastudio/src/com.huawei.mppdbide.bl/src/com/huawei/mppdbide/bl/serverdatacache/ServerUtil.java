@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import com.huawei.mppdbide.bl.serverdatacache.connectioninfo.conif.IServerConnectionInfo;
 import com.huawei.mppdbide.utils.MemoryCleaner;
+import com.huawei.mppdbide.utils.security.SecureUtil;
 
 /**
  * Title: ServerUtil
@@ -28,6 +29,7 @@ public class ServerUtil {
      * @param props the props
      */
     public static void clearPropertyDetails(Properties props) {
+        SecureUtil.cleanKeyString(props.getProperty("password"));
         props.setProperty("password", "");
         props.remove("password");
     }
