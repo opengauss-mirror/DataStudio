@@ -1206,7 +1206,9 @@ public class Server implements IConnectionProfile, GaussOLAPDBMSObject {
             return true;
         }
         String compareTrimVersion = "openGauss 1.0.0";
-        String trimVersion = getServerVersion(true).substring(0, compareTrimVersion.length());
+        int length = serverVersionString.length() < compareTrimVersion.length() ?
+                serverVersionString.length() : compareTrimVersion.length();
+        String trimVersion = serverVersionString.substring(0, length);
         if (trimVersion.compareTo(compareTrimVersion) > 0) {
             return true;
         }
