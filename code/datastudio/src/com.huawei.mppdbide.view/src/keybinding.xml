@@ -202,18 +202,11 @@
         <defaultkey>CTRL+F2</defaultkey>
    </keybinding>
    <keybinding>
-        <commandid>com.huawei.mppdbide.command.id.stepin</commandid>
-        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_STEPIN_DEBUG</commandname>
-        <command>editor.shortcutmapper.stepindebug</command>
-        <description>KEY_BINDING_COMMENTS_DESC_STEPIN_DEBUG</description>
-        <defaultkey>CTRL+F5</defaultkey>
-    </keybinding>
-   <keybinding>
-        <commandid>com.huawei.mppdbide.command.id.stepout</commandid>
-        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_STEPOUT_DEBUG</commandname>
-        <command>editor.shortcutmapper.stepout</command>
-        <description>KEY_BINDING_COMMENTS_DESC_STEPOUT_DEBUG</description>
-        <defaultkey>F7</defaultkey>
+        <commandid>com.huawei.mppdbide.command.id.continue</commandid>
+        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_CONTINUE_DEBUG</commandname>
+        <command>editor.shortcutmapper.continue</command>
+        <description>KEY_BINDING_COMMENTS_DESC_CONTINUE_DEBUG</description>
+        <defaultkey>F8</defaultkey>
     </keybinding>
    <keybinding>
         <commandid>com.huawei.mppdbide.command.id.stepover</commandid>
@@ -221,12 +214,5 @@
         <command>editor.shortcutmapper.stepover</command>
         <description>KEY_BINDING_COMMENTS_DESC_STEPOVER_DEBUG</description>
         <defaultkey>F6</defaultkey>
-    </keybinding>
-   <keybinding>
-        <commandid>com.huawei.mppdbide.command.id.continue</commandid>
-        <commandname>PREFERENCE_SHORTCUT_KEY_BINDING_CONTINUE_DEBUG</commandname>
-        <command>editor.shortcutmapper.continue</command>
-        <description>KEY_BINDING_COMMENTS_DESC_CONTINUE_DEBUG</description>
-        <defaultkey>F8</defaultkey>
     </keybinding>
 </keys>
