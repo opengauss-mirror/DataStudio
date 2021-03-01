@@ -828,11 +828,6 @@ public class ExportExcelApachePOITest extends BasicJDBCTestCaseAdapter
             fail(e.getMessage());
 
         }
-        catch (MPPDBIDEException e)
-        {
-            fail(e.getMessage());
-
-        }
     }
 
     @Test
@@ -875,11 +870,6 @@ public class ExportExcelApachePOITest extends BasicJDBCTestCaseAdapter
         }
 
         catch (DatabaseOperationException e)
-        {
-            fail(e.getMessage());
-
-        }
-        catch (MPPDBIDEException e)
         {
             fail(e.getMessage());
 
@@ -935,11 +925,7 @@ public class ExportExcelApachePOITest extends BasicJDBCTestCaseAdapter
             fail(e.getMessage());
 
         }
-        catch (MPPDBIDEException e)
-        {
-            fail(e.getMessage());
 
-        }
     }
 
     @Test
@@ -989,11 +975,7 @@ public class ExportExcelApachePOITest extends BasicJDBCTestCaseAdapter
             fail(e.getMessage());
 
         }
-        catch (MPPDBIDEException e)
-        {
-            fail(e.getMessage());
 
-        }
     }
 
     @Test
@@ -1042,11 +1024,7 @@ public class ExportExcelApachePOITest extends BasicJDBCTestCaseAdapter
             fail(e.getMessage());
 
         }
-        catch (MPPDBIDEException e)
-        {
-            fail(e.getMessage());
 
-        }
     }
 
 

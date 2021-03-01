@@ -376,5 +376,24 @@ public class Connfactory implements QueryExecutor
         return null;
     }
     
+    @Override
+    public String getSocketAddress() {
+        return "";
+    }
+
+    @Override
+    public void setGaussdbVersion(String gaussdbVersion) {
+        
+    }
+
+    @Override
+    public String getApplicationType() {
+        return "";
+    }
+
+    @Override
+    public String getGaussdbVersion() {
+        return "";
+    }
 
 }

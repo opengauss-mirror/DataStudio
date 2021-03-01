@@ -157,11 +157,6 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
             
             fail("not expected");
         }
-        catch (MPPDBIDEException e)
-        {
-            
-            fail("not expected");
-        }
     }
 
     
@@ -191,11 +186,6 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
         {
             fail("not expected to come here");
         }
-        
-        catch (MPPDBIDEException e)
-        {
-            fail("not expected to come here");
-        }
     }
 
     
@@ -213,10 +203,6 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
 
         }
         catch (DatabaseOperationException e)
-        {
-            fail("not expected to come here");
-        }
-        catch (MPPDBIDEException e)
         {
             fail("not expected to come here");
         }
@@ -289,11 +275,6 @@ public class ViewSequenceDataTest extends BasicJDBCTestCaseAdapter
         catch (DatabaseOperationException e)
         {
             fail("not expected to come here");
-        }
-        catch (MPPDBIDEException e)
-        {
-            fail("not expected to come here");
-
         }
     }
 

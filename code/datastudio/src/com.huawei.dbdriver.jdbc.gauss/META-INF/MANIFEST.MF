@@ -18,10 +18,11 @@ Export-Package: org.postgresql,
  org.postgresql.jdbc2,
  org.postgresql.jdbc2.optional,
  org.postgresql.largeobject,
+ org.postgresql.log,
+ org.postgresql.replication,
  org.postgresql.ssl,
  org.postgresql.ssl.jdbc4,
  org.postgresql.util,
- org.postgresql.xa,
- org.postgresql.replication
+ org.postgresql.xa
 Bundle-ClassPath: gsjdbc4.jar,
  .

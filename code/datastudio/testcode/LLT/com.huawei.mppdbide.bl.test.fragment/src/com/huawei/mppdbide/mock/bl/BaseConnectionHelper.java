@@ -20,6 +20,7 @@ import org.postgresql.core.TransactionState;
 import org.postgresql.core.TypeInfo;
 import org.postgresql.core.Version;
 import org.postgresql.fastpath.Fastpath;
+import org.postgresql.log.Log;
 import org.postgresql.jdbc.AutoSave;
 import org.postgresql.jdbc.FieldMetadata;
 import org.postgresql.jdbc.FieldMetadata.Key;
@@ -368,7 +369,7 @@ private boolean throwSQLException;
     }
 
     @Override
-    public java.util.logging.Logger getLogger() {
+    public Log getLogger() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -416,9 +417,8 @@ private boolean throwSQLException;
 	}
 
     @Override
-    public int getBackendPID() {
-        // TODO Auto-generated method stub
-        return 0;
+    public String getSocketAddress() {
+        return "";
     }
 
 }

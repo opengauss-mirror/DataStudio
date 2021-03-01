@@ -157,11 +157,6 @@ public class ViewTableDataTest extends BasicJDBCTestCaseAdapter
             
             fail("not expected");
         }
-        catch (MPPDBIDEException e)
-        {
-            
-            fail("not expected");
-        }
     }
     
 
@@ -187,11 +182,6 @@ public class ViewTableDataTest extends BasicJDBCTestCaseAdapter
         {
             fail("not expected to come here");
         }
-        
-        catch (MPPDBIDEException e)
-        {
-            fail("not expected to come here");
-        }
     }
 
     
@@ -208,10 +198,6 @@ public class ViewTableDataTest extends BasicJDBCTestCaseAdapter
 
         }
         catch (DatabaseOperationException e)
-        {
-            fail("not expected to come here");
-        }
-        catch (MPPDBIDEException e)
         {
             fail("not expected to come here");
         }
@@ -296,11 +282,6 @@ public class ViewTableDataTest extends BasicJDBCTestCaseAdapter
         catch (DatabaseOperationException e)
         {
             fail("not expected to come here");
-        }
-        catch (MPPDBIDEException e)
-        {
-            fail("not expected to come here");
-
         }
     }
 
