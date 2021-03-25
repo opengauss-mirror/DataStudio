@@ -93,53 +93,91 @@ public class GridColumnValueAccessor implements IColumnPropertyAccessor<IDSGridD
      */
     @Override
     public Object getDataValue(IDSGridDataRow rowObject, int columnIndex) {
-        if (dataProvider.getColumnDataProvider().getColumnDatatype(columnIndex) == Types.TIMESTAMP || dataProvider
-                .getColumnDataProvider().getColumnDatatype(columnIndex) == Types.TIMESTAMP_WITH_TIMEZONE) {
-            Object objVal = rowObject.getValue(columnIndex);
-            Timestamp timestamp = null;
-            if (objVal instanceof String) {
-                try {
-                    timestamp = Timestamp.valueOf(objVal.toString());
-                } catch (IllegalArgumentException exp) {
-                    return null;
-                }
-            } else {
-                timestamp = (Timestamp) objVal;
+        int columnDataType = dataProvider.getColumnDataProvider().getColumnDatatype(columnIndex);
+        Object value = null;
+        switch (columnDataType) {
+            case Types.TIMESTAMP: {
+                value = getTimestampTypeDataValue(rowObject, columnIndex);
+                break;
             }
+            case Types.TIME: {
+                value = getTimeTypeDataValue(rowObject, columnIndex);
+                break;
+            }
+            case Types.DATE: {
+                value = getDateTypeDataValue(rowObject, columnIndex);
+                break;
+            }
+            default: {
+                value = rowObject.getValue(columnIndex);
+                break;
+            }
+        }
+        return value;
+    }
 
-            ConvertTimeStampValues value = null;
-            String dateFormat = PreferenceWrapper.getInstance().getPreferenceStore()
-                    .getString(MPPDBIDEConstants.DATE_FORMAT_VALUE);
-            String timeFormat = PreferenceWrapper.getInstance().getPreferenceStore()
-                    .getString(MPPDBIDEConstants.TIME_FORMAT_VALUE);
-            if (null != timestamp) {
-                value = new ConvertTimeStampValues(timestamp.getTime(),
-                        DateTimeFormatValidator.getDatePlusTimeFormat(dateFormat, timeFormat));
-            }
-            return value;
+    private Object getTimestampTypeDataValue (IDSGridDataRow rowObject, int columnIndex) {
+        String columnDataTypeName = dataProvider.getColumnDataProvider().getColumnDataTypeName(columnIndex);
+        if ("timestamptz".equals(columnDataTypeName)) {
+            return rowObject.getValue(columnIndex);
         }
-        if (dataProvider.getColumnDataProvider().getColumnDatatype(columnIndex) == Types.TIME
-                || dataProvider.getColumnDataProvider().getColumnDatatype(columnIndex) == Types.TIME_WITH_TIMEZONE) {
-            Timestamp timestamp = (Timestamp) rowObject.getValue(columnIndex);
-            ConvertTimeValues value = null;
-            String timeFormat = PreferenceWrapper.getInstance().getPreferenceStore()
-                    .getString(MPPDBIDEConstants.TIME_FORMAT_VALUE);
-            if (null != timestamp) {
-                value = new ConvertTimeValues(timestamp.getTime(), timeFormat);
+        Object objVal = rowObject.getValue(columnIndex);
+        Timestamp timestamp = null;
+        if (objVal instanceof String) {
+            try {
+                timestamp = Timestamp.valueOf(objVal.toString());
+            } catch (IllegalArgumentException exp) {
+                return null;
             }
-            return value;
+        } else if (objVal instanceof Timestamp) {
+            timestamp = (Timestamp) objVal;
+        } else {
+            return timestamp;
         }
-        if (dataProvider.getColumnDataProvider().getColumnDatatype(columnIndex) == Types.DATE) {
-            Date date = (Date) rowObject.getValue(columnIndex);
-            ConvertTimeStampValues value = null;
-            String dateFormat = PreferenceWrapper.getInstance().getPreferenceStore()
-                    .getString(MPPDBIDEConstants.DATE_FORMAT_VALUE);
-            if (null != date) {
-                value = new ConvertTimeStampValues(date.getTime(), dateFormat);
-            }
-            return value;
+        ConvertTimeStampValues value = null;
+        String dateFormat = PreferenceWrapper.getInstance().getPreferenceStore()
+                .getString(MPPDBIDEConstants.DATE_FORMAT_VALUE);
+        String timeFormat = PreferenceWrapper.getInstance().getPreferenceStore()
+                .getString(MPPDBIDEConstants.TIME_FORMAT_VALUE);
+        if (null != timestamp) {
+            value = new ConvertTimeStampValues(timestamp.getTime(),
+                    DateTimeFormatValidator.getDatePlusTimeFormat(dateFormat, timeFormat));
         }
-        return rowObject.getValue(columnIndex);
+        return value;
+    }
+
+    private Object getTimeTypeDataValue (IDSGridDataRow rowObject, int columnIndex) {
+        String columnDataTypeName = dataProvider.getColumnDataProvider().getColumnDataTypeName(columnIndex);
+        if ("timetz".equals(columnDataTypeName)) {
+            return rowObject.getValue(columnIndex);
+        }
+        Object obj = rowObject.getValue(columnIndex);
+        Timestamp timestamp = null;
+        if (obj instanceof Timestamp) {
+            timestamp = (Timestamp) obj;
+        }
+        ConvertTimeValues value = null;
+        String timeFormat = PreferenceWrapper.getInstance().getPreferenceStore()
+                .getString(MPPDBIDEConstants.TIME_FORMAT_VALUE);
+        if (null != timestamp) {
+            value = new ConvertTimeValues(timestamp.getTime(), timeFormat);
+        }
+        return value;
+    }
+
+    private Object getDateTypeDataValue (IDSGridDataRow rowObject, int columnIndex) {
+        Object obj = rowObject.getValue(columnIndex);
+        Date date = null;
+        if (obj instanceof Date) {
+            date = (Date) obj;
+        }
+        ConvertTimeStampValues value = null;
+        String dateFormat = PreferenceWrapper.getInstance().getPreferenceStore()
+                .getString(MPPDBIDEConstants.DATE_FORMAT_VALUE);
+        if (null != date) {
+            value = new ConvertTimeStampValues(date.getTime(), dateFormat);
+        }
+        return value;
     }
 
     /**
