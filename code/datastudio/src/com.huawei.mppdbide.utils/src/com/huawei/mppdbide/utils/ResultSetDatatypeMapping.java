@@ -165,7 +165,12 @@ public final class ResultSetDatatypeMapping {
                 case Types.TIME_WITH_TIMEZONE:
                 case Types.TIMESTAMP:
                 case Types.TIMESTAMP_WITH_TIMEZONE: {
-                    return rs.getTimestamp(columnIndex);
+                    String typeName = rs.getMetaData().getColumnTypeName(columnIndex);
+                    if ("timetz".equals(typeName) || "timestamptz".equals(typeName)) {
+                        return rs.getString(columnIndex);
+                    } else {
+                        return rs.getTimestamp(columnIndex);
+                    }
                 }
                 case INTERVAL_DAY_TO_SECOND:
                 case INTERVAL_YEAR_TO_MONTH: {
