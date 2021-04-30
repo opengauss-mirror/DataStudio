@@ -70,6 +70,8 @@ public abstract class DBTypeLabelUtil {
         objectTypeLabelMap.put(OBJECTTYPE.KEYWORDS, "Keywords");
 
         objectTypeLabelMap.put(OBJECTTYPE.SYNONYM_METADATA_GROUP, "Synonym");
+        objectTypeLabelMap.put(OBJECTTYPE.TRIGGER_GROUP, "TriggerGroup");
+        objectTypeLabelMap.put(OBJECTTYPE.TRIGGER_METADATA, "Trigger");
     }
 
     /**

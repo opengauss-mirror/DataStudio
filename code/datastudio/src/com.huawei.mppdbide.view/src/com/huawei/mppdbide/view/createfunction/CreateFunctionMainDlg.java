@@ -77,6 +77,9 @@ public class CreateFunctionMainDlg extends Dialog {
     private Combo comboLanguage;
     private Button btnFunction;
     private Button btnProcedure;
+    private Button btnTrigger;
+    private FuncTypeEnum curFuncType;
+    private SashForm paramSashForm;
     private SashForm sashForm;
 
     /**
@@ -306,7 +309,7 @@ public class CreateFunctionMainDlg extends Dialog {
     }
 
     private void paramListUi(SashForm mainForm) {
-        SashForm paramSashForm = new SashForm(mainForm, SWT.BORDER | SWT.SMOOTH | SWT.VERTICAL);
+        paramSashForm = new SashForm(mainForm, SWT.BORDER | SWT.SMOOTH | SWT.VERTICAL);
 
         SashForm sashForm1 = new SashForm(paramSashForm, SWT.VERTICAL);
 
@@ -451,12 +454,18 @@ public class CreateFunctionMainDlg extends Dialog {
 
         btnFunction = new Button(group, SWT.RADIO);
         btnFunction.setSelection(true);
-        btnFunction.addSelectionListener(new FunctionOrProcedureAdapter(this, tabItemFunction, true));
+        btnFunction.addSelectionListener(new FunctionOrProcedureAdapter(this, tabItemFunction, FuncTypeEnum.FUNCTION));
         btnFunction.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FUNCTION_UI_FUNCTION));
+        curFuncType = FuncTypeEnum.FUNCTION;
 
         btnProcedure = new Button(group, SWT.RADIO);
-        btnProcedure.addSelectionListener(new FunctionOrProcedureAdapter(this, tabItemFunction, false));
+        btnProcedure.addSelectionListener(
+                new FunctionOrProcedureAdapter(this, tabItemFunction, FuncTypeEnum.PROCEDURE));
         btnProcedure.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FUNCTION_UI_PROCEDURE));
+
+        btnTrigger = new Button(group, SWT.RADIO);
+        btnTrigger.addSelectionListener(new FunctionOrProcedureAdapter(this, tabItemFunction, FuncTypeEnum.TRIGGER));
+        btnTrigger.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FUNCTION_UI_TRIGGER));
     }
 
     private void schemaAndFunctionNameUi(SashForm mainForm) {
@@ -515,7 +524,7 @@ public class CreateFunctionMainDlg extends Dialog {
         String functionName = text.getText();
         String functionReturnType = comboRetType.getText();
         String functionBody = textFunctionBodyTemp.getText();
-        String language = btnProcedure.getSelection() ? CreateFunctionRelyInfo.PROCEDURE : comboLanguage.getText();
+        String language = btnFunction.getSelection() ? comboLanguage.getText() : curFuncType.language;
         LinkedList<CreateFunctionParam> params = getDataList().orElse(new LinkedList<CreateFunctionParam>());
         return new CreateFunctionUiData(
                 relyInfo,
@@ -613,29 +622,38 @@ public class CreateFunctionMainDlg extends Dialog {
     private class FunctionOrProcedureAdapter extends SelectionAdapter {
         private CreateFunctionMainDlg dlg;
         private CTabItem tableItemFunction;
-        private boolean isFunction = true;
+        private FuncTypeEnum funcType;
 
-        public FunctionOrProcedureAdapter(CreateFunctionMainDlg dlg, CTabItem tableItemFunction, boolean isFunction) {
-            this.isFunction = isFunction;
-            this.tableItemFunction = tableItemFunction;
+        public FunctionOrProcedureAdapter(CreateFunctionMainDlg dlg,
+                CTabItem tableItemFunction, FuncTypeEnum funcType) {
             this.dlg = dlg;
+            this.tableItemFunction = tableItemFunction;
+            this.funcType = funcType;
         }
 
         @Override
         public void widgetSelected(SelectionEvent event) {
             Button btn = (Button) event.widget;
             if (btn.getSelection()) {
-                dlg.getSashFormOfFunctionSelect().setVisible(isFunction);
-                dlg.setTitle(functionOrProcedureText(isFunction));
-                tableItemFunction.setText(functionOrProcedureText(isFunction));
-                updateTemplateBody(isFunction ? comboLanguage.getText() : CreateFunctionRelyInfo.PROCEDURE);
+                curFuncType = funcType;
+                dlg.getSashFormOfFunctionSelect().setVisible(funcType == FuncTypeEnum.FUNCTION);
+                dlg.setTitle(functionOrProcedureText(funcType));
+                tableItemFunction.setText(functionOrProcedureText(funcType));
+                boolean paramEnable = true;
+                if (funcType == FuncTypeEnum.TRIGGER) {
+                    dlg.removeAllData();
+                    paramEnable = false;
+                }
+                dlg.paramSashForm.setEnabled(paramEnable);
+                updateTemplateBody(FuncTypeEnum.FUNCTION == funcType ? comboLanguage.getText() : funcType.language);
             }
         }
 
-        private String functionOrProcedureText (boolean isFunction) {
-            return isFunction ?
-                    MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FUNCTION_UI_CREATE_FUNCTION) :
-                        MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FUNCTION_UI_CREATE_PROCEDURE);
+        private String functionOrProcedureText (FuncTypeEnum funcType) {
+            return MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FUNCTION_UI_CREATE) +
+                    MessageConfigLoader.getProperty(funcType.name) +
+                    ((funcType == FuncTypeEnum.TRIGGER) ?
+                            MessageConfigLoader.getProperty(FuncTypeEnum.FUNCTION.name) : "");
         }
     }
 
@@ -706,27 +724,53 @@ public class CreateFunctionMainDlg extends Dialog {
      * Init language ui
      */
     public void initLanguageUi() {
+        FuncTypeEnum funcType;
         if (CreateFunctionRelyInfo.PROCEDURE.equals(initLanguage)) {
-            btnFunction.setSelection(false);
-            btnFunction.notifyListeners(SWT.Selection, null);
-            btnProcedure.setSelection(true);
-            btnProcedure.notifyListeners(SWT.Selection, null);
+            funcType = FuncTypeEnum.PROCEDURE;
+        } else if (CreateFunctionRelyInfo.LANGUAGE_TRIGGER.equals(initLanguage)) {
+            funcType = FuncTypeEnum.TRIGGER;
         } else {
-            btnProcedure.setSelection(false);
-            btnProcedure.notifyListeners(SWT.Selection, null);
-            comboLanguage.select(relyInfo.getSupportLanguage().indexOf(initLanguage));
-            btnFunction.setSelection(true);
-            btnFunction.notifyListeners(SWT.Selection, null);
+            funcType = FuncTypeEnum.FUNCTION;
         }
+        btnStateChange(funcType);
     }
 
+    private void btnStateChange(FuncTypeEnum funcType) {
+        btnFunction.setSelection(funcType == FuncTypeEnum.FUNCTION);
+        btnProcedure.setSelection(funcType == FuncTypeEnum.PROCEDURE);
+        btnTrigger.setSelection(funcType == FuncTypeEnum.TRIGGER);
+        Button nodifyBtn = null;
+        switch (funcType) {
+            case PROCEDURE:
+                nodifyBtn = btnProcedure;
+                break;
+            case TRIGGER:
+                nodifyBtn = btnTrigger;
+                break;
+            case FUNCTION:
+            default:
+                nodifyBtn = btnFunction;
+                break;
+        }
+        if (funcType == FuncTypeEnum.FUNCTION) {
+            int index = relyInfo.getSupportLanguage().indexOf(initLanguage);
+            comboLanguage.select(Math.max(0, index));
+        }
+        nodifyBtn.notifyListeners(SWT.Selection, null);
+    }
+
+    /**
+     * Gets the sash form when function selected
+     *
+     * @return SashForm the sash form when function selected
+     */
     public SashForm getSashFormOfFunctionSelect() {
         return sashFormOfFunctionSelect;
     }
 
     private void initComboLanguage(Combo comboLanguage) {
         List<String> languages = relyInfo.getSupportLanguage();
-        for (String lang: languages) {
+        for (String lang : languages) {
             comboLanguage.add(lang);
         }
         comboLanguage.select(0);
@@ -734,5 +778,25 @@ public class CreateFunctionMainDlg extends Dialog {
 
     private void updateTemplateBody(String language) {
         textFunctionBodyTemp.setText(relyInfo.getFunctionBodyTemplate(language));
+    }
+
+    private enum FuncTypeEnum {
+        FUNCTION(IMessagesConstants.CREATE_FUNCTION_UI_FUNCTION, CreateFunctionRelyInfo.LANGUAGE_PLP),
+        PROCEDURE(IMessagesConstants.CREATE_FUNCTION_UI_PROCEDURE, CreateFunctionRelyInfo.PROCEDURE),
+        TRIGGER(IMessagesConstants.CREATE_FUNCTION_UI_TRIGGER, CreateFunctionRelyInfo.LANGUAGE_TRIGGER);
+
+        /**
+         * The name
+         */
+        public final String name;
+
+        /**
+         * The language
+         */
+        public final String language;
+        private FuncTypeEnum(String name, String language) {
+            this.name = name;
+            this.language = language;
+        }
     }
 }

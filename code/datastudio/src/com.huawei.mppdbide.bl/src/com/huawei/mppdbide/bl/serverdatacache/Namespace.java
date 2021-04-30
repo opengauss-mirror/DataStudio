@@ -30,6 +30,7 @@ import com.huawei.mppdbide.bl.serverdatacache.groups.ObjectList;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SequenceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SynonymObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TableObjectGroup;
+import com.huawei.mppdbide.bl.serverdatacache.groups.TriggerObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ViewObjectGroup;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
@@ -70,6 +71,8 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     private SequenceObjectGroup sequence;
 
     private SynonymObjectGroup synonyms;
+
+    private TriggerObjectGroup triggerGroups;
 
     private boolean isSynoymSupported = true;
 
@@ -159,6 +162,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         this.types = new ObjectList<TypeMetaData>(OBJECTTYPE.DATATYPE_GROUP, this);
         sequence = new SequenceObjectGroup(OBJECTTYPE.SEQUENCE_GROUP, this);
         synonyms = new SynonymObjectGroup(OBJECTTYPE.SYNONYM_GROUP, this);
+        triggerGroups = new TriggerObjectGroup(this);
         errorTableList = new HashSet<String>();
         setNotLoaded();
         updateObjectLoadLimit();
@@ -668,6 +672,15 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     }
 
     /**
+     * description: gets the trigger group
+     *
+     * @return TriggerObjectGroup the trigger object group
+     */
+    public TriggerObjectGroup getTriggerObjectGroup() {
+        return this.triggerGroups;
+    }
+
+    /**
      * Gets the type by name.
      *
      * @param name the name
@@ -876,6 +889,16 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
      */
     private SortedMap<String, SynonymMetaData> findMatchingSynonyms(String prefix) {
         return synonyms.getMatching(prefix);
+    }
+
+    /**
+     * Find matching trigger.
+     *
+     * @param String the prefix
+     * @return SortedMap<String, TriggerMetaData> the sorted map
+     */
+    private SortedMap<String, TriggerMetaData> findMatchingTrigger(String prefix) {
+        return triggerGroups.getMatching(prefix);
     }
 
     @Override
@@ -1147,6 +1170,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         if (isSynoymSupported()) {
             children.add(this.getSynonymGroup());
         }
+        children.add(this.getTriggerObjectGroup());
         return children.toArray();
     }
 
@@ -1292,7 +1316,8 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
      */
     public int getChildrenSize() {
         return getFunctions().getSize() + getTablesGroup().getSize() + getViewGroup().getSize()
-                + getForeignTablesGroup().getSize() + getSequenceGroup().getSize() + getSynonymGroup().getSize();
+                + getForeignTablesGroup().getSize() + getSequenceGroup().getSize() + getSynonymGroup().getSize()
+                + getTriggerObjectGroup().getSize();
     }
 
     /**
@@ -1440,6 +1465,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         retObj.putAll(findExactMatchingViews(prefix));
         retObj.putAll(findExactMatchingSequences(prefix));
         retObj.putAll(findExactMatchingSynonyms(prefix));
+        retObj.putAll(findExactMatchingTrigger(prefix));
         return retObj;
     }
 
@@ -1461,6 +1487,16 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
      */
     private SortedMap<String, SynonymMetaData> findExactMatchingSynonyms(String prefix) {
         return synonyms.getMatchingHyperLink(prefix);
+    }
+
+    /**
+     * Find exact matching trigger
+     *
+     * @param String the prefix
+     * @return SortedMap<String, TriggerMetaData> the sorted map
+     */
+    private SortedMap<String, TriggerMetaData> findExactMatchingTrigger(String prefix) {
+        return triggerGroups.getMatchingHyperLink(prefix);
     }
 
     /**
@@ -1516,6 +1552,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         retObj.putAll(findMatchingViews(""));
         retObj.putAll(findMatchingSequences(""));
         retObj.putAll(findMatchingSynonyms(""));
+        retObj.putAll(findMatchingTrigger(""));
         return retObj;
     }
 
@@ -1622,6 +1659,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         checkCancelStatusAndAbort(conn, status);
         refreshSequences(conn);
         loadSynonyms(conn);
+        loadTriggers(conn);
         MPPDBIDELoggerUtility.perf(this.getDisplayLabel() + " - Load done!!");
         checkCancelStatusAndAbort(conn, status);
         setLevel3LoadedFlagOnAllTables();
@@ -2334,7 +2372,8 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     @Override
     public ServerObject getNewlyCreatedView(String viewName) {
         String query1 = "SELECT c.oid, n.oid as nspoid, n.nspname AS schemaname, c.relname AS viewname, "
-                + "pg_get_userbyid(c.relowner) AS viewowner "
+                + "pg_get_userbyid(c.relowner) AS viewowner, "
+                + "c.relkind as relkind "
                 + "FROM (pg_class c LEFT JOIN pg_namespace n ON ((n.oid = c.relnamespace))) WHERE "
                 + "(c.relkind = 'v'::\"char\") and c.relname='%s' and n.nspname='%s';";
         String query = String.format(Locale.ENGLISH, query1, viewName, this.getName());
@@ -2360,9 +2399,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
             } catch (DatabaseCriticalException exc) {
                 MPPDBIDELoggerUtility.error("Error while getting newly created view from database");
             }
-        } catch (DatabaseCriticalException exce) {
-            MPPDBIDELoggerUtility.error("Error while getting newly created view from database");
-        } catch (DatabaseOperationException excep) {
+        } catch (DatabaseCriticalException | DatabaseOperationException exce) {
             MPPDBIDELoggerUtility.error("Error while getting newly created view from database");
         } finally {
             if (dbConn != null) {
@@ -2382,7 +2419,25 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
             MPPDBIDELoggerUtility.error("Error while getting newly updated view from database");
         }
         return view;
+    }
 
+    @Override
+    public ServerObject getNewlyCreateTrigger(String triggerName) {
+        List<TriggerMetaData> triggers ;
+        TriggerMetaData trigger = null;
+        try {
+            DBConnection dbConn = getDatabase().getConnectionManager().getObjBrowserConn();
+            triggers = TriggerObjectGroup.fetchTriggerByName(this, dbConn, triggerName);
+            for (TriggerMetaData tmpTrigger: triggers) {
+                this.addTrigger(tmpTrigger);
+                trigger = tmpTrigger;
+            }
+        } catch (DatabaseCriticalException exce) {
+            MPPDBIDELoggerUtility.error("Error while getting newly created view from database");
+        } catch (DatabaseOperationException excep) {
+            MPPDBIDELoggerUtility.error("Error while getting newly created view from database");
+        }
+        return trigger;
     }
 
     /**
@@ -2418,6 +2473,31 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     public void loadSynonyms(DBConnection freeConnection) throws DatabaseOperationException, DatabaseCriticalException {
         try {
             SynonymUtil.fetchSynonyms(this, freeConnection);
+        } catch (MPPDBIDEException exception) {
+            extractMPPDBIDExeception(exception);
+        }
+    }
+
+    /**
+     * Adds the trigger.
+     *
+     * @param TriggerMetaData the trigger
+     */
+    public void addTrigger(TriggerMetaData trigger) {
+        triggerGroups.addToGroup(trigger);
+        db.getSearchPoolManager().addTriggerToSearchPool(trigger);
+    }
+
+    /**
+     * Load triggers.
+     *
+     * @param freeConnection the free connection
+     * @throws DatabaseOperationException the database operation exception
+     * @throws DatabaseCriticalException the database critical exception
+     */
+    public void loadTriggers(DBConnection freeConnection) throws DatabaseOperationException, DatabaseCriticalException {
+        try {
+            TriggerObjectGroup.fetchTriggers(this, freeConnection);
         } catch (MPPDBIDEException exception) {
             extractMPPDBIDExeception(exception);
         }

@@ -511,7 +511,11 @@ public class DebugObjects extends BatchDropServerObject implements ObjectChange,
      * @return the string
      */
     public String generateDropQuery() {
-        return DebugObjectsUtils.getDropQuery(DebugObjectsUtils.getDropFuncStatement(false), false, namespace,
+        boolean cascade = false;
+        if ("trigger".equalsIgnoreCase(returnType.getDataType())) {
+            cascade = true;
+        }
+        return DebugObjectsUtils.getDropQuery(DebugObjectsUtils.getDropFuncStatement(false), cascade, namespace,
                 parameters, getName());
     }
 

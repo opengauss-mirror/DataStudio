@@ -267,8 +267,12 @@
                         value="com.huawei.mppdbide.bl.serverdatacache.groups.DatabaseObjectGroup">
                   </instanceof>
                   <instanceof
+                        value="com.huawei.mppdbide.bl.serverdatacache.groups.TriggerObjectGroup">
+                  </instanceof>
+                  <instanceof
                         value="com.huawei.mppdbide.bl.serverdatacache.groups.ObjectGroup">
                   </instanceof>
+
                   <instanceof
                         value="com.huawei.mppdbide.bl.serverdatacache.ViewMetaData">
                   </instanceof>
@@ -1449,6 +1453,38 @@
                   operator="and">
                   <instanceof
                         value="com.huawei.mppdbide.bl.serverdatacache.ViewMetaData">
+                  </instanceof>
+            </iterate>
+         </with>
+      </definition>
+      <definition
+            id="com.huawei.objectbrowser.popupmenu.triggergroup.id.expression">
+         <with
+               variable="org.eclipse.ui.selection">
+            <count
+                  value="1">
+            </count>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+                  <instanceof
+                        value="com.huawei.mppdbide.bl.serverdatacache.groups.TriggerObjectGroup">
+                  </instanceof>
+            </iterate>
+         </with>
+      </definition>
+      <definition
+            id="com.huawei.objectbrowser.popupmenu.trigger.id.expression">
+         <with
+               variable="org.eclipse.ui.selection">
+            <count
+                  value="1">
+            </count>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+                  <instanceof
+                        value="com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData">
                   </instanceof>
             </iterate>
          </with>

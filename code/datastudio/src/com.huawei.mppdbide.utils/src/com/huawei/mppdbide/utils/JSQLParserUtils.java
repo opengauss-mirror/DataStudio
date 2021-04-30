@@ -7,6 +7,8 @@ package com.huawei.mppdbide.utils;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
@@ -484,6 +486,9 @@ public class JSQLParserUtils {
                 return "";
             }
         } catch (JSQLParserException e11) {
+            if (isCreateTrigger(query.toLowerCase(Locale.ENGLISH))) {
+                return getTriggerName(query);
+            }
             return "";
         } catch (Exception e22) {
             return "";
@@ -526,6 +531,9 @@ public class JSQLParserUtils {
             }
 
         } catch (JSQLParserException e11) {
+            if (isCreateTrigger(query.toLowerCase(Locale.ENGLISH))) {
+                return MPPDBIDEConstants.CREATE_TRIGGER;
+            }
             return "";
         } catch (Exception e22) {
             return "";
@@ -535,5 +543,17 @@ public class JSQLParserUtils {
             reader.close();
         }
         return objType;
+    }
+
+    private static boolean isCreateTrigger(String query) {
+        String lowerQuery = query.toLowerCase(Locale.ENGLISH).trim();
+        String pattern = "create\\s+trigger\\s+";
+        Pattern p1 = Pattern.compile(pattern, Pattern.MULTILINE);
+        return p1.matcher(lowerQuery).find();
+    }
+
+    private static String getTriggerName(String query) {
+        String queryTmp = query.replace("\r", " ").replace("\n", " ").trim();
+        return queryTmp.split("\\ +")[2];
     }
 }

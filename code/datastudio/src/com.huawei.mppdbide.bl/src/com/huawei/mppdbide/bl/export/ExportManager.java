@@ -26,6 +26,7 @@ import com.huawei.mppdbide.bl.serverdatacache.Namespace;
 import com.huawei.mppdbide.bl.serverdatacache.SequenceMetadata;
 import com.huawei.mppdbide.bl.serverdatacache.ServerObject;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
@@ -42,11 +43,11 @@ import com.huawei.mppdbide.utils.observer.DSEventWithCount;
 import com.huawei.mppdbide.utils.observer.IDSGridUIListenable;
 
 /**
- * 
+ *
  * Title: class
- * 
+ *
  * Description: The Class ExportManager.
- * 
+ *
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author pWX553609
@@ -55,11 +56,11 @@ import com.huawei.mppdbide.utils.observer.IDSGridUIListenable;
  */
 
 public class ExportManager implements IExportManager {
-    
+
     private DSEventTable eventTable = null;
     private static final byte[] UTF8_BOM = new byte[] {(byte) 0XEF, (byte) 0xBB, (byte) 0xBF};
     private boolean isCancel = false;
-    
+
     /**
      * Instantiates a new export manager.
      */
@@ -145,7 +146,7 @@ public class ExportManager implements IExportManager {
             return;
         }
     }
-    
+
     private void exportSequenceDDLOwenedBy(EXPORTTYPE type, DBConnection conn, Path createdFilePath, Namespace ns)
             throws DatabaseOperationException, UnsupportedEncodingException, IOException {
         ArrayList<ServerObject> objList = new ArrayList<ServerObject>(MPPDBIDEConstants.OBJECT_ARRAY_SIZE);
@@ -266,7 +267,24 @@ public class ExportManager implements IExportManager {
             }
         }
     }
-    
+
+    private void writeTriggerDDL(ArrayList<ServerObject> objList, Path createdFilePath, DBConnection conn)
+            throws DatabaseOperationException, DatabaseCriticalException, IOException, UnsupportedEncodingException {
+        TriggerMetaData trigger = null;
+        StandardOpenOption fileMode = StandardOpenOption.APPEND;
+        String fileEncodingName = getFileEncoding();
+        for (ServerObject fobj : objList) {
+            trigger = (TriggerMetaData) fobj;
+            String header = trigger.getHeader();
+            Files.write(createdFilePath, header.getBytes(fileEncodingName), fileMode);
+            fileMode = StandardOpenOption.APPEND;
+            Files.write(createdFilePath, trigger.getDdlMsg().getBytes(fileEncodingName), fileMode);
+            if (eventTable != null) {
+                eventTable
+                        .sendEvent(new DSEventWithCount(IDSGridUIListenable.LISTEN_BATCHEXPORT_DDL_SUCCESS, trigger));
+            }
+        }
+    }
 
     /*
      * Add BOM (Byte Order Mark) for UTF8 encoding.
@@ -358,7 +376,7 @@ public class ExportManager implements IExportManager {
             throw new DatabaseOperationException(IMessagesConstants.EXPORT_FAIL_DISK_WRITE_ERROR, exp);
         }
     }
-    
+
     private void exportDDLUsingSystemTable(EXPORTTYPE type, ArrayList<ServerObject> objects, String encryptedPwd,
             Path createdFilePath, boolean isTablespaceOption) throws IOException, DatabaseOperationException,
             DatabaseCriticalException, UnsupportedEncodingException, MPPDBIDEException {
@@ -368,6 +386,9 @@ public class ExportManager implements IExportManager {
         DBConnection conn = getDbConnection(db, encryptedPwd);
         if (objects.get(0) instanceof DebugObjects) {
             writeDebugObjectDDL(objects, createdFilePath, conn);
+        }
+        if (objects.get(0) instanceof TriggerMetaData) {
+            writeTriggerDDL(objects, createdFilePath, conn);
         }
         if (objects.get(0) instanceof TableMetaData) {
             writeTableObjectDDL(objects, createdFilePath, type, conn, isTablespaceOption);
@@ -652,7 +673,7 @@ public class ExportManager implements IExportManager {
         builder.append(MPPDBIDEConstants.LINE_SEPARATOR);
         Files.write(createdFilePath, builder.toString().getBytes(getFileEncoding()), StandardOpenOption.APPEND);
     }
-                    
+
     private void deleteTempFiles(List<String> paths) {
         if (!paths.isEmpty()) {
             for (String onefilepath : paths) {

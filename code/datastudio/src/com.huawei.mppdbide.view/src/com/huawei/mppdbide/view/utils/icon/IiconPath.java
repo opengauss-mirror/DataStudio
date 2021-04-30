@@ -940,6 +940,20 @@ public interface IiconPath {
     String ICO_SYNONYM = "synonym.png";
 
     /**
+     * The trigger group
+     */
+    String ICO_TRIGGERS = "Trigger_folder.png";
+
+    /**
+     * The trigger enable
+     */
+    String ICO_TRIGGER_ENABLE = "trigger.png";
+
+    /**
+     * the trigger disable
+     */
+    String ICO_TRIGGER_DISABLE = "trigger-disable.png";
+    /**
      * the pre debug path
      */
     String PRE_DEBUG_PATH = "debug" + File.separator;

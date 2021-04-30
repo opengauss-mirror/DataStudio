@@ -45,6 +45,7 @@ import com.huawei.mppdbide.bl.serverdatacache.SequenceMetadata;
 import com.huawei.mppdbide.bl.serverdatacache.Server;
 import com.huawei.mppdbide.bl.serverdatacache.ServerObject;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.groups.OLAPObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.OLAPObjectList;
@@ -765,6 +766,7 @@ public class BatchExportDDLHandler {
                     otherObjectsToExport.addObject(expObjs.getAllPartitionTablesToExport());
                     otherObjectsToExport.addObject(expObjs.getAllViewsToExport());
                     otherObjectsToExport.addObject(expObjs.getAllSequencesToExport());
+                    otherObjectsToExport.addObject(expObjs.getTriggerExport());
                 } else {
                     schemasToExport.add(expObjs.getNamespaceToExport());
                 }
@@ -914,7 +916,7 @@ public class BatchExportDDLHandler {
         private void exportOtherObjects(boolean passwordFlag) throws DatabaseOperationException,
                 DatabaseCriticalException, DataStudioSecurityException, FileOperationException {
             // initial ArrayList size as export object types
-            ArrayList<ServerObject>[] group = new ArrayList[5];
+            ArrayList<ServerObject>[] group = new ArrayList[6];
 
             // export object type according to potential dependent relationship
             group[0] = otherObjectsToExport.getAllSequencesToExport();
@@ -922,6 +924,7 @@ public class BatchExportDDLHandler {
             group[2] = otherObjectsToExport.getAllPartitionTablesToExport();
             group[3] = otherObjectsToExport.getAllViewsToExport();
             group[4] = otherObjectsToExport.getAllDebugObjectsToExport();
+            group[5] = otherObjectsToExport.getTriggerExport();
 
             File workingDir = getWorkingDir();
             for (int i = 0; i < group.length; i++) {
@@ -1197,6 +1200,7 @@ class BatchExportDDLObjects {
     ArrayList<ServerObject> pTableList = new ArrayList<ServerObject>(4);
     ArrayList<ServerObject> viewList = new ArrayList<ServerObject>(4);
     ArrayList<ServerObject> sequenceList = new ArrayList<ServerObject>(4);
+    ArrayList<ServerObject> triggerList = new ArrayList<ServerObject>(4);
 
     /**
      * Gets the namespace to export.
@@ -1216,6 +1220,7 @@ class BatchExportDDLObjects {
         tableList.clear();
         viewList.clear();
         sequenceList.clear();
+        triggerList.clear();
     }
 
     /**
@@ -1264,6 +1269,15 @@ class BatchExportDDLObjects {
     }
 
     /**
+     * Gets the all trigger to export.
+     *
+     * @return the all trigger to export
+     */
+    public ArrayList<ServerObject> getTriggerExport() {
+        return this.triggerList;
+    }
+
+    /**
      * Adds the object.
      *
      * @param obj the obj
@@ -1297,6 +1311,8 @@ class BatchExportDDLObjects {
             viewList.add(obj);
         } else if (obj instanceof SequenceMetadata) {
             sequenceList.add(obj);
+        } else if (obj instanceof TriggerMetaData) {
+            triggerList.add(obj);
         }
         return true;
     }
@@ -1321,6 +1337,8 @@ class BatchExportDDLObjects {
             viewList.addAll(list);
         } else if (obj instanceof SequenceMetadata) {
             sequenceList.addAll(list);
+        } else if (obj instanceof TriggerMetaData) {
+            triggerList.addAll(list);
         }
     }
 
