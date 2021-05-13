@@ -17,6 +17,7 @@ import java.nio.file.attribute.UserPrincipal;
 import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +45,11 @@ public class DSFileAttributes implements FileAttribute<List<AclEntry>> {
      * @param userChosenPermissions the user chosen permissions
      */
     public DSFileAttributes(Set<AclEntryPermission> userChosenPermissions) {
-        this.userChosenPermissions = userChosenPermissions;
+        Set<AclEntryPermission> currentUserChosenPermissions = userChosenPermissions;
+        if (currentUserChosenPermissions == null) {
+            currentUserChosenPermissions = new HashSet<AclEntryPermission>();
+        }
+        this.userChosenPermissions = currentUserChosenPermissions;
     }
 
     @Override
@@ -100,7 +105,8 @@ public class DSFileAttributes implements FileAttribute<List<AclEntry>> {
 
     @Override
     public String name() {
-        return "acl:acl";
+        // unix:permissions
+        return "posix:permissions";
     }
 
 }

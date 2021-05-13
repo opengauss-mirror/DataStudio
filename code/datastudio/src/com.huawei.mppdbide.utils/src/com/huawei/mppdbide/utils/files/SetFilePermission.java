@@ -69,7 +69,11 @@ public class SetFilePermission implements ISetFilePermission {
                 // create it with security permissions.
                 if (!fileExists) {
                     if (setDefaultOnNull) {
-                        newPath = DSFilesWrapper.createDirectory(newPath, fileAttributes);
+                        try {
+                            newPath = DSFilesWrapper.createDirectory(newPath, fileAttributes);
+                        } catch (FileOperationException e) {
+                            newPath = Files.createDirectory(newPath);
+                        }
                     } else {
                         newPath = Files.createDirectory(newPath);
                     }
