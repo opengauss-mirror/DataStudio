@@ -51,7 +51,7 @@ public class DsCreateTriggerRelyInfo implements CreateTriggerRelyInfo {
     }
 
     @Override
-    public Namespace getNamespace() {
-        return this.namespace;
+    public String getNamespaceName() {
+        return this.namespace.getName();
     }
 }

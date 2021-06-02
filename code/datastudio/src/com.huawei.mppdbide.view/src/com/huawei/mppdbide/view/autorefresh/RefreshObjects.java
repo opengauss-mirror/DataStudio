@@ -50,6 +50,9 @@ public class RefreshObjects {
                         .contains(text.toLowerCase(Locale.ENGLISH)))) {
                     viewer.add(objectDetail.getParent(), objectDetail.getObjToBeRefreshed());
                     viewer.update(objectDetail.getParent(), null);
+                    if ("CREATE_TRIGGER".equals(operationType)) {
+                        viewer.refresh();
+                    }
                 }
                 break;
             }

@@ -4,8 +4,8 @@
 
 package com.huawei.mppdbide.view.ui.trigger;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Title: CreateTriggerUiData for use
@@ -40,17 +40,11 @@ public class CreateTriggerUiData {
         }
     }
 
-    private String triggerName;
-    private String period;
-    private List<String> operate;
-    private List<String> column;
-    private String schemaName;
-    private String tableName;
-    private String level;
-    private String oldName;
-    private String newName;
-    private String condition;
-    private String functionName;
+    private CreateTriggerDataModel dataModel;
+
+    public CreateTriggerUiData(CreateTriggerDataModel dataModel) {
+        this.dataModel = dataModel;
+    }
 
     /**
      * Valid input
@@ -58,16 +52,19 @@ public class CreateTriggerUiData {
      * @return ErrType the error type
      */
     public ErrType valid() {
-        if ("".equals(triggerName)) {
+        if ("".equals(dataModel.getTriggerName())) {
             return ErrType.ERR_TRIGGERNAME;
         }
-        if ("".equals(this.functionName)) {
+        if ("".equals(dataModel.getTriggerFunc())) {
             return ErrType.ERR_FUNCNAME;
         }
-        if ("".equals(tableName)) {
+
+        if ("".equals(dataModel.getTriggerTableName())) {
             return ErrType.ERR_TABLENAME;
         }
-        if (Objects.isNull(operate) || operate.size() == 0) {
+
+        List<String> operate = getOperate();
+        if (operate.size() == 0) {
             return ErrType.ERR_OPERATE;
         }
         return ErrType.ERR_SUCCESS;
@@ -81,14 +78,16 @@ public class CreateTriggerUiData {
     public String getTriggerDefine() {
         StringBuilder sb = new StringBuilder(128);
         boolean canCondition = true;
-        sb.append("CREATE TRIGGER " + triggerName + " ");
-        sb.append(this.period);
-        if (this.period.equals(TriggerKeyword.INSTEAD_OF.keyword)) {
+        sb.append("CREATE TRIGGER " + dataModel.getTriggerName() + " ");
+        String period = getPeriod();
+        sb.append(period);
+        if (period.equals(TriggerKeyword.INSTEAD_OF.keyword)) {
             canCondition = false;
         }
         sb.append(System.lineSeparator());
         StringBuilder op = new StringBuilder(128);
-        for (String event : this.operate) {
+        List<String> operate = getOperate();
+        for (String event : operate) {
             op.append(" OR ").append(event);
             if (event.equals(TriggerKeyword.UPDATE.keyword)) {
                 op.append(obtainUpdateColumn());
@@ -96,15 +95,20 @@ public class CreateTriggerUiData {
         }
         sb.append(op.toString().substring(3));
         sb.append(System.lineSeparator());
-        sb.append(" ON " + schemaName + "." + tableName);
+        sb.append(" ON " +
+            dataModel.getTriggerNamespaceName()
+            + "." + dataModel.getTriggerTableName());
         sb.append(System.lineSeparator());
+        String level = getLevel();
         sb.append(" FOR EACH " + level);
         sb.append(System.lineSeparator());
+
+        String condition = dataModel.getWhenCodition();
         if (canCondition && condition != null && !"".equals(condition.trim())) {
             sb.append(" WHEN " + condition);
             sb.append(System.lineSeparator());
         }
-        sb.append(" EXECUTE PROCEDURE " + functionName + "();");
+        sb.append(" EXECUTE PROCEDURE " + dataModel.getTriggerFunc() + "();");
         return sb.toString();
     }
 
@@ -114,6 +118,7 @@ public class CreateTriggerUiData {
      * @return String the column string
      */
     public String obtainUpdateColumn() {
+        List<String> column = dataModel.getUpdateColumn();
         if (column.size() == 0) {
             return "";
         }
@@ -126,91 +131,51 @@ public class CreateTriggerUiData {
         return obtainStr.substring(0, obtainStr.length() - 2);
     }
 
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public List<String> getOperate() {
-        return operate;
-    }
-
-    public void setOperate(List<String> operate) {
-        this.operate = operate;
-    }
-
-    public List<String> getColumn() {
-        return column;
-    }
-
-    public void setColumn(List<String> column) {
-        this.column = column;
-    }
-
-    public String getSchemaName() {
-        return schemaName;
-    }
-
-    public void setSchemaName(String schemaName) {
-        this.schemaName = schemaName;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
+    /**
+     * Gets level
+     *
+     * @return String the trigger level
+     */
     public String getLevel() {
-        return level;
+        TriggerKeyword[] keys = {
+            TriggerKeyword.ROW,
+            TriggerKeyword.STATEMENT
+        };
+        return keys[dataModel.isStatementLevel() ? 1 : 0].keyword;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    /**
+     * Gets period
+     *
+     * @return String the trigger period
+     */
+    public String getPeriod() {
+        TriggerKeyword[] keys = {
+            TriggerKeyword.BEFORE,
+            TriggerKeyword.AFTER,
+            TriggerKeyword.INSTEAD_OF};
+        return keys[dataModel.getTriggerStage()].keyword;
     }
 
-    public String getOldName() {
-        return oldName;
-    }
-
-    public void setOldName(String oldName) {
-        this.oldName = oldName;
-    }
-
-    public String getNewName() {
-        return newName;
-    }
-
-    public void setNewName(String newName) {
-        this.newName = newName;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public String getFunctionName() {
-        return functionName;
-    }
-
-    public void setFunctionName(String functionName) {
-        this.functionName = functionName;
-    }
-
-    public String getTriggerName() {
-        return triggerName;
-    }
-
-    public void setTriggerName(String triggerName) {
-        this.triggerName = triggerName;
+    /**
+     * Gets operate
+     *
+     * @return List<String> the operation list
+     */
+    public List<String> getOperate() {
+        TriggerKeyword[] keys = new TriggerKeyword[] {
+            TriggerKeyword.INSERT,
+            TriggerKeyword.DELETE,
+            TriggerKeyword.TRUNCATE,
+            TriggerKeyword.UPDATE};
+        int bitPos = 0;
+        List<String> results = new ArrayList<>(keys.length);
+        for (int i = 0; i < keys.length ; i++) {
+            if ((dataModel.getSelectOptration() & (1 <<bitPos)) != 0) {
+                results.add(keys[i].keyword);
+            }
+            bitPos += 1;
+        }
+        return results;
     }
 }

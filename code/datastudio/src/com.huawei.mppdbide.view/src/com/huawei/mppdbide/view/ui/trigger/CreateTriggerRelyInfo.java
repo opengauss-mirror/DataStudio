@@ -18,18 +18,18 @@ import com.huawei.mppdbide.bl.serverdatacache.Namespace;
  */
 public interface CreateTriggerRelyInfo {
     /**
+     * Gets namespace
+     *
+     * @return String the namespace
+     */
+    String getNamespaceName();
+
+    /**
      * Sets the namespace
      *
      * @param Namespace the namespace to set
      */
     void setNamespace(Namespace namespace);
-
-    /**
-     * Gets the namespace
-     *
-     * @return Namespace the namespace to get
-     */
-    Namespace getNamespace();
 
     /**
      * description: get line separator
