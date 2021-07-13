@@ -145,6 +145,9 @@ public class DSUserRolePropertiesGridDataProvider {
                         userRole.setParents(new ArrayList<UserRole>());
                     }
                 }
+                if (value instanceof String && StringUtils.isEmpty(value.toString())) {
+                    userRole.setParents(new ArrayList<UserRole>());
+                }
             }
             continue;
         }
