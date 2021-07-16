@@ -7,6 +7,7 @@ package com.huawei.mppdbide.view.ui.table;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -18,10 +19,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import com.huawei.mppdbide.bl.serverdatacache.IndexMetaData;
-import com.huawei.mppdbide.bl.serverdatacache.PartitionMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.PartitionTable;
 import com.huawei.mppdbide.bl.serverdatacache.Server;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.TableOrientation;
 import com.huawei.mppdbide.bl.serverdatacache.TableValidatorRules;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
@@ -153,6 +154,8 @@ public class CreateIndexDialog extends Dialog implements IDialogWorkerInteractio
 
         ui.createUI(compositeIndices);
 
+        registerUniqueIndex(ui, tableMetaData);
+
         createGenerateQuery(compositeIndices);
 
         createBelowButtons();
@@ -171,6 +174,16 @@ public class CreateIndexDialog extends Dialog implements IDialogWorkerInteractio
         mainSc.pack();
 
         return parent;
+    }
+
+    /**
+     * Register unique index listener
+     *
+     * @param IndexUI the index ui
+     * @param TableMetaData the tableMetaData
+     */
+    private void registerUniqueIndex(IndexUI ui, TableMetaData tableMetaData) {
+        CreateTable.registerUniqueIndexButtonListener(ui, tableMetaData);
     }
 
     private void createBelowButtons() {

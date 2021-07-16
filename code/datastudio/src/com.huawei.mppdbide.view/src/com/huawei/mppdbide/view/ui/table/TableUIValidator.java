@@ -95,20 +95,29 @@ public class TableUIValidator {
         Table indexExprTable = indexUI.getTableIndexesUI();
         boolean validatorValue = validator.enableDisable();
         if (value) {
-
-            indexUI.getBtnUniqueIndex().setEnabled(validatorValue);
-
             indexUI.getTxtWhereExpr().setEnabled(validatorValue);
             indexUI.getFillFactor().setEnabled(validatorValue);
             indexUI.getDecofk().show();
             UIMandatoryAttribute.enableDisableIndexName(value);
+            indexUI.updateIndexTypeObject();
+            if (indexUI.getBtnUniqueIndex().getSelection()) {
+                indexUI.updateBtreeAMCombo(false);
+            } else {
+                indexUI.updateAMCombo();
+            }
         }
         if (!validatorValue) {
-            indexUI.getBtnUniqueIndex().setSelection(false);
             indexUI.getTxtWhereExpr().setText("");
             indexUI.getTxtUserExpr().setText("");
             indexUI.getFillFactor().setSelection(100);
             // clear the index expression from the index tab
+            if (indexUI.getBtnUniqueIndex().getSelection()) {
+                indexUI.updateColumnIndexTypeObject();
+                indexUI.updateBtreeAMCombo(true);
+            } else {
+                indexUI.updateIndexTypeObject();
+                indexUI.updateAMCombo();
+            }
         } else {
             indexUI.setUILabelsColorBlack();
         }

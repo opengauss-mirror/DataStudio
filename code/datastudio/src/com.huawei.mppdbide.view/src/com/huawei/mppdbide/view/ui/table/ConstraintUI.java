@@ -900,6 +900,8 @@ public class ConstraintUI {
         List<ConstraintType> validConstraintTypes = new ArrayList<ConstraintType>(1);
         if (orientation == TableOrientation.COLUMN) {
             validConstraintTypes.add(ConstraintType.PARTIAL_CLUSTER_KEY);
+            validConstraintTypes.add(ConstraintType.UNIQUE_KEY_CONSTRSINT);
+            validConstraintTypes.add(ConstraintType.PRIMARY_KEY_CONSTRSINT);
         } else {
             validConstraintTypes.add(ConstraintType.CHECK_CONSTRSINT);
             validConstraintTypes.add(ConstraintType.UNIQUE_KEY_CONSTRSINT);

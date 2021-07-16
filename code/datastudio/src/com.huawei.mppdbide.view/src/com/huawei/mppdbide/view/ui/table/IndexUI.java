@@ -903,6 +903,28 @@ public class IndexUI {
     }
 
     /**
+     * Update AM combo for column-stored and row-stored table.
+     *
+     * @param boolean, true if isColumnTable
+     */
+    public void updateBtreeAMCombo(boolean isColumnTable) {
+        Iterator<AccessMethod> amItr = this.server.getAccessMethods().iterator();
+        boolean hasNext = amItr.hasNext();
+        AccessMethod am = null;
+        cmbAccessMethod.removeAll();
+        while (hasNext) {
+            am = amItr.next();
+            if (am.getName().contains("btree")) {
+                if (isColumnTable || am.getName().equals("btree")) {
+                    cmbAccessMethod.add(am.getName());
+                    amOids.add(am.getOid());
+                }
+            }
+            hasNext = amItr.hasNext();
+        }
+    }
+
+    /**
      * Creates the tablespace.Tablespace
      *
      * @param comp the comp
@@ -935,6 +957,18 @@ public class IndexUI {
         cmbIndexType.removeAll();
         cmbIndexType.add("GLOBAL");
         cmbIndexType.add("LOCAL");
+    }
+
+    /**
+     * Update index type object for column-stored table.
+     */
+    public void updateColumnIndexTypeObject() {
+        if (cmbIndexType == null) {
+            return;
+        }
+        cmbIndexType.removeAll();
+        cmbIndexType.add("LOCAL");
+        cmbIndexType.select(0);
     }
 
     /**
