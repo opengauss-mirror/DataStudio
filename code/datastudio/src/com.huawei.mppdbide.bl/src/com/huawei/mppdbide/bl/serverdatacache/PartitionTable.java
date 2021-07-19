@@ -81,6 +81,20 @@ public class PartitionTable extends TableMetaData {
         this.partitions = new PartitionList(OBJECTTYPE.PARTITION_GROUP, this);
     }
 
+    private String getPartitionType() {
+        if (this.partitions == null || this.partitions.getSize() <= 0) {
+            return PartitionTypeEnum.BY_RANGE.getTypeName();
+        }
+        return this.partitions.getList().get(0).getPartitionType();
+    }
+
+    private String getIntervalPartitionExpr() {
+        if (this.partitions == null || this.partitions.getSize() <= 0) {
+            return "";
+        }
+        return this.partitions.getList().get(0).getIntervalPartitionExpr();
+    }
+
     /**
      * Form partition queries.
      *
@@ -133,7 +147,11 @@ public class PartitionTable extends TableMetaData {
         StringBuilder sbPartitionCol = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
 
         selectedColumns = getSelColumns();
-        sbPartitionCol.append("PARTITION BY RANGE ");
+        if (PartitionTypeEnum.BY_INTERVAL.getTypeName().equals(getPartitionType())) {
+            sbPartitionCol.append("PARTITION BY RANGE");
+        } else {
+            sbPartitionCol.append("PARTITION " + getPartitionType());
+        }
 
         sbPartitionCol.append("(");
 
@@ -149,6 +167,12 @@ public class PartitionTable extends TableMetaData {
         }
 
         sbPartitionCol.append(")");
+        if (PartitionTypeEnum.BY_INTERVAL.getTypeName().equals(getPartitionType())) {
+            sbPartitionCol.append(MPPDBIDEConstants.LINE_SEPARATOR);
+            sbPartitionCol.append("interval ('");
+            sbPartitionCol.append(getIntervalPartitionExpr());
+            sbPartitionCol.append("')");
+        }
 
         return sbPartitionCol.toString();
     }
@@ -413,7 +437,7 @@ public class PartitionTable extends TableMetaData {
     private PartitionTable getForeignTableKey(ResultSet rs, Namespace nsp, PartitionTable fkeyTableParam)
             throws SQLException {
         PartitionTable fkeyTable = fkeyTableParam;
-        if (null == fkeyTable) {
+        if (fkeyTable == null) {
             fkeyTable = nsp.getForeignTableById(rs.getLong("fkeytableId"));
         }
         return fkeyTable;
@@ -510,7 +534,7 @@ public class PartitionTable extends TableMetaData {
      * @return the part key
      */
     public String getPartKey() {
-        if (null != this.partKey && !this.getColumnMetaDataList().isEmpty()) {
+        if (this.partKey != null && !this.getColumnMetaDataList().isEmpty()) {
             List<String> splittedColNames = Arrays.asList(this.partKey.split(","));
             StringBuilder str = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
             appendColumnName(splittedColNames, str);
@@ -559,7 +583,8 @@ public class PartitionTable extends TableMetaData {
          * We get the partition details only for the non HDFS partition tables.
          * SO the partition type is restricted to 'p'
          */
-        String qry = "select p.oid AS partition_id " + ", p.relname AS partition_name " + ", p.parentid AS table_id "
+        String qry = "select p.oid AS partition_id " + ", p.relname AS partition_name,"
+                + " p.partstrategy as partition_type," + " p.parentid AS table_id "
                 + " from pg_class c, pg_partition p " + " where c.relnamespace =  %d and c.parttype = 'p' "
                 + " and p.parentid = c.oid " + " and p.parttype = 'p' " + " order by p.boundaries;";
         qry = String.format(Locale.ENGLISH, qry, oid);
@@ -607,7 +632,8 @@ public class PartitionTable extends TableMetaData {
          * We get the partition details only for the non HDFS partition tables.
          * SO the partition type is restricted to 'p'
          */
-        String qry = "select p.oid AS partition_id " + ", p.relname AS partition_name " + ", p.parentid AS table_id "
+        String qry = "select p.oid AS partition_id " + ", p.relname AS partition_name,"
+                + " p.partstrategy as partition_type," + " p.parentid AS table_id "
                 + " from pg_class c, pg_partition p " + " where c.oid =  %d and c.parttype = 'p' "
                 + " and p.parentid = c.oid " + " and p.parttype = 'p' " + " order by p.boundaries;";
         qry = String.format(Locale.ENGLISH, qry, this.getOid());

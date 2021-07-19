@@ -264,7 +264,7 @@ public class CommonLLTUtils
     // column info for a single partition table
     public static final String GET_COLUMN_INFO_PARTITION_TABLE           = "select t.oid as tableid, t.relnamespace as namespaceid, c.attnum as columnidx, c.attname as name, pg_catalog.format_type(c.atttypid, c.atttypmod) as displayColumns, c.atttypid as datatypeoid, typ.typnamespace as dtns, c.attlen as length, c.atttypmod as precision, c.attndims as dimentions, c.attnotnull as notnull, c.atthasdef as isdefaultvalueavailable, d.adsrc as default_value, d.adbin as attDefStr from pg_class t left join pg_attribute c on (t.oid = c.attrelid and t.parttype in ('p', 'v')) left join pg_attrdef d on (t.oid = d.adrelid and c.attnum = d.adnum) left join pg_type typ on (c.atttypid = typ.oid) where c.attisdropped = 'f' and c.attnum > 0 and t.oid = 1 and t.relkind <> 'i' order by c.attnum;";
 
-    public static final String GET_PARTITIONS                            = "select p.oid AS partition_id , p.relname AS partition_name , p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  0 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;";
+    public static final String GET_PARTITIONS                            = "select p.oid AS partition_id , p.relname AS partition_name, p.partstrategy as partition_type, p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  0 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;";
 
     // partition info for a single table
     public static final String GET_PARTITION                             = "select p.oid AS partition_id , p.relname AS partition_name , p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  1 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;";
@@ -289,7 +289,7 @@ public class CommonLLTUtils
     public static final String GET_PARTITION_INDEXES_AT_LOAD_LEVEL       = "SELECT i.indexrelid as oid, i.indrelid as tableId, ci.relname as indexname, ci.relnamespace as namespaceid, ci.relam as accessmethodid, i.indisunique as isunique, i.indisprimary as isprimary, i.indisexclusion as isexclusion, i.indimmediate as isimmediate, i.indisclustered as isclustered, i.indcheckxmin as checkmin, i.indisready as isready, i.indkey as cols, array_to_string(ci.reloptions, ',') as reloptions, def.indexdef, def.tablespace FROM pg_index i LEFT JOIN pg_class t on (t.oid = i.indrelid) LEFT JOIN pg_class ci on (i.indexrelid = ci.oid) LEFT JOIN pg_namespace ns on (ci.relnamespace = ns.oid) LEFT JOIN pg_indexes def on (ci.relname = def.indexname and ns.nspname = def.schemaname) WHERE t.relkind in ('r', 'f') and ci.parttype in ('p','v')  and ci.relnamespace = 1;";
     
     
-    public static final String GET_PARTITIONS_AT_LOAD_LEVEL              = "select p.oid AS partition_id , p.relname AS partition_name , p.parentid AS table_id  from pg_class c, pg_partition p  where c.relnamespace =  1 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;";
+    public static final String GET_PARTITIONS_AT_LOAD_LEVEL              = "select p.oid AS partition_id , p.relname AS partition_name, p.partstrategy as partition_type, p.parentid AS table_id  from pg_class c, pg_partition p  where c.relnamespace =  1 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;";
     
     public static final String SET_DEFAULT_DS_ENCODING                          = "UTF-8";
     
@@ -4028,7 +4028,7 @@ public class CommonLLTUtils
     public static void mockGetPartitionOverloaded(
             PreparedStatementResultSetHandler preparedstatementHandler)
     {
-        String GET_PARTITIONS_OVERLOADED = "select p.oid AS partition_id , p.relname AS partition_name , p.parentid AS table_id"
+        String GET_PARTITIONS_OVERLOADED = "select p.oid AS partition_id , p.relname AS partition_name, p.partstrategy as partition_type, p.parentid AS table_id"
                 + "  from pg_class c, pg_partition p  where c.oid =  0 and c.parttype = 'p' "
                 + " and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;";
 
@@ -4036,8 +4036,9 @@ public class CommonLLTUtils
                 .createResultSet();
         getPartitionsOverloadedRS.addColumn("partition_id");
         getPartitionsOverloadedRS.addColumn("partition_name");
+        getPartitionsOverloadedRS.addColumn("partition_type");
         getPartitionsOverloadedRS.addColumn("table_id");
-        getPartitionsOverloadedRS.addRow(new Object[] {1, "part_1", 1});
+        getPartitionsOverloadedRS.addRow(new Object[] {1, "part_1", "r", 1});
         preparedstatementHandler.prepareResultSet(GET_PARTITIONS_OVERLOADED,
                 getPartitionsOverloadedRS);
 
@@ -4917,9 +4918,10 @@ String REFRESH_TABLE4 = "select t.oid as tableid, t.relnamespace as namespaceid,
                 .createResultSet();
         getPartitionsRS.addColumn("partition_id");
         getPartitionsRS.addColumn("partition_name");
+        getPartitionsRS.addColumn("partition_type");
         getPartitionsRS.addColumn("table_id");
 
-        getPartitionsRS.addRow(new Object[] {1, "part_1", 1});
+        getPartitionsRS.addRow(new Object[] {1, "part_1", "r", 1});
         preparedstatementHandler.prepareResultSet(  CommonLLTUtils.GET_PARTITIONS ,
                 getPartitionsRS);
     }
@@ -4990,9 +4992,10 @@ String REFRESH_TABLE4 = "select t.oid as tableid, t.relnamespace as namespaceid,
                 .createResultSet();
         getPartitionsRS.addColumn("partition_id");
         getPartitionsRS.addColumn("partition_name");
+        getPartitionsRS.addColumn("partition_type");
         getPartitionsRS.addColumn("table_id");
 
-        getPartitionsRS.addRow(new Object[] {1, "part_1", 1});
+        getPartitionsRS.addRow(new Object[] {1, "part_1", "r", 1});
         preparedstatementHandler.prepareResultSet(CommonLLTUtils.GET_PARTITIONS_AT_LOAD_LEVEL,
                 getPartitionsRS);
     }

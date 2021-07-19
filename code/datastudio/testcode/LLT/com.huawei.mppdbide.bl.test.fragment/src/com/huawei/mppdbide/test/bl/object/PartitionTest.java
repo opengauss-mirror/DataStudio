@@ -146,7 +146,7 @@ public class PartitionTest extends BasicJDBCTestCaseAdapter
     }
 
     @Test
-    public void test_partition_formPartitionQueries_ROW()
+    public void test_partition_formPartitionQueries_ROW_ByRange()
     {
 
         Database database = connProfCache.getDbForProfileId(profileId);
@@ -159,33 +159,159 @@ public class PartitionTest extends BasicJDBCTestCaseAdapter
                     database.getNameSpaceById(1));
             ColumnMetaData colmetadata = new ColumnMetaData(ps, 2, "col1",
                     typeMetaData);
-            ColumnMetaData colmetadata1 = new ColumnMetaData(ps, 2, "col2",
-                    typeMetaData);
             PartitionColumnExpr column = new PartitionColumnExpr(
                     PartitionColumnType.COLUMN);
-            PartitionColumnExpr column1 = new PartitionColumnExpr(
-                    PartitionColumnType.COLUMN);
-//            PartitionTableGroup group = new PartitionTableGroup(
-//                    OBJECTTYPE.PARTITION_GROUP, ns);
-//            group.getDisplayLabel();
             column.setCol(colmetadata);
-            column1.setCol(colmetadata1);
             List<PartitionColumnExpr> columnlist = new ArrayList<>();
             columnlist.add(column);
-            columnlist.add(column1);
             ps.setSelColumns(columnlist);
             ps.setOrientation(TableOrientation.ROW);
             PartitionMetaData partition = new PartitionMetaData(10, "p1", ps);
-            partition.setPartitionName("P1");
+            partition.setPartitionName("p1");
             partition.setPartitionValue("50");
+            partition.setPartitionType("BY RANGE");
             PartitionMetaData part = new PartitionMetaData(11, "p2", ps);
-            part.setPartitionName("P2");
+            part.setPartitionName("p2");
             part.setPartitionValue("100");
+            part.setPartitionType("BY RANGE");
 
             ps.getPartitions().addItem(partition);
             ps.getPartitions().addItem(part);
             String query = ps.formPartitionQueries();
             assertTrue(query.contains("PARTITION BY RANGE"));
+            assertTrue(query.contains("partition p1 values less than (50)"));
+
+        }
+        catch (DatabaseOperationException e)
+        {
+            fail("not expected");
+        }
+
+    }
+
+    @Test
+    public void test_partition_formPartitionQueries_ROW_ByList()
+    {
+
+        Database database = connProfCache.getDbForProfileId(profileId);
+        try
+        {
+            Namespace ns = database.getNameSpaceById(1);
+            PartitionTable ps = new PartitionTable(ns);
+
+            TypeMetaData typeMetaData = new TypeMetaData(20, "bigint",
+                    database.getNameSpaceById(1));
+            ColumnMetaData colmetadata = new ColumnMetaData(ps, 2, "col1",
+                    typeMetaData);
+            PartitionColumnExpr column = new PartitionColumnExpr(
+                    PartitionColumnType.COLUMN);
+            column.setCol(colmetadata);
+            List<PartitionColumnExpr> columnlist = new ArrayList<>();
+            columnlist.add(column);
+            ps.setSelColumns(columnlist);
+            ps.setOrientation(TableOrientation.ROW);
+            PartitionMetaData partition = new PartitionMetaData(10, "p1", ps);
+            partition.setPartitionName("p1");
+            partition.setPartitionValue("10,20,30");
+            partition.setPartitionType("BY LIST");
+            PartitionMetaData part = new PartitionMetaData(11, "p2", ps);
+            part.setPartitionName("p2");
+            part.setPartitionValue("40,50,60");
+            part.setPartitionType("BY LIST");
+
+            ps.getPartitions().addItem(partition);
+            ps.getPartitions().addItem(part);
+            String query = ps.formPartitionQueries();
+            assertTrue(query.contains("PARTITION BY LIST"));
+            assertTrue(query.contains("partition p1 values (10,20,30)"));
+
+        }
+        catch (DatabaseOperationException e)
+        {
+            fail("not expected");
+        }
+
+    }
+
+    @Test
+    public void test_partition_formPartitionQueries_ROW_ByHash()
+    {
+
+        Database database = connProfCache.getDbForProfileId(profileId);
+        try
+        {
+            Namespace ns = database.getNameSpaceById(1);
+            PartitionTable ps = new PartitionTable(ns);
+
+            TypeMetaData typeMetaData = new TypeMetaData(20, "bigint",
+                    database.getNameSpaceById(1));
+            ColumnMetaData colmetadata = new ColumnMetaData(ps, 2, "col1",
+                    typeMetaData);
+            PartitionColumnExpr column = new PartitionColumnExpr(
+                    PartitionColumnType.COLUMN);
+            column.setCol(colmetadata);
+            List<PartitionColumnExpr> columnlist = new ArrayList<>();
+            columnlist.add(column);
+            ps.setSelColumns(columnlist);
+            ps.setOrientation(TableOrientation.ROW);
+            PartitionMetaData partition = new PartitionMetaData(10, "p1", ps);
+            partition.setPartitionName("p1");
+            partition.setPartitionType("BY HASH");
+            PartitionMetaData part = new PartitionMetaData(11, "p2", ps);
+            part.setPartitionName("p2");
+            part.setPartitionType("BY HASH");
+
+            ps.getPartitions().addItem(partition);
+            ps.getPartitions().addItem(part);
+            String query = ps.formPartitionQueries();
+            assertTrue(query.contains("PARTITION BY HASH"));
+            assertTrue(query.contains("partition p1"));
+        }
+        catch (DatabaseOperationException e)
+        {
+            fail("not expected");
+        }
+
+    }
+
+    @Test
+    public void test_partition_formPartitionQueries_ROW_ByInterval()
+    {
+
+        Database database = connProfCache.getDbForProfileId(profileId);
+        try
+        {
+            Namespace ns = database.getNameSpaceById(1);
+            PartitionTable ps = new PartitionTable(ns);
+
+            TypeMetaData typeMetaData = new TypeMetaData(20, "timestamp with time zone",
+                    database.getNameSpaceById(1));
+            ColumnMetaData colmetadata = new ColumnMetaData(ps, 2, "col1",
+                    typeMetaData);
+            PartitionColumnExpr column = new PartitionColumnExpr(
+                    PartitionColumnType.COLUMN);
+            column.setCol(colmetadata);
+            List<PartitionColumnExpr> columnlist = new ArrayList<>();
+            columnlist.add(column);
+            ps.setSelColumns(columnlist);
+            ps.setOrientation(TableOrientation.ROW);
+            PartitionMetaData partition = new PartitionMetaData(10, "p1", ps);
+            partition.setPartitionName("p1");
+            partition.setPartitionType("BY INTERVAL");
+            partition.setPartitionValue("2021-05-01");
+            partition.setIntervalPartitionExpr("1 month");
+            PartitionMetaData part = new PartitionMetaData(11, "p2", ps);
+            part.setPartitionName("p2");
+            part.setPartitionType("BY INTERVAL");
+            part.setPartitionValue("2021-06-01");
+            part.setIntervalPartitionExpr("1 month");
+
+            ps.getPartitions().addItem(partition);
+            ps.getPartitions().addItem(part);
+            String query = ps.formPartitionQueries();
+            assertTrue(query.contains("PARTITION BY RANGE"));
+            assertTrue(query.contains("interval ('1 month')"));
+            assertTrue(query.contains("partition p1 values less than ('2021-05-01')"));
 
         }
         catch (DatabaseOperationException e)

@@ -7,9 +7,11 @@ package com.huawei.mppdbide.bl.serverdatacache;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import com.huawei.mppdbide.adapter.gauss.DBConnection;
 import com.huawei.mppdbide.adapter.gauss.GaussUtils;
@@ -33,13 +35,39 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 
 public class PartitionMetaData extends BatchDropServerObject implements GaussOLAPDBMSObject {
 
+    private String intervalPartitionExpr = "";
     private PartitionTable pTable;
     private String partitionName;
     private String partitionValue;
-    private String partitionType = "By Range";
+    private String partitionType;
     private Tablespace ts;
     private boolean isRollBack = true;
     private ColumnMetaData columnMetadata;
+    private Map<String, IPartitionType<List<PartitionColumnExpr>, String>> partitionTypeToMethodMap =
+            new HashMap<String, IPartitionType<List<PartitionColumnExpr>, String>>();
+
+    /**
+     * Sets the partition type to method map.
+     */
+    public void setPartitionTypeToMethod() {
+        partitionTypeToMethodMap.put(PartitionTypeEnum.BY_RANGE.getTypeName(),
+                (list) -> formCreatePartitionsQryByRange(list));
+        partitionTypeToMethodMap.put(PartitionTypeEnum.BY_INTERVAL.getTypeName(),
+                (list) -> formCreatePartitionsQryByInterval(list));
+        partitionTypeToMethodMap.put(PartitionTypeEnum.BY_HASH.getTypeName(),
+                (list) -> formCreatePartitionsQryByHash(list));
+        partitionTypeToMethodMap.put(PartitionTypeEnum.BY_LIST.getTypeName(),
+                (list) -> formCreatePartitionsQryByList(list));
+    }
+
+    /**
+     * Gets the partition type to method map
+     *
+     * @return Map<String, IPartitionType<List<PartitionColumnExpr>, String>> the partition type to method map
+     */
+    public Map<String, IPartitionType<List<PartitionColumnExpr>, String>> getPartitionTypeToMethod() {
+        return partitionTypeToMethodMap;
+    }
 
     /**
      * Gets the partition name.
@@ -75,6 +103,24 @@ public class PartitionMetaData extends BatchDropServerObject implements GaussOLA
      */
     public void setPartitionValue(String partitionValue) {
         this.partitionValue = partitionValue;
+    }
+
+    /**
+     * Gets the interval partition expr.
+     *
+     * @return String the interval partition expr
+     */
+    public String getIntervalPartitionExpr() {
+        return intervalPartitionExpr;
+    }
+
+    /**
+     * Sets the interval partition expr.
+     *
+     * @param String the interval partition expr
+     */
+    public void setIntervalPartitionExpr(String intervalPartitionExpr) {
+        this.intervalPartitionExpr = intervalPartitionExpr;
     }
 
     /**
@@ -195,6 +241,7 @@ public class PartitionMetaData extends BatchDropServerObject implements GaussOLA
         PartitionMetaData part = null;
         try {
             part = new PartitionMetaData(rs.getLong("partition_id"), rs.getString("partition_name"), partitionTable);
+            part.setPartitionType(PartitionTypeEnum.getPartitionTypeMap().get(rs.getString("partition_type")));
         } catch (SQLException exp) {
             GaussUtils.handleCriticalException(exp);
             throw new DatabaseOperationException(IMessagesConstants.ERR_GUI_RESULT_SET_INVALID, exp);
@@ -259,16 +306,74 @@ public class PartitionMetaData extends BatchDropServerObject implements GaussOLA
     /**
      * Form create partitions qry.
      *
-     * @param list the list
-     * @return the string
+     * @param List<PartitionColumnExpr> the partition column expr list
+     * @return String the partition query string
      */
     public String formCreatePartitionsQry(List<PartitionColumnExpr> list) {
+        setPartitionTypeToMethod();
+        return getPartitionTypeToMethod().get(getPartitionType()).convert(list);
+    }
+
+    /**
+     * Form create partitions qry by range.
+     *
+     * @param List<PartitionColumnExpr> the partition column expr list
+     * @return String the partition query string
+     */
+    public String formCreatePartitionsQryByRange(List<PartitionColumnExpr> list) {
         StringBuilder sbPartition = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
         sbPartition.append("partition ");
         sbPartition.append(ServerObject.getQualifiedObjectName(getPartitionName()));
         sbPartition.append(" values less than ");
         sbPartition.append("(");
         sbPartition.append(composePartitionValuePart(list));
+        sbPartition.append(")");
+        if (getTs() != null) {
+            sbPartition.append(" tablespace ");
+            sbPartition.append(getTs().getDisplayName());
+        }
+        return sbPartition.toString();
+    }
+
+    /**
+     * Form create partitions qry by interval.
+     *
+     * @param List<PartitionColumnExpr> the partition column expr list
+     * @return String the partition query string
+     */
+    public String formCreatePartitionsQryByInterval(List<PartitionColumnExpr> list) {
+        return formCreatePartitionsQryByRange(list);
+    }
+
+    /**
+     * Form create partitions qry by hash.
+     *
+     * @param List<PartitionColumnExpr> the partition column expr list
+     * @return String the partition query string
+     */
+    public String formCreatePartitionsQryByHash(List<PartitionColumnExpr> list) {
+        StringBuilder sbPartition = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
+        sbPartition.append("partition ");
+        sbPartition.append(ServerObject.getQualifiedObjectName(getPartitionName()));
+        if (getTs() != null) {
+            sbPartition.append(" tablespace ");
+            sbPartition.append(getTs().getDisplayName());
+        }
+        return sbPartition.toString();
+    }
+
+    /**
+     * Form create partitions qry by list.
+     *
+     * @param List<PartitionColumnExpr> the partition column expr list
+     * @return String the partition query string
+     */
+    public String formCreatePartitionsQryByList(List<PartitionColumnExpr> list) {
+        StringBuilder sbPartition = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
+        sbPartition.append("partition ");
+        sbPartition.append(ServerObject.getQualifiedObjectName(getPartitionName()));
+        sbPartition.append(" values (");
+        sbPartition.append(getPartitionValue());
         sbPartition.append(")");
         if (getTs() != null) {
             sbPartition.append(" tablespace ");

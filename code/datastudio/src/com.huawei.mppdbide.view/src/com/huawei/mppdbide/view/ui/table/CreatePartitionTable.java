@@ -142,7 +142,8 @@ public class CreatePartitionTable extends CreateTable {
 
         String query = textSqlPreview.getDocument().get();
 
-        if (query.contains("PARTITION BY RANGE") || query.contains("PARTITION BY VALUES")) {
+        if (query.contains("PARTITION BY RANGE") || query.contains("PARTITION BY VALUES")
+                || query.contains("PARTITION BY HASH") || query.contains("PARTITION BY LIST")) {
             return true;
         }
         return false;
@@ -327,7 +328,7 @@ public class CreatePartitionTable extends CreateTable {
             if (CREATE_TABLE_INDEXES == curTab) {
                 indexUi.refreshColumns();
             }
-            if (CREATE_TABLE_PARTITIONS == curTab || curTab == CREATE_TABLE_SQL_PREVIEW) {
+            if (curTab == CREATE_TABLE_PARTITIONS || curTab == CREATE_TABLE_SQL_PREVIEW) {
                 partitionUI.refreshColumns();
             }
 

@@ -372,6 +372,7 @@ public class PartitionMetaDataTest extends BasicJDBCTestCaseAdapter
             PartitionMetaData partition = new PartitionMetaData(10, "p1", ps);
             partition.setPartitionName("P1");
             partition.setPartitionValue("50");
+            partition.setPartitionType("BY RANGE");
             ps.getPartitions().addItem(partition);
             PartitionTable table = partition.getParent();
             table.execCreate(conn);
