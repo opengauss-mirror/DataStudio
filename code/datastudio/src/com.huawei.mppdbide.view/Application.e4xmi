@@ -233,6 +233,7 @@
   <handlers xmi:id="_Qum98HBmEeiNVrMVEIRuKw" elementId="com.huawei.mppdbide.view.handler.batchexport" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.BatchExportDDLHandler" command="_AFz_sHBmEeiNVrMVEIRuKw"/>
   <handlers xmi:id="_Kl2VMDSfEeezJMW00cmTEA" elementId="com.huawei.mppdbide.handler.id.createpartitionTable" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.table.CreatePartitionTableHandler" command="_JMSooDScEeezJMW00cmTEA"/>
   <handlers xmi:id="_3HKUYDVNEeezJMW00cmTEA" elementId="com.huawei.mppdbide.view.handler.droppartition" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.table.DropPartitionHandler" command="_TFVsMDSuEeezJMW00cmTEA"/>
+  <handlers xmi:id="_G9rB4OOMEeu4zIFJ0xfEyA" elementId="com.huawei.mppdbide.view.handler.viewpartition" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.table.ViewPartitionDataHandler" command="_kciToOOMEeu4zIFJ0xfEyA"/>
   <handlers xmi:id="_85L9YDVNEeezJMW00cmTEA" elementId="com.huawei.mppdbide.view.handler.renamepartition" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.table.RenamePartitionHandler" command="_f_hqsDSuEeezJMW00cmTEA"/>
   <handlers xmi:id="_q22dgFAhEeewb-SUvB_kZg" elementId="com.huawei.mppdbide.handler.id.showddlfortable" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.ShowDDLTableHandler" command="_iVQukFAvEeexqeebXX0EXg"/>
   <handlers xmi:id="_VVwigFUiEeei8u-E028HEw" elementId="com.huawei.mppdbide.view.handler.renameconnection" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.RenameConnection" command="_GFOXsFUiEeei8u-E028HEw"/>
@@ -746,6 +747,9 @@
       <children xsi:type="menu:HandledMenuItem" xmi:id="_-Wb7UDVJEeezJMW00cmTEA" elementId="com.huawei.objectbrowser.popupmenu.id.droppartition" label="%objectbrowser.popupmenu.label.droppartition" tooltip="%objectbrowser.popupmenu.tooltip.droppartition" mnemonics="%objectbrowser.popupmenu.mnemonics.droppartition" command="_TFVsMDSuEeezJMW00cmTEA">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_MbqJkDVKEeezJMW00cmTEA" coreExpressionId="com.huawei.objectbrowser.popupmenu.selectedpartition.id.expression"/>
       </children>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_B6uP8OONEeu4zIFJ0xfEyA" elementId="com.huawei.objectbrowser.popupmenu.id.viewpartition" label="%objectbrowser.popupmenu.label.viewpartition" tooltip="%objectbrowser.popupmenu.tooltip.viewpartition" mnemonics="%objectbrowser.popupmenu.mnemonics.viewpartition" command="_kciToOOMEeu4zIFJ0xfEyA">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_8pCHUOOhEeu4zIFJ0xfEyA" coreExpressionId="com.huawei.objectbrowser.popupmenu.selectedpartition.id.expression"/>
+      </children>
       <children xsi:type="menu:HandledMenuItem" xmi:id="_dngKgDVKEeezJMW00cmTEA" elementId="com.huawei.objectbrowser.popupmenu.id.renamepartition" label="%objectbrowser.popupmenu.label.renamepartition" tooltip="%objectbrowser.popupmenu.tooltip.renamepartition" mnemonics="%objectbrowser.popupmenu.mnemonics.renamepartition" command="_f_hqsDSuEeezJMW00cmTEA">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_m2RAIDVKEeezJMW00cmTEA" coreExpressionId="com.huawei.objectbrowser.popupmenu.selectedpartition.id.expression"/>
       </children>
@@ -911,6 +915,7 @@
   <commands xmi:id="_huFwMDSsEeezJMW00cmTEA" elementId="com.huawei.mppdbide.command.id.vacuumedeltarange" commandName="Vacuum Deltarange" description="Vacuum Deltarange"/>
   <commands xmi:id="_xiSowDSsEeezJMW00cmTEA" elementId="com.huawei.mppdbide.command.id.vacuumhdfsdirectory" commandName="Vaccum HDFS Directory" description="Vaccum HDFS Directory"/>
   <commands xmi:id="_TFVsMDSuEeezJMW00cmTEA" elementId="com.huawei.mppdbide.command.id.droppartition" commandName="Drop Partition" description="Drop Partition"/>
+  <commands xmi:id="_kciToOOMEeu4zIFJ0xfEyA" elementId="com.huawei.mppdbide.command.id.viewpartition" commandName="View Partition" description="View Partition"/>
   <commands xmi:id="_f_hqsDSuEeezJMW00cmTEA" elementId="com.huawei.mppdbide.command.id.renamepartition" commandName="Rename Partition" description="Rename Partition"/>
   <commands xmi:id="_7LxFYDVlEeee0_ktRNCYVw" elementId="com.huawei.mppdbide.view.command.testabilityfocusconsole" commandName="Force Focus Console" description="Force Focus Console"/>
   <commands xmi:id="_lklWcD65Eee-MYyHzjf50w" elementId="com.huawei.mppdbide.view.command.id.createsqlfunction" commandName="Create SQL Function" description="Create SQL Function">

@@ -32,7 +32,7 @@ import com.huawei.mppdbide.utils.messaging.ProgressBarLabelFormatter;
 
 public class ViewTableDataCore extends AbstractViewTableDataCore {
     private static final String VIEW_TABLE_DATA = "VIEW_TABLE_DATA_";
-    private static final String SELECT_ALL_QUERY = "select * from %s";
+    private static final String SELECT_ALL_QUERY = "select * from %s%s";
     /**
      * server object
      */
@@ -150,7 +150,9 @@ public class ViewTableDataCore extends AbstractViewTableDataCore {
      * @throws DatabaseOperationException 
      */
     public String getQuery() throws DatabaseOperationException {
-        return String.format(Locale.ENGLISH, SELECT_ALL_QUERY, serverObject.getDisplayName());
+        return String.format(Locale.ENGLISH, SELECT_ALL_QUERY,
+                serverObject.getDisplayName(),
+                " " + handlerParameter).trim();
     }
 
     
