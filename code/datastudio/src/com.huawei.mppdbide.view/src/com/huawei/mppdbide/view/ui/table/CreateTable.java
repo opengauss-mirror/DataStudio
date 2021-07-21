@@ -490,6 +490,7 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         currentShell.setImage(getWindowImage());
         createTableGUI(currentShell);
         registerTableOrientationListener(getTableOrientationCombo());
+        registerUniqueIndexButtonListener(indexUi, newTable);
 
         Monitor monitor = parent.getMonitor();
 
@@ -601,6 +602,33 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
             }
         });
 
+    }
+
+    /**
+     * Register unique index listener.
+     *
+     * @param IndexUI the index ui
+     * @param TableMetaData the TableMetaData
+     */
+    public static void registerUniqueIndexButtonListener(IndexUI indexUi, TableMetaData newTable) {
+        Button btnUniqueIndex = indexUi.getBtnUniqueIndex();
+        btnUniqueIndex.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (btnUniqueIndex.getSelection()) {
+                    if (newTable.getOrientation() == TableOrientation.COLUMN) {
+                        indexUi.updateColumnIndexTypeObject();
+                        indexUi.updateBtreeAMCombo(true);
+                    } else {
+                        indexUi.updateIndexTypeObject();
+                        indexUi.updateBtreeAMCombo(false);
+                    }
+                } else {
+                    indexUi.updateIndexTypeObject();
+                    indexUi.updateAMCombo();
+                }
+            }
+        });
     }
 
     /**
