@@ -15,6 +15,7 @@ import com.huawei.mppdbide.adapter.gauss.DBConnection;
 import com.huawei.mppdbide.adapter.gauss.GaussUtils;
 import com.huawei.mppdbide.bl.serverdatacache.PartitionMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.PartitionTable;
+import com.huawei.mppdbide.bl.serverdatacache.PartitionTypeEnum;
 import com.huawei.mppdbide.bl.serverdatacache.ServerProperty;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
@@ -39,8 +40,6 @@ public class PropertiesPartitionTableImpl extends PropertiesTableImpl {
     private String partitionType;
     private PartitionTable partitionTable;
     private OlapConvertToObjectPropertyData convertToObjectPropertyData;
-    private static final String BY_VALUE_PART_TYPE = "By Value";
-    private static final String BY_RANGE_PART_TYPE = "By Range";
 
     /**
      * Instantiates a new properties partition table impl.
@@ -59,10 +58,9 @@ public class PropertiesPartitionTableImpl extends PropertiesTableImpl {
 
         super.getAllProperties(conn);
         if (!(this.partitionTable.getPartitions().getSize() == 0)) {
-            this.partitionType = BY_RANGE_PART_TYPE;
-
+            this.partitionType = partitionTable.getPartitions().getItem(0).getPartitionType();
         } else {
-            this.partitionType = BY_VALUE_PART_TYPE;
+            this.partitionType = PartitionTypeEnum.BY_RANGE.getTypeName();
         }
         tabNameList.add(PropertiesConstants.PARTITION);
         tableProperties.add(getPartitionInfo(conn));

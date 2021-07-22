@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
@@ -36,6 +37,7 @@ import com.huawei.mppdbide.bl.serverdatacache.PartitionColumnExpr;
 import com.huawei.mppdbide.bl.serverdatacache.PartitionColumnType;
 import com.huawei.mppdbide.bl.serverdatacache.PartitionMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.PartitionTable;
+import com.huawei.mppdbide.bl.serverdatacache.PartitionTypeEnum;
 import com.huawei.mppdbide.bl.serverdatacache.Server;
 import com.huawei.mppdbide.bl.serverdatacache.TableOrientation;
 import com.huawei.mppdbide.bl.serverdatacache.Tablespace;
@@ -78,16 +80,16 @@ public class PartitionUI {
 
     private Text txtPartitionName;
     private Text txtPartitionValue;
+    private Text txtIntervalPartitionExpr;
     private Combo cmbTablespace;
     private List<Long> tablespaceOids = new ArrayList<Long>(4);
     private Table tblPartitions;
     private PartitionMetaData partitionMetadata;
     private Label lblErrorMsg;
     private Label orientationselected;
-    private Label partitionTypeValue;
+    private Combo partitionTypeCombo;
+    private String partitionTypeString;
     private Group grpPartitions;
-    private static final String BY_RANGE = "By Range";
-    private static final String BY_VALUE = "By Values";
     private boolean isPartitionUpdate = false;
     private Button btnNewButton = null;
     private Button btnDelete = null;
@@ -340,6 +342,8 @@ public class PartitionUI {
 
     /**
      * Adds the partition columns buttons.
+     *
+     * @param Composite the partition column button composite
      */
     private void addPartitionColumnsButtons(Composite partitionBtnsComposite) {
         btnNewButton = new Button(partitionBtnsComposite, SWT.NONE);
@@ -450,7 +454,7 @@ public class PartitionUI {
      */
     private void addPartitionTypeGroup(Composite compositePartition) {
         Group grpPartitionType = new Group(compositePartition, SWT.NONE);
-        grpPartitionType.setLayout(new GridLayout(2, false));
+        grpPartitionType.setLayout(new GridLayout(3, false));
         GridData grpPartitionTypeGD = new GridData(SWT.FILL, SWT.NONE, true, true);
         grpPartitionType.setLayoutData(grpPartitionTypeGD);
         grpPartitionType.setText(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_TAB_TYPE));
@@ -479,9 +483,54 @@ public class PartitionUI {
         partitionType.setText(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_TAB_TYPE) + " :");
         partitionType.pack();
 
-        partitionTypeValue = new Label(partitionTypeComposite, SWT.NONE);
-        partitionTypeValue.setText(BY_RANGE);
-        partitionTypeValue.pack();
+        partitionTypeCombo = new Combo(partitionTypeComposite, SWT.READ_ONLY);
+        GridData cmbPartitionTypeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        partitionTypeCombo.setLayoutData(cmbPartitionTypeGD);
+        partitionTypeCombo.setItems(PartitionTypeEnum.getPartitionTypeNameArray());
+        partitionTypeString = partitionTypeCombo.getText();
+        partitionTypeCombo.select(0);
+        partitionTypeCombo.addSelectionListener(new PartitionTypeSelectListener());
+
+        Composite intervalPartitionExprComposite = new Composite(grpPartitionType, SWT.NONE);
+        intervalPartitionExprComposite.setLayout(new GridLayout(2, false));
+        GridData intervalPartitionExprCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        intervalPartitionExprComposite.setLayoutData(intervalPartitionExprCompositeGD);
+
+        Label intervalPartition = new Label(intervalPartitionExprComposite, SWT.NONE);
+        intervalPartition.setText(MessageConfigLoader.getProperty(
+                IMessagesConstants.PARTITION_TAB_INTERVAL_PARTITION_EXPR) + " :");
+        intervalPartition.pack();
+
+        txtIntervalPartitionExpr = new Text(intervalPartitionExprComposite, SWT.BORDER);
+        GridData txtintervalPartitionExprGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        txtIntervalPartitionExpr.setLayoutData(txtintervalPartitionExprGD);
+        txtIntervalPartitionExpr.setEnabled(false);
+    }
+
+    private class PartitionTypeSelectListener extends SelectionAdapter {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            String curSelectPartitionType = partitionTypeCombo.getText();
+            if (partitionTypeString.equals(curSelectPartitionType)) {
+                return;
+            }
+            partitionTypeString = curSelectPartitionType;
+            availCols.addAll(selCols);
+            selCols.clear();
+            rePopulateCols(tblSelCols, selCols);
+            rePopulateCols(tblAvailCols, availCols);
+            modifyColumnsClear();
+            txtIntervalPartitionExpr.setEnabled(false);
+            txtPartitionValue.setEnabled(true);
+            btnPartitionValue.setEnabled(true);
+            if (PartitionTypeEnum.BY_HASH.getTypeName().equals(partitionTypeCombo.getText())) {
+                txtPartitionValue.setEnabled(false);
+                btnPartitionValue.setEnabled(false);
+            }
+            if (PartitionTypeEnum.BY_INTERVAL.getTypeName().equals(partitionTypeCombo.getText())) {
+                txtIntervalPartitionExpr.setEnabled(true);
+            }
+        }
     }
 
     /**
@@ -522,11 +571,11 @@ public class PartitionUI {
 
             TableItem row = new TableItem(tblPartitions, SWT.NONE);
             List<PartitionColumnExpr> selColumns = pTable.getSelColumns();
-            if (null != selColumns && null != selColumns.get(0)) {
+            if (selColumns != null && selColumns.size() > 0 && selColumns.get(0) != null) {
                 partition.setColumnMetadata(selColumns.get(0).getCol());
             }
 
-            if (null != selColumns) {
+            if (selColumns != null) {
                 String formCreatePartitionsQryString = partition.formCreatePartitionsQry(selColumns);
                 row.setText(formCreatePartitionsQryString);
             }
@@ -703,25 +752,19 @@ public class PartitionUI {
                     return;
                 }
 
-                if (validateColumnsCount()) {
+                if (validateColumnsCount() && validatePartitionColumnType(col)) {
                     showError("");
                     availCols.remove(selectedIdx);
                     tblAvailCols.remove(selectedIdx);
                     selCols.add(col);
                     modifyColumnsClear();
-
                     if (isPartitionDefAvailable()) {
                         removePartitionTableEntries(tblPartitions);
                         modifyColumnsClear();
                         pTable.getPartitions().clear();
                     }
                 }
-
-                if (BY_VALUE.equalsIgnoreCase(partitionTypeValue.getText())) {
-                    pTable.setSelColumns(selCols);
-                }
                 rePopulateCols(tblSelCols, selCols);
-
             }
 
         }
@@ -759,9 +802,6 @@ public class PartitionUI {
                 showError("");
                 if (isPartitionDefAvailable()) {
                     pTable.getPartitions().clear();
-                    if (BY_VALUE.equalsIgnoreCase(partitionTypeValue.getText())) {
-                        pTable.setSelColumns(selCols);
-                    }
                 }
                 modifyColumnsClear();
                 selCols.remove(selectedIdx);
@@ -948,14 +988,40 @@ public class PartitionUI {
         TableOrientation orientation = ConvertToOrientation.convertToOrientationEnum(orientationselected.getText());
 
         if (validateTableOrientation(orientation)) {
-            if (selCols.size() < 4) {
-                return true;
+            String partitionType = partitionTypeCombo.getText();
+            if (PartitionTypeEnum.BY_RANGE.getTypeName().equals(partitionType)) {
+                if (selCols.size() < 4) {
+                    return true;
+                } else {
+                    showError(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_COLUMN_ERROR_THAN_FOUR));
+                }
             } else {
-                showError(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_COLUMN_ERROR_THAN_FOUR));
+                if (selCols.size() < 1)  {
+                    return true;
+                } else {
+                    showError(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_COLUMN_ERROR_THAN_ONE));
+                }
             }
-
         }
         return false;
+    }
+
+    /**
+     * Validate partition column type.
+     *
+     * @return true, if successful
+     */
+    protected boolean validatePartitionColumnType(PartitionColumnExpr col) {
+        if (PartitionTypeEnum.BY_INTERVAL.getTypeName().equals(partitionTypeCombo.getText())) {
+            String typeName = col.getCol().getDataTypeName();
+            if (typeName.contains("time") || typeName.contains("date")) {
+                return true;
+            } else {
+                showError(MessageConfigLoader.getProperty(IMessagesConstants.ERR_PARTITION_INTERVAL_COLUMN_TYPE));
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -978,7 +1044,9 @@ public class PartitionUI {
         setPartitionName(partMetadata);
         setPartitionValue(partMetadata);
         setTablespaceName(partMetadata);
-        if (partitionValueList != null) {
+        setPartitionTypeName(partMetadata);
+        if (partitionValueList != null &&
+                !PartitionTypeEnum.BY_HASH.getTypeName().equals(partitionTypeCombo.getText())) {
             partitionValueList = partMetadata.getPartitionValuesAsList();
         }
         refreshColumns();
@@ -1001,8 +1069,20 @@ public class PartitionUI {
      * @param partMetadata the new partition value
      */
     private void setPartitionValue(PartitionMetaData partMetadata) {
-        if (txtPartitionValue != null) {
+        if (txtPartitionValue != null &&
+                !PartitionTypeEnum.BY_HASH.getTypeName().equals(partitionTypeCombo.getText())) {
             txtPartitionValue.setText(partMetadata.getPartitionValue());
+        }
+    }
+
+    /**
+     * Sets the partition type name.
+     *
+     * @param PartitionMetaData the new partitionMetadata
+     */
+    private void setPartitionTypeName(PartitionMetaData partMetadata) {
+        if (partitionTypeCombo != null) {
+            partitionTypeCombo.setText(partMetadata.getPartitionType());
         }
     }
 
@@ -1303,17 +1383,37 @@ public class PartitionUI {
         validateForPartitionValue();
 
         validateDuplicatePartitionName();
+        validateIntervalPartitionExpr();
 
         partitionMetadata = new PartitionMetaData(txtPartitionName.getText());
         partitionMetadata.setParent(pTable);
-        partitionMetadata.setPartitionType(partitionTypeValue.getText());
+        partitionMetadata.setPartitionType(partitionTypeCombo.getText());
         partitionMetadata.setPartitionName(txtPartitionName.getText());
-        partitionMetadata.setPartitionValue(txtPartitionValue.getText());
+        partitionMetadata.setIntervalPartitionExpr(txtIntervalPartitionExpr.getText());
+        if (!PartitionTypeEnum.BY_HASH.getTypeName().equals(partitionTypeCombo.getText())) {
+            partitionMetadata.setPartitionValue(txtPartitionValue.getText());
+        }
         if (getSelectedTablespace() != null) {
             partitionMetadata.setTs(getSelectedTablespace());
         }
 
         return partitionMetadata;
+    }
+
+    /**
+     * Validate interval partition expr.
+     *
+     * @throws DatabaseOperationException the database operation exception
+     */
+    private void validateIntervalPartitionExpr() throws DatabaseOperationException {
+        if (!PartitionTypeEnum.BY_INTERVAL.getTypeName().equals(partitionTypeCombo.getText())) {
+            return;
+        }
+        if (txtIntervalPartitionExpr == null || txtIntervalPartitionExpr.getText().isEmpty()) {
+            MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(
+                    IMessagesConstants.ERR_PARTITION_INTERVAL_VALUE_EMPTY));
+            throw new DatabaseOperationException(IMessagesConstants.ERR_PARTITION_INTERVAL_VALUE_EMPTY);
+        }
     }
 
     /**
@@ -1334,8 +1434,21 @@ public class PartitionUI {
      * @throws DatabaseOperationException the database operation exception
      */
     private void validateForPartitionColumn() throws DatabaseOperationException {
+        if (PartitionTypeEnum.BY_INTERVAL.getTypeName().equals(partitionTypeCombo.getText())) {
+            if (null != selCols && selCols.size() == 1) {
+                String typeName = selCols.get(0).getCol().getDisplayName();
+                if (typeName.contains("time") || typeName.contains("date")) {
+                    return;
+                }
+            } else {
+                MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(
+                        IMessagesConstants.ERR_PARTITION_INTERVAL_COLUMN_TYPE));
+                throw new DatabaseOperationException(IMessagesConstants.ERR_PARTITION_INTERVAL_COLUMN_TYPE);
+            }
+        }
         if (null == selCols || selCols.size() < 1) {
-            MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_PARTITION_COLUMN_EMPTY));
+            MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(
+                    IMessagesConstants.ERR_PARTITION_COLUMN_EMPTY));
             throw new DatabaseOperationException(IMessagesConstants.ERR_PARTITION_COLUMN_EMPTY);
         }
     }
@@ -1359,6 +1472,9 @@ public class PartitionUI {
      * @throws DatabaseOperationException the database operation exception
      */
     private void validateForPartitionValue() throws DatabaseOperationException {
+        if (PartitionTypeEnum.BY_HASH.getTypeName().equals(partitionTypeCombo.getText())) {
+            return;
+        }
         if (txtPartitionValue == null || txtPartitionValue.getText().isEmpty()) {
             MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_PARTITION_VALUE_EMPTY));
             throw new DatabaseOperationException(IMessagesConstants.ERR_PARTITION_VALUE_EMPTY);
@@ -1438,7 +1554,7 @@ public class PartitionUI {
      */
     public void handleRowColumnSelection(TableOrientation orientationType) {
         orientationselected.setText(orientationType.toString());
-        partitionTypeValue.setText(BY_RANGE);
+        partitionTypeCombo.select(0);
         enableDisableComponents(true);
 
         validatePartitionUI();
@@ -1612,7 +1728,7 @@ public class PartitionUI {
      * Removes the ALL.
      */
     public void removeALL() {
-        if (null != pTable && null != tblPartitions && null != getSelCols()) {
+        if (pTable != null && tblPartitions != null && getSelCols() != null) {
             pTable.removeAllPartition();
             tblPartitions.removeAll();
             getSelCols().clear();
@@ -1630,6 +1746,7 @@ public class PartitionUI {
         editPartitionValueMap.clear();
         txtPartitionName.setText("");
         txtPartitionValue.setText("");
+        txtIntervalPartitionExpr.setText("");
         cmbTablespace.select(0);
     }
 }

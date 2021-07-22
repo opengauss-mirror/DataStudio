@@ -1114,12 +1114,13 @@ public class AutoSuggestTest extends BasicJDBCTestCaseAdapter
                 .createResultSet();
         getPartitionsRS_1.addColumn("partition_id");
         getPartitionsRS_1.addColumn("partition_name");
+        getPartitionsRS_1.addColumn("partition_type");
         getPartitionsRS_1.addColumn("table_id");
 
-        getPartitionsRS_1.addRow(new Object[] {1, "part_1", 1});
-        preparedstatementHandler.prepareResultSet("select p.oid AS partition_id , p.relname AS partition_name , p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  2 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;",
+        getPartitionsRS_1.addRow(new Object[] {1, "part_1", "r", 1});
+        preparedstatementHandler.prepareResultSet("select p.oid AS partition_id , p.relname AS partition_name, p.partstrategy as partition_type, p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  2 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;",
                 getPartitionsRS_1);
-        preparedstatementHandler.prepareResultSet("select p.oid AS partition_id , p.relname AS partition_name , p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  1 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;",
+        preparedstatementHandler.prepareResultSet("select p.oid AS partition_id , p.relname AS partition_name, p.partstrategy as partition_type, p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  1 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;",
                 getPartitionsRS_1);
         core.getContextProposals("\"partTable\".", "select * from partTable1.PCo");
         LinkedHashMap<String, ServerObject> map2;
@@ -1226,16 +1227,18 @@ public class AutoSuggestTest extends BasicJDBCTestCaseAdapter
                 "SELECT i.indexrelid as oid, i.indrelid as tableId, ci.relname as indexname, ci.relnamespace as namespaceid, ci.relam as accessmethodid, i.indisunique as isunique, i.indisprimary as isprimary, i.indisexclusion as isexclusion, i.indimmediate as isimmediate, i.indisclustered as isclustered, i.indcheckxmin as checkmin, i.indisready as isready, i.indkey as cols, array_to_string(ci.reloptions, ',') as reloptions, def.indexdef, def.tablespace FROM pg_index i LEFT JOIN pg_class t on (t.oid = i.indrelid) LEFT JOIN pg_class ci on (i.indexrelid = ci.oid) LEFT JOIN pg_namespace ns on (ci.relnamespace = ns.oid) LEFT JOIN pg_indexes def on (ci.relname = def.indexname and ns.nspname = def.schemaname) WHERE t.relkind in ('r', 'f') and ci.parttype in ('p','v') and ci.oid = 2;", indexRS);
         
         preparedstatementHandler.prepareResultSet(
-                "SELECT i.indexrelid as oid, i.indrelid as tableId, ci.relname as indexname, ci.relnamespace as namespaceid, ci.relam as accessmethodid, i.indisunique as isunique, i.indisprimary as isprimary, i.indisexclusion as isexclusion, i.indimmediate as isimmediate, i.indisclustered as isclustered, i.indcheckxmin as checkmin, i.indisready as isready, i.indkey as cols, array_to_string(ci.reloptions, ',') as reloptions, def.indexdef, def.tablespace FROM pg_index i LEFT JOIN pg_class t on (t.oid = i.indrelid) LEFT JOIN pg_class ci on (i.indexrelid = ci.oid) LEFT JOIN pg_namespace ns on (ci.relnamespace = ns.oid) LEFT JOIN pg_indexes def on (ci.relname = def.indexname and ns.nspname = def.schemaname) WHERE t.relkind in ('r', 'f') and ci.parttype in ('p','v') and ci.oid = 1;", indexRS);        MockResultSet getPartitionsRS_1 = preparedstatementHandler
+                "SELECT i.indexrelid as oid, i.indrelid as tableId, ci.relname as indexname, ci.relnamespace as namespaceid, ci.relam as accessmethodid, i.indisunique as isunique, i.indisprimary as isprimary, i.indisexclusion as isexclusion, i.indimmediate as isimmediate, i.indisclustered as isclustered, i.indcheckxmin as checkmin, i.indisready as isready, i.indkey as cols, array_to_string(ci.reloptions, ',') as reloptions, def.indexdef, def.tablespace FROM pg_index i LEFT JOIN pg_class t on (t.oid = i.indrelid) LEFT JOIN pg_class ci on (i.indexrelid = ci.oid) LEFT JOIN pg_namespace ns on (ci.relnamespace = ns.oid) LEFT JOIN pg_indexes def on (ci.relname = def.indexname and ns.nspname = def.schemaname) WHERE t.relkind in ('r', 'f') and ci.parttype in ('p','v') and ci.oid = 1;", indexRS);
+        MockResultSet getPartitionsRS_1 = preparedstatementHandler
                 .createResultSet();
         getPartitionsRS_1.addColumn("partition_id");
         getPartitionsRS_1.addColumn("partition_name");
+        getPartitionsRS_1.addColumn("partition_type");
         getPartitionsRS_1.addColumn("table_id");
 
-        getPartitionsRS_1.addRow(new Object[] {1, "part_1", 1});
-        preparedstatementHandler.prepareResultSet("select p.oid AS partition_id , p.relname AS partition_name , p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  2 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;",
+        getPartitionsRS_1.addRow(new Object[] {1, "part_1", "r", 1});
+        preparedstatementHandler.prepareResultSet("select p.oid AS partition_id , p.relname AS partition_name, p.partstrategy as partition_type, p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  2 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;",
                 getPartitionsRS_1);
-        preparedstatementHandler.prepareResultSet("select p.oid AS partition_id , p.relname AS partition_name , p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  1 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;",
+        preparedstatementHandler.prepareResultSet("select p.oid AS partition_id , p.relname AS partition_name, p.partstrategy as partition_type, p.parentid AS table_id  from pg_class c, pg_partition p  where c.oid =  1 and c.parttype = 'p'  and p.parentid = c.oid  and p.parttype = 'p'  order by p.boundaries;",
                 getPartitionsRS_1);
         core.getContextProposals("pg_catalog.\"partTable\".\"PCo\"", "select * from pg_catalog.partTable.PCo");
         LinkedHashMap<String, ServerObject> map2;
