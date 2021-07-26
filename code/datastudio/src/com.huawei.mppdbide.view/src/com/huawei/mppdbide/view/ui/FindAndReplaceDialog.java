@@ -139,7 +139,7 @@ public class FindAndReplaceDialog extends Dialog {
     }
 
     private void setParentLocation(Composite parent) {
-        parent.setSize(350, 170);
+        parent.setSize(375, 170);
         Rectangle screenSize = Display.getDefault().getPrimaryMonitor().getBounds();
         parent.setLocation((screenSize.width - parent.getBounds().width) / 2,
                 (screenSize.height - parent.getBounds().height) / 2);
@@ -197,6 +197,7 @@ public class FindAndReplaceDialog extends Dialog {
 
         btnIsWrapAround = new Button(checkboxComp, SWT.CHECK);
         btnIsWrapAround.setText(MessageConfigLoader.getProperty(IMessagesConstants.FIND_REPLACE_WRAP));
+        btnIsWrapAround.setSelection(true);
     }
 
     private void addFindAndReplaceText(Composite textboxComp) {
@@ -280,10 +281,10 @@ public class FindAndReplaceDialog extends Dialog {
     @Override
     public boolean close() {
 
-        if (null != core) {
+        if (core != null) {
             findAndReplaceOptions = core.getFindAndReplaceoptions();
 
-            if (null != findAndReplaceOptions) {
+            if (findAndReplaceOptions != null) {
                 findAndReplaceOptions.setBackwardSearch(false);
             } else {
                 return super.close();
@@ -319,7 +320,7 @@ public class FindAndReplaceDialog extends Dialog {
                 atleastOneMatchFound = true;
             }
 
-            if (-1 == lastSearchReturnIndex) {
+            if (lastSearchReturnIndex == -1) {
                 break;
             }
 
