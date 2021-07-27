@@ -142,7 +142,7 @@ public class CreateSequenceDialoge extends Dialog {
     protected MenuItem menuCopy;
     private int sequenceError;
     private String invalidSequenceValue;
-    private Label txtErrorMsg;
+    private Text txtErrorMsg;
     private SequeHandlerWorkerJob sequenceWorker;
     private SQLSourceViewerDecorationSupport sourceViewerDecorationSupport;
     private static final int SEQ_VALIDATION_CHECKPOINT_MIN_VALUE = 0;
@@ -216,9 +216,9 @@ public class CreateSequenceDialoge extends Dialog {
         tabItem.setText(GENERAL);
         Group generalGroup = new Group(tabFolder, SWT.NONE);
         GridLayout grpLayout = new GridLayout(4, false);
-        grpLayout.verticalSpacing = 15;
+        grpLayout.verticalSpacing = 6;
         grpLayout.horizontalSpacing = 15;
-        grpLayout.marginTop = 10;
+        grpLayout.marginTop = 0;
         generalGroup.setLayout(grpLayout);
         generalGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         tabItem.setControl(generalGroup);
@@ -343,11 +343,12 @@ public class CreateSequenceDialoge extends Dialog {
     }
 
     private void addErrorMsgArea(Composite mainComp) {
-        txtErrorMsg = new Label(mainComp, SWT.NONE);
+        txtErrorMsg = new Text(mainComp, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
         GridData txtErrData = new GridData(SWT.FILL, SWT.FILL, true, true);
         txtErrorMsg.setLayoutData(txtErrData);
         txtErrorMsg.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
         txtErrorMsg.setVisible(false);
+        txtErrorMsg.setSize(530, 40);
     }
 
     private void addSequenceOwnerDetailsUi(Group generalGroup) {
