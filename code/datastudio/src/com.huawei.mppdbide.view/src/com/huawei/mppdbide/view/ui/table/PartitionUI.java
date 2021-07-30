@@ -487,8 +487,8 @@ public class PartitionUI {
         GridData cmbPartitionTypeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         partitionTypeCombo.setLayoutData(cmbPartitionTypeGD);
         partitionTypeCombo.setItems(PartitionTypeEnum.getPartitionTypeNameArray());
-        partitionTypeString = partitionTypeCombo.getText();
         partitionTypeCombo.select(0);
+        partitionTypeString = partitionTypeCombo.getText();
         partitionTypeCombo.addSelectionListener(new PartitionTypeSelectListener());
 
         Composite intervalPartitionExprComposite = new Composite(grpPartitionType, SWT.NONE);
@@ -948,6 +948,21 @@ public class PartitionUI {
         cmbTablespace.clearSelection();
         cmbTablespace.select(0);
         rePopulateCols(tblSelCols, selCols);
+    }
+
+    /**
+     * Partition type based on orientation
+     */
+    private void partitionTypeBasedOnOrientation() {
+        if (pTable.getOrientation() == TableOrientation.COLUMN) {
+            partitionTypeCombo.setItems(PartitionTypeEnum.BY_RANGE.getTypeName());
+            txtIntervalPartitionExpr.setText("");
+            txtIntervalPartitionExpr.setEnabled(false);
+        } else {
+            partitionTypeCombo.setItems(PartitionTypeEnum.getPartitionTypeNameArray());
+        }
+        partitionTypeCombo.select(0);
+        partitionTypeString = partitionTypeCombo.getText();
     }
 
     /**
@@ -1435,7 +1450,7 @@ public class PartitionUI {
      */
     private void validateForPartitionColumn() throws DatabaseOperationException {
         if (PartitionTypeEnum.BY_INTERVAL.getTypeName().equals(partitionTypeCombo.getText())) {
-            if (null != selCols && selCols.size() == 1) {
+            if (selCols != null && selCols.size() == 1) {
                 String typeName = selCols.get(0).getCol().getDisplayName();
                 if (typeName.contains("time") || typeName.contains("date")) {
                     return;
@@ -1446,7 +1461,7 @@ public class PartitionUI {
                 throw new DatabaseOperationException(IMessagesConstants.ERR_PARTITION_INTERVAL_COLUMN_TYPE);
             }
         }
-        if (null == selCols || selCols.size() < 1) {
+        if (selCols == null || selCols.size() < 1) {
             MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(
                     IMessagesConstants.ERR_PARTITION_COLUMN_EMPTY));
             throw new DatabaseOperationException(IMessagesConstants.ERR_PARTITION_COLUMN_EMPTY);
@@ -1558,6 +1573,7 @@ public class PartitionUI {
         enableDisableComponents(true);
 
         validatePartitionUI();
+        partitionTypeBasedOnOrientation();
     }
 
     /**
