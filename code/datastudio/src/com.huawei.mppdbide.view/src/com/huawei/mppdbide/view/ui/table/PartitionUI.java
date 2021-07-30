@@ -31,6 +31,8 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 
 import com.huawei.mppdbide.bl.serverdatacache.ColumnMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.PartitionColumnExpr;
@@ -505,6 +507,18 @@ public class PartitionUI {
         GridData txtintervalPartitionExprGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         txtIntervalPartitionExpr.setLayoutData(txtintervalPartitionExprGD);
         txtIntervalPartitionExpr.setEnabled(false);
+        txtIntervalPartitionExpr.addModifyListener(new PartitionIntervalValueModifiedListener());
+    }
+
+    private class PartitionIntervalValueModifiedListener implements ModifyListener {
+        @Override
+        public void modifyText(ModifyEvent e) {
+            String intervalPartitionExpr = txtIntervalPartitionExpr.getText();
+            if (intervalPartitionExpr != null && !"".equals(intervalPartitionExpr)
+                    && partitionMetadata != null) {
+                partitionMetadata.setIntervalPartitionExpr(intervalPartitionExpr);
+            }
+        }
     }
 
     private class PartitionTypeSelectListener extends SelectionAdapter {
@@ -520,6 +534,7 @@ public class PartitionUI {
             rePopulateCols(tblSelCols, selCols);
             rePopulateCols(tblAvailCols, availCols);
             modifyColumnsClear();
+            txtIntervalPartitionExpr.setText("");
             txtIntervalPartitionExpr.setEnabled(false);
             txtPartitionValue.setEnabled(true);
             btnPartitionValue.setEnabled(true);
@@ -1746,7 +1761,6 @@ public class PartitionUI {
         editPartitionValueMap.clear();
         txtPartitionName.setText("");
         txtPartitionValue.setText("");
-        txtIntervalPartitionExpr.setText("");
         cmbTablespace.select(0);
     }
 }

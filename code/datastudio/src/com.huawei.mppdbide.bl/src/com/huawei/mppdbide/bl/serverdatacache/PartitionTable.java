@@ -92,7 +92,8 @@ public class PartitionTable extends TableMetaData {
         if (this.partitions == null || this.partitions.getSize() <= 0) {
             return "";
         }
-        return this.partitions.getList().get(0).getIntervalPartitionExpr();
+        int size = this.partitions.getList().size();
+        return this.partitions.getList().get(size - 1).getIntervalPartitionExpr();
     }
 
     /**
