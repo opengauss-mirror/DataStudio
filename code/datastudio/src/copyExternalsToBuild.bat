@@ -35,19 +35,8 @@ xcopy %SOURCE%\3rd_src\google\guava-28.0-jre.jar %DEST%\com.huawei.mppdbide.view
 xcopy %SOURCE%\platform\Gauss200\gs_jdbc\gsjdbc4.jar %DEST%\com.huawei.dbdriver.jdbc.gauss\. /Y /S /E
 
 mkdir %DEST%\com.huawei.mppdbide.repository\tools
-mkdir %DEST%\com.huawei.mppdbide.repository\tools\win
-mkdir %DEST%\com.huawei.mppdbide.repository\tools\linux
-mkdir %DEST%\com.huawei.mppdbide.repository\tools\win\dbms1
-mkdir %DEST%\com.huawei.mppdbide.repository\tools\win\dbms2
-mkdir %DEST%\com.huawei.mppdbide.repository\tools\win\dbms3
-mkdir %DEST%\com.huawei.mppdbide.repository\tools\linux\dbms1
-mkdir %DEST%\com.huawei.mppdbide.repository\tools\linux\dbms2
 mkdir %DEST%\db_assistant
 
-xcopy %SOURCE%\platform\Gauss100\gs_dump_win %DEST%\com.huawei.mppdbide.repository\tools\win\dbms1\. /Y /S /E
-xcopy %SOURCE%\platform\Gauss200\gs_dump_win %DEST%\com.huawei.mppdbide.repository\tools\win\dbms2\. /Y /S /E
-xcopy %SOURCE%\platform\Gauss100\gs_zenith_dump_win %DEST%\com.huawei.mppdbide.repository\tools\win\dbms3\. /Y /S /E
-xcopy %SOURCE%\platform\Gauss200\gs_dump_linux %DEST%\com.huawei.mppdbide.repository\tools\linux\dbms2\. /Y /S /E
 xcopy %DEST%\..\db_assistant %DEST%\db_assistant /Y /E
 xcopy %SOURCE%\code\datastudio\src\StartDataStudio.bat %DEST%\com.huawei.mppdbide.repository\tools\.
 mkdir ..\docs

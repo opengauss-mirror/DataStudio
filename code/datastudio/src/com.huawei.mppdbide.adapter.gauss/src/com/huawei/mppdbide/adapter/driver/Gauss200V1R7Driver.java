@@ -30,7 +30,6 @@ import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
  * @since 17 May, 2019
  */
 public class Gauss200V1R7Driver extends AbstractConnectionDriver {
-    private static final String GSDUMP_WINDOWS_RELATIVE_PATH = "tools\\win\\dbms2\\gs_dump.exe";
     private static volatile Gauss200V1R7Driver v1r7Driver;
 
     /**
@@ -42,22 +41,10 @@ public class Gauss200V1R7Driver extends AbstractConnectionDriver {
         configureDriverDetails(dsInstallPath);
     }
 
-    private String getToolAbsolutePath(String installPath, String toolRelativePath) {
-        Path dumpLoc = Paths.get(installPath, toolRelativePath);
-        String toolpath = null;
-        Path absolutePath = dumpLoc.toAbsolutePath();
-        if (absolutePath != null && absolutePath.normalize() != null) {
-            toolpath = absolutePath.normalize().toString();
-        }
-        return toolpath;
-    }
-
     @Override
     protected void configureDriverDetails(String dsInstallPath) {
         setDriver(MPPDBIDEConstants.GAUSS200V1R7DRIVER);
         HashMap<String, String> hashMap = new HashMap<String, String>(5);
-
-        hashMap.put(IDSSupportToolNames.GS_DUMP, getToolAbsolutePath(dsInstallPath, GSDUMP_WINDOWS_RELATIVE_PATH));
 
         setToolPathMap(hashMap);
 

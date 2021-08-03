@@ -18,6 +18,4 @@ package com.huawei.mppdbide.adapter;
  */
 public interface IDSSupportToolNames {
     String JDBC_JAR_FILE_PATH = "JDBC_JAR_FILE_PATH";
-    String GS_DUMP = "GS_DUMP";
-    String GS_ZENITH_DUMP = "GS_ZENITH_DUMP";
 }
