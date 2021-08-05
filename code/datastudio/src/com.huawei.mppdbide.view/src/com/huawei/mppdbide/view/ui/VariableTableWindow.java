@@ -173,9 +173,13 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
                     .getDefaulParametertMap()
                     .get(debugObject.getOid());
             ArrayList<DefaultParameter> outParamsList = debugObject.getOutParameters();
+            if (inParamsList == null) {
+                inParamsList = new ArrayList<DefaultParameter>();
+            }
             List<DefaultParameter> matchedParam = Stream.concat(inParamsList.stream(), outParamsList.stream())
                     .filter(param -> {
-                        if (param.getDefaultParameterName().equals(variableVo.name)) {
+                        if (param.getDefaultParameterName().equals(variableVo.name)
+                                || variableVo.name.contains("$")) {
                             return true;
                         } else {
                             return false;
