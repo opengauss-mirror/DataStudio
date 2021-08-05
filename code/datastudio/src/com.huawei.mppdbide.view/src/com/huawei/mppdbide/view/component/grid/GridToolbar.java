@@ -1901,11 +1901,13 @@ public class GridToolbar implements Observer {
                 dataText.doHideText(dataText.getTextParent());
                 dataText.doHideText(dataText.getSearchParent());
                 dsGridComponent.showStatusBar();
-                int scrolledRowIndex = dataText.getTopIndex();
-                dataGrid.updateScrolledInfo(scrolledRowIndex, -1);
-                dataGrid.getDataGrid().doCommand(new ShowRowInViewportCommand(
-                        dataGrid.getCurrentScrolledBeginRow(scrolledRowIndex))
-                        );
+                if (dataGrid != null) {
+                    int scrolledRowIndex = dataText.getTopIndex();
+                    dataGrid.updateScrolledInfo(scrolledRowIndex, -1);
+                    dataGrid.getDataGrid().doCommand(new ShowRowInViewportCommand(
+                            dataGrid.getCurrentScrolledBeginRow(scrolledRowIndex))
+                            );
+                }
             }
 
             @Override
@@ -1952,7 +1954,9 @@ public class GridToolbar implements Observer {
                     dataText.doShowText(dataText.getTextParent());
                 }
                 dsGridComponent.showStatusBar();
-                dataText.setTopIndex(dataGrid.getCurScrolledRow());
+                if (dataGrid != null) {
+                    dataText.setTopIndex(dataGrid.getCurScrolledRow());
+                }
             }
 
             @Override
