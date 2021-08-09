@@ -2242,7 +2242,6 @@ public void testTTA_BL_ADAPTER_FUNC_001_005_()
 		assertEquals(false, wrapper.getShowDDLSupportCheck());
 		assertNotNull(wrapper.getJDBCDriver());
 		assertNotNull(wrapper.getKeywordList());
-		assertNotNull(wrapper.getToolPath("GS_DUMP"));
 		assertEquals(false, wrapper.getShowDDLSupport());
 		SQLException excep = new SQLException("Error message");
 		assertEquals("SQL Error Code = null\r\nError message\r\n", wrapper.extractErrCodeAdErrMsgFrmServErr(excep));

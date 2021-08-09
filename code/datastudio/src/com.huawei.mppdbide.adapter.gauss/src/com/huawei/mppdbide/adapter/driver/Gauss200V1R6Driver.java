@@ -31,8 +31,6 @@ import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
  */
 public class Gauss200V1R6Driver extends AbstractConnectionDriver {
 
-    private static final String GSDUMP_WINDOWS_RELATIVE_PATH = "tools\\win\\dbms1\\gs_dump.exe";
-    private static final String GS_ZENITH_DUMP_RELATIVE_PATH = "tools\\win\\dbms3\\gs_dump.exe";
     private static volatile Gauss200V1R6Driver v1r6Driver;
 
     /**
@@ -45,24 +43,11 @@ public class Gauss200V1R6Driver extends AbstractConnectionDriver {
 
     }
 
-    private String getToolAbsolutePath(String installPath, String toolRelativePath) {
-        Path dumpLoc = Paths.get(installPath, toolRelativePath);
-        String toolpath = null;
-        if (dumpLoc.toAbsolutePath() != null && dumpLoc.toAbsolutePath().normalize() != null) {
-            toolpath = dumpLoc.toAbsolutePath().normalize().toString();
-        }
-        return toolpath;
-    }
-
     @Override
     protected void configureDriverDetails(String dsInstallPath) {
         setDriver(MPPDBIDEConstants.GAUSS200V1R6DRIVER);
         HashMap<String, String> hashMap = new HashMap<String, String>(5);
 
-        hashMap.put(IDSSupportToolNames.GS_DUMP, getToolAbsolutePath(dsInstallPath, GSDUMP_WINDOWS_RELATIVE_PATH));
-
-        hashMap.put(IDSSupportToolNames.GS_ZENITH_DUMP,
-                getToolAbsolutePath(dsInstallPath, GS_ZENITH_DUMP_RELATIVE_PATH));
         setToolPathMap(hashMap);
 
         org.postgresql.Driver driver = new org.postgresql.Driver();

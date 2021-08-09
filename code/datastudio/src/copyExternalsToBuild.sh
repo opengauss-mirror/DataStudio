@@ -37,20 +37,9 @@ cp $SOURCE/3rd_src/google/guava-28.0-jre.jar $DEST/com.huawei.mppdbide.view/.
 cp $SOURCE/platform/Gauss200/gs_jdbc/gsjdbc4.jar $DEST/com.huawei.dbdriver.jdbc.gauss/.
 
 mkdir $DEST/com.huawei.mppdbide.repository/tools
-mkdir $DEST/com.huawei.mppdbide.repository/tools/win
-mkdir $DEST/com.huawei.mppdbide.repository/tools/linux
-mkdir $DEST/com.huawei.mppdbide.repository/tools/win/dbms1
-mkdir $DEST/com.huawei.mppdbide.repository/tools/win/dbms2
-mkdir $DEST/com.huawei.mppdbide.repository/tools/win/dbms3
-mkdir $DEST/com.huawei.mppdbide.repository/tools/linux/dbms1
-mkdir $DEST/com.huawei.mppdbide.repository/tools/linux/dbms2
 mkdir $DEST/db_assistant
 mkdir $DEST/com.huawei.mppdbide.repository/tools/win/FileUtil
 
-cp -r $SOURCE/platform/Gauss100/gs_dump_win/* $DEST/com.huawei.mppdbide.repository/tools/win/dbms1/. 
-cp -r $SOURCE/platform/Gauss200/gs_dump_win/* $DEST/com.huawei.mppdbide.repository/tools/win/dbms2/. 
-cp -r $SOURCE/platform/Gauss100/gs_zenith_dump_win/* $DEST/com.huawei.mppdbide.repository/tools/win/dbms3/.
-cp -r $SOURCE/platform/Gauss200/gs_dump_linux/* $DEST/com.huawei.mppdbide.repository/tools/linux/dbms2/. 
 cp -r $DEST/../db_assistant/ $DEST/db_assistant/
 cp -r $SOURCE/platform/FileUtil/* $DEST/com.huawei.mppdbide.repository/tools/win/FileUtil/.
 cp $SOURCE/code/datastudio/src/StartDataStudio.bat $DEST/com.huawei.mppdbide.repository/tools/.
