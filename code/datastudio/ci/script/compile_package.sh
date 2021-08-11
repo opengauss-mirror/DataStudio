@@ -40,7 +40,7 @@ then
     find -path '*/linux*' -delete
     echo -e "{\"application_name\":\""$application_name"\", \"compiled_time\":\""$time_stamp"\", \"commit_id\":\""$commit_id"\"}" > version.json
 	cp -rf $info_path/openGauss* .
-	cp -rf "$info_path/Data Studio 2.0.0 Open Source Software Notice.doc" .
+	cp -rf "$info_path/Data Studio 2.1.0 Open Source Software Notice.doc" .
 	rm ./plugins/com.google.guava_21.0.0.v20170206-1425.jar
     cp "$code_path/../../../3rd_src/guava-patch/com.google.guava_27.1.0.v20190517-1946.jar" ./plugins/
     sed -i 's/21.0.0.v20170206-1425/27.1.0.v20190517-1946/g' artifacts.xml
