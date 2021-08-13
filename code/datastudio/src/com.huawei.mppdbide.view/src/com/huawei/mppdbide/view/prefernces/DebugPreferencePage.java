@@ -75,7 +75,6 @@ public class DebugPreferencePage extends PreferencePage {
 
     @Override
     public boolean performCancel() {
-        PreferenceWrapper.getInstance().setNeedRestart(false);
         PreferenceWrapper.getInstance().setPreferenceApply(false);
         PreferenceWrapper.getInstance().setDefaultStore(false);
         return true;
@@ -83,7 +82,6 @@ public class DebugPreferencePage extends PreferencePage {
 
     @Override
     protected void performDefaults() {
-        PreferenceWrapper.getInstance().setNeedRestart(false);
         PreferenceWrapper.getInstance().setDefaultStore(true);
         boolean defaultRollback = getDebugRollbackSetting(true);
         btnIfRollback.setSelection(defaultRollback);
@@ -98,7 +96,9 @@ public class DebugPreferencePage extends PreferencePage {
             performApply();
             isSelectChange = false;
         }
-        PreferenceWrapper.getInstance().setNeedRestart(false);
+        if (null != getApplyButton() && !getApplyButton().isEnabled()) {
+            PreferenceWrapper.getInstance().setPreferenceApply(false);
+        }
         return true;
     }
 
