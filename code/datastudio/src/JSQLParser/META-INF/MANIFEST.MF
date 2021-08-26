@@ -27,6 +27,12 @@ Export-Package: net.sf.jsqlparser,
  net.sf.jsqlparser.statement.update,
  net.sf.jsqlparser.statement.upsert,
  net.sf.jsqlparser.util.cnfexpression,
- net.sf.jsqlparser.util.deparser
-Bundle-ClassPath: jsqlparser-1.2.jar,
+ net.sf.jsqlparser.util.deparser,
+ net.sf.jsqlparser.statement.values,
+ net.sf.jsqlparser.statement.alter.sequence,
+ net.sf.jsqlparser.statement.comment,
+ net.sf.jsqlparser.statement.create.schema,
+ net.sf.jsqlparser.statement.create.sequence,
+ net.sf.jsqlparser.statement.grant
+Bundle-ClassPath: jsqlparser-3.2.jar,
  .
