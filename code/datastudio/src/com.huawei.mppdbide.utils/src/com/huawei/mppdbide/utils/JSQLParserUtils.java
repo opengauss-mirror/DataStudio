@@ -23,6 +23,7 @@ import net.sf.jsqlparser.statement.create.view.CreateView;
 import net.sf.jsqlparser.statement.drop.Drop;
 import net.sf.jsqlparser.statement.select.AllColumns;
 import net.sf.jsqlparser.statement.select.AllTableColumns;
+import net.sf.jsqlparser.statement.select.GroupByElement;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.statement.select.SelectBody;
@@ -379,13 +380,11 @@ public class JSQLParserUtils {
         if (ps == null) {
             return false;
         }
-        List<Expression> groupBy = ps.getGroupByColumnReferences();
+        GroupByElement groupBy = ps.getGroupBy();
         if (groupBy == null) {
             return false;
-        } else if (groupBy.size() > 0) {
-            return true;
         } else {
-            return false;
+            return true;
         }
     }
 

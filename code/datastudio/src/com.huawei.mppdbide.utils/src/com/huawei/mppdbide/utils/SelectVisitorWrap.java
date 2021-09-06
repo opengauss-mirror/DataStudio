@@ -8,6 +8,7 @@ import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.SelectVisitor;
 import net.sf.jsqlparser.statement.select.SetOperationList;
 import net.sf.jsqlparser.statement.select.WithItem;
+import net.sf.jsqlparser.statement.values.ValuesStatement;
 
 /**
  * 
@@ -36,7 +37,6 @@ public class SelectVisitorWrap implements SelectVisitor {
 
     @Override
     public void visit(PlainSelect arg0) {
-
     }
 
     @Override
@@ -46,7 +46,9 @@ public class SelectVisitorWrap implements SelectVisitor {
 
     @Override
     public void visit(WithItem arg0) {
-
     }
 
+    @Override
+    public void visit(ValuesStatement aThis) {
+    }
 }

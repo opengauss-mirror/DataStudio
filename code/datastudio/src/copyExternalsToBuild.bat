@@ -19,10 +19,10 @@ xcopy %SOURCE%\3rd_src\apache-poi\poi-4.1.1.jar %DEST%\Common-collection\. /Y /S
 xcopy %SOURCE%\3rd_src\apache-poi\poi-ooxml-4.1.1.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\apache-poi\poi-ooxml-schemas-4.1.1.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\apache-xml-beans\xmlbeans-3.0.2.jar %DEST%\Common-collection\. /Y /S /E
-xcopy %SOURCE%\3rd_src\apache-commons-compress\commons-compress-1.19.jar %DEST%\Common-collection\. /Y /S /E
+xcopy %SOURCE%\3rd_src\apache-commons-compress\commons-compress-1.21.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\apache-jakarta-commons-math\commons-math3-3.6.1.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\commons-csv\commons-csv-1.7.jar %DEST%\commons-csv\. /Y /S /E
-xcopy %SOURCE%\3rd_src\jsql-parser\jsqlparser-1.2.jar %DEST%\JSQLParser\. /Y /S /E
+xcopy %SOURCE%\3rd_src\jsql-parser\jsqlparser-3.2.jar %DEST%\JSQLParser\. /Y /S /E
 xcopy %SOURCE%\3rd_src\jquery\jquery.min.js %DEST%\..\db_assistant\js\. /Y /S /E
 xcopy %SOURCE%\3rd_src\antlr\antlr4-runtime-4.7.2.jar %DEST%\com.huawei.mppdbide.parser\. /Y /S /E
 xcopy %SOURCE%\3rd_src\apache-log4j\log4j-api-2.13.2.jar %DEST%\com.huawei.mppdbide.utils\. /Y /S /E
@@ -31,7 +31,7 @@ xcopy %SOURCE%\3rd_src\gson\gson-2.8.6.jar %DEST%\com.huawei.mppdbide.bl\. /Y /S
 xcopy %SOURCE%\3rd_src\gson\gson-2.8.6.jar %DEST%\com.huawei.mppdbide.explainplan\. /Y /S /E
 xcopy %SOURCE%\3rd_src\gson\gson-2.8.6.jar %DEST%\com.huawei.mppdbide.view\. /Y /S /E
 xcopy %SOURCE%\3rd_src\google\guice-4.2.0.jar %DEST%\com.huawei.mppdbide.view\. /Y /S /E
-xcopy %SOURCE%\3rd_src\google\guava-28.0-jre.jar %DEST%\com.huawei.mppdbide.view\. /Y /S /E
+xcopy %SOURCE%\3rd_src\google\guava-30.1.1-jre.jar %DEST%\com.huawei.mppdbide.view\. /Y /S /E
 xcopy %SOURCE%\platform\Gauss200\gs_jdbc\gsjdbc4.jar %DEST%\com.huawei.dbdriver.jdbc.gauss\. /Y /S /E
 
 mkdir %DEST%\com.huawei.mppdbide.repository\tools
