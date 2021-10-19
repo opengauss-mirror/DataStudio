@@ -14,14 +14,17 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import com.huawei.mppdbide.bl.serverdatacache.ColumnMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.ConstraintMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.ConstraintType;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.groups.OLAPObjectList;
 import com.huawei.mppdbide.utils.IMessagesConstants;
@@ -79,6 +82,17 @@ public class AddConstraint extends Dialog implements IDialogWorkerInteraction {
     protected Label lblErrormsg;
     private ConstraintMetaData newconstraint;
 
+    private ModifyConstraintData modifyConstraint;
+
+    /**
+     * set the constraint to be modify
+     *
+     * @param modifyConstraint the modify constraint
+     */
+    public void setModifyConstraint(ModifyConstraintData modifyConstraint) {
+        this.modifyConstraint = modifyConstraint;
+    }
+
     /**
      * Instantiates a new adds the constraint.
      *
@@ -109,6 +123,7 @@ public class AddConstraint extends Dialog implements IDialogWorkerInteraction {
         GridData mainCompositeGD = new GridData(SWT.FILL, SWT.NONE, true, false);
         mainComposite.setLayoutData(mainCompositeGD);
 
+        showAlreadyExistExpr(mainComposite);
         constraintUI.createConstraintsInfoGui(mainComposite);
 
         OLAPObjectList<ColumnMetaData> columns = tableMetaData.getColumns();
@@ -134,6 +149,7 @@ public class AddConstraint extends Dialog implements IDialogWorkerInteraction {
         performCancel();
         cancelButton.setText(MessageConfigLoader.getProperty(IMessagesConstants.MPPDBIDE_DIA_BTN_CANC));
 
+        initModifyConstraintUI();
         currentShell.open();
         validateForShellDispose(parent);
 
@@ -155,8 +171,11 @@ public class AddConstraint extends Dialog implements IDialogWorkerInteraction {
         currentShell.setLayout(new GridLayout(1, false));
         GridData currentShellGD = new GridData(SWT.FILL, SWT.NONE, true, true);
         currentShell.setLayoutData(currentShellGD);
-        currentShell.setSize(630, 420);
-        currentShell.setText(MessageConfigLoader.getProperty(IMessagesConstants.ADD_NEW_CONSTRAINT));
+        int height = 420 + (isModifyConstraint() ? 30 : 0);
+        String titleProp = isModifyConstraint() ? IMessagesConstants.EDIT_CONSTRAINT
+                : IMessagesConstants.ADD_NEW_CONSTRAINT;
+        currentShell.setSize(630, height);
+        currentShell.setText(MessageConfigLoader.getProperty(titleProp));
         currentShell.setImage(IconUtility.getIconImage(IiconPath.ICO_CONSTRAINTS, this.getClass()));
     }
 
@@ -202,7 +221,7 @@ public class AddConstraint extends Dialog implements IDialogWorkerInteraction {
             @Override
             public void widgetSelected(SelectionEvent event) {
 
-                newconstraint = constraintUI.getConstraint(true);
+                newconstraint = constraintUI.getConstraint(true, !isModifyConstraint());
                 lblErrormsg.setText("");
 
                 if (null != newconstraint) {
@@ -213,6 +232,7 @@ public class AddConstraint extends Dialog implements IDialogWorkerInteraction {
                     AddConstraintWorker worker = new AddConstraintWorker(progressLabel, newconstraint, tableMetaData,
                             MessageConfigLoader.getProperty(IMessagesConstants.STATUS_MSG_ADD_CONSTRAINT),
                             AddConstraint.this);
+                    worker.setAddBeforeDrop(isModifyConstraint());
                     worker.schedule();
                 } else {
                     lblErrormsg.setText(MessageConfigLoader.getProperty(IMessagesConstants.PLS_ENTER_TABLE_FOR_CONS));
@@ -228,6 +248,37 @@ public class AddConstraint extends Dialog implements IDialogWorkerInteraction {
         if (!currentShell.isDisposed()) {
             currentShell.dispose();
         }
+    }
+
+    private void showAlreadyExistExpr(Composite parent) {
+        if (isModifyConstraint()) {
+            Composite comp = new Composite(parent, SWT.NONE);
+            comp.setLayout(new GridLayout(2, false));
+            GridData compLayoutData = new GridData(SWT.FILL, SWT.NONE, true, false);
+            comp.setLayoutData(compLayoutData);
+            Label lable = new Label(comp, SWT.NONE);
+            lable.setText(MessageConfigLoader.getProperty(IMessagesConstants.EDIT_CONSTRAINT_LABEL));
+            Label lableExpr = new Label(comp, SWT.NONE);
+            lableExpr.setText(modifyConstraint.getConstraint().getConsDef());
+        }
+    }
+
+    private void initModifyConstraintUI() {
+        if (isModifyConstraint()) {
+            ConstraintMetaData curMeta = modifyConstraint.getConstraint();
+            Text constNameTxt = this.constraintUI.getTextTblConstraintName();
+            constNameTxt.setText(curMeta.getQualifiedObjectName());
+            constNameTxt.setEnabled(false);
+
+            Combo constTypeCmb = this.constraintUI.getCmbConstraintType();
+            int selectIdx = constTypeCmb.indexOf(curMeta.getConstraintType().strType);
+            constTypeCmb.select(selectIdx);
+            constTypeCmb.notifyListeners(SWT.Selection, null);
+        }
+    }
+
+    private boolean isModifyConstraint() {
+        return this.modifyConstraint != null;
     }
 
     /**

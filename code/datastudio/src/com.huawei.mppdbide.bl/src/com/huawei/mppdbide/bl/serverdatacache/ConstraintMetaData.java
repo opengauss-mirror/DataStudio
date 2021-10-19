@@ -560,6 +560,27 @@ public class ConstraintMetaData extends BatchDropServerObject implements GaussOL
     }
 
     /**
+     * Exec alter drop  then add constraint.
+     *
+     * @param tableMetaData the table meta data
+     * @param dbConnection the db connection
+     * @throws DatabaseOperationException the database operation exception
+     * @throws DatabaseCriticalException the database critical exception
+     */
+    public void execAlterDropAndAddConstraint(TableMetaData tableMetaData, DBConnection dbConnection)
+            throws DatabaseOperationException, DatabaseCriticalException {
+        StringBuilder query = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
+
+        query.append("ALTER TABLE ").append(tableMetaData.getDisplayName())
+            .append(" DROP CONSTRAINT ")
+            .append(super.getDisplayName())
+            .append(",")
+            .append(" ADD ")
+            .append(formConstraintString());
+        dbConnection.execNonSelectForTimeout(query.toString());
+    }
+
+    /**
      * Checks if is loaded.
      *
      * @return true, if is loaded

@@ -290,7 +290,7 @@ public class ConstraintUI {
         
         Label namespaceLable = new Label(namespaceParentComposite, SWT.NONE);
         namespaceLable.setText(MessageConfigLoader.getProperty(IMessagesConstants.CONSTRAINT_FOREIGN_NAMESPACE));
-    
+
         // add namespace selecter
         cmbForeignNamespace = new Combo(namespaceParentComposite, SWT.READ_ONLY);
         GridData cmbTablespaceGD = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -925,10 +925,20 @@ public class ConstraintUI {
      * @return the constraint
      */
     public ConstraintMetaData getConstraint(boolean isConstraintUpdate) {
-        ConstraintMetaData cons = null;
+        return getConstraint(isConstraintUpdate, false);
+    }
+    
+    /**
+     * Gets the constraint.
+     *
+     * @param isConstraintUpdate the is constraint update
+     * @param skipDumpCheck true if skip dump check
+     * @return ConstraintMetaData the constraint metadata
+     */
+    public ConstraintMetaData getConstraint(boolean isConstraintUpdate, boolean skipDumpCheck) {
         String name = textTblConstraintName.getText();
 
-        if (parentTable != null) {
+        if (parentTable != null && !skipDumpCheck) {
             List<ConstraintMetaData> metaDatas = parentTable.getConstraints().getList();
 
             int size = metaDatas.size();
@@ -941,6 +951,11 @@ public class ConstraintUI {
             }
         }
 
+        return getNewConstraintMetaData(name, isConstraintUpdate);
+    }
+
+    private ConstraintMetaData getNewConstraintMetaData(String name, boolean isConstraintUpdate) {
+        ConstraintMetaData cons = null;
         ConstraintType constraintType = ConstraintType.strTypeConvert(
                 cmbConstraintType.getText());
         switch (constraintType) {
