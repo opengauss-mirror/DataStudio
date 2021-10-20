@@ -20,6 +20,7 @@ import com.huawei.mppdbide.bl.util.DebugObjectGauss200Utils;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
+import com.huawei.mppdbide.view.createfunction.CreateFunctionRelyInfo;
 import com.huawei.mppdbide.view.search.SearchWindow;
 import com.huawei.mppdbide.view.ui.PLSourceEditor;
 import com.huawei.mppdbide.view.utils.UIElement;
@@ -36,7 +37,7 @@ import com.huawei.mppdbide.view.utils.UIElement;
  * @version [DataStudio 6.5.1, 17 May, 2019]
  * @since 17 May, 2019
  */
-public class CreateSQLFunction {
+public class CreateSQLFunction extends CreateFunctionBase {
 
     /**
      * Execute.
@@ -47,40 +48,9 @@ public class CreateSQLFunction {
     public void execute(@Optional @Named("function.command") String command) {
         MPPDBIDELoggerUtility.info(MessageConfigLoader.getProperty(IMessagesConstants.GUI_CREATE_FUNCTION));
 
-        /*
-         * The object will never be null. In case of null, the Menu item will be
-         * disabled automatically.
-         */
-
-        Object obj = IHandlerUtilities.getObjectBrowserSelectedObject();
-        DebugObjectGroup debugObjectGroup = null;
-        debugObjectGroup = (DebugObjectGroup) obj;
-        if (null != debugObjectGroup) {
-
-            final Database db = debugObjectGroup.getNamespace().getDatabase();
-
-            final DebugObjects object = new DebugObjects(0, "NewObject",
-                    "pl/sql".equals(command) ? OBJECTTYPE.SQLFUNCTION : OBJECTTYPE.CFUNCTION, db);
-            object.setNamespace(debugObjectGroup.getNamespace());
-
-            SourceCode sourceCode = new SourceCode();
-            Namespace ns = debugObjectGroup.getNamespace();
-            String namespacename = "";
-            if (null != ns) {
-                namespacename = ns.getQualifiedObjectName();
-            }
-            sourceCode.setCode(
-                    DebugObjectGauss200Utils.getNewFunctionObjectTemplate("return_datatype", namespacename, command));
-            object.setSourceCode(sourceCode);
-
-            PLSourceEditor plSourceEditor = UIElement.getInstance().createEditor(object);
-            if (null != plSourceEditor) {
-                plSourceEditor.displaySourceForDebugObject(object);
-                plSourceEditor.registerModifyListener();
-            }
-
-        }
-
+        String language = "pl/sql".equals(command) ?
+                CreateFunctionRelyInfo.LANGUAGE_SQL : CreateFunctionRelyInfo.LANGUAGE_C;
+        baseExecute(language);
     }
 
     /**
@@ -90,14 +60,7 @@ public class CreateSQLFunction {
      */
     @CanExecute
     public boolean canExecute() {
-        Object object = UIElement.getInstance().getActivePartObject();
-        if (object instanceof SearchWindow) {
-            return false;
-        }
-
-        Object obj = IHandlerUtilities.getObjectBrowserSelectedObject();
-        return obj instanceof DebugObjectGroup
-                && OBJECTTYPE.FUNCTION_GROUP == ((DebugObjectGroup) obj).getObjectGroupType();
+        return this.baseCanExecute();
     }
 
 }
