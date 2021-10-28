@@ -248,6 +248,7 @@
   <handlers xmi:id="_b3AAYLYNEeapfbL_jXc1Qg" elementId="com.huawei.mppdbide.handler.id.renametablespace" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.RenameTablespace" command="_kRaS0LYLEeapfbL_jXc1Qg"/>
   <handlers xmi:id="_sIhRoLYOEeapfbL_jXc1Qg" elementId="com.huawei.mppdbide.handler.id.settablespaceoption" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.SetTablespaceOption" command="_pVl-YLYLEeapfbL_jXc1Qg"/>
   <handlers xmi:id="_CT9v4KBaEeOaparmEgPkcw" elementId="com.com.huawei.mppdbide.handler.id.validateconstraint" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.table.ValidateConstraint" command="_zE1HgKA-EeOaparmEgPkcw"/>
+  <handlers xmi:id="_TRvBULbmEeuv0aZ6L_U2Xg" elementId="com.huawei.mppdbide.view.handler.constraint.edit" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.table.EditConstraintHandler" command="_ObnjwLbiEeuv0aZ6L_U2Xg"/>
   <handlers xmi:id="_CV0KAKBaEeOaparmEgPkcw" elementId="com.huawei.mppdbide.handler.id.dropconstraint" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.table.DropConstraintHandler" command="_zmGokKA-EeOaparmEgPkcw"/>
   <handlers xmi:id="_4UoqwKRQEeOq0eI1u72WIg" elementId="com.huawei.mppdbide.handler.id.editconstraintproperties" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.CreateIndexHandler" command="_h4f04KRQEeOq0eI1u72WIg"/>
   <handlers xmi:id="_AJpZ4KXrEeOq0eI1u72WIg" elementId="com.huawei.mppdbide.handler.id.dropindex" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.table.DropIndex" command="_rULm4KXqEeOq0eI1u72WIg"/>
@@ -550,7 +551,7 @@
       <children xsi:type="menu:HandledMenuItem" xmi:id="_52JakKBPEeOaparmEgPkcw" elementId="com.huawei.objectbrowser.popupmenu.id.validateconstraint" label="%objectbrowser.popupmenu.label.validateconstraint" tooltip="%objectbrowser.popupmenu.tooltip.validateconstraint" mnemonics="%objectbrowser.popupmenu.mnemonics.validateconstraint" command="_zE1HgKA-EeOaparmEgPkcw">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_maH00KBREeOaparmEgPkcw" coreExpressionId="com.huawei.objectbrowser.popupmenu.selectedconstraint.id.expression"/>
       </children>
-      <children xsi:type="menu:HandledMenuItem" xmi:id="_9gUmQKBPEeOaparmEgPkcw" elementId="com.huawei.objectbrowser.popupmenu.id.editconstraintproperties" toBeRendered="false" visible="false" label="%objectbrowser.popupmenu.label.editconstraintproperties" tooltip="%objectbrowser.popupmenu.tooltip.editconstraintproperties" enabled="false" mnemonics="%objectbrowser.popupmenu.mnemonics.editconstraintproperties">
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_9gUmQKBPEeOaparmEgPkcw" elementId="com.huawei.objectbrowser.popupmenu.id.editconstraint" label="%objectbrowser.popupmenu.label.editconstraint" tooltip="%objectbrowser.popupmenu.tooltip.editconstraint" mnemonics="%objectbrowser.popupmenu.mnemonics.editconstraint" command="_ObnjwLbiEeuv0aZ6L_U2Xg">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_nJomMKBREeOaparmEgPkcw" coreExpressionId="com.huawei.objectbrowser.popupmenu.selectedconstraint.id.expression"/>
       </children>
       <children xsi:type="menu:HandledMenuItem" xmi:id="_n6udEKRQEeOq0eI1u72WIg" elementId="com.huawei.objectbrowser.popupmenu.id.editconstraintproperties" label="%objectbrowser.popupmenu.label.createindex" tooltip="%objectbrowser.popupmenu.tooltip.createindex" mnemonics="%objectbrowser.popupmenu.mnemonics.createindex" command="_h4f04KRQEeOq0eI1u72WIg">
@@ -835,6 +836,7 @@
   <commands xmi:id="_AEXkQKA4EeOaparmEgPkcw" elementId="com.huawei.mppdbide.command.id.createconstraint" commandName="Create Constraint" description="Create new constraint"/>
   <commands xmi:id="_yivHEKA-EeOaparmEgPkcw" elementId="com.huawei.mppdbide.command.id.renameconstraint" commandName="Rename Constraint" description="Change the name of a constraint"/>
   <commands xmi:id="_zE1HgKA-EeOaparmEgPkcw" elementId="com.huawei.mppdbide.command.id.validateconstraint" commandName="Validate Constraint" description="Validates the constraint"/>
+  <commands xmi:id="_ObnjwLbiEeuv0aZ6L_U2Xg" elementId="com.huawei.mppdbide.command.id.editconstraint" commandName="Edit Constraint" description="editor the constraint"/>
   <commands xmi:id="_zmGokKA-EeOaparmEgPkcw" elementId="com.huawei.mppdbide.command.id.dropconstraint" commandName="Drop Constraint" description="Drop the constraint"/>
   <commands xmi:id="_h4f04KRQEeOq0eI1u72WIg" elementId="com.huawei.mppdbide.command.id.createindex" commandName="Create index" description="Create index for the table"/>
   <commands xmi:id="_3PpDwKOvEeOw4IuN4lFjsw" elementId="com.huawei.mppdbide.command.id.exporttabledata" commandName="Export Table Data" description="Export Table Data into CSV file"/>

@@ -28,6 +28,7 @@ import com.huawei.mppdbide.view.handler.connection.AbstractDialogWindowOperation
 public class AddConstraintWorker extends AbstractDialogWindowOperationUIWorkerJob {
     private ConstraintMetaData newconstraint;
     private TableMetaData tableMetaData;
+    private boolean addBeforeDrop = false;
 
     /**
      * Instantiates a new adds the constraint worker.
@@ -45,6 +46,10 @@ public class AddConstraintWorker extends AbstractDialogWindowOperationUIWorkerJo
         this.tableMetaData = table;
     }
 
+    public void setAddBeforeDrop(boolean addBeforeDrop) {
+        this.addBeforeDrop = addBeforeDrop;
+    }
+
     /**
      * Do job.
      *
@@ -56,7 +61,11 @@ public class AddConstraintWorker extends AbstractDialogWindowOperationUIWorkerJo
      */
     @Override
     public Object doJob() throws DatabaseOperationException, DatabaseCriticalException, MPPDBIDEException, Exception {
-        newconstraint.execAlterAddConstraint(tableMetaData, conn);
+        if (addBeforeDrop) {
+            newconstraint.execAlterDropAndAddConstraint(tableMetaData, conn);
+        } else {
+            newconstraint.execAlterAddConstraint(tableMetaData, conn);
+        }
         tableMetaData.refresh(conn);
         return null;
     }
