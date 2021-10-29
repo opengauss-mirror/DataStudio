@@ -26,6 +26,7 @@ import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -73,6 +74,7 @@ import com.huawei.mppdbide.bl.serverdatacache.Server;
 import com.huawei.mppdbide.bl.serverdatacache.ServerObject;
 import com.huawei.mppdbide.bl.serverdatacache.ShowMoreObject;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.UserNamespace;
 import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.groups.DatabaseObjectGroup;
@@ -104,6 +106,7 @@ import com.huawei.mppdbide.view.handler.ConnectToDB;
 import com.huawei.mppdbide.view.handler.DisconnectDatabase;
 import com.huawei.mppdbide.view.handler.ExecuteObjectBrowserItem;
 import com.huawei.mppdbide.view.handler.RefreshObjectBrowserItem;
+import com.huawei.mppdbide.view.ui.terminal.SQLTerminal;
 import com.huawei.mppdbide.view.ui.uiif.ObjectBrowserIf;
 import com.huawei.mppdbide.view.utils.GUISM;
 import com.huawei.mppdbide.view.utils.UIElement;
@@ -1009,6 +1012,18 @@ public class ObjectBrowser implements Observer, ObjectBrowserIf {
                 }
                 if (obj instanceof IDebugObject) {
                     initDebugObjects();
+                } else if (obj instanceof TriggerMetaData) {
+                    TriggerMetaData trigger = (TriggerMetaData) obj;
+                    SQLTerminal terminal = UIElement.getInstance().createNewTerminal(trigger.getDatabase());
+                    if (null != terminal) {
+                        Document doc = new Document(trigger.getHeader() + trigger.getDdlMsg());
+                        terminal.getTerminalCore().setDocument(doc, 0);
+                        terminal.resetSQLTerminalButton();
+                        terminal.resetAutoCommitButton();
+                        terminal.setModified(true);
+                        terminal.setModifiedAfterCreate(true);
+                        terminal.registerModifyListener();
+                    }
                 } else if (isValidObj(obj)) {
                     checkIfObjectValid(obj);
                 } else if (((ServerObject) obj).isLoaded()) {

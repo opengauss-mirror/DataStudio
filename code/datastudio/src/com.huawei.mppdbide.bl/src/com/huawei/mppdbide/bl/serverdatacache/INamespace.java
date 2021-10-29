@@ -136,4 +136,12 @@ public interface INamespace {
      * @return the server object
      */
     ServerObject getNewlyUpdatedView(String viewName);
+
+    /**
+     * gets the New Create Trigger view
+     *
+     * @param triggerName the trigger
+     * @return the server object
+     */
+    ServerObject getNewlyCreateTrigger(String triggerName);
 }

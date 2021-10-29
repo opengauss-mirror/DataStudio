@@ -124,6 +124,10 @@ public class ObjectGroup<T extends ServerObject> implements Iterable<T> {
                 this.displayName = MessageConfigLoader.getProperty(IMessagesConstants.SYNONYM_GROUP_NAME);
                 break;
             }
+            case TRIGGER_GROUP: {
+                this.displayName = MessageConfigLoader.getProperty(IMessagesConstants.TRIGGER_GROUP_NAME);
+                break;
+            }
             default: {
                 break;
             }

@@ -319,6 +319,12 @@
   <handlers xmi:id="_PxB-QDXPEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.stepin" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.StepInDebugHandler" command="_1t6MMC-PEeu3vZBI81hPmA"/>
   <handlers xmi:id="_UI-18DXPEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.stepover" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.StepOverDebugHandler" command="_zmRKQC-PEeu3vZBI81hPmA"/>
   <handlers xmi:id="_YUBTADXPEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.handler.continue" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.debug.ContinueDebugHandler" command="_xGswgC-PEeu3vZBI81hPmA"/>
+  <handlers xmi:id="_2Zf78KlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.handler.trigger.create" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.trigger.TriggerCreateHandler" command="_eCDP8KlWEeuojqeHJNNWsQ"/>
+  <handlers xmi:id="_27tRIKlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.handler.trigger.drop" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.trigger.TriggerDropHandler" command="_mgW5AKlWEeuojqeHJNNWsQ"/>
+  <handlers xmi:id="_3YSfcKlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.handler.trigger.enable" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.trigger.TriggerEnableHandler" command="_nQpGcKlWEeuojqeHJNNWsQ"/>
+  <handlers xmi:id="_32L8YKlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.handler.trigger.disable" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.trigger.TriggerDisableHandler" command="_nz49cKlWEeuojqeHJNNWsQ"/>
+  <handlers xmi:id="_4WGLgKlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.handler.trigger.rename" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.trigger.TriggerRenameHandler" command="_oadOMKlWEeuojqeHJNNWsQ"/>
+  <handlers xmi:id="_u19KAKmuEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.handler.function.createtrigger" contributionURI="bundleclass://com.huawei.mppdbide.view/com.huawei.mppdbide.view.handler.CreateTriggerFunction" command="_g92nMKmtEeuojqeHJNNWsQ"/>
   <bindingTables xmi:id="_ZMuLcP2OEeGZi6yaMvtO4A" elementId="com.huawei.mppdbide.view.bindingtable.id" bindingContext="_3i-_QP2OEeGZi6yaMvtO4A">
     <tags>type:user</tags>
     <bindings xmi:id="_Znpz8P2OEeGZi6yaMvtO4A" elementId="key.id.newdbconnection" keySequence="M1+N" command="_yJ2c0Pf7EeGyxMhq6ePu1A">
@@ -455,6 +461,9 @@
       <children xsi:type="menu:MenuSeparator" xmi:id="_chYg4pPqEeOwspWUd5Ul7A" elementId="com.huawei.mppdbide.view.menuseparator.0"/>
       <children xsi:type="menu:HandledMenuItem" xmi:id="_chYg45PqEeOwspWUd5Ul7A" elementId="com.huawei.objectbrowser.popupmenu.id.createfunction" label="%objectbrowser.popupmenu.label.createfunction" tooltip="%objectbrowser.popupmenu.tooltip.createfunction" mnemonics="%objectbrowser.popupmenu.mnemonics.createfunction" command="_nzKO0EujEeOxYYqXfkt1Gw">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_chYg5JPqEeOwspWUd5Ul7A" coreExpressionId="com.huawei.objectbrowser.popupmenu.createfunction.id.expression"/>
+      </children>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_l433EKmqEeuojqeHJNNWsQ" elementId="com.huawei.objectbrowser.popupmenu.id.createtrigger" label="%objectbrowser.popupmenu.label.createtrigger" tooltip="%objectbrowser.popupmenu.tooltip.createtrigger" mnemonics="%objectbrowser.popupmenu.mnemonics.createtrigger" command="_g92nMKmtEeuojqeHJNNWsQ">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_Kn3ukKmrEeuojqeHJNNWsQ" coreExpressionId="com.huawei.objectbrowser.popupmenu.createprocedure.id.expression"/>
       </children>
       <children xsi:type="menu:HandledMenuItem" xmi:id="_8oJGQNdXEeek8ZuCIxzvJQ" elementId="com.huawei.objectbrowser.popupmenu.id.createprocedure" label="%objectbrowser.popupmenu.label.createprocedure" tooltip="%objectbrowser.popupmenu.tooltip.createprocedure" mnemonics="%objectbrowser.popupmenu.mnemonics.createprocedure" command="_ZWO30NdXEeek8ZuCIxzvJQ">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_LBr-sNdYEeek8ZuCIxzvJQ" coreExpressionId="com.huawei.objectbrowser.popupmenu.createprocedure.id.expression"/>
@@ -766,6 +775,22 @@
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_chYg2pPqEeOwspWUd5Ul7A" coreExpressionId="com.huawei.objectbrowser.popupmenu.refresh.id.expression"/>
         <parameters xmi:id="_HmU-sM-REemZic6zc4AEcg" elementId="com.huawei.mppdbide.view.parameter.autorefresh1" name="objectbrowser.id" value="objectbrowser"/>
       </children>
+      <children xsi:type="menu:MenuSeparator" xmi:id="_09F6QKlUEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.menuseparator.23"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_1ebswKlUEeuojqeHJNNWsQ" elementId="com.huawei.objectbrowser.popupmenu.id.triggergroup.create" label="%objectbrowser.popupmenu.label.triggergroup.create" tooltip="%objectbrowser.popupmenu.tooltip.triggergroup.create" mnemonics="%objectbrowser.popupmenu.mnemonics.triggergroup.create" command="_eCDP8KlWEeuojqeHJNNWsQ">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_PYIOoKlVEeuojqeHJNNWsQ" coreExpressionId="com.huawei.objectbrowser.popupmenu.triggergroup.id.expression"/>
+      </children>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_-5YkQKlUEeuojqeHJNNWsQ" elementId="com.huawei.objectbrowser.popupmenu.id.trigger.enable" label="%objectbrowser.popupmenu.label.trigger.enable" tooltip="%objectbrowser.popupmenu.tooltip.trigger.enable" mnemonics="%objectbrowser.popupmenu.mnemonics.trigger.enable" command="_nQpGcKlWEeuojqeHJNNWsQ">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_evxHAKlVEeuojqeHJNNWsQ" coreExpressionId="com.huawei.objectbrowser.popupmenu.trigger.id.expression"/>
+      </children>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="__t8NsKlUEeuojqeHJNNWsQ" elementId="com.huawei.objectbrowser.popupmenu.id.trigger.disable" label="%objectbrowser.popupmenu.label.trigger.disable" tooltip="%objectbrowser.popupmenu.tooltip.trigger.disable" mnemonics="%objectbrowser.popupmenu.mnemonics.trigger.disable" command="_nz49cKlWEeuojqeHJNNWsQ">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_fH7vYKlVEeuojqeHJNNWsQ" coreExpressionId="com.huawei.objectbrowser.popupmenu.trigger.id.expression"/>
+      </children>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_C4UpkKlWEeuojqeHJNNWsQ" elementId="com.huawei.objectbrowser.popupmenu.id.trigger.rename" label="%objectbrowser.popupmenu.label.trigger.rename" tooltip="%objectbrowser.popupmenu.tooltip.trigger.rename" mnemonics="%objectbrowser.popupmenu.mnemonics.trigger.rename" command="_oadOMKlWEeuojqeHJNNWsQ">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_HjUZEKlWEeuojqeHJNNWsQ" coreExpressionId="com.huawei.objectbrowser.popupmenu.trigger.id.expression"/>
+      </children>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_2q-YYKlUEeuojqeHJNNWsQ" elementId="com.huawei.objectbrowser.popupmenu.id.trigger.drop" label="%objectbrowser.popupmenu.label.trigger.drop" tooltip="%objectbrowser.popupmenu.tooltip.trigger.drop" mnemonics="%objectbrowser.popupmenu.mnemonics.trigger.drop" command="_mgW5AKlWEeuojqeHJNNWsQ">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_eKsrEKlVEeuojqeHJNNWsQ" coreExpressionId="com.huawei.objectbrowser.popupmenu.trigger.id.expression"/>
+      </children>
     </menus>
   </snippets>
   <snippets xsi:type="basic:PartStack" xmi:id="_XoL_kAwoEeqcE_uidrAqeQ" elementId="com.huawei.mppdbide.view.partstack.visualsnippet">
@@ -923,6 +948,7 @@
   <commands xmi:id="_lklWcD65Eee-MYyHzjf50w" elementId="com.huawei.mppdbide.view.command.id.createsqlfunction" commandName="Create SQL Function" description="Create SQL Function">
     <parameters xmi:id="_SYDMAN0GEeizOuSH2fh4dg" elementId="function.command" name="function.command"/>
   </commands>
+  <commands xmi:id="_g92nMKmtEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.command.id.function.createtrigger" commandName="Create Function Trigger" description="Create Function Trigger"/>
   <commands xmi:id="_iVQukFAvEeexqeebXX0EXg" elementId="com.huawei.mppdbide.view.command.id.showddlfortable" commandName="Show DDL For Table" description="Show DDL For Table"/>
   <commands xmi:id="_GFOXsFUiEeei8u-E028HEw" elementId="com.huawei.mppdbide.view.command.renameconnection" commandName="Rename Connection" description="Rename Connection"/>
   <commands xmi:id="_LSzP0FUiEeei8u-E028HEw" elementId="com.huawei.mppdbide.view.command.editconnection" commandName="Edit Connection" description="Edit Connection"/>
@@ -993,6 +1019,11 @@
   <commands xmi:id="_4NaUgC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.stepout" commandName="Step out" description="Step out"/>
   <commands xmi:id="_6GFGUC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.view.command.ToggleBlockComment" commandName="Toggle Block Comment" description="Toggle Block Comment"/>
   <commands xmi:id="_9RstwC-PEeu3vZBI81hPmA" elementId="com.huawei.mppdbide.command.id.viewbreakpoint" commandName="View Breakpoint" description="View Breakpoint"/>
+  <commands xmi:id="_eCDP8KlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.command.id.trigger.create" commandName="Trigger Create" description="Trigger Create"/>
+  <commands xmi:id="_mgW5AKlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.command.id.trigger.drop" commandName="Trigger Drop" description="Trigger Drop"/>
+  <commands xmi:id="_nQpGcKlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.command.id.trigger.enable" commandName="Trigger Enable" description="Trigger Enable"/>
+  <commands xmi:id="_nz49cKlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.command.id.trigger.disable" commandName="Trigger Disable" description="Trigger Disable"/>
+  <commands xmi:id="_oadOMKlWEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.command.id.trigger.rename" commandName="Trigger Rename" description="Trigger Rename"/>
   <addons xmi:id="_C4LugfdQEeG3IOiaXuj5Ng" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_C4LugvdQEeG3IOiaXuj5Ng" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_C4Lug_dQEeG3IOiaXuj5Ng" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

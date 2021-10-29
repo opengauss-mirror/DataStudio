@@ -69,6 +69,10 @@ public class AutoRefreshQueryFormation {
                 serverObj = setSchemaForTable(objectDetail, listOfObjects);
                 break;
             }
+            case MPPDBIDEConstants.CREATE_TRIGGER: {
+                serverObj = objectDetail.getNamespace().getNewlyCreateTrigger(objectDetail.getObjectName());
+                break;
+            }
             default: {
                 break;
             }

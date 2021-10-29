@@ -448,6 +448,7 @@ public interface MPPDBIDEConstants {
     String ALTER_VIEW = "ALTER_VIEW";
     String SET_SCHEMA_VIEW = "SET_SCHEMA_VIEW";
     String SET_SCHEMA_TABLE = "SET_SCHEMA_TABLE";
+    String CREATE_TRIGGER = "CREATE_TRIGGER";
     String ID_EDIT_TERMINAL_VALUE_BUTTON = "ID_EDIT_TERMINAL_VALUE_BUTTON";
     String PREF_USER_DEFINE_DATE_FORMAT = "userdefineddateformat.prefs";
     String PREF_USER_DEFINE_TIME_FORMAT = "userdefinedtimeformat.prefs";

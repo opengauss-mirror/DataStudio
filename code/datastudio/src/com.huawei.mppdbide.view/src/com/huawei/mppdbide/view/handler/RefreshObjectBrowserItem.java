@@ -41,6 +41,7 @@ import com.huawei.mppdbide.bl.serverdatacache.SynonymMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.SystemNamespace;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.Tablespace;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.UserNamespace;
 import com.huawei.mppdbide.bl.serverdatacache.UserRole;
 import com.huawei.mppdbide.bl.serverdatacache.UserRoleManager;
@@ -55,6 +56,7 @@ import com.huawei.mppdbide.bl.serverdatacache.groups.SynonymObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SystemNamespaceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TableObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TablespaceObjectGroup;
+import com.huawei.mppdbide.bl.serverdatacache.groups.TriggerObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.UserNamespaceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.UserRoleObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ViewObjectGroup;
@@ -611,6 +613,8 @@ public class RefreshObjectBrowserItem {
             refreshSequenceObjGroup(obj, objectName, db);
         } else if (obj instanceof SynonymObjectGroup) {
             refreshSynonymObjGroup(obj, db);
+        } else if (obj instanceof TriggerObjectGroup) {
+            refreshTriggerGroup(obj, db);
         } else if (obj instanceof UserRoleObjectGroup) {
             refreshUserRoleObjGroup(obj, objectName);
         }
@@ -665,6 +669,24 @@ public class RefreshObjectBrowserItem {
         Namespace ns = (Namespace) group.getParent();
         timer = new ExecTimer("Refreshing synonyms for Schema : " + ns.getDisplayName()).start();
         ns.loadSynonyms(db.getConnectionManager().getObjBrowserConn());
+        db.setLoadingNamespaceInProgress(false);
+        timer.stopAndLog();
+    }
+
+    /**
+     * Refresh trigger obj group.
+     *
+     * @param Object the obj
+     * @param Database the database
+     * @throws DatabaseCriticalException the database critical exception
+     * @throws DatabaseOperationException the database operation exception
+     */
+    private void refreshTriggerGroup(final Object obj, Database db)
+            throws DatabaseCriticalException, DatabaseOperationException {
+        TriggerObjectGroup group = (TriggerObjectGroup) obj;
+        Namespace ns = (Namespace) group.getParent();
+        timer = new ExecTimer("Refreshing synonyms for Schema : " + ns.getDisplayName()).start();
+        ns.loadTriggers(db.getConnectionManager().getObjBrowserConn());
         db.setLoadingNamespaceInProgress(false);
         timer.stopAndLog();
     }
@@ -1651,14 +1673,15 @@ public class RefreshObjectBrowserItem {
     }
 
     /**
-     * Validate for N amespace child.
+     * Validate for namespace child.
      *
-     * @param obj the obj
-     * @return true, if successful
+     * @param Object the obj
+     * @return boolean true if successful
      */
     private boolean validateForNamespaceChild(Object obj) {
         return obj instanceof ViewMetaData || obj instanceof SequenceMetadata || obj instanceof SequenceObjectGroup
-                || obj instanceof SynonymMetaData || obj instanceof SynonymObjectGroup;
+                || obj instanceof SynonymMetaData || obj instanceof SynonymObjectGroup
+                || obj instanceof TriggerMetaData || obj instanceof TriggerObjectGroup;
     }
 
     /**

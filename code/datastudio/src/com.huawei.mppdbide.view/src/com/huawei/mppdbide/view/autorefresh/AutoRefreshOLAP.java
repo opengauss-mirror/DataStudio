@@ -111,6 +111,21 @@ public class AutoRefreshOLAP extends AutoRefreshObject {
     }
 
     /**
+     * Gets the trigger objects.
+     *
+     * @param Database the database
+     * @param INamespace the namespace
+     * @param RefreshObjectDetails the refresh object detail
+     * @return the trigger objects
+     */
+    @Override
+    public void getTriggerObjects(Database database,
+            INamespace namespace,
+            RefreshObjectDetails refObject2) {
+        refObject2.setParent(((Namespace) namespace).getTriggerObjectGroup());
+    }
+
+    /**
      * Gets the table name for index.
      *
      * @param namespace the namespace

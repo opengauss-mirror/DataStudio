@@ -531,6 +531,8 @@ public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
 
     String RENAME_TABLE_NEW = "RENAME_TABLE_NEW";
 
+    String RENAME_TRIGGER_WAIT = "RENAME_TRIGGER_WAIT";
+
     String SET_COLUMN_TOGGLE_TITLE = "SET_COLUMN_TOGGLE_TITLE";
     String SET_COLUMN_TOGGLE_MSG = "SET_COLUMN_TOGGLE_MSG";
     String SET_COLUMN = "SET_COLUMN";

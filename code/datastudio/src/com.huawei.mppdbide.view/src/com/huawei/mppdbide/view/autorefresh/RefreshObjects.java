@@ -43,7 +43,8 @@ public class RefreshObjects {
         switch (operationType) {
             case "CREATE_TABLE":
             case "CREATE_FUNC_PROC":
-            case "CREATE_VIEW": {
+            case "CREATE_VIEW":
+            case "CREATE_TRIGGER": {
                 String text = FilterObject.getInstance().getFilterText();
                 if ((text == null) || (objectDetail.getObjToBeRefreshed().getName().toLowerCase(Locale.ENGLISH)
                         .contains(text.toLowerCase(Locale.ENGLISH)))) {

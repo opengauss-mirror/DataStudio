@@ -18,12 +18,9 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URL;
 import java.nio.file.Files;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.StringTokenizer;
 
 import org.apache.poi.util.BoundedInputStream;
@@ -40,11 +37,9 @@ import com.huawei.mppdbide.bl.serverdatacache.ConstraintMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.DBConnProfCache;
 import com.huawei.mppdbide.bl.serverdatacache.Database;
 import com.huawei.mppdbide.bl.serverdatacache.DebugObjects;
-import com.huawei.mppdbide.bl.serverdatacache.DefaultParameter;
 import com.huawei.mppdbide.bl.serverdatacache.ForeignPartitionTable;
 import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
 import com.huawei.mppdbide.bl.serverdatacache.INamespace;
-import com.huawei.mppdbide.bl.serverdatacache.IQueryResult;
 import com.huawei.mppdbide.bl.serverdatacache.ITableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.IViewMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.IViewObjectGroups;
@@ -56,6 +51,7 @@ import com.huawei.mppdbide.bl.serverdatacache.SequenceMetadata;
 import com.huawei.mppdbide.bl.serverdatacache.Server;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.Tablespace;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.UserNamespace;
 import com.huawei.mppdbide.bl.serverdatacache.UserRole;
 import com.huawei.mppdbide.bl.serverdatacache.ViewColumnMetaData;
@@ -63,24 +59,14 @@ import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ColumnList;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ConstraintList;
 import com.huawei.mppdbide.bl.serverdatacache.groups.DatabaseObjectGroup;
-import com.huawei.mppdbide.bl.serverdatacache.groups.SequenceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SynonymObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TableObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TablespaceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.UserRoleObjectGroup;
-import com.huawei.mppdbide.bl.serverdatacache.groups.ViewObjectGroup;
-import com.huawei.mppdbide.bl.sqlhistory.IQueryExecutionSummary;
-import com.huawei.mppdbide.bl.sqlhistory.SQLHistoryFactory;
-import com.huawei.mppdbide.bl.util.ExecTimer;
-import com.huawei.mppdbide.presentation.TerminalExecutionConnectionInfra;
-import com.huawei.mppdbide.presentation.edittabledata.QueryResultMaterializer;
 import com.huawei.mppdbide.presentation.resultset.ActionAfterResultFetch;
-import com.huawei.mppdbide.presentation.resultset.ConsoleDataWrapper;
 import com.huawei.mppdbide.presentation.resultsetif.IResultConfig;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
-import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
-import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 import com.huawei.mppdbide.utils.exceptions.MPPDBIDEException;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
@@ -89,11 +75,7 @@ import com.huawei.mppdbide.view.core.statusbar.ObjectBrowserStatusBarProvider;
 import com.huawei.mppdbide.view.prefernces.PreferenceWrapper;
 import com.huawei.mppdbide.view.search.SearchWindow;
 import com.huawei.mppdbide.view.ui.ObjectBrowser;
-import com.huawei.mppdbide.view.ui.PLSourceEditor;
-import com.huawei.mppdbide.view.uidisplay.UIDisplayFactoryProvider;
-import com.huawei.mppdbide.view.uidisplay.uidisplayif.UIDisplayStateIf;
 import com.huawei.mppdbide.view.utils.UIElement;
-import com.huawei.mppdbide.view.utils.consts.UIConstants;
 import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
 import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
 import com.huawei.mppdbide.view.workerjob.UIWorkerJob;
@@ -197,7 +179,7 @@ public interface IHandlerUtilities {
             viewer = ((SearchWindow) partObject).getResultViewer();
         }
 
-        if (null != viewer) {
+        if (viewer != null) {
             ISelection selection = viewer.getSelection();
             if (selection instanceof IStructuredSelection) {
                 return ((IStructuredSelection) selection).getFirstElement();
@@ -231,7 +213,7 @@ public interface IHandlerUtilities {
             viewer = ((SearchWindow) partObject).getResultViewer();
         }
 
-        if (null != viewer) {
+        if (viewer != null) {
             ISelection selection = viewer.getSelection();
             if (selection instanceof IStructuredSelection) {
                 return ((IStructuredSelection) selection).toList();
@@ -324,7 +306,19 @@ public interface IHandlerUtilities {
         if (obj instanceof ITableMetaData) {
             return (ITableMetaData) obj;
         }
+        return null;
+    }
 
+    /**
+     * Get the selected trigger metaData
+     *
+     * @return TriggerMetaData the selected trigger metadata
+     */
+    static TriggerMetaData getSelectedTriggerMetaData() {
+        Object obj = getObjectBrowserSelectedObject();
+        if (obj instanceof TriggerMetaData) {
+            return (TriggerMetaData) obj;
+        }
         return null;
     }
 
@@ -568,7 +562,7 @@ public interface IHandlerUtilities {
                         + MessageConfigLoader.getProperty(IMessagesConstants.MSG_HINT_GETSOURCE));
 
         MPPDBIDELoggerUtility.info("GUI: ObjectBrowser: Display source code failed.");
-        if (null != sqlObject) {
+        if (sqlObject != null) {
             ObjectBrowserStatusBarProvider.getStatusBar().displayMessage(Message.getError(MessageConfigLoader
                     .getProperty(IMessagesConstants.FETCHING_SOURCE_CODE_FAILED, sqlObject.getDisplayName(false))));
         }
@@ -710,7 +704,7 @@ public interface IHandlerUtilities {
         StringBuilder code = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
 
         code.append("CREATE [OR REPLACE] PROCEDURE ");
-        if (null != namespace) {
+        if (namespace != null) {
             code.append(namespace.getQualifiedObjectName()).append('.');
 
         }
@@ -926,7 +920,7 @@ public interface IHandlerUtilities {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     static void closeFileOutput(FileOutputStream fileOutput) throws IOException {
-        if (null != fileOutput) {
+        if (fileOutput != null) {
             fileOutput.close();
         }
     }
@@ -938,7 +932,7 @@ public interface IHandlerUtilities {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     static void closeInputStreamReader(InputStreamReader inputStreamReader) throws IOException {
-        if (null != inputStreamReader) {
+        if (inputStreamReader != null) {
             inputStreamReader.close();
         }
     }
@@ -950,7 +944,7 @@ public interface IHandlerUtilities {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     static void closeInputStream(InputStream inputStream) throws IOException {
-        if (null != inputStream) {
+        if (inputStream != null) {
             inputStream.close();
         }
     }
@@ -962,7 +956,7 @@ public interface IHandlerUtilities {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     static void closeWriter(Writer writer) throws IOException {
-        if (null != writer) {
+        if (writer != null) {
             writer.close();
         }
     }
@@ -974,7 +968,7 @@ public interface IHandlerUtilities {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     static void closeFilePathInputStream(FileInputStream filePathInputStream) throws IOException {
-        if (null != filePathInputStream) {
+        if (filePathInputStream != null) {
             filePathInputStream.close();
         }
     }
@@ -986,7 +980,7 @@ public interface IHandlerUtilities {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     static void closeBoundedInputStream(BoundedInputStream boundedInputStream) throws IOException {
-        if (null != boundedInputStream) {
+        if (boundedInputStream != null) {
             boundedInputStream.close();
         }
     }
@@ -998,7 +992,7 @@ public interface IHandlerUtilities {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     static void closeBufferReader(BufferedReader bufferReader) throws IOException {
-        if (null != bufferReader) {
+        if (bufferReader != null) {
             bufferReader.close();
         }
     }
@@ -1009,7 +1003,7 @@ public interface IHandlerUtilities {
      * @param printWriter the print writer
      */
     static void closePrintWriter(PrintWriter printWriter) {
-        if (null != printWriter) {
+        if (printWriter != null) {
             printWriter.close();
         }
     }
@@ -1165,7 +1159,7 @@ public interface IHandlerUtilities {
     static boolean isSelectedTableForignPartition() {
         Object obj = getObjectBrowserSelectedObject();
 
-        if (null != obj && obj instanceof ForeignPartitionTable) {
+        if (obj != null && obj instanceof ForeignPartitionTable) {
             return true;
         }
         return false;

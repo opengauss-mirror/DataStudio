@@ -20,6 +20,7 @@ import com.huawei.mppdbide.bl.serverdatacache.ShowMoreObject;
 import com.huawei.mppdbide.bl.serverdatacache.SynonymMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.Tablespace;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.UserRole;
 import com.huawei.mppdbide.bl.serverdatacache.ViewColumnMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
@@ -34,6 +35,7 @@ import com.huawei.mppdbide.bl.serverdatacache.groups.SynonymObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SystemNamespaceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TableObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TablespaceObjectGroup;
+import com.huawei.mppdbide.bl.serverdatacache.groups.TriggerObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.UserNamespaceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.UserRoleObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ViewObjectGroup;
@@ -167,9 +169,7 @@ public class ObjectBrowserLabelProviderForGaussOLAP extends AbstarctObjectBrowse
             retImage = IconUtility.getIconForDebugObjectType(((DebugObjectGroup) element).getObjectGroupType());
         } else if (element instanceof DebugObjects) {
             retImage = IconUtility.getIconForDebugObjectType(((DebugObjects) element).getObjectType());
-        }
-
-        else if (element instanceof ForeignTableGroup) {
+        } else if (element instanceof ForeignTableGroup) {
             retImage = IconUtility.getIconImage(IiconPath.FOREIGN_TABLE_GROUP, getClass());
         } else if (element instanceof SequenceObjectGroup) {
             retImage = IconUtility.getIconImage(IiconPath.SEQUENCE_OBJECT_GROUP, getClass());
@@ -179,6 +179,13 @@ public class ObjectBrowserLabelProviderForGaussOLAP extends AbstarctObjectBrowse
             retImage = IconUtility.getIconImage(IiconPath.ICO_SYNONYMS, getClass());
         } else if (element instanceof SynonymMetaData) {
             retImage = IconUtility.getIconImage(IiconPath.ICO_SYNONYM, getClass());
+        } else if (element instanceof TriggerObjectGroup) {
+            retImage = IconUtility.getIconImage(IiconPath.ICO_TRIGGERS, getClass());
+        } else if (element instanceof TriggerMetaData) {
+            TriggerMetaData metaData = (TriggerMetaData) element;
+            String path = metaData.getEnable() ? IiconPath.ICO_TRIGGER_ENABLE :
+                IiconPath.ICO_TRIGGER_DISABLE;
+            retImage = IconUtility.getIconImage(path, getClass());
         } else if (element instanceof TableObjectGroup) {
             retImage = IconUtility.getIconImage(IiconPath.ICO_TABLES, getClass());
         }

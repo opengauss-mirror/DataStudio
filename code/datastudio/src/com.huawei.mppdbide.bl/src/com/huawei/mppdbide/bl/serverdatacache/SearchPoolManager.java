@@ -45,6 +45,8 @@ public class SearchPoolManager {
 
     private PatriciaTrie<SynonymMetaData> synonymTrie;
 
+    private PatriciaTrie<TriggerMetaData> triggerTrie;
+
     /**
      * Instantiates a new search pool manager.
      */
@@ -56,6 +58,7 @@ public class SearchPoolManager {
         this.viewTrie = new PatriciaTrie<ViewMetaData>();
         this.sequenceTrie = new PatriciaTrie<SequenceMetadata>();
         this.synonymTrie = new PatriciaTrie<SynonymMetaData>();
+        this.triggerTrie = new PatriciaTrie<TriggerMetaData>();
     }
 
     /**
@@ -122,6 +125,15 @@ public class SearchPoolManager {
     }
 
     /**
+     * Gets the trigger trie.
+     *
+     * @return the trigger trie
+     */
+    public PatriciaTrie<TriggerMetaData> getTriggerTrie() {
+        return triggerTrie;
+    }
+
+    /**
      * Clear trie.
      */
     public void clearTrie() {
@@ -132,6 +144,7 @@ public class SearchPoolManager {
         getSynonymTrie().clear();
         getPtableTrie().clear();
         getFtableTrie().clear();
+        getTriggerTrie().clear();
     }
 
     /**
@@ -153,6 +166,15 @@ public class SearchPoolManager {
     }
 
     /**
+     * Add TriggerMetaData to search pool.
+     *
+     * @param TriggerMetaData the trigger metadata
+     */
+    public void addTriggerToSearchPool(TriggerMetaData trigger) {
+        getTriggerTrie().put(trigger.getSearchName(), trigger);
+    }
+
+    /**
      * Removes the object from search pool.
      *
      * @param searchKey the search key
@@ -165,10 +187,8 @@ public class SearchPoolManager {
                     return;
                 }
                 if (ftableTrie.containsKey(searchKey)) {
-
                     ftableTrie.remove(searchKey);
                 }
-
                 break;
             }
             case PARTITION_TABLE: {
@@ -178,7 +198,6 @@ public class SearchPoolManager {
                 if (ptableTrie.containsKey(searchKey)) {
                     ptableTrie.remove(searchKey);
                 }
-
                 break;
             }
             default: {
@@ -217,6 +236,18 @@ public class SearchPoolManager {
         String searchKey = synonym.getSearchName();
         if (getSynonymTrie().containsKey(searchKey)) {
             getSynonymTrie().remove(searchKey);
+        }
+    }
+
+    /**
+     * Removes the trigger from search pool.
+     *
+     * @param trigger the trigger
+     */
+    public void removeTriggerFromSearchPool(TriggerMetaData trigger) {
+        String searchKey = trigger.getSearchName();
+        if (getTriggerTrie().containsKey(searchKey)) {
+            getTriggerTrie().remove(searchKey);
         }
     }
 
@@ -298,6 +329,8 @@ public class SearchPoolManager {
                 removeSynonymFromSearchPool((SynonymMetaData) obj);
             } else if (obj instanceof TableMetaData) {
                 removeTableFromSearchPool((TableMetaData) obj);
+            } else if (obj instanceof TriggerMetaData) {
+                removeTriggerFromSearchPool((TriggerMetaData) obj);
             }
         }
     }

@@ -78,6 +78,7 @@ public class CreateFunctionUiData {
         }
 
         if (!isProcedure()
+                && !isTrigger()
                 && "".equals(functionReturnType)) {
             return ErrType.ERR_FUNCTYPE;
         }
@@ -97,6 +98,10 @@ public class CreateFunctionUiData {
 
     private boolean isProcedure() {
         return CreateFunctionRelyInfo.PROCEDURE.equals(language);
+    }
+
+    private boolean isTrigger() {
+        return CreateFunctionRelyInfo.LANGUAGE_TRIGGER.equals(language);
     }
 
     private String functionType() {
@@ -122,9 +127,10 @@ public class CreateFunctionUiData {
 
         if (!isProcedure()) {
             sb.append("\tRETURNS ");
-            sb.append(functionReturnType);
+            sb.append(isTrigger() ? CreateFunctionRelyInfo.LANGUAGE_TRIGGER : functionReturnType);
             sb.append(relyInfo.getLineSeparator());
-            sb.append("\tLANGUAGE " + language);
+            sb.append("\tLANGUAGE "
+                + (isTrigger() ? CreateFunctionRelyInfo.LANGUAGE_PLP : language));
             sb.append(relyInfo.getLineSeparator());
         }
         sb.append(relyInfo.getLineSeparator());
@@ -138,6 +144,9 @@ public class CreateFunctionUiData {
      * @return String the formatted param string
      */
     public String formatParam() {
+        if (isTrigger()) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
         if (this.paramList.size() != 0) {
             sb.append(relyInfo.getLineSeparator());

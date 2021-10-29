@@ -26,13 +26,18 @@ public interface CreateFunctionRelyInfo {
      */
     String LANGUAGE_PLP = "PLPGSQL";
     /**
-     *  define language when select sql
+     * define language when select sql
      */
     String LANGUAGE_SQL = "SQL";
     /**
-     *  define language when select c
+     * define language when select c
      */
     String LANGUAGE_C = "C";
+    /**
+     * define lanaguage when select trigger
+     */
+    String LANGUAGE_TRIGGER = "TRIGGER";
+
     /**
      *
      * description: get schema name

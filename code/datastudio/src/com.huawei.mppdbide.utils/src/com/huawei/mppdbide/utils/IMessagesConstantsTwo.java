@@ -327,6 +327,8 @@ public interface IMessagesConstantsTwo {
     // SYNONYMS Start
     String SYNONYM_GROUP_NAME = "SYNONYM_GROUP_NAME";
 
+    String TRIGGER_GROUP_NAME = "TRIGGER_GROUP_NAME";
+
     String CREATE_NEW_SYNONYM = "CREATE_NEW_SYNONYM";
 
     String SYNONYM_NAME = "SYNONYM_NAME";

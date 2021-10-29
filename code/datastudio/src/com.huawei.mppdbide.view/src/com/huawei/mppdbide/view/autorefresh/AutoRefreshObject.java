@@ -418,6 +418,10 @@ public abstract class AutoRefreshObject {
                 getDropViewObjects(db, refObject2.getNamespace(), refObject2);
                 break;
             }
+            case MPPDBIDEConstants.CREATE_TRIGGER: {
+                getTriggerObjects(db, refObject2.getNamespace(), refObject2);
+                break;
+            }
             default: {
                 break;
             }
@@ -575,5 +579,14 @@ public abstract class AutoRefreshObject {
      * @return the drop view objects
      */
     protected abstract void getDropViewObjects(Database db, INamespace namespace, RefreshObjectDetails refObject2);
+
+    /**
+     * Gets the create trigger objects
+     *
+     * @param Database the db
+     * @param INamespace the namespace
+     * @param RefreshObjectDetails the refresh object detail
+     */
+    protected abstract void getTriggerObjects(Database db, INamespace namespace, RefreshObjectDetails refObject2);
 
 }
