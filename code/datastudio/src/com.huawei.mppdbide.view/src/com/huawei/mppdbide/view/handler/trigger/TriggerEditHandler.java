@@ -21,9 +21,9 @@ import com.huawei.mppdbide.bl.serverdatacache.IDebugObject;
 import com.huawei.mppdbide.bl.serverdatacache.Namespace;
 import com.huawei.mppdbide.bl.serverdatacache.OBJECTTYPE;
 import com.huawei.mppdbide.bl.serverdatacache.SourceCode;
-import com.huawei.mppdbide.bl.serverdatacache.groups.OLAPObjectGroup;
-import com.huawei.mppdbide.bl.serverdatacache.groups.ObjectGroup;
-import com.huawei.mppdbide.bl.serverdatacache.groups.TriggerObjectGroup;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
+import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
+import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.handler.IHandlerUtilities;
 import com.huawei.mppdbide.view.search.SearchWindow;
@@ -37,14 +37,14 @@ import com.huawei.mppdbide.view.utils.UIElement;
 
 /**
  * Title: class
- * Description: The Class TriggerCreateHandler.
+ * Description: The Class DebugEditorItem.
  * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
  * @author z00588921
  * @version [openGauss DataStudio 1.0.1, 30,04,2021]
  * @since 30,04,2021
  */
-public class TriggerCreateHandler {
+public class TriggerEditHandler {
     @Inject
     private ECommandService commandService;
 
@@ -52,32 +52,42 @@ public class TriggerCreateHandler {
     private EHandlerService handlerService;
 
     /**
-     * Execute.
+     * Execute
      */
     @Execute
     public void execute() {
-        MPPDBIDELoggerUtility.info("Start show createTrigger dialog.");
+        MPPDBIDELoggerUtility.info("Start show edit Trigger dialog.");
         Object obj = IHandlerUtilities.getObjectBrowserSelectedObject();
-        TriggerObjectGroup debugObjectGroup = (TriggerObjectGroup) obj;
+        TriggerMetaData triggerMetaData = (TriggerMetaData) obj;
         Namespace namespace = null;
-        namespace = debugObjectGroup.getNamespace();
+        namespace = triggerMetaData.getNamespace();
         if (namespace == null) {
             return;
         }
         CreateTriggerMainDialog dialog = new CreateTriggerMainDialog(new Shell(), SWT.NONE);
         DsCreateTriggerRelyInfo relyInfo = new DsCreateTriggerRelyInfo();
-        relyInfo.setNamespace(namespace);
-        dialog.setRelyInfo(relyInfo);
-        if (dialog.open() != 0) {
-            return;
-        }
         DataModeSaveFactory factory = DataModeSaveFactory.instance();
         DataModeSave modeSave = factory.init(
-                namespace.getDatabase().getConnectionManager(),
+                namespace.getConnectionManager(),
                 0);
-        CreateTriggerDataModel dataModel = dialog.getSaveDataModel();
-        modeSave.saveData(dataModel.getUniqueId(), dataModel);
+        relyInfo.setNamespace(namespace);
+        dialog.setRelyInfo(relyInfo);
+        String uniqueId = getUniqueId(triggerMetaData);
+        dialog.setTriggerDataModel(
+                triggerMetaData.getName(),
+                modeSave.loadData(uniqueId,
+                        CreateTriggerDataModel.class));
+        if (dialog.open() != 0) {
+            factory.clear(modeSave);
+            return;
+        }
+        modeSave.saveData(uniqueId, dialog.getSaveDataModel());
         factory.clear(modeSave);
+        executeCreateTrigger(triggerMetaData, namespace, relyInfo);
+    }
+
+    private void executeCreateTrigger(TriggerMetaData triggerMetaData, Namespace namespace,
+            DsCreateTriggerRelyInfo relyInfo) {
         IDebugObject object = null;
         SourceCode srcCode = new SourceCode();
         final Database db = namespace.getDatabase();
@@ -90,6 +100,7 @@ public class TriggerCreateHandler {
             plSourceEditor.displaySourceForDebugObject(object);
             plSourceEditor.registerModifyListener();
             if (!"".equals(srcCode.getCode())) {
+                dropBeforeCreate(triggerMetaData);
                 Command command = commandService.getCommand(
                         "com.huawei.mppdbide.command.id.executeobjectbrowseritemfromtoolbar"
                         );
@@ -99,20 +110,33 @@ public class TriggerCreateHandler {
         }
     }
 
+    private void dropBeforeCreate(TriggerMetaData metaData) {
+        try {
+            Database db = metaData.getDatabase();
+            db.getConnectionManager().execNonSelectOnObjBrowserConn(metaData.getDropQuery(false));
+        } catch (DatabaseCriticalException | DatabaseOperationException exp) {
+            MPPDBIDELoggerUtility.error("drop trigger failed!, please check!");
+        }
+    }
+
+    private static String getUniqueId(TriggerMetaData metaData) {
+        return metaData.getNamespace().getName() + "_" + metaData.getName();
+    }
+
     /**
      * Gets the debug object.
      *
-     * @param Database the database
-     * @return DebugObjects the debug object
+     * @param db the db
+     * @return the debug object
      */
     protected DebugObjects getDebugObject(final Database db) {
         return new DebugObjects(0, "NewObject", OBJECTTYPE.PLSQLFUNCTION, db);
     }
 
     /**
-     * Can execute.
+     * Can execute
      *
-     * @return boolean true if can execute
+     * @return boolean true if can exacute
      */
     @CanExecute
     public boolean canExecute() {
@@ -120,11 +144,7 @@ public class TriggerCreateHandler {
         if (object instanceof SearchWindow) {
             return false;
         }
-        Object selectedObject = IHandlerUtilities.getObjectBrowserSelectedObject();
-        if (!(selectedObject instanceof ObjectGroup<?>)) {
-            return false;
-        }
-        ObjectGroup<?> obj = (ObjectGroup<?>) selectedObject;
-        return (obj instanceof TriggerObjectGroup) && (OBJECTTYPE.TRIGGER_GROUP == obj.getObjectGroupType());
+        Object obj =  IHandlerUtilities.getObjectBrowserSelectedObject();
+        return obj instanceof TriggerMetaData;
     }
 }

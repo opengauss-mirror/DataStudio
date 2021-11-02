@@ -18,7 +18,10 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -36,6 +39,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.TableColumn;
 
+import com.huawei.mppdbide.utils.IMessagesConstants;
+import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.view.ui.trigger.CreateTriggerUiData.ErrType;
 
 /**
@@ -76,68 +81,156 @@ public class CreateTriggerMainDialog extends Dialog {
     private Combo functionNameCombo;
     private Table table;
     private Label lblInfoShow;
+    private boolean isModifyTrigger = false;
+    private CreateTriggerDataModel dataModel;
 
     /**
-     * Get the trigger ui data
+     * Sets trigger data model
+     *
+     * @param String the trigger name
+     * @param CreateTriggerDataModel the create trigger data model
+     */
+    public void setTriggerDataModel(
+            String triggerName,
+            CreateTriggerDataModel dataModel) {
+        this.isModifyTrigger = true;
+        this.dataModel = dataModel;
+        if (this.dataModel == null) {
+            this.dataModel = new CreateTriggerDataModel();
+        }
+        this.dataModel.setTriggerName(triggerName);
+    }
+
+    private boolean isModify() {
+        return isModifyTrigger;
+    }
+
+    private void refreshUiByDataModel() {
+        if (!isModify()) {
+            return;
+        }
+        triggerNameText.setText(dataModel.getTriggerName());
+        triggerNameText.setEnabled(false);
+
+        if (Objects.isNull(dataModel.getTriggerTableName())
+                || "".equals(dataModel.getTriggerTableName())) {
+            return;
+        }
+        int valueIndex = triggerTableCombo.indexOf(dataModel.getTriggerTableName());
+        triggerTableCombo.select(valueIndex);
+        triggerTableCombo.notifyListeners(SWT.Selection, null);
+
+        refreshStageAndSelection();
+        refreshParamAndOther();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void refreshParamAndOther() {
+        Object data = tableViewer.getInput();
+        if (data != null && data instanceof List<?>) {
+            List<CreateTriggerParam> listOfInputs = (List<CreateTriggerParam>) data;
+            Set<String> alreadySelectedColumns = new HashSet<>(dataModel.getUpdateColumn());
+            List<CreateTriggerParam> selectParams = new ArrayList<>();
+            for (int i = 0, n = listOfInputs.size(); i < n; i++) {
+                String columnName = listOfInputs.get(i).getValue(1);
+                if (alreadySelectedColumns.contains(columnName)) {
+                    selectParams.add(listOfInputs.get(i));
+                }
+            }
+            tableViewer.setCheckedElements(selectParams.toArray());
+        }
+
+        statementLevel.setSelection(false);
+        rowLevel.setSelection(false);
+        Button statementBtn = dataModel.isStatementLevel() ? statementLevel : rowLevel;
+        statementBtn.setSelection(true);
+        statementBtn.notifyListeners(SWT.Selection, null);
+
+        whenText.setText(dataModel.getWhenCodition());
+        functionNameCombo.select(functionNameCombo.indexOf(dataModel.getTriggerFunc()));
+        functionNameCombo.notifyListeners(SWT.Selection, null);
+    }
+
+    private void refreshStageAndSelection() {
+        int firesNum = 0;
+        for (Button btn: new Button[] {firesBefore, firesAfter, firesInsteadOf}) {
+            if (firesNum == dataModel.getTriggerStage()) {
+                btn.setSelection(true);
+                btn.notifyListeners(SWT.Selection, null);
+            } else {
+                btn.setSelection(false);
+            }
+            firesNum += 1;
+        }
+
+        int bitPos = 0;
+        for (Button btn: new Button[] {btnInsert, btnDelete, btnTruncate, btnUpdate}) {
+            if ((dataModel.getSelectOptration() & (1 << bitPos)) != 0) {
+                btn.setSelection(true);
+                btn.notifyListeners(SWT.Selection, null);
+            } else {
+                btn.setSelection(false);
+            }
+            bitPos += 1;
+        }
+    }
+
+    /**
+     * Gets save data model
+     *
+     * @return CreateTriggerDataModel the trigger data model
+     */
+    public CreateTriggerDataModel getSaveDataModel() {
+        return this.dataModel;
+    }
+
+    private CreateTriggerDataModel getCurrentDataModel() {
+        CreateTriggerDataModel tmpModel = new CreateTriggerDataModel();
+        tmpModel.setTriggerName(triggerNameText.getText());
+        tmpModel.setTriggerNamespaceName(relyInfo.getNamespaceName());
+        tmpModel.setTriggerTableName(triggerTableCombo.getText());
+
+        int firesNum = 0;
+        for (Button btn:  new Button [] {firesBefore, firesAfter, firesInsteadOf} ) {
+            if (btn.getSelection()) {
+                tmpModel.setTriggerStage(firesNum);
+                break;
+            }
+            firesNum += 1;
+        }
+
+        int selectOperation = 0;
+        int bitPos = 0;
+        for (Button btn: new Button[] {btnInsert, btnDelete, btnTruncate, btnUpdate}) {
+            if (btn.getSelection()) {
+                selectOperation |= (1 << bitPos);
+            }
+            bitPos += 1;
+        }
+        tmpModel.setSelectOptration(selectOperation);
+
+        for (Object obj: tableViewer.getCheckedElements()) {
+            if (obj instanceof CreateTriggerParam) {
+                String columnName = ((CreateTriggerParam) obj).getValue(1);
+                tmpModel.getUpdateColumn().add(columnName);
+            }
+        }
+
+        tmpModel.setStatementLevel(statementLevel.getSelection());
+
+        tmpModel.setWhenCodition(whenText.getText());
+        tmpModel.setTriggerFunc(functionNameCombo.getText());
+        return tmpModel;
+    }
+
+    /**
+     * Gets trigger ui data
      *
      * @return CreateTriggerUiData the trigger ui data
      */
     public CreateTriggerUiData getCreateTriggerUiData() {
-        CreateTriggerUiData createTriggerUiData = new CreateTriggerUiData();
-        createTriggerUiData.setTriggerName(triggerNameText.getText());
-        createTriggerUiData.setTableName(triggerTableCombo.getText());
-        if (firesBefore.getSelection()) {
-            createTriggerUiData.setPeriod(TriggerKeyword.BEFORE.keyword);
-        }
-        if (firesAfter.getSelection()) {
-            createTriggerUiData.setPeriod(TriggerKeyword.AFTER.keyword);
-        }
-        if (firesInsteadOf.getSelection()) {
-            createTriggerUiData.setPeriod(TriggerKeyword.INSTEAD_OF.keyword);
-        }
-        createTriggerUiData.setOperate(getOperate());
-        if (btnUpdate.getSelection()) {
-            createTriggerUiData.setColumn(getColumns());
-        }
-        if (rowLevel.getSelection()) {
-            createTriggerUiData.setLevel(TriggerKeyword.ROW.keyword);
-        }
-        if (statementLevel.getSelection()) {
-            createTriggerUiData.setLevel(TriggerKeyword.STATEMENT.keyword);
-        }
-        createTriggerUiData.setCondition(whenText.getText());
-        createTriggerUiData.setFunctionName(functionNameCombo.getText());
-        createTriggerUiData.setSchemaName(relyInfo.getNamespace().getName());
-        return createTriggerUiData;
-    }
-
-    private List<String> getOperate() {
-        List<String> operate = new ArrayList<>();
-        if (btnInsert.getSelection()) {
-            operate.add(TriggerKeyword.INSERT.keyword);
-        }
-        if (btnDelete.getSelection()) {
-            operate.add(TriggerKeyword.DELETE.keyword);
-        }
-        if (btnTruncate.getSelection()) {
-            operate.add(TriggerKeyword.TRUNCATE.keyword);
-        }
-        if (btnUpdate.getSelection()) {
-            operate.add(TriggerKeyword.UPDATE.keyword);
-        }
-        return operate;
-    }
-
-    private List<String> getColumns() {
-        List<String> list = new ArrayList<String>();
-        Object[] checkedInput = tableViewer.getCheckedElements();
-        for (Object check : checkedInput) {
-            if (check instanceof CreateTriggerParam) {
-                String columnName = ((CreateTriggerParam) check).getValue(1);
-                list.add(columnName);
-            }
-        }
-        return list;
+        dataModel = getCurrentDataModel();
+        return new CreateTriggerUiData(dataModel);
     }
 
     /**
@@ -148,7 +241,7 @@ public class CreateTriggerMainDialog extends Dialog {
      */
     public CreateTriggerMainDialog(Shell parent, int style) {
         super(parent, SWT.DIALOG_TRIM | SWT.MIN | SWT.RESIZE | SWT.APPLICATION_MODAL);
-        setText("Create Function");
+        setText("Create Trigger");
     }
 
     /**
@@ -162,6 +255,7 @@ public class CreateTriggerMainDialog extends Dialog {
         shell.layout();
         initUiData();
         addWidgetListeners();
+        refreshUiByDataModel();
         Display display = getParent().getDisplay();
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch()) {
@@ -254,7 +348,8 @@ public class CreateTriggerMainDialog extends Dialog {
     private void createMainShell() {
         shell = new Shell(getParent(), getStyle());
         shell.setSize(664, 724);
-        shell.setText("\u65B0\u5EFA\u89E6\u53D1\u5668");
+        shell.setText(isModify() ? MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_EDIT_TRIGGER)
+                : MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_CREATE_TRIGGER));
         shell.setLayout(new FillLayout(SWT.HORIZONTAL));
         tabFolder = new CTabFolder(shell, SWT.BORDER);
         tabFolder.setBorderVisible(false);
@@ -266,7 +361,7 @@ public class CreateTriggerMainDialog extends Dialog {
 
     private void createPreviewPage() {
         tableItemPreview = new CTabItem(tabFolder, SWT.NONE);
-        tableItemPreview.setText("SQL\u9884\u89C8");
+        tableItemPreview.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_SQL_PREVIEW));
 
         SashForm sashFormPreview = new SashForm(tabFolder, SWT.VERTICAL);
         tableItemPreview.setControl(sashFormPreview);
@@ -291,7 +386,7 @@ public class CreateTriggerMainDialog extends Dialog {
                 tabFolder.setSelection(tabItemTrigger);
             }
         });
-        btnBack.setText("\u4E0A\u4E00\u6B65");
+        btnBack.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_PREVIOUS));
 
         Button btnCancelPreview = new Button(sashForm, SWT.NONE);
         btnCancelPreview.addSelectionListener(new SelectionAdapter() {
@@ -300,7 +395,7 @@ public class CreateTriggerMainDialog extends Dialog {
                 getParent().dispose();
             }
         });
-        btnCancelPreview.setText("\u53D6\u6D88");
+        btnCancelPreview.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_CANCEL));
 
         Button btnOk = new Button(sashForm, SWT.NONE);
         btnOk.setToolTipText("enter datastudio ternimal and auto compile!");
@@ -313,14 +408,14 @@ public class CreateTriggerMainDialog extends Dialog {
                 getParent().dispose();
             }
         });
-        btnOk.setText("\u5B8C\u6210");
+        btnOk.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_FINISH));
 
         sashForm.setWeights(new int[] {4, 1, 1, 1});
     }
 
     private void createGeneralPage() {
         tabItemTrigger = new CTabItem(tabFolder, SWT.NONE);
-        tabItemTrigger.setText("\u5E38\u89C4");
+        tabItemTrigger.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_GENERAL_PAGE));
 
         SashForm mainForm = new SashForm(tabFolder, SWT.VERTICAL);
         tabItemTrigger.setControl(mainForm);
@@ -358,7 +453,7 @@ public class CreateTriggerMainDialog extends Dialog {
                 getParent().dispose();
             }
         });
-        btnCancel.setText("\u53D6\u6D88");
+        btnCancel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_CANCEL));
     }
 
     private void nextButton(SashForm footSashForm) {
@@ -377,7 +472,7 @@ public class CreateTriggerMainDialog extends Dialog {
                 }
             }
         });
-        btnNext.setText("\u4E0B\u4E00\u6B65");
+        btnNext.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_NEXT));
     }
 
     private void triggerCondition(SashForm mainForm) {
@@ -403,38 +498,40 @@ public class CreateTriggerMainDialog extends Dialog {
         SashForm sashForm = new SashForm(conditionSashForm, SWT.NONE);
 
         Label functionNameLabel = new Label(sashForm, SWT.NONE);
-        functionNameLabel.setText("\u89E6\u53D1\u5668\u51FD\u6570");
+        functionNameLabel.setText(MessageConfigLoader.getProperty(
+                IMessagesConstants.CREATE_TRIGGER_UI_TRIGGER_FUNCTION));
 
         functionNameCombo = new Combo(sashForm, SWT.READ_ONLY);
 
-        sashForm.setWeights(new int[] {100, 553});
+        sashForm.setWeights(new int[] {150, 553});
     }
 
     private void triggerConditions(SashForm conditionSashForm) {
         SashForm sashForm = new SashForm(conditionSashForm, SWT.NONE);
 
         Label whenLabel = new Label(sashForm, SWT.NONE);
-        whenLabel.setText("\u89E6\u53D1\u6761\u4EF6(W)");
+        whenLabel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_TRIGGER_CONDITION));
 
         whenText = new Text(sashForm, SWT.BORDER);
 
-        sashForm.setWeights(new int[] {100, 550});
+        sashForm.setWeights(new int[] {150, 550});
     }
 
     private void triggerLevel(SashForm conditionSashForm) {
         SashForm sashForm = new SashForm(conditionSashForm, SWT.NONE);
 
         Label levelLabel = new Label(sashForm, SWT.NONE);
-        levelLabel.setText("\u7EA7\u522B:");
+        levelLabel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_TRIGGER_LEVEL));
 
         rowLevel = new Button(sashForm, SWT.RADIO);
-        rowLevel.setText("\u5143\u7EC4\u7EA7\u89E6\u53D1\u5668(R)");
+        rowLevel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_TUPLE_LEVEL_TRIGGER));
 
         statementLevel = new Button(sashForm, SWT.RADIO);
         statementLevel.setSelection(true);
-        statementLevel.setText("\u8BED\u53E5\u7EA7\u89E6\u53D1\u5668(M)");
+        statementLevel.setText(MessageConfigLoader.getProperty(
+                IMessagesConstants.CREATE_TRIGGER_UI_STATEMENT_LEVEL_TRIGGER));
 
-        sashForm.setWeights(new int[] {100, 128, 419});
+        sashForm.setWeights(new int[] {162, 200, 400});
     }
 
     private void operationType(SashForm mainForm) {
@@ -446,7 +543,7 @@ public class CreateTriggerMainDialog extends Dialog {
 
         paramTable(sashForm);
 
-        sashForm.setWeights(new int[] {16, 24, 24, 22, 23, 278});
+        sashForm.setWeights(new int[] {20, 24, 24, 22, 23, 278});
         operateSashForm.setWeights(new int[] {3});
     }
 
@@ -476,10 +573,9 @@ public class CreateTriggerMainDialog extends Dialog {
         SashForm paramSearchSashForm = new SashForm(sashForm, SWT.NONE);
 
         Label operateLabel = new Label(paramSearchSashForm, SWT.NONE);
-        operateLabel.setAlignment(SWT.RIGHT);
-        operateLabel.setText("\u64CD\u4F5C\u7C7B\u578B");
-        Label lineLabel = new Label(paramSearchSashForm, SWT.SEPARATOR | SWT.HORIZONTAL);
-        paramSearchSashForm.setWeights(new int[] {56, 565});
+        operateLabel.setAlignment(SWT.LEFT);
+        operateLabel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_OPERATION_TYPE));
+        paramSearchSashForm.setWeights(new int[] {100});
 
         btnInsert = new Button(sashForm, SWT.CHECK);
         btnInsert.setText("INSERT");
@@ -502,7 +598,7 @@ public class CreateTriggerMainDialog extends Dialog {
         SashForm sashForm = new SashForm(firesSashForm, SWT.NONE);
 
         Label firesLabel = new Label(sashForm, SWT.NONE);
-        firesLabel.setText("\u89E6\u53D1\u65F6\u95F4:");
+        firesLabel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_TIME_TO_TRIGGER));
 
         firesBefore = new Button(sashForm, SWT.RADIO);
         firesBefore.setSelection(true);
@@ -514,7 +610,7 @@ public class CreateTriggerMainDialog extends Dialog {
         firesInsteadOf = new Button(sashForm, SWT.RADIO);
         firesInsteadOf.setText("INSTEAD OF");
 
-        sashForm.setWeights(new int[] {94, 103, 100, 304});
+        sashForm.setWeights(new int[] {140, 103, 100, 304});
         firesSashForm.setWeights(new int[] {2});
     }
 
@@ -527,20 +623,21 @@ public class CreateTriggerMainDialog extends Dialog {
         schemaSshForm.setSashWidth(0);
 
         Label triggerNameLabel = new Label(schemaSshForm, SWT.NONE);
-        triggerNameLabel.setText("\u89E6\u53D1\u5668\u540D(N):");
+        triggerNameLabel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_TRIGGER_NAME));
 
         triggerNameText = new Text(schemaSshForm, SWT.BORDER);
-        schemaSshForm.setWeights(new int[] {100, 546});
+        schemaSshForm.setWeights(new int[] {150, 546});
 
         SashForm functionNameSshForm = new SashForm(nameSshFormAll, SWT.NONE);
         functionNameSshForm.setSashWidth(0);
 
         Label triggerTableLabel = new Label(functionNameSshForm, SWT.NONE);
-        triggerTableLabel.setText("\u89E6\u53D1\u8868\u540D:");
+        triggerTableLabel.setText(MessageConfigLoader.getProperty(
+                IMessagesConstants.CREATE_TRIGGER_UI_TRIGGER_TABLE_NAME));
 
         triggerTableCombo = new Combo(functionNameSshForm, SWT.READ_ONLY);
 
-        functionNameSshForm.setWeights(new int[] {100, 546});
+        functionNameSshForm.setWeights(new int[] {150, 546});
         nameSshFormAll.setWeights(new int[] {27, 27});
         nameSshForm.setWeights(new int[] {1});
     }

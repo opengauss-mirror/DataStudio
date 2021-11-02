@@ -7,6 +7,9 @@ package com.huawei.mppdbide.view.ui.trigger;
 import java.util.Arrays;
 import java.util.List;
 
+import com.huawei.mppdbide.utils.IMessagesConstants;
+import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
+
 /**
  * Title: Class
  * Description: the class CreateFunctionParamsTitle
@@ -24,7 +27,9 @@ public class CreateTriggerParamsTitle {
      * @return List<String> the title string list
      */
     public List<String> getTitles() {
-        return Arrays.asList("", "\u5217\u540d", "\u6570\u636e\u7c7b\u578b");
+        return Arrays.asList("",
+                MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_COLUMN_NAME),
+                MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_DATA_TYPE));
     }
 
     /**
@@ -45,5 +50,4 @@ public class CreateTriggerParamsTitle {
     public List<Integer> getScales() {
         return Arrays.asList(1, 5, 5);
     }
-
 }
