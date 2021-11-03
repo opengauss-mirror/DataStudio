@@ -553,13 +553,6 @@ public final class SecureUtil {
         if (key == null || "".equals(key)) {
             return;
         }
-        try {
-            Field valueFieldOfString = String.class.getDeclaredField("value");
-            valueFieldOfString.setAccessible(true);
-            char[] value = (char[]) valueFieldOfString.get(key);
-            clearPassword(value);
-        } catch (NoSuchFieldException | IllegalAccessException fieldExp) {
-            MPPDBIDELoggerUtility.warn("clear key string failed!");
-        }
+        return;
     }
 }

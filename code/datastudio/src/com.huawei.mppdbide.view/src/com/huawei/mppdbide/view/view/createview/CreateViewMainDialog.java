@@ -925,11 +925,10 @@ public class CreateViewMainDialog extends Dialog {
             if (!"".equals(tableItem.getText(3))) {
                 sb.append(" AS " + tableItem.getText(3));
             }
-            sb.append(",").append(System.lineSeparator());
+            if (i < tableItems.length - 1) {
+                sb.append(",").append(System.lineSeparator());
+            }
         }
-        sb.deleteCharAt(sb.length() - 1);
-        sb.deleteCharAt(sb.length() - 1);
-        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 
@@ -948,13 +947,11 @@ public class CreateViewMainDialog extends Dialog {
                 String tableFullName = schemaName + "." + tableName;
                 String alias = tableAliasMap.getOrDefault(tableFullName, "");
                 String tableReferenceName = "".equals(alias) ? tableFullName : tableFullName + " " + alias;
-                sb.append("\t" + tableReferenceName + "," + System.lineSeparator());
+                sb.append("\t" + tableReferenceName);
+                if (!(i == schemaList.size() - 1 && j == tables.size() - 1)) {
+                    sb.append("," + System.lineSeparator());
+                }
             }
-        }
-        if (sb.toString().length() >= 3) {
-            sb.deleteCharAt(sb.length() - 1);
-            sb.deleteCharAt(sb.length() - 1);
-            sb.deleteCharAt(sb.length() - 1);
         }
         return sb.toString();
     }
@@ -995,10 +992,11 @@ public class CreateViewMainDialog extends Dialog {
             sb.append(getTableAliasInCondition(tableItem.getText(0)));
             sb.append(" = ");
             sb.append(getTableAliasInCondition(tableItem.getText(1)));
-            sb.append(" and").append(System.lineSeparator());
+            if (i < tableItems.length - 1) {
+                sb.append(" and").append(System.lineSeparator());
+            }
         }
-        String resultString = sb.toString();
-        return resultString.substring(0, resultString.length() - 6);
+        return sb.toString();
     }
 
     /**

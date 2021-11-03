@@ -11,7 +11,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.e4.ui.workbench.swt.internal.copy.BasicUIJob;
 import org.eclipse.e4.ui.workbench.swt.internal.copy.WorkbenchSWTMessages;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -1075,4 +1074,75 @@ public class ObjectBrowserFilterTree extends Composite implements Observer {
         }
     }
 
+    /**
+     * Title: Abstract class BasicUIJob
+     * Description: Abstract class BasicUIJob
+     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
+     *
+     * @version [DataStudio 2.1.0, 3-Nov.-2021]
+     * @since 3-Nov.-2021
+     */
+    public abstract class BasicUIJob extends Job {
+        private Display cachedDisplay;
+
+        /**
+         * Create a new instance of the receiver with the supplied name. The display
+         * used will be the one from the workbench if this is available. UIJobs with
+         * this constructor will determine their display at runtime.
+         *
+         * @param String the job name
+         * @param Display the display
+         */
+        public BasicUIJob(String name, Display display) {
+            super(name);
+            this.cachedDisplay = display;
+        }
+
+        @Override
+        public final IStatus run(final IProgressMonitor monitor) {
+            if (monitor.isCanceled()) {
+                return Status.CANCEL_STATUS;
+            }
+            Display asyncDisplay = (cachedDisplay == null) ? getDisplay()
+                    : cachedDisplay;
+            if (asyncDisplay == null || asyncDisplay.isDisposed()) {
+                return Status.CANCEL_STATUS;
+            }
+            asyncDisplay.asyncExec(() -> {
+                IStatus result = null;
+                try {
+                    // As we are in the UI Thread we can
+                    // always know what to tell the job.
+                    setThread(Thread.currentThread());
+                    if (monitor.isCanceled()) {
+                        result = Status.CANCEL_STATUS;
+                    } else {
+                        result = runInUIThread(monitor);
+                    }
+                } finally {
+                    done(result);
+                }
+            });
+            return Job.ASYNC_FINISH;
+        }
+
+        /**
+         * Run the job in the UI Thread.
+         *
+         * @param IProgressMonitor the monitor
+         * @return IStatus the status
+         */
+        public abstract IStatus runInUIThread(IProgressMonitor monitor);
+
+        /**
+         * Returns the display for use by the receiver when running in an asyncExec.
+         * If it is not set then the display set in the workbench is used. If the
+         * display is null the job will not be run.
+         *
+         * @return Display or <code>null</code>.
+         */
+        public Display getDisplay() {
+            return (cachedDisplay != null) ? cachedDisplay : Display.getCurrent();
+        }
+    }
 }

@@ -66,7 +66,7 @@ public class DSFilesWrapper {
                 if (!Files.exists(folder)) {
                     Set<String> supportedAttr = folder.getFileSystem().supportedFileAttributeViews();
                     try {
-                        Files.createDirectory(folderPath, fileAttributes);
+                        Files.createDirectory(folderPath);
                         if (supportedAttr.contains("acl")) {
                             setWindowsPermissions(folderPath);
                         }
@@ -129,7 +129,7 @@ public class DSFilesWrapper {
                 if (!Files.exists(file)) {
                     Set<String> supportedAttr = file.getFileSystem().supportedFileAttributeViews();
                     try {
-                        Files.createFile(file, fileAttributes);
+                        Files.createFile(file);
                         if (supportedAttr.contains("acl")) {
                             setWindowsPermissions(file);
                         }
