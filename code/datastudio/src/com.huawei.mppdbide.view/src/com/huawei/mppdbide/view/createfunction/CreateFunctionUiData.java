@@ -7,6 +7,9 @@ package com.huawei.mppdbide.view.createfunction;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.huawei.mppdbide.utils.IMessagesConstants;
+import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
+
 /**
  * Title: CreateFunctionUiData for use
  * Description:
@@ -28,10 +31,8 @@ public class CreateFunctionUiData {
      */
     public enum ErrType {
         ERR_SUCCESS("success"),
-        ERR_FUNCNAME("function name can't be empty"),
-        ERR_FUNCTYPE("function return type can't be empty"),
-        ERR_FUNCBODY("function body can't be empty"),
-        ERR_FUNCPARAM("function param name not valid!");
+        ERR_FUNCNAME(IMessagesConstants.CREATE_FUNCTION_UI_ERR_FUNC_NAME),
+        ERR_FUNCBODY(IMessagesConstants.CREATE_FUNCTION_UI_ERR_FUNC_BODY);
 
         /**
          * The error message string
@@ -39,6 +40,16 @@ public class CreateFunctionUiData {
         public final String errMsg;
         ErrType(String errMsg) {
             this.errMsg = errMsg;
+        }
+
+        /**
+         * Gets property
+         *
+         * @param ErrType the error type
+         * @return String the error string
+         */
+        public String getProperty(ErrType errType) {
+            return MessageConfigLoader.getProperty(errType.errMsg);
         }
     }
 
@@ -76,22 +87,8 @@ public class CreateFunctionUiData {
         if ("".equals(this.functionName)) {
             return ErrType.ERR_FUNCNAME;
         }
-
-        if (!isProcedure()
-                && !isTrigger()
-                && "".equals(functionReturnType)) {
-            return ErrType.ERR_FUNCTYPE;
-        }
-
         if ("".equals(this.functionBody)) {
             return ErrType.ERR_FUNCBODY;
-        }
-        for (List<String> param: this.paramList) {
-            String paramName = param.get(0);
-            if ("".equals(paramName)
-                    || CreateFunctionParam.INVALID_PARAM_NAME.equals(paramName)) {
-                return ErrType.ERR_FUNCPARAM;
-            }
         }
         return ErrType.ERR_SUCCESS;
     }
@@ -126,14 +123,18 @@ public class CreateFunctionUiData {
         sb.append(relyInfo.getLineSeparator());
 
         if (!isProcedure()) {
-            sb.append("\tRETURNS ");
-            sb.append(isTrigger() ? CreateFunctionRelyInfo.LANGUAGE_TRIGGER : functionReturnType);
-            sb.append(relyInfo.getLineSeparator());
+            if (isTrigger()) {
+                sb.append("\tRETURNS ").append(CreateFunctionRelyInfo.LANGUAGE_TRIGGER);
+                sb.append(relyInfo.getLineSeparator());
+            }
+            if (!"".equals(functionReturnType)) {
+                sb.append("\tRETURNS ").append(functionReturnType);
+                sb.append(relyInfo.getLineSeparator());
+            }
             sb.append("\tLANGUAGE "
                 + (isTrigger() ? CreateFunctionRelyInfo.LANGUAGE_PLP : language));
             sb.append(relyInfo.getLineSeparator());
         }
-        sb.append(relyInfo.getLineSeparator());
         sb.append(functionBody);
         return sb.toString();
     }
@@ -157,8 +158,10 @@ public class CreateFunctionUiData {
             String name = param.get(0).trim();
             String mode = param.get(1).trim();
             String type = param.get(2).trim();
-            sb.append(name);
-            sb.append(" ");
+            if (!CreateFunctionParam.DEFAULT_PARAM_NAME.equals(name)) {
+                sb.append(name);
+                sb.append(" ");
+            }
             sb.append(mode);
             sb.append(" ");
             sb.append(type);

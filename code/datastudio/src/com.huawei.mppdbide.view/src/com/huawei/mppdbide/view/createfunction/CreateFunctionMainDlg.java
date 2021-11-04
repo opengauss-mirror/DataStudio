@@ -279,7 +279,7 @@ public class CreateFunctionMainDlg extends Dialog {
                     textPreview.setText(uiData.getFunctionDefine());
                     lblInfoShow.setText("");
                 } else {
-                    lblInfoShow.setText(errType.errMsg);
+                    lblInfoShow.setText(errType.getProperty(errType));
                 }
             }
         });
@@ -645,7 +645,7 @@ public class CreateFunctionMainDlg extends Dialog {
                     paramEnable = false;
                 }
                 dlg.paramSashForm.setEnabled(paramEnable);
-                updateTemplateBody(FuncTypeEnum.FUNCTION == funcType ? comboLanguage.getText() : funcType.language);
+                updateTemplateBody(funcType == FuncTypeEnum.FUNCTION ? comboLanguage.getText() : funcType.language);
             }
         }
 
