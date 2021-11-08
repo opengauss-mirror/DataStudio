@@ -51,6 +51,7 @@ import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.view.ui.connectiondialog.PartitionValueDialog;
 import com.huawei.mppdbide.view.utils.FontAndColorUtility;
+import com.huawei.mppdbide.view.utils.UIVerifier;
 import com.huawei.mppdbide.view.utils.consts.UIConstants;
 import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
 import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
@@ -406,6 +407,7 @@ public class PartitionUI {
         txtPartitionName = new Text(partitionNameComposite, SWT.BORDER);
         GridData txtPartitionNameGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         txtPartitionName.setLayoutData(txtPartitionNameGD);
+        UIVerifier.verifyTextSize(txtPartitionName, 63);
 
         Composite partitionValueComposite = new Composite(comp, SWT.NONE);
         partitionValueComposite.setLayout(new GridLayout(2, false));
