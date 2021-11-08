@@ -1209,7 +1209,7 @@ public class IndexUI {
             cmbTablespace.setText(idx.getTablespace().getName());
         }
         updateIndexTypeObject();
-        if (null != idx.getIndexType()) {
+        if (null != idx.getIndexType() && !"".equals(idx.getIndexType())) {
             cmbIndexType.setText(idx.getIndexType());
         }
         // end DTS2016012708124
