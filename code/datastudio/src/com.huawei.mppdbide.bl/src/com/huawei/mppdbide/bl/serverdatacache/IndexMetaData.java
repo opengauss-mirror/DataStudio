@@ -455,7 +455,7 @@ public class IndexMetaData extends BatchDropServerObject implements GaussOLAPDBM
      */
     private void appendWhrExpression(StringBuilder qry) {
         if (null != this.whereExpr && !"".equals(this.whereExpr)) {
-            qry.append("WHERE ").append(this.whereExpr);
+            qry.append(" WHERE ").append(this.whereExpr);
         }
     }
 
@@ -466,7 +466,7 @@ public class IndexMetaData extends BatchDropServerObject implements GaussOLAPDBM
      */
     private void appendTablespace(StringBuilder qry) {
         if (null != this.tablespace) {
-            qry.append("TABLESPACE ").append(this.tablespace.getQualifiedObjectName()).append(" ");
+            qry.append(" TABLESPACE ").append(this.tablespace.getQualifiedObjectName());
         }
     }
 
@@ -482,7 +482,7 @@ public class IndexMetaData extends BatchDropServerObject implements GaussOLAPDBM
             if ((getAccessMethod() == null
                     || (!getAccessMethod().getName().equals("gin") && !getAccessMethod().getName().equals("psort")))) {
                 if (this.fillFactor > 0) {
-                    qry.append("WITH (FILLFACTOR=").append(this.fillFactor).append(") ");
+                    qry.append("WITH (FILLFACTOR=").append(this.fillFactor).append(")");
                 }
             }
         }
