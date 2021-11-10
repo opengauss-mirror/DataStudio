@@ -56,7 +56,7 @@ public interface DatabaseUtils {
      */
     static void checkCancelStatusAndAbort(IJobCancelStatus cancelStatus, Database db)
             throws DatabaseOperationException, DatabaseCriticalException {
-        if (cancelStatus.getCancel() && null != db) {
+        if (cancelStatus.getCancel() && db != null) {
             db.getConnectionManager().cancelAllConnectionQueries();
             DBConnProfCache.getInstance().destroyConnection(db);
 
@@ -555,7 +555,8 @@ public interface DatabaseUtils {
             {"bit", null}, {"box", null}, {"bytea", null}, {"cidr", null}, {"circle", null}, {"inet", null},
             {"lseg", null}, {"macaddr", null}, {"path", null}, {"point", null}, {"polygon", null},
             {"timetz", "time with time zone"}, {"timestamptz", "timestamp with time zone"}, {"tsquery", null},
-            {"tsvector", null}, {"txid_snapshot", null}, {"uuid", null}, {"varbit", null}, {"xml", null}};
+            {"tsvector", null}, {"txid_snapshot", null}, {"uuid", null}, {"varbit", null}, {"xml", null},
+            {"clob", null}, {"blob", null}};
         return defaultDatatype;
     }
 
