@@ -21,7 +21,7 @@ public class CreateFunctionParam {
     /**
      * Invalid param name
      */
-    public static final String INVALID_PARAM_NAME = "<>";
+    public static final String DEFAULT_PARAM_NAME = "<>";
     private static final int IDX_MODE = 1;
     private static final int IDX_TYPE = 2;
     private List<String> dataArrays = new ArrayList<>(4);
@@ -32,7 +32,7 @@ public class CreateFunctionParam {
     private int indexOfType = 0;
 
     public CreateFunctionParam(CreateFunctionRelyInfo info, CreateFunctionParamsTitle titles) {
-        this(info, titles, INVALID_PARAM_NAME, "");
+        this(info, titles, DEFAULT_PARAM_NAME, "");
     }
 
     public CreateFunctionParam(CreateFunctionRelyInfo info,
