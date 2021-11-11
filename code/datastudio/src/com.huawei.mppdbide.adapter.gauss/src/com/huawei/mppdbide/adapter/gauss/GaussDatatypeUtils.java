@@ -102,6 +102,8 @@ public class GaussDatatypeUtils {
         addDatatype(869, "inet", false);
         addDatatype(1000, "bool[]", false);
         addDatatype(1001, "bytea[]", true);
+        addDatatype(88, "blob", true);
+        addDatatype(90, "clob", true);
     }
 
     /**

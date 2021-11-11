@@ -140,6 +140,8 @@ public final class UIUtils {
         scaleMap.put("smallserial", false);
         scaleMap.put("serial", false);
         scaleMap.put("bigserial", false);
+        scaleMap.put("clob", false);
+        scaleMap.put("blob", false);
         // mapping orc data types
         initalizeScaleMapperForORC();
 
@@ -219,6 +221,8 @@ public final class UIUtils {
         precisionMap.put("smallserial", false);
         precisionMap.put("serial", false);
         precisionMap.put("bigserial", false);
+        precisionMap.put("clob", false);
+        precisionMap.put("blob", false);
         // for orc datatype
         initializePrecisionMapperForORC();
     }
