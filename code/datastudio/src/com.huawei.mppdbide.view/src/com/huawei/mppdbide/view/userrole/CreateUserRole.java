@@ -203,6 +203,11 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
     protected Button btnBack;
 
     /**
+     * The btn cancel
+     */
+    protected Button btnCancel;
+
+    /**
      * The begin time.
      */
     protected CDateTime beginTime;
@@ -458,7 +463,7 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
     protected void addControlPannel(Composite composite) {
 
         Composite btnBar = new Composite(composite, SWT.NONE);
-        GridLayout btnLayout = new GridLayout(3, true);
+        GridLayout btnLayout = new GridLayout(4, true);
         btnLayout.marginTop = 15;
         btnBar.setLayout(btnLayout);
         btnBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -472,10 +477,14 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
         btnFinish = new Button(btnBar, SWT.NONE);
         btnFinish.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_BTN_COL_CREATE_URL_FINISH_001");
         btnFinish.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        btnCancel = new Button(btnBar, SWT.NONE);
+        btnCancel.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_BTN_COL_CREATE_URL_CANCEL_001");
+        btnCancel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         btnFinish.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_USERROLE_FINISH_BTN));
         btnNext.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_USERROLE_NEXT_BTN));
         btnBack.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_USERROLE_BACK_BTN));
+        btnCancel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_USERROLE_CANCEL_BTN));
 
         FinishBtnSelectionAdapter finishBtnSelectionAdapter = new FinishBtnSelectionAdapter();
 
@@ -489,6 +498,9 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
 
         btnBack.addSelectionListener(btnBackSelectionAdapter);
 
+        BtnCancelSelectionAdapter btnCancelSelectionAdapter = new BtnCancelSelectionAdapter();
+
+        btnCancel.addSelectionListener(btnCancelSelectionAdapter);
     }
 
     private void addTabFolder(Composite composite) {
@@ -549,11 +561,8 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
     }
 
     /**
-     * 
      * Title: class
-     * 
      * Description: The Class FinishBtnSelectionAdapter.
-     * 
      * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
      *
      * @author pWX553609
@@ -589,11 +598,23 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
     }
 
     /**
-     * 
      * Title: class
-     * 
+     * Description: The Class BtnCancelSelectionAdapter.
+     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
+     *
+     * @version [DataStudio 2.1.0, 13 Nov., 2021]
+     * @since 13 Nov., 2021
+     */
+    private class BtnCancelSelectionAdapter extends SelectionAdapter {
+        @Override
+        public void widgetSelected(SelectionEvent event) {
+            currentShell.dispose();
+        }
+    }
+
+    /**
+     * Title: class
      * Description: The Class BtnBackSelectionAdapter.
-     * 
      * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
      *
      * @author pWX553609
