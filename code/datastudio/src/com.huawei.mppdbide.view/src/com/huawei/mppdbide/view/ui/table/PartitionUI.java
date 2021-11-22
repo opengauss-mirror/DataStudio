@@ -111,6 +111,7 @@ public class PartitionUI {
     private LinkedHashMap<String, String> editPartitionValueMap = new LinkedHashMap<String, String>();
     private List<String> partitionValueList = new ArrayList<String>(MPPDBIDEConstants.OBJECT_ARRAY_SIZE);
     private static final String PART_VALUE_BUTTON = "...";
+    private int defaultIndex = -1;
 
     /**
      * Instantiates a new partition UI.
@@ -961,7 +962,7 @@ public class PartitionUI {
         editPartitionValueMap.putAll(partitionValueMap);
         partitionValueMap.clear();
         cmbTablespace.clearSelection();
-        cmbTablespace.select(0);
+        cmbTablespace.select(defaultIndex);
         rePopulateCols(tblSelCols, selCols);
     }
 
@@ -1088,7 +1089,7 @@ public class PartitionUI {
      * @param partMetadata the new tablespace name
      */
     private void setTablespaceName(PartitionMetaData partMetadata) {
-        if (cmbTablespace != null && cmbTablespace.getSelectionIndex() == 0 && !partMetadata.isTablespaceNull()) {
+        if (cmbTablespace != null && !partMetadata.isTablespaceNull()) {
             cmbTablespace.setText(partMetadata.getTablespaceName());
         }
     }
@@ -1135,15 +1136,19 @@ public class PartitionUI {
         boolean hasNext = tableSpaceItr.hasNext();
         Tablespace tablespace = null;
         cmbTablespace.removeAll();
-        cmbTablespace.add(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_UI_SELECT));
+        int index = 0;
         while (hasNext) {
             tablespace = tableSpaceItr.next();
             cmbTablespace.add(tablespace.getName());
             tablespaceOids.add(tablespace.getOid());
             hasNext = tableSpaceItr.hasNext();
+            if ("pg_default".equals(tablespace.getName())) {
+                defaultIndex = index;
+            }
+            index++;
         }
 
-        cmbTablespace.select(0);
+        cmbTablespace.select(defaultIndex);
     }
 
     /**
@@ -1153,11 +1158,11 @@ public class PartitionUI {
      */
     private Tablespace getSelectedTablespace() {
         int index = cmbTablespace.getSelectionIndex();
-        if (index < 1) {
+        if (index < 0) {
             return null;
         }
 
-        long tsOid = tablespaceOids.get(index - 1);
+        long tsOid = tablespaceOids.get(index);
         if (this.pTable != null) {
             return this.server.getTablespaceById(tsOid);
         }
@@ -1777,6 +1782,6 @@ public class PartitionUI {
         editPartitionValueMap.clear();
         txtPartitionName.setText("");
         txtPartitionValue.setText("");
-        cmbTablespace.select(0);
+        cmbTablespace.select(defaultIndex);
     }
 }

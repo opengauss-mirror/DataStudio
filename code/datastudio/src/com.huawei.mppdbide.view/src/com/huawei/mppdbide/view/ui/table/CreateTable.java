@@ -1655,11 +1655,7 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      * Sets the tablespace.
      */
     private void setTablespace() {
-        if (0 != cmbTblspcName.getSelectionIndex()) {
-            this.newTable.setTablespaceName(cmbTblspcName.getText());
-        } else {
-            this.newTable.setTablespaceName(null);
-        }
+        this.newTable.setTablespaceName(cmbTblspcName.getText());
     }
 
     /**
