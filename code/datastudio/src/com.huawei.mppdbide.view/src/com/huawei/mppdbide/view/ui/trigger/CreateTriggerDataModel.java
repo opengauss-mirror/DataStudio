@@ -6,6 +6,7 @@ package com.huawei.mppdbide.view.ui.trigger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Title: CreateTriggerDataModel for use
@@ -18,6 +19,7 @@ import java.util.List;
  */
 public class CreateTriggerDataModel {
     private String triggerName;
+    private boolean triggerNameCase;
     private String triggerNamespaceName;
     private String triggerTableName;
 
@@ -46,7 +48,8 @@ public class CreateTriggerDataModel {
      * @return String the unique id
      */
     public String getUniqueId() {
-        return getTriggerNamespaceName() + "_" + getTriggerName();
+        return getTriggerNamespaceName() + "_" +
+            (triggerNameCase ? getTriggerName() : getTriggerName().toLowerCase(Locale.ENGLISH));
     }
 
     /**
@@ -92,6 +95,24 @@ public class CreateTriggerDataModel {
      */
     public void setTriggerName(String triggerName) {
         this.triggerName = triggerName;
+    }
+
+    /**
+     * Gets trigger name case
+     *
+     * @return boolean trigger name case
+     */
+    public boolean getTriggerNameCase() {
+        return triggerNameCase;
+    }
+
+    /**
+     * Sets trigger name case
+     *
+     * @param boolean trigger name case
+     */
+    public void setTriggerNameCase(boolean triggerNameCase) {
+        this.triggerNameCase = triggerNameCase;
     }
 
     /**

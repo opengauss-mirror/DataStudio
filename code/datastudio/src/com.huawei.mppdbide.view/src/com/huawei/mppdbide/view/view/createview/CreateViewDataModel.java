@@ -15,15 +15,40 @@ import java.util.List;
  * @since 21 Oct., 2021
  */
 public class CreateViewDataModel {
+    private boolean isMaterview;
+    private boolean isCaseSensitive;
     private List<ViewBody> viewBodyList;
     private List<TableAlias> tableAliasList;
     private List<WhereCondition> whereConditionList;
 
-    public CreateViewDataModel (List<ViewBody> viewBodyList, List<TableAlias> tableAliasList,
+    public CreateViewDataModel (boolean isMaterview,
+            boolean isCaseSensitive,
+            List<ViewBody> viewBodyList,
+            List<TableAlias> tableAliasList,
             List<WhereCondition> whereConditionList) {
+        this.isMaterview = isMaterview;
+        this.isCaseSensitive = isCaseSensitive;
         this.viewBodyList = viewBodyList;
         this.tableAliasList = tableAliasList;
         this.whereConditionList = whereConditionList;
+    }
+
+    /**
+     * Gets if is materview
+     *
+     * @return boolean if is materview
+     */
+    public boolean getIsMaterview() {
+        return isMaterview;
+    }
+
+    /**
+     * Gets if is case sensitive
+     *
+     * @return boolean if is sensitive
+     */
+    public boolean getIsCaseSensitive() {
+        return isCaseSensitive;
     }
 
     /**

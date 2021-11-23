@@ -55,6 +55,7 @@ public class CreateFunctionUiData {
 
     private CreateFunctionRelyInfo relyInfo;
     private String functionName;
+    private boolean functionNameCase;
     private String language;
     private String functionReturnType;
     private List<List<String>> paramList;
@@ -63,12 +64,14 @@ public class CreateFunctionUiData {
     public CreateFunctionUiData(
             CreateFunctionRelyInfo relyInfo,
             String functionName,
+            boolean functionNameCase,
             String language,
             String functionReturnType,
             List<CreateFunctionParam> paramList,
             String functionBody) {
         this.relyInfo = relyInfo;
         this.functionName = functionName;
+        this.functionNameCase = functionNameCase;
         this.language = language;
         this.functionReturnType = functionReturnType;
         this.paramList = new ArrayList<>();
@@ -115,7 +118,11 @@ public class CreateFunctionUiData {
         sb.append("CREATE OR REPLACE " + functionType() + " ");
         sb.append(relyInfo.getSchameName());
         sb.append(".");
-        sb.append(functionName);
+        if (functionNameCase) {
+            sb.append("\"").append(functionName).append("\"");
+        } else {
+            sb.append(functionName);
+        }
         sb.append(" (");
         sb.append(formatParam());
         sb.append(")");
