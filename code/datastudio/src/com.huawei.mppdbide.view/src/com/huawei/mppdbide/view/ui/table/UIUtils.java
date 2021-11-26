@@ -552,20 +552,26 @@ public final class UIUtils {
 
         cmbAny.removeAll();
 
-        cmbAny.add(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_UI_SELECT));
-
         String name = null;
 
+        int index = 0;
+        int defaultIndex = -1;
         while (hasMore) {
             tablespace = objectIter.next();
             if (tspcType.equals(tablespace.getTablespaceType())) {
                 name = tablespace.getName();
                 cmbAny.add(name);
+                if ("pg_default".equals(name)) {
+                    defaultIndex = index;
+                }
+                index++;
             }
             hasMore = objectIter.hasNext();
         }
 
-        cmbAny.select(0);
+        if (defaultIndex != -1) {
+            cmbAny.select(defaultIndex);
+        }
     }
 
     /**
