@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Text;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.view.createfunction.CreateFunctionUiData.ErrType;
+import com.huawei.mppdbide.view.utils.UIVerifier;
 
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
@@ -81,6 +82,7 @@ public class CreateFunctionMainDlg extends Dialog {
     private FuncTypeEnum curFuncType;
     private SashForm paramSashForm;
     private SashForm sashForm;
+    private Button btnCheckFunctionNameCase;
 
     /**
      * Create the dialog.
@@ -490,7 +492,12 @@ public class CreateFunctionMainDlg extends Dialog {
         lblFunctionName.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FUNCTION_UI_FUNCTION_NAME));
 
         text = new Text(functionNameSshForm, SWT.BORDER);
-        functionNameSshForm.setWeights(new int[] {1, 4});
+        UIVerifier.verifyTextSize(text, 63);
+        new Label(functionNameSshForm, SWT.NONE);
+
+        btnCheckFunctionNameCase = new Button(functionNameSshForm, SWT.CHECK | SWT.CENTER);
+        btnCheckFunctionNameCase.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_CASE));
+        functionNameSshForm.setWeights(new int[] {10, 32, 1, 7});
         nameSshFormAll.setWeights(new int[] {1, 1});
         nameSshForm.setWeights(new int[] {1});
     }
@@ -522,6 +529,7 @@ public class CreateFunctionMainDlg extends Dialog {
      */
     public CreateFunctionUiData getFunctionUiData() {
         String functionName = text.getText();
+        boolean functionNameCase = btnCheckFunctionNameCase.getSelection();
         String functionReturnType = comboRetType.getText();
         String functionBody = textFunctionBodyTemp.getText();
         String language = btnFunction.getSelection() ? comboLanguage.getText() : curFuncType.language;
@@ -529,6 +537,7 @@ public class CreateFunctionMainDlg extends Dialog {
         return new CreateFunctionUiData(
                 relyInfo,
                 functionName,
+                functionNameCase,
                 language,
                 functionReturnType,
                 params,

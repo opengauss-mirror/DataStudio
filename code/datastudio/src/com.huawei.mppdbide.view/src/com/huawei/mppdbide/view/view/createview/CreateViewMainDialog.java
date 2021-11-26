@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
@@ -24,6 +25,7 @@ import org.eclipse.swt.widgets.Text;
 
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
+import com.huawei.mppdbide.view.utils.UIVerifier;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.custom.TableEditor;
@@ -33,11 +35,14 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Group;
 
 /**
  * Title: class
@@ -77,6 +82,10 @@ public class CreateViewMainDialog extends Dialog {
     private Combo schema2Combo;
     private Combo table2Combo;
     private Combo column2Combo;
+    private Button btnView;
+    private Button btnMaterview;
+    private Button btnCaseSensitive;
+    private Combo conditionCombo;
 
     private String schema;
     private String table;
@@ -219,22 +228,30 @@ public class CreateViewMainDialog extends Dialog {
         tableAliasAndCondition(firstMainForm);
         nextAndCancelButton(firstMainForm);
 
-        firstMainForm.setWeights(new int[] { 1, 1, 6, 7, 1 });
+        firstMainForm.setWeights(new int[] {2, 1, 6, 7, 1});
     }
 
     private void nextAndCancelButton(SashForm firstMainForm) {
         SashForm nextSashForm = new SashForm(firstMainForm, SWT.NONE);
 
         Label hideLabel = new Label(nextSashForm, SWT.NONE);
+        hideLabel.setForeground(new Color(getParent().getDisplay(),
+                    new RGB(255, 0, 0))
+                );
 
         Button nextButton = new Button(nextSashForm, SWT.NONE);
         nextButton.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_VIEW_UI_NEXT));
         nextButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                tabFolder.setSelection(secondItem);
-                getTableAlias();
-                ddlText.setText(getViewDdl());
+                if ("".equals(viewNameText.getText())) {
+                    hideLabel.setText(MessageConfigLoader.getProperty(
+                            IMessagesConstants.CREATE_VIEW_UI_NAME_NOT_EMPTY));
+                } else {
+                    tabFolder.setSelection(secondItem);
+                    getTableAlias();
+                    ddlText.setText(getViewDdl());
+                }
             }
         });
 
@@ -333,8 +350,9 @@ public class CreateViewMainDialog extends Dialog {
     private void rightExpressionUi(SashForm sashForm) {
         SashForm sashFormCurrent = new SashForm(sashForm, SWT.NONE);
 
-        Label equalLabel = new Label(sashFormCurrent, SWT.CENTER);
-        equalLabel.setText("=");
+        conditionCombo = new Combo(sashFormCurrent, SWT.NONE);
+        conditionCombo.setItems(new String[] {"=", ">", ">=", "<", "<=", "!="});
+        conditionCombo.select(0);
 
         schema2Combo = new Combo(sashFormCurrent, SWT.NONE);
         schema2Combo.addSelectionListener(new SelectionAdapter() {
@@ -668,8 +686,55 @@ public class CreateViewMainDialog extends Dialog {
     }
 
     private void schemaAndViewName(SashForm firstMainForm) {
-        SashForm nameSashForm = new SashForm(firstMainForm, SWT.NONE);
+        SashForm nameSashForm = new SashForm(firstMainForm, SWT.VERTICAL);
 
+        schemaNameUi(nameSashForm);
+
+        viewNameUi(nameSashForm);
+
+        nameSashForm.setWeights(new int[] {2, 3});
+    }
+
+    private void viewNameUi(SashForm nameSashForm) {
+        SashForm sashForm = new SashForm(nameSashForm, SWT.NONE);
+
+        Group group = new Group(sashForm, SWT.NONE);
+
+        group.setLayout(new FillLayout(SWT.HORIZONTAL));
+        btnView = new Button(group, SWT.RADIO);
+        btnView.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_VIEW_UI_VIEW));
+        btnView.setSelection(true);
+
+        btnMaterview = new Button(group, SWT.RADIO);
+        btnMaterview.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_VIEW_UI_MATERVIEW));
+
+        SashForm viewNameSashForm = new SashForm(sashForm, SWT.VERTICAL);
+
+        Label lblNewLabel = new Label(viewNameSashForm, SWT.NONE);
+        SashForm viewSashForm = new SashForm(viewNameSashForm, SWT.NONE);
+
+        Label viewNameLabel = new Label(viewSashForm, SWT.NONE);
+        viewNameLabel.setAlignment(SWT.CENTER);
+        viewNameLabel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_VIEW_UI_VIEW_NAME));
+
+        viewNameText = new Text(viewSashForm, SWT.BORDER);
+        UIVerifier.verifyTextSize(viewNameText, 63);
+
+        btnCaseSensitive = new Button(viewSashForm, SWT.CHECK);
+        btnCaseSensitive.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_CASE));
+        viewSashForm.setWeights(new int[] {1, 2, 1});
+
+        viewNameSashForm.setWeights(new int[] {1, 4});
+
+        if (createViewRelyInfo.getIsEditView()) {
+            viewNameText.setText(createViewRelyInfo.getFixedViewName());
+            viewNameText.setEnabled(false);
+        }
+
+        sashForm.setWeights(new int[] {2, 2});
+    }
+
+    private void schemaNameUi(SashForm nameSashForm) {
         SashForm schemaNameForm = new SashForm(nameSashForm, SWT.NONE);
 
         Label schemaNameLabel = new Label(schemaNameForm, SWT.HORIZONTAL);
@@ -680,22 +745,7 @@ public class CreateViewMainDialog extends Dialog {
         combo.select(0);
         combo.setEnabled(false);
 
-        schemaNameForm.setWeights(new int[] { 2, 5 });
-
-        SashForm viewNameSashForm = new SashForm(nameSashForm, SWT.NONE);
-
-        Label viewNameLabel = new Label(viewNameSashForm, SWT.CENTER);
-        viewNameLabel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_VIEW_UI_VIEW_NAME));
-
-        viewNameText = new Text(viewNameSashForm, SWT.BORDER);
-        if (createViewRelyInfo.getIsEditView()) {
-            viewNameText.setText(createViewRelyInfo.getFixedViewName());
-            viewNameText.setEnabled(false);
-        }
-
-        viewNameSashForm.setWeights(new int[] { 2, 5 });
-
-        nameSashForm.setWeights(new int[] { 5, 5 });
+        schemaNameForm.setWeights(new int[] {1, 7});
     }
 
     private void sqlPreviewPage() {
@@ -738,7 +788,9 @@ public class CreateViewMainDialog extends Dialog {
                 result = 0;
                 createViewRelyInfo.setDdlSentence(ddlText.getText());
                 createViewdataModel = constructCreateViewDataModel();
-                viewFullName = createViewRelyInfo.getFixedSchemaName() + "." + viewNameText.getText();
+                viewFullName = createViewRelyInfo.getFixedSchemaName() + "." +
+                    (btnCaseSensitive.getSelection() ? viewNameText.getText() :
+                        viewNameText.getText().toLowerCase(Locale.ENGLISH));
                 getParent().dispose();
             }
         });
@@ -749,6 +801,14 @@ public class CreateViewMainDialog extends Dialog {
     private void displayDataForEditView() {
         if (createViewRelyInfo.getIsEditView()) {
             if (createViewdataModel != null) {
+                boolean isMaterview = createViewdataModel.getIsMaterview();
+                btnMaterview.setSelection(isMaterview);
+                btnMaterview.setEnabled(false);
+                btnView.setSelection(!isMaterview);
+                btnView.setEnabled(false);
+                boolean isCaseSensitive = createViewdataModel.getIsCaseSensitive();
+                btnCaseSensitive.setSelection(isCaseSensitive);
+                btnCaseSensitive.setEnabled(false);
                 List<ViewBody> viewBodyList = createViewdataModel.getViewBodyList();
                 List<TableAlias> tableAliasList = createViewdataModel.getTableAliasList();
                 List<WhereCondition> whereCondition = createViewdataModel.getWhereConditionList();
@@ -892,10 +952,20 @@ public class CreateViewMainDialog extends Dialog {
      */
     public String getViewDdl() {
         StringBuilder sb = new StringBuilder(128);
-        sb.append("CREATE OR REPLACE VIEW ");
+        sb.append("CREATE ");
+        if (btnMaterview.getSelection()) {
+            sb.append("MATERIALIZED ");
+        } else {
+            sb.append("OR REPLACE ");
+        }
+        sb.append("VIEW ");
         sb.append(createViewRelyInfo.getFixedSchemaName() + ".");
         String viewName = viewNameText.getText();
-        sb.append(viewName);
+        if (btnCaseSensitive.getSelection()) {
+            sb.append("\"").append(viewName).append("\"");
+        } else {
+            sb.append(viewName);
+        }
         sb.append(System.lineSeparator()).append("AS").append(System.lineSeparator());
         sb.append(getViewBodyDdl());
         sb.append(System.lineSeparator()).append("FROM").append(System.lineSeparator());
@@ -990,7 +1060,7 @@ public class CreateViewMainDialog extends Dialog {
             TableItem tableItem = tableItems[i];
             sb.append("\t");
             sb.append(getTableAliasInCondition(tableItem.getText(0)));
-            sb.append(" = ");
+            sb.append(" ");
             sb.append(getTableAliasInCondition(tableItem.getText(1)));
             if (i < tableItems.length - 1) {
                 sb.append(" and").append(System.lineSeparator());
@@ -1050,6 +1120,9 @@ public class CreateViewMainDialog extends Dialog {
      * @return CreateViewDataModel create view data model
      */
     public CreateViewDataModel constructCreateViewDataModel () {
+        boolean isMaterview = btnMaterview.getSelection();
+        boolean isCaseSensitive = btnCaseSensitive.getSelection();
+
         List<ViewBody> viewBodyList = new ArrayList<ViewBody>();
         TableItem[] tableItem1 = viewBodyTable.getItems();
         for (int i = 0; i < tableItem1.length; i++) {
@@ -1069,7 +1142,7 @@ public class CreateViewMainDialog extends Dialog {
             whereCondition.add(new WhereCondition(tableItem3[i].getText(0), tableItem3[i].getText(1)));
         }
 
-        return new CreateViewDataModel(viewBodyList, tableAliasList, whereCondition);
+        return new CreateViewDataModel(isMaterview, isCaseSensitive, viewBodyList, tableAliasList, whereCondition);
     }
 
     /**
@@ -1124,7 +1197,8 @@ public class CreateViewMainDialog extends Dialog {
      * Add where condition data
      */
     public void addWhereConditionData() {
-        String column1 = schema1Combo.getText() + "." + table1Combo.getText() + "." + column1Combo.getText();
+        String column1 = schema1Combo.getText() + "." + table1Combo.getText() + "." + column1Combo.getText() +
+                " " + conditionCombo.getText();
         String column2 = schema2Combo.getText() + "." + table2Combo.getText() + "." + column2Combo.getText();
         updateWhereConditionList(column1, column2);
     }
@@ -1136,7 +1210,7 @@ public class CreateViewMainDialog extends Dialog {
      * @param String the column2
      */
     public void updateWhereConditionList(String column1, String column2) {
-        if (!("..".equals(column1) && "..".equals(column2))) {
+        if (!("..".equals(column1.substring(0, 2)) && "..".equals(column2))) {
             if (!whereConditionList.containsKey(column1)) {
                 List<String> column2Condition = new ArrayList<String>();
                 column2Condition.add(column2);
@@ -1162,7 +1236,7 @@ public class CreateViewMainDialog extends Dialog {
      * @param String the column2
      */
     public void updateWhereConditionListOnly(String column1, String column2) {
-        if (!("..".equals(column1) && "..".equals(column2))) {
+        if (!("..".equals(column1.substring(0, 2)) && "..".equals(column2))) {
             if (!whereConditionList.containsKey(column1)) {
                 List<String> column2Condition = new ArrayList<String>();
                 column2Condition.add(column2);

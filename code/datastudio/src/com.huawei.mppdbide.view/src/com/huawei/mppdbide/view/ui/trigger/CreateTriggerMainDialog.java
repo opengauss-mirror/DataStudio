@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.view.ui.trigger.CreateTriggerUiData.ErrType;
+import com.huawei.mppdbide.view.utils.UIVerifier;
 
 /**
  * Title: class
@@ -83,6 +84,7 @@ public class CreateTriggerMainDialog extends Dialog {
     private Label lblInfoShow;
     private boolean isModifyTrigger = false;
     private CreateTriggerDataModel dataModel;
+    private Button btnCheckTriggerNameCase;
 
     /**
      * Sets trigger data model
@@ -111,6 +113,8 @@ public class CreateTriggerMainDialog extends Dialog {
         }
         triggerNameText.setText(dataModel.getTriggerName());
         triggerNameText.setEnabled(false);
+        btnCheckTriggerNameCase.setSelection(dataModel.getTriggerNameCase());
+        btnCheckTriggerNameCase.setEnabled(false);
 
         if (Objects.isNull(dataModel.getTriggerTableName())
                 || "".equals(dataModel.getTriggerTableName())) {
@@ -189,6 +193,7 @@ public class CreateTriggerMainDialog extends Dialog {
         tmpModel.setTriggerName(triggerNameText.getText());
         tmpModel.setTriggerNamespaceName(relyInfo.getNamespaceName());
         tmpModel.setTriggerTableName(triggerTableCombo.getText());
+        tmpModel.setTriggerNameCase(btnCheckTriggerNameCase.getSelection());
 
         int firesNum = 0;
         for (Button btn:  new Button [] {firesBefore, firesAfter, firesInsteadOf} ) {
@@ -626,7 +631,13 @@ public class CreateTriggerMainDialog extends Dialog {
         triggerNameLabel.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TRIGGER_UI_TRIGGER_NAME));
 
         triggerNameText = new Text(schemaSshForm, SWT.BORDER);
-        schemaSshForm.setWeights(new int[] {150, 546});
+        UIVerifier.verifyTextSize(triggerNameText, 63);
+
+        new Label(schemaSshForm, SWT.NONE);
+
+        btnCheckTriggerNameCase = new Button(schemaSshForm, SWT.CHECK | SWT.CENTER);
+        btnCheckTriggerNameCase.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_CASE));
+        schemaSshForm.setWeights(new int[] {150, 445, 5, 95});
 
         SashForm functionNameSshForm = new SashForm(nameSshFormAll, SWT.NONE);
         functionNameSshForm.setSashWidth(0);

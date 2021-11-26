@@ -78,7 +78,12 @@ public class CreateTriggerUiData {
     public String getTriggerDefine() {
         StringBuilder sb = new StringBuilder(128);
         boolean canCondition = true;
-        sb.append("CREATE TRIGGER " + dataModel.getTriggerName() + " ");
+        sb.append("CREATE TRIGGER ");
+        if (dataModel.getTriggerNameCase()) {
+            sb.append("\"" + dataModel.getTriggerName() + "\" ");
+        } else {
+            sb.append(dataModel.getTriggerName() + " ");
+        }
         String period = getPeriod();
         sb.append(period);
         if (period.equals(TriggerKeyword.INSTEAD_OF.keyword)) {

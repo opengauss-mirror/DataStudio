@@ -92,7 +92,7 @@ public class EditViewHandler {
         ViewMetaData view = IHandlerUtilities.getSelectedViewObject();
         if (view != null) {
             Namespace ns = (Namespace) view.getNamespace();
-            if (ns != null && ns.getDatabase().isConnected()) {
+            if (ns != null && ns.getDatabase().isConnected() && "v".equals(view.getRelKind())) {
                 return true;
             }
         }
