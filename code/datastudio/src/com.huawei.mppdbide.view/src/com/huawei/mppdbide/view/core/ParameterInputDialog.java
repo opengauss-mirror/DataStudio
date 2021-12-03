@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.nebula.widgets.nattable.config.AbstractRegistryConfiguration;
@@ -410,6 +411,7 @@ public class ParameterInputDialog extends ExecDialog {
             throws DatabaseOperationException {
         if (null != params) {
             boolean isFirstParam = true;
+            boolean isEmptyParam = true;
 
             String argType = null;
             String argName = null;
@@ -418,18 +420,26 @@ public class ParameterInputDialog extends ExecDialog {
             DefaultParameter param = null;
             int paramSize = params.size();
 
+            StringBuilder templateTemp = new StringBuilder();
             for (int cnt = 0; cnt < paramSize; cnt++) {
                 param = params.get(cnt);
 
                 if (PARAMETERTYPE.IN.equals(param.getDefaultParameterMode())
                         || PARAMETERTYPE.INOUT.equals(param.getDefaultParameterMode())) {
                     if (!isFirstParam) {
-                        template.append(MPPDBIDEConstants.LINE_SEPARATOR);
+                    	templateTemp.append(MPPDBIDEConstants.LINE_SEPARATOR);
                     }
 
                     argType = param.getDefaultParameterType();
                     argName = param.getDefaultParameterName();
-                    argValue = param.getDefaultParameterValue() == null ? "" : param.getDefaultParameterValue();
+                    String defaultParameterValue = param.getDefaultParameterValue();
+                    if (StringUtils.isNotEmpty(defaultParameterValue)) {
+                    	isEmptyParam = false;
+                    	argValue = defaultParameterValue;
+					}else {
+						argValue = "";
+					}
+                   
 
                     if (null != argType) {
                         if ("refcursor".equals(argType)) {
@@ -438,23 +448,27 @@ public class ParameterInputDialog extends ExecDialog {
                             throw new DatabaseOperationException(
                                     IMessagesConstants.ERR_BL_REFCUR_EXECUTION_TEMPLATE_FAILURE);
                         } else {
-                            template.append(MPPDBIDEConstants.TAB);
-                            template.append(argValue);
+                        	templateTemp.append(MPPDBIDEConstants.TAB);
+                        	templateTemp.append(argValue);
                             if (cnt < paramSize - 1) {
-                                template.append(MPPDBIDEConstants.COMMA_SEPARATE);
+                            	templateTemp.append(MPPDBIDEConstants.COMMA_SEPARATE);
                             }
-                            template.append(MPPDBIDEConstants.TAB);
-                            template.append(MPPDBIDEConstants.SEPARATOR);
-                            template.append(MPPDBIDEConstants.SEPARATOR);
-                            template.append(argName);
-                            template.append(MPPDBIDEConstants.SPACE_CHAR);
-                            template.append(argType);
+                            templateTemp.append(MPPDBIDEConstants.TAB);
+                            templateTemp.append(MPPDBIDEConstants.SEPARATOR);
+                            templateTemp.append(MPPDBIDEConstants.SEPARATOR);
+                            templateTemp.append(argName);
+                            templateTemp.append(MPPDBIDEConstants.SPACE_CHAR);
+                            templateTemp.append(argType);
                         }
                     }
 
                     isFirstParam = false;
                 }
             }
+            
+            if (!isEmptyParam) {
+            	template.append(templateTemp);
+			}
         }
     }
 
