@@ -773,11 +773,6 @@
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_Y58pcAFTEeq9mJM5AwY0ng" coreExpressionId="com.huawei.objectbrowser.popupmenu.dropsynonym.id.expression"/>
       </children>
       <children xsi:type="menu:MenuSeparator" xmi:id="_T_SDMEQjEeqlldxUz0HolA" elementId="com.huawei.mppdbide.view.menuseparator.26"/>
-      <children xsi:type="menu:HandledMenuItem" xmi:id="_chYg2ZPqEeOwspWUd5Ul7A" elementId="com.huawei.objectbrowser.popupmenu.id.refresh" label="%objectbrowser.popupmenu.label.refresh" tooltip="%objectbrowser.popupmenu.tooltip.refresh" mnemonics="%objectbrowser.popupmenu.mnemonics.refresh" command="_2QD0oPj1EeGUL_jrWwhBMg">
-        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_chYg2pPqEeOwspWUd5Ul7A" coreExpressionId="com.huawei.objectbrowser.popupmenu.refresh.id.expression"/>
-        <parameters xmi:id="_HmU-sM-REemZic6zc4AEcg" elementId="com.huawei.mppdbide.view.parameter.autorefresh1" name="objectbrowser.id" value="objectbrowser"/>
-      </children>
-      <children xsi:type="menu:MenuSeparator" xmi:id="_09F6QKlUEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.menuseparator.23"/>
       <children xsi:type="menu:HandledMenuItem" xmi:id="_1ebswKlUEeuojqeHJNNWsQ" elementId="com.huawei.objectbrowser.popupmenu.id.triggergroup.create" label="%objectbrowser.popupmenu.label.triggergroup.create" tooltip="%objectbrowser.popupmenu.tooltip.triggergroup.create" mnemonics="%objectbrowser.popupmenu.mnemonics.triggergroup.create" command="_eCDP8KlWEeuojqeHJNNWsQ">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_PYIOoKlVEeuojqeHJNNWsQ" coreExpressionId="com.huawei.objectbrowser.popupmenu.triggergroup.id.expression"/>
       </children>
@@ -798,6 +793,11 @@
       </children>
       <children xsi:type="menu:HandledMenuItem" xmi:id="_t_RVUMOnEeulLtaGG6emAA" elementId="com.huawei.objectbrowser.popupmenu.id.view.editview" label="%objectbrowser.popupmenu.label.editview" tooltip="%objectbrowser.popupmenu.tooltip.editview" mnemonics="%objectbrowser.popupmenu.mnemonics.editview" command="_ktmVoMOnEeulLtaGG6emAA">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_3ONxIMOnEeulLtaGG6emAA" coreExpressionId="com.huawei.objectbrowser.popupmenu.dropview.id.expression"/>
+      </children>
+      <children xsi:type="menu:MenuSeparator" xmi:id="_09F6QKlUEeuojqeHJNNWsQ" elementId="com.huawei.mppdbide.view.menuseparator.23"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_chYg2ZPqEeOwspWUd5Ul7A" elementId="com.huawei.objectbrowser.popupmenu.id.refresh" label="%objectbrowser.popupmenu.label.refresh" tooltip="%objectbrowser.popupmenu.tooltip.refresh" mnemonics="%objectbrowser.popupmenu.mnemonics.refresh" command="_2QD0oPj1EeGUL_jrWwhBMg">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_chYg2pPqEeOwspWUd5Ul7A" coreExpressionId="com.huawei.objectbrowser.popupmenu.refresh.id.expression"/>
+        <parameters xmi:id="_HmU-sM-REemZic6zc4AEcg" elementId="com.huawei.mppdbide.view.parameter.autorefresh1" name="objectbrowser.id" value="objectbrowser"/>
       </children>
     </menus>
   </snippets>
