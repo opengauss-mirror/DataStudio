@@ -9,10 +9,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.core.runtime.IStatus;
@@ -26,6 +28,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.StatusDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
@@ -78,6 +81,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -817,7 +821,18 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
             String name = nameText == null ? originalTemplate.getName() : nameText.getText();
             String pattern = patternEditor.getDocument().get();
             newTemplate = TemplateFactory.getTemplate(name, descriptionText.getText(), pattern);
-            super.okPressed();
+            TemplatePersistenceDataIf[] templateData = TemplateStoreManager.getInstance().getTemplateData(false);
+            Optional<TemplatePersistenceDataIf> existingTemplates = Arrays.stream(templateData)
+                .filter(template -> name.equals(template.getTemplate().getName()))
+                .findAny();
+            if (existingTemplates.isPresent()) {
+                Shell shell = Display.getCurrent().getActiveShell();
+                MessageDialog.openInformation(shell,
+                    MessageConfigLoader.getProperty(IMessagesConstants.CODE_TEMPLATE_PREFPAGE_TITLE),
+                    MessageConfigLoader.getProperty(IMessagesConstants.CODE_TEMPLATE_DUPLICATE_MSG, name));
+            } else {
+                super.okPressed();
+            }
         }
 
         /**
