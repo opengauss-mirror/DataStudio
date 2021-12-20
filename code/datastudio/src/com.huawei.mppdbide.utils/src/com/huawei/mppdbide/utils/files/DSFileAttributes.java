@@ -105,7 +105,6 @@ public class DSFileAttributes implements FileAttribute<List<AclEntry>> {
 
     @Override
     public String name() {
-        // unix:permissions
         return "posix:permissions";
     }
 

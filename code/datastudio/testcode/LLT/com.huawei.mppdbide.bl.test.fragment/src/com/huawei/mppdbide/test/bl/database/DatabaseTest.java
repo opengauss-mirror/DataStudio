@@ -164,6 +164,7 @@ public class DatabaseTest extends BasicJDBCTestCaseAdapter
         CommonLLTUtils.fetchAllSynonyms(preparedstatementHandler);
         CommonLLTUtils.mockCheckDebugSupport(preparedstatementHandler);
         CommonLLTUtils.mockCheckExplainPlanSupport(preparedstatementHandler);
+        CommonLLTUtils.fetchTriggerQuery(preparedstatementHandler);
         connProfCache = DBConnProfCache.getInstance();
         JobCancelStatus status=new JobCancelStatus();
         status.setCancel(false);
@@ -5532,7 +5533,7 @@ public class DatabaseTest extends BasicJDBCTestCaseAdapter
             namespace.setLoaded();
             namespace.getObjectBrowserLabel();
 
-            assertEquals("pg_catalog (10) ", namespace.getObjectBrowserLabel());
+            assertEquals("pg_catalog (11) ", namespace.getObjectBrowserLabel());
 
           
 
@@ -5562,7 +5563,7 @@ public class DatabaseTest extends BasicJDBCTestCaseAdapter
             namespace.getAllObjects(database.getConnectionManager().getObjBrowserConn(), status);
             namespace.setLoaded();
 
-            assertEquals("pg_catalog (10) ", namespace.getObjectBrowserLabel());
+            assertEquals("pg_catalog (11) ", namespace.getObjectBrowserLabel());
 
           
 

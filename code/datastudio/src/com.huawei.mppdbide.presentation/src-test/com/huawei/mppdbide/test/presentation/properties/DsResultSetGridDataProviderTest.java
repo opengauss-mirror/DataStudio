@@ -1006,7 +1006,7 @@ public class DsResultSetGridDataProviderTest extends BasicJDBCTestCaseAdapter
         
         refreshObj.setOperationType(MPPDBIDEConstants.CREATE_VIEW);
         refreshObj.setObjectName("table1");
-        String newlycreatedTableQuery = "SELECT c.oid, n.oid as nspoid, n.nspname AS schemaname, c.relname AS viewname, pg_get_userbyid(c.relowner) AS viewowner FROM (pg_class c LEFT JOIN pg_namespace n ON ((n.oid = c.relnamespace))) WHERE (c.relkind = 'v'::\"char\") and c.relname='table1' and n.nspname='ns1';";
+        String newlycreatedTableQuery = "SELECT c.oid, n.oid as nspoid, n.nspname AS schemaname, c.relname AS viewname, pg_get_userbyid(c.relowner) AS viewowner, c.relkind as relkind FROM (pg_class c LEFT JOIN pg_namespace n ON ((n.oid = c.relnamespace))) WHERE (c.relkind = 'v'::\"char\") and c.relname='table1' and n.nspname='ns1';";
         MockResultSet fetchRS = preparedstatementHandler.createResultSet();
         fetchRS.addColumn("");
         fetchRS.addRow(new Object[] {});
@@ -1033,7 +1033,7 @@ public class DsResultSetGridDataProviderTest extends BasicJDBCTestCaseAdapter
         
         refreshObj.setOperationType(MPPDBIDEConstants.SET_SCHEMA_VIEW);
         refreshObj.setObjectName("table1");
-        String newlycreatedTableQuery = "SELECT c.oid, n.oid as nspoid, n.nspname AS schemaname, c.relname AS viewname, pg_get_userbyid(c.relowner) AS viewowner FROM (pg_class c LEFT JOIN pg_namespace n ON ((n.oid = c.relnamespace))) WHERE (c.relkind = 'v'::\"char\") and c.relname='table1' and n.nspname='ns1';";
+        String newlycreatedTableQuery = "SELECT c.oid, n.oid as nspoid, n.nspname AS schemaname, c.relname AS viewname, pg_get_userbyid(c.relowner) AS viewowner, c.relkind as relkind FROM (pg_class c LEFT JOIN pg_namespace n ON ((n.oid = c.relnamespace))) WHERE (c.relkind = 'v'::\"char\") and c.relname='table1' and n.nspname='ns1';";
         MockResultSet fetchRS = preparedstatementHandler.createResultSet();
         fetchRS.addColumn("");
         fetchRS.addRow(new Object[] {});

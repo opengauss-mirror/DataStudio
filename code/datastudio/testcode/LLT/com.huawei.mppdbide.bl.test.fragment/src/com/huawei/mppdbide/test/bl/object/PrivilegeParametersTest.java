@@ -42,7 +42,7 @@ public class PrivilegeParametersTest {
    public void testTTA_file_test_001() {
        DSFileAttributes attr = new DSFileAttributes(null);
        assertNotNull(attr.value());
-       assertEquals("acl:acl", attr.name());
+       assertEquals("posix:permissions", attr.name());
        assertNotNull(DSFilePermission.getDefaultPermission());
    }
 

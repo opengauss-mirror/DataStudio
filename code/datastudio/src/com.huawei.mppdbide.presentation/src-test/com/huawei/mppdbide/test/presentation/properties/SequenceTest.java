@@ -63,7 +63,6 @@ public class SequenceTest extends BasicJDBCTestCaseAdapter
     PreparedStatementResultSetHandler preparedstatementHandler  = null;
     StatementResultSetHandler         statementHandler          = null;
 
-    PreparedStatementResultSetHandler epreparedstatementHandler = null;
     StatementResultSetHandler         estatementHandler         = null;
     DBConnProfCache                   connProfCache             = null;
     ConnectionProfileId               profileId                 = null;
@@ -99,6 +98,7 @@ public class SequenceTest extends BasicJDBCTestCaseAdapter
         CommonLLTUtils.fetchViewColumnInfo(preparedstatementHandler);
         CommonLLTUtils.createTableSpaceRS(preparedstatementHandler);
         CommonLLTUtils.fetchAllSynonyms(preparedstatementHandler);
+        CommonLLTUtils.fetchTriggerQuery(preparedstatementHandler);
         connProfCache = DBConnProfCache.getInstance();
 
         serverInfo.setConectionName("Conn1");
