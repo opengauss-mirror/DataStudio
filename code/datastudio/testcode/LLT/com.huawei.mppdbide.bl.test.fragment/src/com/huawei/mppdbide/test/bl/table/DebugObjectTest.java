@@ -90,6 +90,7 @@ public class DebugObjectTest extends BasicJDBCTestCaseAdapter
         CommonLLTUtils.preparePartitionIndexLoadLevel(preparedstatementHandler);
         CommonLLTUtils.preparePartitionstLoadLevel(preparedstatementHandler);
         CommonLLTUtils.fetchAllSynonyms(preparedstatementHandler);
+        CommonLLTUtils.fetchTriggerQuery(preparedstatementHandler);
         // com.huawei.mppdbide.bl.test.gaussintegration.helpers.CommonLLTUtils.prepareConnectionResultSets(getJDBCMockObjectFactory());
 
         connProfCache = DBConnProfCache.getInstance();

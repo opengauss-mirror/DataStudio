@@ -1181,7 +1181,7 @@ public class CommonLLTUtils
         constraintRS.addColumn("tablespace");
         constraintRS.addRow(new Object[] {1, 1, 1, "ConstraintName",
                 "ConstraintType", false, false, false, 1, 1, "", "", "", "",
-                "1", "1", "", "constraint_tablespace"});
+                "{1}", "1", "", "constraint_tablespace"});
         preparedstatementHandler.prepareResultSet(
                 CommonLLTUtils.GET_ALL_CONSTRAINTS, constraintRS);
 
@@ -3695,6 +3695,20 @@ MockResultSet colmetadataRS = preparedstatementHandler
 
     }
 
+    public static void fetchTriggerQuery(PreparedStatementResultSetHandler preparedstatementHandler) {
+        String fetchTriggerQuery = "select t.oid as oid, t.tgrelid as tableoid, t.tgname as name, t.tgfoid as functionoid, t.tgtype as tgtype, t.tgenabled as tgenable, pg_get_triggerdef(t.oid) as ddlmsg from pg_trigger t, pg_class c where t.tgrelid = c.oid and c.relnamespace=?";
+        MockResultSet fetchTriggerRS = preparedstatementHandler.createResultSet();
+        fetchTriggerRS.addColumn("oid");
+        fetchTriggerRS.addColumn("tableoid");
+        fetchTriggerRS.addColumn("name");
+        fetchTriggerRS.addColumn("functionoid");
+        fetchTriggerRS.addColumn("tgtype");
+        fetchTriggerRS.addColumn("tgenable");
+        fetchTriggerRS.addColumn("ddlmsg");
+        fetchTriggerRS.addRow(new Object[] {1, 1, "trigger1", 1, 1, true, ""});
+        preparedstatementHandler.prepareResultSet(fetchTriggerQuery, fetchTriggerRS);
+    }
+
     public static void fetchViewQuery(
             PreparedStatementResultSetHandler preparedstatementHandler)
     {
@@ -4388,7 +4402,7 @@ MockResultSet colmetadataRS = preparedstatementHandler
                     if (!fileExists) {
                         if (setDefaultOnNull) {
                             try {
-                                newPath = Files.createDirectory(newPath, fileAttributes);
+                                newPath = Files.createDirectory(newPath);
                             } catch (IOException exception) {
                                 MPPDBIDELoggerUtility.error(
                                         MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FOLDER_FAIL_ERR),
@@ -4402,7 +4416,7 @@ MockResultSet colmetadataRS = preparedstatementHandler
                     if (!fileExists) {
                         if (setDefaultOnNull) {
                             try {
-                                Files.createFile(newPath, fileAttributes);
+                                Files.createFile(newPath);
                             } catch (IOException exception) {
                                 MPPDBIDELoggerUtility.error(
                                         MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FILE_FAIL_ERR),

@@ -1494,7 +1494,7 @@ public class AutoSuggestTest extends BasicJDBCTestCaseAdapter
         preparedstatementHandler.prepareResultSet(
                 tableQuery, createTableRS);
         
-        String viewQuery = "SELECT c.oid, n.oid as nspoid, n.nspname AS schemaname, c.relname AS viewname, pg_get_userbyid(c.relowner) AS viewowner FROM (pg_class c LEFT JOIN pg_namespace n ON ((n.oid = c.relnamespace))) WHERE (c.relkind = 'v'::\"char\") and c.relname='table1' and n.nspname='ns1';";
+        String viewQuery = "SELECT c.oid, n.oid as nspoid, n.nspname AS schemaname, c.relname AS viewname, pg_get_userbyid(c.relowner) AS viewowner, c.relkind as relkind FROM (pg_class c LEFT JOIN pg_namespace n ON ((n.oid = c.relnamespace))) WHERE (c.relkind = 'v'::\"char\") and c.relname='table1' and n.nspname='ns1';";
         MockResultSet createViewRS = preparedstatementHandler.createResultSet();
         createViewRS.addColumn("oid");
         createViewRS.addColumn("viewname");

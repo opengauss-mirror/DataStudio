@@ -114,6 +114,7 @@ public class CommonTest extends BasicJDBCTestCaseAdapter
         CommonLLTUtils.preparePartitionIndexLoadLevel(preparedstatementHandler);
         CommonLLTUtils.preparePartitionstLoadLevel(preparedstatementHandler);
         CommonLLTUtils.fetchAllSynonyms(preparedstatementHandler);
+        CommonLLTUtils.fetchTriggerQuery(preparedstatementHandler);
             connProfCache = DBConnProfCache.getInstance();
        
         JobCancelStatus status = new JobCancelStatus();

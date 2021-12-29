@@ -114,6 +114,7 @@ public class ViewTest extends BasicJDBCTestCaseAdapter
         CommonLLTUtils.preparePartitionIndexLoadLevel(preparedstatementHandler);
         CommonLLTUtils.preparePartitionstLoadLevel(preparedstatementHandler);
         CommonLLTUtils.fetchAllSynonyms(preparedstatementHandler);
+        CommonLLTUtils.fetchTriggerQuery(preparedstatementHandler);
         connProfCache = DBConnProfCache.getInstance();
 
         serverInfo.setConectionName("Conn1");
