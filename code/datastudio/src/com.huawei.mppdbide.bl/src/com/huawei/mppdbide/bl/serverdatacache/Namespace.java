@@ -239,6 +239,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         clearCollection(foreigntables);
         clearCollection(sequence);
         clearCollection(synonyms);
+        clearCollection(triggerGroups);
     }
 
     /**
@@ -251,6 +252,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         foreigntables = null;
         sequence = null;
         synonyms = null;
+        triggerGroups = null;
     }
 
     /**
@@ -942,6 +944,10 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     public void addSynonymToGroup(SynonymMetaData synonym) {
         synonyms.addToGroup(synonym);
     }
+    
+    public void addTrigerToGroup(TriggerMetaData trigger) {
+    	triggerGroups.addToGroup(trigger);
+    }
 
     /**
      * Fetch level 2 view column info.
@@ -1450,6 +1456,16 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         }
         return synonym;
     }
+    
+    public TriggerMetaData getSearchedTrigger(int tblId, String tblName) {
+        TriggerMetaData triggerMetaData = getTriggerObjectGroup().getObjectById(tblId);
+        if (null == triggerMetaData) {
+        	triggerMetaData = new TriggerMetaData(tblId, tblName);
+            addTrigerToGroup(triggerMetaData);
+        }
+        return triggerMetaData;
+    }
+
 
     /**
      * Find exact matching child objects.
@@ -1622,6 +1638,8 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
             removeFromCollection(tables, obj);
         } else if (obj instanceof SynonymMetaData) {
             removeFromCollection(synonyms, obj);
+        }else if (obj instanceof TriggerMetaData) {
+            removeFromCollection(triggerGroups, obj);
         }
     }
 

@@ -127,6 +127,7 @@ public class SearchWindow implements Observer {
     private Button viewCheck;
     private Button sequenceCheck;
     private Button synonymCheck;
+    private Button triggerCheck;
     private Text searchText;
     private Combo nameMatchCombo;
     private Button matchCaseCheck;
@@ -530,6 +531,11 @@ public class SearchWindow implements Observer {
         synonymCheck.setText(MessageConfigLoader.getProperty(IMessagesConstants.SYNONYM_GROUP_NAME));
         synonymCheck.setSelection(true);
         synonymCheck.addSelectionListener(new ButtonSelectionListner());
+        
+        triggerCheck = new Button(withinComposite, SWT.CHECK);
+        triggerCheck.setText(MessageConfigLoader.getProperty(IMessagesConstants.TRIGGER_GROUP_NAME));
+        triggerCheck.setSelection(true);
+        triggerCheck.addSelectionListener(new ButtonSelectionListner());
 
     }
 
@@ -1024,7 +1030,7 @@ public class SearchWindow implements Observer {
 
             }
             if (schemaCombo.getSelectionIndex() >= 0 && tableCheck.getSelection() || funProcCheck.getSelection()
-                    || viewCheck.getSelection() || sequenceCheck.getSelection() || synonymCheck.getSelection()) {
+                    || viewCheck.getSelection() || sequenceCheck.getSelection() || synonymCheck.getSelection() || triggerCheck.getSelection()) {
                 searchCore.clearData();
                 getUserInPut();
                 boolean isConnection = false;
@@ -1153,6 +1159,7 @@ public class SearchWindow implements Observer {
         searchObjInfo.setMatchCase(matchCaseCheck.getSelection());
         searchObjInfo.setSequenceSelected(sequenceCheck.getSelection());
         searchObjInfo.setSynonymSelected(synonymCheck.getSelection());
+        searchObjInfo.setTriggerSelected(triggerCheck.getSelection());
 
     }
 

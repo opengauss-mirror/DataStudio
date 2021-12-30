@@ -25,6 +25,7 @@ import com.huawei.mppdbide.bl.serverdatacache.SequenceMetadata;
 import com.huawei.mppdbide.bl.serverdatacache.Server;
 import com.huawei.mppdbide.bl.serverdatacache.SynonymMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
@@ -289,6 +290,9 @@ public class SearchObjCore extends Observable {
                 if (searchInfo.isSynonymSelected()) {
                     executeTogetSearchedSynonym(selectedNs.getPrivilegeFlag());
                 }
+                if (searchInfo.isTriggerSelected()) {
+					searchTriggerData(selectedNs.getPrivilegeFlag());
+				}
             } catch (DatabaseCriticalException exception) {
                 MPPDBIDELoggerUtility.error("SearchObjCore: search operation failed.", exception);
                 throw new DatabaseCriticalException(IMessagesConstants.SEARCH_OBJ_ERROR, exception);
@@ -395,6 +399,38 @@ public class SearchObjCore extends Observable {
             }
         }
     }
+    
+    private void searchTriggerData(boolean privilegeFlag)
+            throws DatabaseCriticalException, DatabaseOperationException, SQLException {
+        ResultSet rs = null;
+        try {
+            int namespaceId;
+            String nsName;
+            Namespace ns;
+            SearchNameMatchEnum matchIndex = getMatchIndex();
+            if (null != matchIndex) {
+                rs = conn.execSelectForSearch(
+                        searchInfo.formSearchQueryForTriggers(selectedNs.getOid(), matchIndex, privilegeFlag,
+                                server.isServerCompatibleToNodeGroupPrivilege()),
+                        AbstractSearchObjUtils.formQuerybyNameMatch(getMatchIndex(), getSearchedText()));
+                boolean hasNext = rs.next();
+                while (hasNext) {
+                    namespaceId = rs.getInt("relnamespace");
+                    ns = selectedDb.getNameSpaceById(namespaceId);
+                    nsName = rs.getString("nsname");
+                   
+                    if (searchNamespace.getOid() != namespaceId) {
+                        searchNamespace = new SearchNamespace(namespaceId, nsName, selectedDb);
+                        searchedDatabase.addSearchNamespaces(searchNamespace);
+                    }
+                    getSearchedTrigger(rs, ns);
+                    hasNext = rs.next();
+                }
+            }
+        } finally {
+            conn.closeResultSet(rs);
+        }
+    }
 
     private void getSearchedObject(ResultSet rs, Namespace ns) throws SQLException {
         PartitionTable parTable;
@@ -453,6 +489,16 @@ public class SearchObjCore extends Observable {
         childName = rs.getString("synname");
         syn = ns.getSearchedSynonym(childId, childName);
         searchNamespace.addToSynonymGroup(syn);
+    }
+    
+    private void getSearchedTrigger(ResultSet rs, Namespace ns) throws SQLException {
+    	TriggerMetaData triggerMetaData;
+        int childId;
+        String childName = null;
+        childId = rs.getInt("oid");
+        childName = rs.getString("tgname");
+        triggerMetaData = ns.getSearchedTrigger(childId, childName);
+        searchNamespace.addToTrigerGroup(triggerMetaData);
     }
 
     /**
