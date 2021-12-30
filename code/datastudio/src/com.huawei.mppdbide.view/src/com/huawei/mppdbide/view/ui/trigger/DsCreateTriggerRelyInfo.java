@@ -35,6 +35,11 @@ public class DsCreateTriggerRelyInfo implements CreateTriggerRelyInfo {
     public List<String> getTableNames() {
         return TriggerUtils.getTableNames(namespace.getTables());
     }
+    
+    @Override
+    public List<String> getViewNames() {
+        return TriggerUtils.getViewNames(namespace.getViewGroup());
+    }
 
     @Override
     public List<String> getFunctionNames() {

@@ -17,7 +17,9 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 
+import java.awt.ItemSelectable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -258,7 +260,7 @@ public class CreateTriggerMainDialog extends Dialog {
         createContents();
         shell.open();
         shell.layout();
-        initUiData();
+        initUiData(false);
         addWidgetListeners();
         refreshUiByDataModel();
         Display display = getParent().getDisplay();
@@ -312,10 +314,15 @@ public class CreateTriggerMainDialog extends Dialog {
         });
     }
 
-    private void initUiData() {
-        for (String name : relyInfo.getTableNames()) {
-            triggerTableCombo.add(name);
-        }
+    private void initUiData(boolean isIgnoreTables) {
+    	ArrayList<String> items = new ArrayList<>();
+    	if (!isIgnoreTables) {
+    		items.addAll(relyInfo.getTableNames());
+		}
+
+    	items.addAll(relyInfo.getViewNames());
+        triggerTableCombo.setItems(items.toArray(new String[0]));
+        
         for (String name : relyInfo.getFunctionNames()) {
             functionNameCombo.add(name);
         }
@@ -614,6 +621,16 @@ public class CreateTriggerMainDialog extends Dialog {
 
         firesInsteadOf = new Button(sashForm, SWT.RADIO);
         firesInsteadOf.setText("INSTEAD OF");
+        firesInsteadOf.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e){
+				boolean isSelected = ((Button)e.getSource()).getSelection();
+				if (isSelected) {
+					initUiData(true);
+				}else {
+					initUiData(false);
+				}
+			}
+		});
 
         sashForm.setWeights(new int[] {140, 103, 100, 304});
         firesSashForm.setWeights(new int[] {2});

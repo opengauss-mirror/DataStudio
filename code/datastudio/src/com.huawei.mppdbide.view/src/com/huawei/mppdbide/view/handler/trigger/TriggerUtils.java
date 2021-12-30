@@ -13,7 +13,9 @@ import com.huawei.mppdbide.bl.serverdatacache.ColumnMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.Database;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TableObjectGroup;
+import com.huawei.mppdbide.bl.serverdatacache.groups.ViewObjectGroup;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
 import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
@@ -83,6 +85,21 @@ public class TriggerUtils {
             tableNameList.add(tableData.getName());
         }
         return tableNameList;
+    }
+    
+    /**
+     * Get view names
+     *
+     * @param ViewObjectGroup the view group
+     * @return List<String> the view name list
+     */
+    public static List<String> getViewNames(ViewObjectGroup  viewGroup) {        
+        ArrayList<ViewMetaData> viewList = viewGroup.getSortedServerObjectList();
+        ArrayList<String> viewNameList = new ArrayList<String>();
+        for (ViewMetaData viewData : viewList) {
+            viewNameList.add(viewData.getName());
+        }
+        return viewNameList;
     }
 
     /**
