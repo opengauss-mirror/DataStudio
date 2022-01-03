@@ -193,7 +193,7 @@ public class DSCursorDataGridRow extends DSResultSetGridDataRow implements IDSGr
             getValue(columnIndex);
         }
 
-        return super.getValue(columnIndex);
+        return super.getOriginalValue(columnIndex);
     }
 
     @Override

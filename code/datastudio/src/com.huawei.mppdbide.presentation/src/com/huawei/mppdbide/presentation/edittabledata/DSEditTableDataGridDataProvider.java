@@ -872,6 +872,7 @@ public class DSEditTableDataGridDataProvider extends DSResultSetGridDataProvider
     protected IDSGridDataRow createRowFromValues(Object[] rowValues) {
         DSEditTableDataGridRow row = new DSEditTableDataGridRow(eventTable, this);
         row.setValues(rowValues);
+        row.setOriginalValues(rowValues.clone());
         row.setIncludeEncoding(isIncludeEncoding());
 
         return row;

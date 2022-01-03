@@ -27,6 +27,7 @@ public class DSResultSetGridDataRow implements IDSGridDataRow {
 
     /** The values. */
     protected Object[] values;
+    protected Object[] originalValues;
     private String encoding;
     private boolean isIncludeEncoding;
     private DSResultSetGridDataProvider dsResultSetGridDataProvider;
@@ -37,6 +38,15 @@ public class DSResultSetGridDataRow implements IDSGridDataRow {
     public DSResultSetGridDataRow(DSResultSetGridDataProvider dsResultSetGridDataProvider) {
         this.encoding = null;
         this.dsResultSetGridDataProvider = dsResultSetGridDataProvider;
+    }
+
+    /**
+     * Sets the originalValues.
+     *
+     * @param rowValues the new values
+     */
+    public void setOriginalValues(Object[] rowValues) {
+        this.originalValues = rowValues;
     }
 
     /**
@@ -64,6 +74,21 @@ public class DSResultSetGridDataRow implements IDSGridDataRow {
             return "";
         }
 
+    }
+
+	public Object[] getOriginalValues() {
+		return originalValues;
+	}
+
+    public Object getOriginalValue(int columnIndex) {
+        if (originalValues != null && columnIndex >= 0 && columnIndex < originalValues.length) {
+            if (isIncludeEncoding() && !isUnstructuredDatatype(columnIndex)) {
+                return getEncodedValue(originalValues[columnIndex]);
+            }
+            return originalValues[columnIndex];
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -165,5 +190,4 @@ public class DSResultSetGridDataRow implements IDSGridDataRow {
     public void setIncludeEncoding(boolean isIncludeDSEncoding) {
         this.isIncludeEncoding = isIncludeDSEncoding;
     }
-
 }
