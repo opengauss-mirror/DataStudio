@@ -234,7 +234,7 @@ public class SearchNamespace extends Namespace {
     /**
      * Adds the to trigger group.
      *
-     * @param triggerMetaData
+     * @param triggerMetaData the trigger metadata
      */
     public void addToTrigerGroup(TriggerMetaData triggerMetaData) {
         getTriggerObjectGroup().addToGroup(triggerMetaData);
