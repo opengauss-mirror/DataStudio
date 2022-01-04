@@ -855,6 +855,7 @@ public class DSEditTableDataGridDataProvider extends DSResultSetGridDataProvider
         int colCount = getColumnDataProvider().getColumnCount();
         Object[] value = new Object[colCount];
         emptyRow.createNewRow(value);
+        emptyRow.setOriginalValues(value.clone());
         emptyRow.setIncludeEncoding(BLPreferenceManager.getInstance().getBLPreference().isIncludeEncoding());
         emptyRow.setEncoding(super.getEncoding());
         addToInsertList(emptyRow);
