@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -40,7 +54,6 @@ public class Edit_Data_Filter_Wizard {
 					QueryEditor.SingleQueryExe("select count (*) from autotable.rowtable;", "Normal");
 					sFlag1 = QueryResult.EditCopyContent().replace("*", "");
 					Thread.sleep(GlobalConstants.MinWait);
-					//EditTableDataFunctions.closeEditTableResult();
 					Thread.sleep(GlobalConstants.MinWait);
 					EditTableDataFunctions.autoTableNavigation();
 					UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 4);
@@ -54,7 +67,6 @@ public class Edit_Data_Filter_Wizard {
 					Thread.sleep(GlobalConstants.MedWait);
 					EditTableDataFunctions.editDataOperations("ADD");
 					Thread.sleep(GlobalConstants.MinWait);
-					//BaseActions.MouseClick("Data Studio", "", "SunAwtCanvas1", "left", 2, 255, 97);
 					EditTableDataFunctions.editDataOperations("POST");
 					Thread.sleep(GlobalConstants.MinWait);
 					EditTableDataFunctions.editDataOperations("ROllBACK");
@@ -97,7 +109,6 @@ public class Edit_Data_Filter_Wizard {
 					EditTableDataFunctions.Button("EXECUTE");
 					Thread.sleep(GlobalConstants.MedWait);
 					EditTableDataFunctions.editDataOperations("ADD");
-					//BaseActions.MouseClick("Data Studio", "", "SunAwtCanvas1", "left", 2,320,115 );//255, 97
 					Thread.sleep(GlobalConstants.MedWait);
 					BaseActions.SetText("Data Studio", "", "SunAwtCanvas1", "B");
 					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT,1);
@@ -126,105 +137,6 @@ public class Edit_Data_Filter_Wizard {
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
 				}
-				/*if(sTestCaseID.equals("SDV_FUNVAL_DS_Edit_data_filter_004"))
-				{
-					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					QueryEditor.SingleQueryExe("select count (*) from autotable.part_table;", "Normal");
-					sFlag1 = QueryResult.EditCopyContent().replace("*", "");
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.closeEditTableResult();
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.autoTableNavigation();
-					Thread.sleep(GlobalConstants.MinWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 3);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 3);
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.editTablWindow();
-					EditTableDataFunctions.editTableWizard("Select", "*");
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.Button("OK");
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.Button("Execute");
-					Thread.sleep(GlobalConstants.MedWait);
-					EditTableDataFunctions.editDataOperations("ADD");
-					Thread.sleep(GlobalConstants.MinWait);
-					BaseActions.MouseClick("Data Studio", "", "SunAwtCanvas1", "left", 2,141,113 );//255, 97
-					Thread.sleep(GlobalConstants.MinWait);
-					BaseActions.SetText("Data Studio", "", "SunAwtCanvas1", "abc");
-					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT,1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_LEFT,1);
-					BaseActions.SetText("Data Studio", "", "SunAwtCanvas1", "5");
-					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT,2);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,2);
-					BaseActions.SetText("Data Studio", "", "SunAwtCanvas1", "60000");
-					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT,1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_LEFT,1);
-					EditTableDataFunctions.editDataOperations("POST");
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.editDataOperations("ROllBACK");
-					Thread.sleep(GlobalConstants.MinWait);
-					sFlag2 = EditTableDataFunctions.copyEditTableResultData();
-					QueryEditor.SingleQueryExe("select count (*) from autotable.part_table;", "Normal");
-					sFlag3 = QueryResult.EditCopyContent().replace("*", "");
-					if(sFlag1.matches(sFlag3) && sFlag2.contains("Status : Rollback Successful"))
-					{
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-					}
-					else
-					{
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Unable to Retreive the result for partition table. Please refer screenshot "+sTestCaseID+".jpg");
-						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-					}
-				}*/
-				/*	if(sTestCaseID.equals("SDV_FUNVAL_DS_Edit_data_filter_005"))
-				{
-					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					QueryEditor.SingleQueryExe("select count(*)from autotable.ftable;", "Normal");
-					sFlag1 = QueryResult.EditCopyContent().replace("*", "");
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.closeEditTableResult();
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.autoTableNavigation();
-					Thread.sleep(GlobalConstants.MinWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 2);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 2);
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.editTablWindow();
-					EditTableDataFunctions.editTableWizard("Select", "*");
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.Button("OK");
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.Button("Execute");
-					Thread.sleep(GlobalConstants.MedWait);
-					EditTableDataFunctions.editDataOperations("ADD");
-					Thread.sleep(GlobalConstants.MinWait);
-					BaseActions.MouseClick("Data Studio", "", "SunAwtCanvas1", "left", 2,141,113 );//255, 97
-					Thread.sleep(GlobalConstants.MinWait);
-					BaseActions.SetText("Data Studio", "", "SunAwtCanvas1", "50");
-					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT,1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_LEFT,1);
-					BaseActions.SetText("Data Studio", "", "SunAwtCanvas1", "5");
-					Thread.sleep(GlobalConstants.MinWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT,1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.editDataOperations("POST");
-					Thread.sleep(GlobalConstants.MinWait);
-					sFlag2 = EditTableDataFunctions.copyEditTableResultData();
-					QueryEditor.SingleQueryExe("select count(*)from autotable.ftable;", "Normal");
-					sFlag3 = QueryResult.EditCopyContent().replace("*", "");
-					if(sFlag1.matches(sFlag3) && sFlag2.contains("Status : 1 rows insert failed;"))
-					{
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-					}
-					else
-					{
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Able to insert in foreign table. Please refer screenshot "+sTestCaseID+".jpg");
-						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-					}
-				}*/
 
 				if(sTestCaseID.equals("SDV_FUNVAL_DS_Edit_data_filter_007"))
 				{
@@ -249,7 +161,6 @@ public class Edit_Data_Filter_Wizard {
 					Thread.sleep(GlobalConstants.MedWait);
 					EditTableDataFunctions.editDataOperations("ADD");
 					Thread.sleep(GlobalConstants.MinWait);
-					//BaseActions.MouseClick("Data Studio", "", "SunAwtCanvas1", "left", 2,141,113 );//255, 97
 					Thread.sleep(GlobalConstants.MinWait);
 					BaseActions.SetText("Data Studio", "", "SunAwtCanvas1", "B");
 					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT,1);
@@ -432,8 +343,6 @@ public class Edit_Data_Filter_Wizard {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_TAB, 1);
 					Thread.sleep(GlobalConstants.MinWait);
 					sFlag1=BaseActions.ControlGetText("Edit table data wizard", "", "Static6");
-					//Thread.sleep(GlobalConstants.MinWait);
-					//EditTableDataFunctions.Button("CANCEL");
 					if(sFlag1.matches("Please enter valid columns"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
@@ -584,8 +493,6 @@ public class Edit_Data_Filter_Wizard {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_TAB, 1);
 					Thread.sleep(GlobalConstants.MinWait);
 					sFlag2 =BaseActions.ControlGetText("Edit table data wizard", "", "Static6");
-					/*Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.Button("CANCEL");*/
 					if(sFlag2.matches("Please enter valid columns"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
@@ -613,8 +520,6 @@ public class Edit_Data_Filter_Wizard {
 					EditTableDataFunctions.editTableWizard("Where", "%");
 					Thread.sleep(GlobalConstants.MinWait);
 					sFlag2 =BaseActions.ControlGetText("Edit table data wizard", "", "Static6");
-					/*Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.Button("CANCEL");*/
 					if(sFlag2.matches("Please enter valid columns"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
@@ -636,8 +541,6 @@ public class Edit_Data_Filter_Wizard {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_TAB, 1);
 					Thread.sleep(GlobalConstants.MedWait);
 					sFlag2 =BaseActions.ControlGetText("Edit table data wizard", "", "Static6");
-					/*Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.Button("CANCEL");*/
 					if(sFlag2.matches("Please enter valid columns"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
@@ -711,8 +614,6 @@ public class Edit_Data_Filter_Wizard {
 					Thread.sleep(GlobalConstants.MedWait);
 					EditTableDataFunctions.editDataOperations("ADD");
 					Thread.sleep(GlobalConstants.MinWait);
-					//BaseActions.MouseClick("Data Studio", "", "SunAwtCanvas1", "left", 2,141,113 );//255, 97
-					//Thread.sleep(GlobalConstants.MinWait);
 					BaseActions.SetText("Data Studio", "", "SunAwtCanvas1", "Test");
 					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT,1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_LEFT,1);
@@ -724,7 +625,6 @@ public class Edit_Data_Filter_Wizard {
 						UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE,1);
 						Thread.sleep(GlobalConstants.MinWait);
 						sFlag1= QueryResult.ReadConsoleOutput("GLOBAL").replace("\"", "");
-						//if(sFlag1.contains("Hint: You will need to rewrite or cast the expression."))
 						if(sFlag1.contains("[INFO] Query execution failed."))
 						{
 							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
@@ -786,11 +686,7 @@ public class Edit_Data_Filter_Wizard {
 				if(sTestCaseID.equals("SDV_FIA_DS_Edit_data_filter_002"))	
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					/*EditTableDataFunctions.closeEditData();
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.closeEditTableResult();
-					Thread.sleep(GlobalConstants.MinWait);
-					 */					EditTableDataFunctions.autoTableNavigation();
+					EditTableDataFunctions.autoTableNavigation();
 					 UtilityFunctions.KeyPress(KeyEvent.VK_DOWN,1);
 					 UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);
 					 Thread.sleep(GlobalConstants.MinWait);
@@ -842,12 +738,6 @@ public class Edit_Data_Filter_Wizard {
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
 					BaseActions.ClearConsole("GLOBAL"); //** Needs to be confirmed
 					Thread.sleep(GlobalConstants.MinWait);
-					//EditTableDataFunctions.closeEditData();
-					//Thread.sleep(GlobalConstants.MinWait);
-					/*EditTableDataFunctions.closeEditTableResult();
-					Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.closeEditData();
-					Thread.sleep(GlobalConstants.MinWait);*/
 					QueryEditor.OpenQuery("SHORTCUT", "EXISTING", "12K_Lines.sql", "OPEN", "OVERWRITE");
 					Thread.sleep(GlobalConstants.MedWait);
 					sFlag1= QueryResult.ReadConsoleOutput("GLOBAL");
@@ -919,8 +809,6 @@ public class Edit_Data_Filter_Wizard {
 					EditTableDataFunctions.closeEditData();
 					Thread.sleep(GlobalConstants.MinWait);
 					EditTableDataFunctions.closeEditTableResult();
-					/*	Thread.sleep(GlobalConstants.MinWait);
-					EditTableDataFunctions.closeEditData();*/
 					Thread.sleep(GlobalConstants.MinWait);
 					ObjectBrowserPane.ObjectBrowserRefresh();
 					Thread.sleep(GlobalConstants.MinWait);
@@ -953,7 +841,6 @@ public class Edit_Data_Filter_Wizard {
 				if(sTestCaseID.equals("SDV_FUN_INVAL_DS_Edit_data_filter_003")) //need to modify this test case
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					//ObjectBrowserPane.RenameTable("autotable.ctable", "coltable");
 					Thread.sleep(GlobalConstants.MedWait);
 					EditTableDataFunctions.closeEditData();
 					Thread.sleep(GlobalConstants.MinWait);

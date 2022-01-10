@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.adapter.gauss;
@@ -27,12 +38,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import com.huawei.mppdbide.utils.messaging.MessageQueue;
 
 /**
- * Title: class Description: The Class StmtExecutor. Copyright (c) Huawei
- * Technologies Co., Ltd. 2012-2019.
- *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * Title: class Description: The Class StmtExecutor. 
  */
 public class StmtExecutor {
     private static final String CURSOR_QUERY_PREPEND = "CURSOR %s NO SCROLL FOR %s";
@@ -65,7 +71,7 @@ public class StmtExecutor {
 
     private boolean isLastRecordFetched = false;
 
-    private int fetchCount = 0;  // DTS2015111110302 Fix starts
+    private int fetchCount = 0;  
 
     private int regOutParameter = 0;
 
@@ -87,7 +93,6 @@ public class StmtExecutor {
      */
     public void setFetchCount(int fetchCount) {
         this.fetchCount = fetchCount;
-        // DTS2015111110302 Fix ends
     }
 
     /**
@@ -290,12 +295,11 @@ public class StmtExecutor {
             GaussUtils.handleCriticalException(excep);
             throw new DatabaseOperationException(IMessagesConstants.ERR_BL_EXECUTE_FAILED,
                     connection.extractErrorCodeAndErrorMsgFromServerError(excep), excep);
-        } catch (OutOfMemoryError excep) { /* Start DTS2013013108162 */
+        } catch (OutOfMemoryError excep) { 
             closeStatement();
             MPPDBIDELoggerUtility.error("OutOfMemoryError ocurred");
             throw new DatabaseCriticalException(IMessagesConstants.ERR_MSG_OUT_OF_MEMORY_ERROR_OCCURRED, excep);
         }
-        /* End DTS2013013108162 */
     }
 
     /**
@@ -560,11 +564,6 @@ public class StmtExecutor {
      * 
      * Description: The Class GetFuncProcResultValueParam.
      * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020.
-     *
-     * @author s00428892
-     * @version [DataStudio 8.0.2, 04 Apr, 2020]
-     * @since 04 Apr, 2020
      */
     public static class GetFuncProcResultValueParam {
         private int columnCount;
@@ -871,8 +870,6 @@ public class StmtExecutor {
      * @return the table name
      * @throws DatabaseOperationException the database operation exception
      * @throws DatabaseCriticalException the database critical exception
-     * @Author: lijialiang(l00448174)
-     * @Date: May 15, 2019
      * @Title: getTableName
      * @Description: (use a sentence to describe the usage of method)
      */
@@ -897,8 +894,6 @@ public class StmtExecutor {
      * @return the schema name
      * @throws DatabaseOperationException the database operation exception
      * @throws DatabaseCriticalException the database critical exception
-     * @Author: lijialiang(l00448174)
-     * @Date: May 15, 2019
      * @Title: getTableName
      * @Description: (use a sentence to describe the usage of method)
      */

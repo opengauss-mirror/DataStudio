@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 import java.io.FileWriter;
@@ -44,9 +58,6 @@ public class Import_Table_Data {
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
 					String sFileName = GlobalConstants.sCsvImportPath+"employee.csv";
-					//ObjectBrowserPane.DropTable("auto_import_table","employee");
-					//ObjectBrowserPane.CreateTable("auto_import_table","employee");
-					//ObjectBrowserPane.ObjectBrowserRefresh();
 					ObjectBrowserPane.Auto_Import_Table_Navigation();
 					sFlag = ObjectBrowserPane.TruncateTable(143,153);
 					if(sFlag.equals("Success"))
@@ -324,9 +335,6 @@ public class Import_Table_Data {
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,3,"Yes");
 
 					String sFileName = GlobalConstants.sCsvImportPath+"employee.csv";
-					//ObjectBrowserPane.DropTable("auto_import_table","import");
-					//sFlag = ObjectBrowserPane.CreateTable("auto_import_table","import");
-					//ObjectBrowserPane.ObjectBrowserRefresh();
 					sFlag="Success";
 					if(sFlag.equals("Success"))
 					{
@@ -386,8 +394,6 @@ public class Import_Table_Data {
 			if(!sStatus.isEmpty())
 				UtilityFunctions.WriteToText(sTextResultFile, sFinalStatus);
 		}
-		//Save the Excel result to HTML
-		//UtilityFunctions.SaveResult(ResultExcel,"Execution_Status");
 	}//end of main
 }//end of class
 

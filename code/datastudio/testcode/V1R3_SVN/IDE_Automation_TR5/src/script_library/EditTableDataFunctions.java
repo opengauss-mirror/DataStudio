@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package script_library;
 
 import java.awt.event.KeyEvent;
@@ -19,7 +33,6 @@ public class EditTableDataFunctions {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
 		BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "", EditWindowElements.sMouseClick, EditWindowElements.sButton,EditWindowElements.iClick,110,11);
 		
-		//ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 		UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT,3);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,3);	
 		Thread.sleep(GlobalConstants.MinWait);
@@ -58,13 +71,6 @@ public class EditTableDataFunctions {
 	public static void closeEditData() throws Exception
 	{
 		BaseActions.MouseClick("Data Studio", "", "SWT_Window016", "left", 1, 229, 13);
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-		UtilityFunctions.KeyPress(KeyEvent.VK_S, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
-		UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 1);*/
-		
 		
 		UtilityFunctions.KeyPress(KeyEvent.VK_SHIFT, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_F4, 1);
@@ -157,43 +163,12 @@ public class EditTableDataFunctions {
 		case "EXECUTE":
 
 			Thread.sleep(GlobalConstants.MinWait);
-			/*BaseActions.Focus("Data Studio", "", "SWT_Window040");
-			Thread.sleep(GlobalConstants.MinWait);*/
 			BaseActions.Click("Data Studio","", "Button4");
-			/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-			UtilityFunctions.KeyPress(KeyEvent.VK_S, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-			Thread.sleep(GlobalConstants.MinWait);
-			UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 1);
-			Thread.sleep(GlobalConstants.MinWait);
-			//BaseActions.Focus(EditWindowElements.wSQLTerminal ,"", "SWT_Window06");
-			UtilityFunctions.KeyPress(KeyEvent.VK_TAB, 2);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_TAB, 2);
-			Thread.sleep(GlobalConstants.MinWait);
-			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
-
 			break;
 
 		case "EDIT":
 			Thread.sleep(GlobalConstants.MinWait);
 			BaseActions.Click("Data Studio","", "Button5");
-			/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-			UtilityFunctions.KeyPress(KeyEvent.VK_S, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-			Thread.sleep(GlobalConstants.MinWait);
-			UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 1);
-			Thread.sleep(GlobalConstants.MinWait);
-			UtilityFunctions.KeyPress(KeyEvent.VK_TAB, 3);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_TAB, 3);
-			Thread.sleep(GlobalConstants.MinWait);
-			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-*/
 			break;
 
 		default:
@@ -229,13 +204,10 @@ public class EditTableDataFunctions {
 	public static void editDataOperations(String sOption) throws Exception
 	{
 
-		//BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "", EditWindowElements.sEditresult,EditWindowElements.sButton, EditWindowElements.iClick, EditWindowElements.ixcord, EditWindowElements.iycord);
-
 		switch (sOption.toUpperCase()) {
 
 		case "ADD":
 			Thread.sleep(GlobalConstants.MedWait);
-			//BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "", EditWindowElements.sEditOperation, EditWindowElements.sButton, EditWindowElements.iClick, EditWindowElements.ixaddcord, EditWindowElements.iyaddcord);
 			UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
 			UtilityFunctions.KeyPress(KeyEvent.VK_T, 1);
 			UtilityFunctions.KeyRelease(KeyEvent.VK_T, 1);
@@ -259,11 +231,6 @@ public class EditTableDataFunctions {
 			UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 1);
 			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-
-
-			/*BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "",EditWindowElements.sEditWindow, EditWindowElements.sButton, EditWindowElements.iClick, EditWindowElements.ixEditcord, EditWindowElements.iyEditcord);
-			Thread.sleep(GlobalConstants.MinWait);
-			BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "", EditWindowElements.sEditOperation, EditWindowElements.sButton, EditWindowElements.iClick, EditWindowElements.ixdeletecord, EditWindowElements.iydeletecord);*/
 			break;
 		case "PASTE":
 			Thread.sleep(GlobalConstants.MinWait);
@@ -277,8 +244,6 @@ public class EditTableDataFunctions {
 			UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 2);
 			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-
-			//BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "", EditWindowElements.sEditOperation, EditWindowElements.sButton, EditWindowElements.iClick, EditWindowElements.ixpastecord, EditWindowElements.iypastecord);
 			break;
 		case "POST":
 			Thread.sleep(GlobalConstants.MinWait);
@@ -290,8 +255,6 @@ public class EditTableDataFunctions {
 			UtilityFunctions.KeyRelease(KeyEvent.VK_TAB, 2);
 			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-
-			//BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "", EditWindowElements.sEditOperation, EditWindowElements.sButton, EditWindowElements.iClick, EditWindowElements.ixpostcord, EditWindowElements.iypostcord);
 			break;
 		case "ROLLBACK":
 			Thread.sleep(GlobalConstants.MinWait);
@@ -305,7 +268,6 @@ public class EditTableDataFunctions {
 			UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 3);
 			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-			//BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "", EditWindowElements.sEditOperation, EditWindowElements.sButton, EditWindowElements.iClick, EditWindowElements.ixrollcord, EditWindowElements.iyrollcord);
 			break;
 		case "COMMIT":
 			Thread.sleep(GlobalConstants.MinWait);
@@ -324,7 +286,6 @@ public class EditTableDataFunctions {
 			BaseActions.Winwait("Commit Successful");
 			Thread.sleep(GlobalConstants.MedWait);
 			BaseActions.Click("Commit Successful", "", "Button1");
-			//BaseActions.MouseClick(EditWindowElements.wSQLTerminal, "", EditWindowElements.sEditOperation, EditWindowElements.sButton, EditWindowElements.iClick, EditWindowElements.ixcommitcord, EditWindowElements.iycommitcord);
 			break;
 
 		default:

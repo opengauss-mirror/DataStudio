@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package script_library;
 
 import java.awt.event.KeyEvent;
@@ -18,8 +32,6 @@ public class DataMgmtFunctions {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
-		//UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		//UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_F, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
@@ -62,9 +74,7 @@ public class DataMgmtFunctions {
 		Thread.sleep(GlobalConstants.MinWait);
 		UtilityFunctions.KeyPress(KeyEvent.VK_O,1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_O, 1);
-		/*BaseActions.Focus(DataMgntElements.wTitle, "", DataMgntElements.sPControlID);
-		BaseActions.MouseClick(DataMgntElements.wTitle, "",DataMgntElements.sPControlID, DataMgntElements.sButton, DataMgntElements.nProclicks,DataMgntElements.xpcord, DataMgntElements.ypcord);
-		*/Thread.sleep(GlobalConstants.MedWait);
+		Thread.sleep(GlobalConstants.MedWait);
 		UtilityFunctions.KeyPress(KeyEvent.VK_CONTEXT_MENU, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTEXT_MENU, 1);
 		Thread.sleep(GlobalConstants.MedWait);
@@ -81,12 +91,10 @@ public class DataMgmtFunctions {
 		UtilityFunctions.KeyPress(KeyEvent.VK_F4, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_F4, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_SHIFT, 1);
-		//BaseActions.MouseClick(DataMgntElements.wTitle, "", DataMgntElements.sprocloseID,  DataMgntElements.sButton, DataMgntElements.nProclicks, DataMgntElements.xpecord, DataMgntElements.ypecord);
 	}
 
 	public static void closeTableProperty() throws Exception
 	{
-		//BaseActions.MouseClick(DataMgntElements.wTitle, "", DataMgntElements.sprocloseID,  DataMgntElements.sButton, DataMgntElements.nProclicks,208,11);
 		UtilityFunctions.KeyPress(KeyEvent.VK_SHIFT, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_F4, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_F4, 1);

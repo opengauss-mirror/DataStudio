@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /************************************************************************************************
 TITLE - AUTOFILL & AUTOSUGGESTION
 DESCRIPTION - THIS PROGRAM COVERS THE BELOW TEST SCRIPTS
@@ -39,21 +54,6 @@ public class AR_Tools_IDE_020_001_AUT_FTR {
 		String sInputQuery,sStatus,sTestCaseID,sExecute,sActualQuery,sExpectedQuery;
 		//Getting the total number of test cases from data sheet
 		int iRowCount = UtilityFunctions.GetRowCount(GlobalConstants.sFunctionalTestDataFile, sARNumber);
-		//Precondition
-		//QueryEditor.AutoFillPre();
-		//Logout from IDE Tool after Execution
-		/*Login.IDELogout();
-		//Launching the IDE Tool Application
-		Login.LaunchIDE(GlobalConstants.sIDEPath);
-		//Getting Login Credentials from IDE_Smoke_Test_Data file and
-		String sConnection = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 0);
-		String sHost = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 1);
-		String sHostPort = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 2);
-		String sDBName = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 3);
-		String sUserName = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 4);
-		String sPassword = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 5);
-		//Login into IDE Tool
-		Login.IDELogin(sConnection, sHost, sHostPort, sDBName, sUserName,sPassword);*/
 		//Loop to iterate through each Test Case in Test Data Sheet	
 		for(int i=1;i<=iRowCount;i++)
 		{
@@ -316,7 +316,5 @@ public class AR_Tools_IDE_020_001_AUT_FTR {
 			if(!sStatus.isEmpty())
 				UtilityFunctions.WriteToText(sTextResultFile, sFinalStatus);
 		}
-		//Save the Excel result to HTML
-	//	UtilityFunctions.SaveResult(ResultExcel,"Auto_Fill_Suggest");
 	}//end of main
 }//end of class

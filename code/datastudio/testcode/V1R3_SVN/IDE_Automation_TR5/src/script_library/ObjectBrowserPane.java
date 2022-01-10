@@ -1,9 +1,21 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /*************************************************************************
 TITLE - OBJECT BROWSER AND TOOLBAR
 DESCRIPTION - FUNCTIONS WITH RESPECT TO OBJECT BROWSER AND TOOLBAR
-AUTHORS - AWX321824
-CREATED DATE - 16-NOV-2015
-LAST UPDATED DATE - 16-NOV-2015
 MODIFICATION HISTORY - 
 TEST CASES COVERED - NA
  *************************************************************************/
@@ -38,9 +50,6 @@ public class ObjectBrowserPane {
 		 *************************************************************************/
 		BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,
 				ObjectBrowserElements.xcord, ObjectBrowserElements.ycord);
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
-		 */
 		UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 1);
 
@@ -77,8 +86,6 @@ public class ObjectBrowserPane {
 		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
 
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);*/
 	}
 
 	public static void BrowserImport() throws Exception{
@@ -270,11 +277,6 @@ public class ObjectBrowserPane {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
 		BaseActions.Winwait(ObjectBrowserElements.wSetSchema);
 		BaseActions.Click(ObjectBrowserElements.wSetSchema, "", ObjectBrowserElements.dSetSchema);
-		//UtilityFunctions.KeyPress(KeyEvent.VK_A, 1);
-		//UtilityFunctions.KeyRelease(KeyEvent.VK_A,1);
-		//BaseActions.Click(TablePropertyElements.sSchemaTitle, "", TablePropertyElements.btnOK);
-
-
 	}
 
 	public static void RenameTable(String sNewTableName) throws Exception{
@@ -388,7 +390,6 @@ public class ObjectBrowserPane {
 
 	public static void InsertTable(String sSchemaname,String sTableName,int records) throws Exception
 	{	
-		//String sFlag = null;
 		for(int i=1;i<=records;i++)
 		{
 			String sInsertquery= "INSERT INTO "+sSchemaname+"."+sTableName+" VALUES ("+i+",'"+sTableName+"',"+i+10001+","+i+10+");";
@@ -504,7 +505,6 @@ public class ObjectBrowserPane {
 			QueryEditor.SetFunction(sLine);
 		}
 		BaseActions.Click(ExecQueryElements.wSQLTerminal,"",ExecQueryElements.sExeButton);
-		//QueryEditor.ClearEditor();
 	}
 	public static String DropSchema(String sSchemaName) throws Exception{
 		/*************************************************************************
@@ -551,12 +551,6 @@ public class ObjectBrowserPane {
 	{
 		AutoItX x = new AutoItX();
 
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_CONTEXT_MENU, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTEXT_MENU, 1);
-		UtilityFunctions.KeyPress(KeyEvent.VK_UP, 5);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_UP, 5);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 		UtilityFunctions.KeyPress(KeyEvent.VK_CONTEXT_MENU, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTEXT_MENU, 1);
 
@@ -739,10 +733,6 @@ public class ObjectBrowserPane {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTEXT_MENU, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_T, 3);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_T, 3);
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 3);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 3);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 		Thread.sleep(GlobalConstants.MedWait);
 		if(BaseActions.WinExists(ExpQueryElements.wTruncateTableWindow))
 		{
@@ -838,10 +828,6 @@ public class ObjectBrowserPane {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTEXT_MENU, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_C, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_C, 1);
-
-		/*BaseActions.SetText(ObjectBrowserElements.wPasswordTitle, "", ObjectBrowserElements.sPasswordControlID, sPassword);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 		break;
 
 		case "DOUBLE":BaseActions.MouseClick(ObjectBrowserElements.wTitle, "",ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,83,45);
@@ -849,9 +835,6 @@ public class ObjectBrowserPane {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTEXT_MENU, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_C, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_C, 1);
-		/*BaseActions.SetText(ObjectBrowserElements.wPasswordTitle, "", ObjectBrowserElements.sPasswordControlID, sPassword);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 		break;
 
 		case "TRIPLE":BaseActions.MouseClick(ObjectBrowserElements.wTitle, "",ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,83,61);
@@ -859,9 +842,6 @@ public class ObjectBrowserPane {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTEXT_MENU, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_C, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_C, 1);
-		/*BaseActions.SetText(ObjectBrowserElements.wPasswordTitle, "", ObjectBrowserElements.sPasswordControlID, sPassword);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 		break;
 
 		default:
@@ -874,13 +854,8 @@ public class ObjectBrowserPane {
 				ObjectBrowserElements.xDBcord, ObjectBrowserElements.yDBcord);
 		UtilityFunctions.KeyPress(KeyEvent.VK_CONTEXT_MENU, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTEXT_MENU, 1);
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 2);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 2);*/
 		UtilityFunctions.KeyPress(KeyEvent.VK_C, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_C, 1);
-		/*BaseActions.SetText(ObjectBrowserElements.wPasswordTitle, "", ObjectBrowserElements.sPasswordControlID, sPassword);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 	}
 
 	public static void disconnectDB() throws Exception

@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -73,14 +87,12 @@ public static void main(String sARNumber) throws Exception {
 							if(b==false)
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								////System.out.println(sTestCaseID  + "passed");
 							}
 							else
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Password is already saved for existing connection profile. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								////System.out.println(sTestCaseID  + "failed");
 							}
 						}
 						
@@ -100,14 +112,12 @@ public static void main(String sARNumber) throws Exception {
 							if(BaseActions.WinExists(DebugElements.sDebugPasswordWindow))
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								////System.out.println(sTestCaseID  + "passed");
 							}
 							else
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Password is not prompted while debugging when not saved in connection profile. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								////System.out.println(sTestCaseID  + "failed");
 							}
 							}
 							
@@ -124,14 +134,12 @@ public static void main(String sARNumber) throws Exception {
 								if(!sFlag.equals("Permanently"))
 								{
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-									////System.out.println(sTestCaseID  + "passed");
 								}
 								else
 								{
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Save Password option is selected in the combo box when not saved in connection profile.Please refer screenshot "+sTestCaseID+".jpg");
 									UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-									////System.out.println(sTestCaseID  + "failed");
 								}
 							}
 						
@@ -160,13 +168,11 @@ public static void main(String sARNumber) throws Exception {
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Debug window again prompts for password when saved once.Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 								BaseActions.Click(LoginElements.wDBConnection, "", LoginElements.bCancel);
-								////System.out.println(sTestCaseID  + "failed");
 								
 							}
 							else
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								////System.out.println(sTestCaseID  + "passed");
 							}
 							
 							}
@@ -188,14 +194,12 @@ public static void main(String sARNumber) throws Exception {
 							if(b==true)
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								////System.out.println(sTestCaseID  + "passed");
 							}
 							else
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Password is not saved on for the existing connection when saved while debugging. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								////System.out.println(sTestCaseID  + "failed");
 							}
 							}
 						
@@ -233,14 +237,12 @@ public static void main(String sARNumber) throws Exception {
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 								BaseActions.Click(DebugElements.sDebugPasswordWindow, "", DebugElements.sDebugCancelButton);
-								////System.out.println(sTestCaseID  + "passed");
 							}
 							else
 							{
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Debug password is not prompted even when not saved while debugging. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								////System.out.println(sTestCaseID  + "failed");
 							}
 							}
 							
@@ -263,14 +265,12 @@ public static void main(String sARNumber) throws Exception {
 								if(b==false)
 								{
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-									//System.out.println(sTestCaseID  + "passed");
 								}
 								else
 								{
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Password is not saved on for the existing connection when saved while debugging. Please refer screenshot "+sTestCaseID+".jpg");
 									UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-									//System.out.println(sTestCaseID  + "failed");
 								}
 								
 								

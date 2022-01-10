@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package script_library;
 
 import java.awt.event.KeyEvent;
@@ -71,8 +85,6 @@ public class ViewFunctions {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,3);
 		Thread.sleep(GlobalConstants.MinWait);
 
-
-		//BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,120,297);//Pg_Catalog co-ordinates
 		UtilityFunctions.KeyPress(KeyEvent.VK_DOWN,15);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,15);
 		Thread.sleep(GlobalConstants.ModWait);
@@ -101,7 +113,6 @@ public class ViewFunctions {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,15);
 		Thread.sleep(GlobalConstants.ModWait);
 
-		//BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,100,296);//public schema co-ordinates
 		UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT,1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
 		Thread.sleep(GlobalConstants.MinWait);

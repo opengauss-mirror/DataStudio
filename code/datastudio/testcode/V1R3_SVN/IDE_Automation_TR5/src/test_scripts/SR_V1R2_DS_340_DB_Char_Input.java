@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -51,14 +65,12 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					if(BaseActions.ControlGetText(CreateDBElements.sWindowName, "", CreateDBElements.sLabel).equalsIgnoreCase(sFlag) && BaseActions.ObjExists(CreateDBElements.sWindowName, "", CreateDBElements.sComboBoxName))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + " passsed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Combo box for encoding does not exist. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + " failed");
 					}
 				}
 
@@ -69,14 +81,12 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					if(BaseActions.ControlGetText(CreateDBElements.sWindowName, "", CreateDBElements.sComboBoxName).isEmpty())
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + " passsed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Default value of encoding is not null. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + " failed");
 					}
 				}
 
@@ -91,14 +101,12 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					if(!sFlag.equals("someText"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + " passsed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Database encoding character set is editable when null.Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + " failed");
 					}
 				}
 
@@ -153,14 +161,12 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					if(sFlag1.equals("passed") && sFlag2.equals("passed") && sFlag3.equals("passed"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + " passsed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Widely used character set UTF-8, GBK, Latin1 are not listed first in the drop down list. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + " failed");
 					}
 				}
 
@@ -189,14 +195,12 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					if(!sFlag.equals("someText"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + " passsed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Database encoding character set is editable when null.Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + " failed");
 					}
 				}
 
@@ -209,20 +213,17 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					if(sFlag.contains("[INFO] Created 'sampledb' database successfully."))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + " passsed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Creation of database Failed. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + " failed");
 					}
 				}
 
 				if(sTestCaseID.equals("SDV_FUN_VAL_DS_Create_Encoding_Of_Database_008"))
 				{
-					//ObjectBrowserPane.ObjectBrowserRefresh();
 					UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
@@ -232,14 +233,10 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					UtilityFunctions.KeyPress(KeyEvent.VK_S, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
 					sFlag = ObjectBrowserPane.RenameDBObjectBrowser("\"SAMPLEDB\"", "Yes");
-					//sFlag = ObjectBrowserPane.RenameDB("sampledb", "\"SAMPLEDB\"");
 					Thread.sleep(GlobalConstants.MedWait);
-					//ObjectBrowserPane.objectBrowserRefresh("SINGLE");
-					//Thread.sleep(GlobalConstants.MedWait);
 					if(sFlag.contains("[INFO] Renamed sampledb database to 'SAMPLEDB'."))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + " passsed");
 					}
 
 					else
@@ -247,14 +244,11 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Renaming of database Failed. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + " failed");
 					}
 				}
 
 				if(sTestCaseID.equals("SDV_FUN_VAL_DS_Create_Encoding_Of_Database_003"))
 				{
-					//ObjectBrowserPane.ObjectBrowserRefresh();  
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_S, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
@@ -292,8 +286,6 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 
 					ObjectBrowserPane.disconnectDB();
 					Thread.sleep(GlobalConstants.MedWait);
-					/*	ObjectBrowserPane.ObjectBrowserRefresh();
-					Thread.sleep(GlobalConstants.MedWait);*/
 					UtilityFunctions.KeyPress(KeyEvent.VK_S, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_CONTEXT_MENU, 1);
@@ -319,7 +311,6 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					else {
 
 						sFlag = "passed";
-						//ObjectBrowserPane.DropDB("\"SAMPLEDB\"");
 						ObjectBrowserPane.ObjectBrowserRefresh();
 						UtilityFunctions.KeyPress(KeyEvent.VK_S, 1);
 						UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
@@ -329,7 +320,6 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 					if(sFlag.equals("passed"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + " passsed");
 					}
 
 					else 
@@ -337,7 +327,6 @@ public class SR_V1R2_DS_340_DB_Char_Input {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Property window doesnot close on disconnecting the database. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + " failed");
 					}
 				}
 			}

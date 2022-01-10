@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -79,11 +93,9 @@ public class SR_V1R2_DS_001_STR1 {
 				if(sTestCaseID.equals("PTS_SR.V1R2.DS.001_STR_1_Functional_valid_2"))
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					//QueryResult.ResultWindow();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryResult.NextRecords(sRecord);
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
-					//QueryResult.ResultWindow();
 					QueryResult.ExeNextRecord();
 					sFlag = QueryResult.ExportButton();
 					if(sFlag.equals("Fail"))
@@ -104,7 +116,6 @@ public class SR_V1R2_DS_001_STR1 {
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryResult.NextRecords(sRecord);
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
-					//QueryResult.ResultWindow();
 					QueryResult.ExportButton();
 					File file = new File(GlobalConstants.sCsvExportPath+"PTS_SR.V1R2.DS.001_STR_1_Functional_valid_3.csv");
 					if(file.exists())
@@ -138,7 +149,6 @@ public class SR_V1R2_DS_001_STR1 {
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,3,"Yes");
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
-					//QueryResult.ResultWindow();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryResult.NextRecords(sRecord);
 					QueryResult.ExportButton();
@@ -240,9 +250,7 @@ public class SR_V1R2_DS_001_STR1 {
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+4,3,"Yes");
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
 					QueryResult.CurrentExport();
-					//Thread.sleep(GlobalConstants.MaxWait);
 					AutoItX x = new AutoItX();
-					//Thread.sleep(GlobalConstants.MaxWait);
 					if(x.winExists(SaveAsElements.sSave))
 					{
 						BaseActions.Click(SaveAsElements.sSave, "", "Button2");
@@ -252,7 +260,6 @@ public class SR_V1R2_DS_001_STR1 {
 					else{
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,4,"Passed");
-						//UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"User is not able to cancel .Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
 					QueryResult.CurrentExport();
@@ -302,7 +309,6 @@ public class SR_V1R2_DS_001_STR1 {
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+4,4,"Passed");
-						//UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+4,5,"Able to save with no file name.Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
 					UtilityFunctions.KeyPress(KeyEvent.VK_TAB, 4);
@@ -315,10 +321,8 @@ public class SR_V1R2_DS_001_STR1 {
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+4,3,"Yes");
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+5,3,"Yes");
-					//QueryResult.ResultWindow();
 					QueryResult.NextRecords(sRecord);
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
-					//QueryResult.ResultWindow();
 					QueryResult.ExeNextRecord();
 					QueryResult.CurrentExport();
 					File file = new File(GlobalConstants.sCsvExportPath+"PTS_SR.V1R2.DS.001_STR_1_Functional_valid_14.csv");
@@ -373,7 +377,6 @@ public class SR_V1R2_DS_001_STR1 {
 					BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, 1,140,170);
 					String sFileName = GlobalConstants.sCsvImportPath+"文件.csv";
 					ObjectBrowserPane.TableImport(sFileName, "OPEN");
-					//BaseActions.Winwait("Data Imported Successfully");
 					Thread.sleep(GlobalConstants.MinWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
@@ -434,7 +437,6 @@ public class SR_V1R2_DS_001_STR1 {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_L, 1);
 					BaseActions.Click("Disconnect Confirmation", "", "Button1");
 					Thread.sleep(GlobalConstants.MinWait);
-					//QueryResult.ResultWindow();
 					Thread.sleep(GlobalConstants.MinWait);
 					sFlag = BaseActions.ControlGetText(ConsoleResultElements.wConsoleResult, "", ConsoleResultElements.sExeTime);
 					Login.IDELogout();
@@ -463,7 +465,6 @@ public class SR_V1R2_DS_001_STR1 {
 					String sPassword = UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, "IDELogin", 1, 5);
 					Login.LaunchIDE(GlobalConstants.sIDEPath);
 					Login.IDELogin(sConnection, sHost, sHostPort, sDBName, sUserName,sPassword,"PERMENANT");
-					//QueryResult.ResultWindow();
 					sFlag = QueryResult.ExportButton();
 					if(sFlag.equalsIgnoreCase("Fail"))
 					{

@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package script_library;
 
 import java.awt.event.KeyEvent;
@@ -183,7 +197,6 @@ public class DebugOperations {
 			BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,
 					89,27);
 			Thread.sleep(GlobalConstants.MinWait);
-			//Thread.sleep(GlobalConstants.MinWait);
 			UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 2);
 			UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 2);
 			UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
@@ -192,33 +205,6 @@ public class DebugOperations {
 			UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 6);
 			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-
-			/*UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 1);
-
-			UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 2);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 2);
-
-			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-
-			UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
-
-			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-
-			UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
-
-			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-
-			UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);
-
-			UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-			UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 			break;
 		default:
 			break;
@@ -252,19 +238,6 @@ public class DebugOperations {
 		IN PARAMETERS		: None
 		RETURN PARAMETERS	: None
 		 *************************************************************************/
-		/*BaseActions.ClearConsole("Basic");
-		Thread.sleep(GlobalConstants.MedWait);
-		DebugOperations.TerminateDebugging();
-		Thread.sleep(GlobalConstants.MedWait);
-		BaseActions.MouseClick(ObjectBrowserElements.wTitle,"","SWT_Window06",ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks, 180, 12);
-		Thread.sleep(GlobalConstants.MedWait);
-		BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,157,80);
-		UtilityFunctions.KeyPress(KeyEvent.VK_LEFT, 8);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_LEFT, 8);
-		DebugOperations.CheckboxClick(0);
-		Thread.sleep(GlobalConstants.MedWait);
-		DebugOperations.DeleteBreakpoint();
-		Thread.sleep(GlobalConstants.MedWait);*/
 		DebugOperations.TerminateDebugging();
 		Thread.sleep(GlobalConstants.MedWait);
 		Login.DebugWindows();
@@ -293,43 +266,36 @@ public class DebugOperations {
 		case 6:
 			BaseActions.MouseClick(DebugElements.wDebugpane, "",
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					//DebugElements.iClick, 6, 83);
 					DebugElements.iClick, 6, 92);
 			break;
 		case 7:
 			BaseActions.MouseClick(DebugElements.wDebugpane, "",
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					//DebugElements.iClick, 6,99);
 					DebugElements.iClick, 6,110);
 			break;
 		case 8:
 			BaseActions.MouseClick(DebugElements.wDebugpane, "",
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					//DebugElements.iClick, 6, 112);
 					DebugElements.iClick, 6, 128);
 			break;
 		case 9:
 			BaseActions.MouseClick(DebugElements.wDebugpane, "",
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					//DebugElements.iClick, 6, 127);
 					DebugElements.iClick, 6, 144);
 			break;
 		case 10:
 			BaseActions.MouseClick(DebugElements.wDebugpane, "",
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					//DebugElements.iClick, 6, 142);
 					DebugElements.iClick, 6, 162);
 			break;
 		case 11:
 			BaseActions.MouseClick(DebugElements.wDebugpane, "",
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					//DebugElements.iClick, 6, 157);
 					DebugElements.iClick, 6, 177);
 			break;
 		case 12:
 			BaseActions.MouseClick(DebugElements.wDebugpane, "",
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					//DebugElements.iClick, 6, 172);
 					DebugElements.iClick, 6, 194);
 			break;
 		case 13:
@@ -347,41 +313,6 @@ public class DebugOperations {
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
 					DebugElements.iClick, 6, 246);
 			break;
-			/*	case 16:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 17:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 18:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 19:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 20:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 21:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 22:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;*/
 
 		default :
 		}
@@ -440,41 +371,6 @@ public class DebugOperations {
 					DebugElements.sDebugwindow, DebugElements.sMouseButton,
 					DebugElements.iClick, 6, 246);
 			break;
-			/*	case 16:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 17:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 18:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 19:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 20:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 21:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;
-		case 22:
-			BaseActions.MouseClick(DebugElements.wDebugpane, "",
-					DebugElements.sDebugwindow, DebugElements.sMouseButton,
-					DebugElements.iClick, x, y);
-			break;*/
 
 		default :
 		}
@@ -503,7 +399,6 @@ public class DebugOperations {
 		case 2:
 			Thread.sleep(GlobalConstants.MedWait);
 			BaseActions.MouseClick(DebugElements.wDebugpane, "",DebugElements.sBreakpointwindow, DebugElements.sMouseButton, DebugElements.iCheckboxClick,13,54);
-			//Thread.sleep(GlobalConstants.MinWait);
 			break;
 		case 3:
 
@@ -575,8 +470,6 @@ public class DebugOperations {
 		IN PARAMETERS		: None
 		RETURN PARAMETERS	: None
 		 *************************************************************************/
-		/*BaseActions.SetText(DebugElements.sDebugConnection, "", DebugElements.sDebugpassword,Password);
-		BaseActions.Click(DebugElements.sDebugConnection, "", DebugElements.sDebugOKButton);*/
 		Thread.sleep(GlobalConstants.MedWait);
 		if(BaseActions.WinExists(ErrorElements.wDebugConnectionError))
 		{
@@ -705,20 +598,6 @@ public class DebugOperations {
 		BaseActions.Click("Remove server Confirmation", "", "Button1");
 
 	}
-
-	/*public static void RemoveConnection() throws Exception{
-	 *//*************************************************************************
-	FUNCTION NAME		: RemoveConnection()
-	DESCRIPTION	 		: Function to Remove Connection.
-	IN PARAMETERS		: None
-	RETURN PARAMETERS	: None
-	  *************************************************************************//*
-		Thread.sleep(GlobalConstants.MedWait);
-		BaseActions.MouseClick(DebugElements.wDebugpane, "", DebugElements.ClickConnection, DebugElements.sMouseButton, DebugElements.iButtonClick, DebugElements.ClickConnectionxcord, DebugElements.ClickConnectionycord);
-		Thread.sleep(GlobalConstants.MedWait);
-		BaseActions.MouseClick(DebugElements.wDebugpane, "", DebugElements.ClickDisconnectConnection, DebugElements.sMouseButton, DebugElements.iButtonClick, DebugElements.ClickDisconnectionxcord, DebugElements.ClickDisconnectionycord);
-		BaseActions.Click("Remove server Confirmation", "", "Button1");
-	}*/
 
 	public static String DebugValidation() throws Exception{
 		/*************************************************************************

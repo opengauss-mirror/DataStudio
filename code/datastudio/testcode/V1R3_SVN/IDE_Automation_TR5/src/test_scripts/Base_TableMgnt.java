@@ -41,8 +41,6 @@ public class Base_TableMgnt {
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
 					ObjectBrowserPane.objectBrowserExpansion("SINGLE");
-					/*ObjectBrowserPane.CreateSchema("auto");
-					ObjectBrowserPane.objectBrowserRefresh("SINGLE");*/
 					ObjectBrowserPane.CreateTable("auto", "Testtable");
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					sFlag = ObjectBrowserPane.AlterTable("auto", "TestTable", "TestTablea");
@@ -85,7 +83,6 @@ public class Base_TableMgnt {
 					ObjectBrowserPane.InsertTable("auto", "PK_Testtable", 10);
 					sFlag= QueryResult.ReadConsoleOutput("TERMINAL");
 					Thread.sleep(GlobalConstants.MedWait);
-					//ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					if(sFlag.contains("Executed Successfully"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
@@ -130,9 +127,6 @@ public class Base_TableMgnt {
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						/*UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Unable to view the table property. Please refer screenshot "+sTestCaseID+".jpg");
-						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);*/
 					}
 
 					ObjectBrowserPane.DropTable("auto", "test");
@@ -776,7 +770,6 @@ public class Base_TableMgnt {
 				if(sTestCaseID.equals("GaussIDE_FUNC_CreateTable_066_070"))
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+4,3,"Yes");
-					//CreateTableWizardFunctions.CreateTableWizard();
 					CreateTableWizardFunctions.openCreateTableWizard();
 					CreateTableWizardFunctions.TableName("uniqueTable","No");
 					CreateTableWizardFunctions.Button("NEXT");

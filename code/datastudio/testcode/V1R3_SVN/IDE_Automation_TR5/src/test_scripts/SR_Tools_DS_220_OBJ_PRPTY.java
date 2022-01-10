@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -178,11 +192,9 @@ public class SR_Tools_DS_220_OBJ_PRPTY {
 					QueryEditor.SetQuery("tblduplicate");
 					UtilityFunctions.KeyPress(KeyEvent.VK_CONTROL, 1);
 					Thread.sleep(GlobalConstants.ModWait);
-					//x.mouseMove(414, 153,50);
 					x.mouseMove(414, 128,50);
 					Thread.sleep(GlobalConstants.ModWait);
 					UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-					//x.mouseClick("left", 427, 180, 1,50);
 					x.mouseClick("left", 460, 155, 1,50);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_CONTROL, 1);
 					Thread.sleep(GlobalConstants.ModWait);
@@ -190,10 +202,8 @@ public class SR_Tools_DS_220_OBJ_PRPTY {
 					BaseActions.Click(TablePropertyElements.sPropertywindow,"",TablePropertyElements.btnOK);
 					UtilityFunctions.KeyPress(KeyEvent.VK_CONTROL, 1);
 					Thread.sleep(GlobalConstants.ModWait);
-					//x.mouseMove(414, 153,50);
 					x.mouseMove(414, 128,50);
 					Thread.sleep(GlobalConstants.ModWait);
-					//x.mouseClick("left", 422, 202, 1,50);
 					x.mouseClick("left", 460, 175, 1,50);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_CONTROL, 1);
 					Thread.sleep(GlobalConstants.ModWait);
@@ -460,7 +470,6 @@ public class SR_Tools_DS_220_OBJ_PRPTY {
 					String sUserName=UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, "IDELogin", 2, 4);
 					String sPassword=UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, "IDELogin", 2, 5);
 					BaseActions.ClearConsole("GLOBAL");
-					//BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sToolbarControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,ObjectBrowserElements.iNewConnxcord, ObjectBrowserElements.iNewConnycord);
 					BaseActions.CreateNewConnection();
 					Login.IDELogin("New Connection", sHost, sHostPort, sDBName, sUserName,sPassword,"PERMENANT");
 					sFlag = QueryResult.ReadConsoleOutput("GLOBAL");

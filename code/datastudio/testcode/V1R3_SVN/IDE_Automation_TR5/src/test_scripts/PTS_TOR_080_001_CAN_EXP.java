@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -33,7 +47,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 			if(sExecute.equals("Yes"))
 			{			
 				sTestCaseID=UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, sARNumber, i,1);
-				//	sInputQuery=UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, sARNumber, i,3);
 
 				if(sTestCaseID.equals("PTS_TOR.080.001_Functional_valid_2")) //Testcase mapped PTS_TOR.080.001_Functional_valid_3,PTS_TOR.080.001_Usability Test_1,PTS_TOR.080.001_Usability Test_2
 				{
@@ -70,14 +83,12 @@ public class PTS_TOR_080_001_CAN_EXP {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
 					ObjectBrowserPane.Auto_Table_Navigation();
-					//BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 155, 118);
 					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"PS_TOR.080.001_Functional_valid_4.csv", "Open");
 					QueryEditor.CancelImportExport("Yes");
 					Thread.sleep(GlobalConstants.MinWait);
 					sFlag = QueryResult.ReadConsoleOutput("GLOBAL");
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
 					Thread.sleep(GlobalConstants.MedWait);
-					//sFlag1= QueryResult.CopyContent();
 					if(sFlag.contains("[INFO] Canceled Data Import on user request."))//&&sFlag1.contains("5517312"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
@@ -137,7 +148,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
-					//Thread.sleep(22000);
 					BaseActions.Winwait("Data Exported Successfully");
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
@@ -167,7 +177,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
 					ObjectBrowserPane.Auto_Table_Navigation();
-					//BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 155, 118);
 					ObjectBrowserPane.BrowserExport();
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
@@ -211,11 +220,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 				if(sTestCaseID.equals("PTS_TOR.080.001_Functional_valid_9"))
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-					ObjectBrowserPane.Auto_Table_Navigation();*/
 					BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 145, 100);
 					ObjectBrowserPane.BrowserExport();
 					Thread.sleep(GlobalConstants.MedWait);
@@ -234,8 +238,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);*/
 					Thread.sleep(GlobalConstants.MinWait);
 					sFlag = QueryResult.ReadConsoleOutput("GLOBAL").replace("\"", "");
 					if(sFlag.contains("[INFO] The table auto.auto_largedata has been successfully reindexed."))
@@ -254,11 +256,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 				if(sTestCaseID.equals("PTS_TOR.080.001_Functional_valid_11"))
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-					ObjectBrowserPane.Auto_Table_Navigation();*/
 					BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 145, 100);
 					ObjectBrowserPane.BrowserExport();
 					Thread.sleep(GlobalConstants.MedWait);
@@ -294,11 +291,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 				if(sTestCaseID.equals("PTS_TOR.080.001_Functional_valid_12"))
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-					ObjectBrowserPane.Auto_Table_Navigation();*/
 					QueryEditor.ClearEditor();
 					Thread.sleep(GlobalConstants.MinWait);
 					BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 145, 100);
@@ -325,9 +317,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
 
-					/*Thread.sleep(GlobalConstants.MaxWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);*/
 					Thread.sleep(GlobalConstants.MinWait);
 					sFlag= QueryResult.ReadConsoleOutput("GLOBAL");
 					if(sFlag.contains("data successfully exported.")|| sFlag.contains("[INFO] Executed Successfully..."))
@@ -346,11 +335,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 				if(sTestCaseID.equals("PTS_TOR.080.001_Functional_Invalid_1"))
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-					ObjectBrowserPane.Auto_Table_Navigation();*/
 					BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 145, 100);
 					ObjectBrowserPane.BrowserExport();
 					Thread.sleep(GlobalConstants.MedWait);
@@ -362,8 +346,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 						file.delete();
 					QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"BrowserExport.csv");
 					Thread.sleep(GlobalConstants.MinWait);
-					/*BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 145, 100);
-					ObjectBrowserPane.BrowserExport();*/
 					BaseActions.Winwait("Data Exported Successfully");
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
@@ -386,11 +368,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 				if(sTestCaseID.equals("PTS_TOR.080.001_Functional_Invalid_2"))
 				{
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-					ObjectBrowserPane.Auto_Table_Navigation();*/
 					BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 145, 100);
 					ObjectBrowserPane.BrowserExport();
 					Thread.sleep(GlobalConstants.MedWait);
@@ -400,7 +377,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 					File file = new File(GlobalConstants.sCsvExportPath+"PTS_TOR.080.001_Functional_Invalid_1.csv");
 					if(file.exists())
 						file.delete();
-					//Thread.sleep(GlobalConstants.MedWait);
 					QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"PTS_TOR.080.001_Functional_Invalid_1.csv");
 					BaseActions.MouseClick("Data Studio","", "SysTreeView321", "left", 1, 145, 100);
 					ObjectBrowserPane.DropTableObjectBrowser();
@@ -469,8 +445,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
-					/*ObjectBrowserPane.objectBrowserRefresh("Single");
-					Thread.sleep(GlobalConstants.MinWait);*/
 					UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
@@ -519,8 +493,6 @@ public class PTS_TOR_080_001_CAN_EXP {
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.ModWait);
-					/*ObjectBrowserPane.objectBrowserRefresh("Single");
-					Thread.sleep(GlobalConstants.MinWait);*/
 					UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);

@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -106,9 +120,6 @@ public class SR_V1R2_DS_001_STR3 {
 				{
 					QueryEditor.SingleQueryExe(sInputQuery, sQueryType);
 					ObjectBrowserPane.TableRefresh();
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);
-					ObjectBrowserPane.TableImport(GlobalConstants.sCsvImportPath+"foriegntable.csv", "OPEN");*/
 					sFlag = QueryResult.ReadConsoleOutput("LOCAL");//CHanged as per the new error message
 					if(sFlag.contains(" Error Code:[0]ERROR: FOREIGN KEY ... REFERENCES constraint is not yet supported.")) 
 					{

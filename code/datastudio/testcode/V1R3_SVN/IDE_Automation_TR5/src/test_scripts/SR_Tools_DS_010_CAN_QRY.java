@@ -1,3 +1,17 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
 package test_scripts;
 
 
@@ -50,7 +64,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					QueryEditor.SetFunction("select count(*) from largedata");
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.ExecuteButton();
-					//Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
 					sFlag = QueryResult.ReadConsoleOutput("TERMINAL");
 					if(sFlag.contains("[INFO] Canceled the query on user request.")||sFlag.contains("[INFO] One or more queries after the canceled query are not executed"))
@@ -81,13 +94,8 @@ public class SR_Tools_DS_010_CAN_QRY {
 					QueryEditor.SetFunction("select count (*) from public.updatetable where dept ='BLR'");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(20000);
-					//QueryResult.ResultWindow();
 					sFlag = QueryResult.CopyContent();
 					if(sFlag.contains("2758656"))
-						/*sFlag = sFlag.trim();
-					sFlag = sFlag.substring(Math.max(sFlag.length()-7,0));
-					int iCount = Integer.parseInt(sFlag);
-					if(iCount<=2758656 && iCount>0)*/
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 					}
@@ -106,19 +114,13 @@ public class SR_Tools_DS_010_CAN_QRY {
 					QueryEditor.SetFunction("Insert into updatetable(select * from public.updatetable where eid = 23);");
 					QueryEditor.SetFunction("delete from updatetable;");
 					QueryEditor.ExecuteButton();
-					//Thread.sleep(GlobalConstants.ModWait);
 					QueryEditor.CancelQuery("BUTTON");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetFunction("select count (*) from public.updatetable;");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(20000);
-					//QueryResult.ResultWindow();
 					sFlag = QueryResult.CopyContent();
 					if(sFlag.contains("2758656"))
-						/*sFlag = sFlag.trim();
-					sFlag = sFlag.substring(Math.max(sFlag.length()-7,0));
-					int iCount = Integer.parseInt(sFlag);
-					if(iCount<=2758656 && iCount>0)*/
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 					}
@@ -141,23 +143,17 @@ public class SR_Tools_DS_010_CAN_QRY {
 					QueryEditor.SetFunction("insert into public.updatetable values (15,'a6','PUNE');insert into public.updatetable values (16,'a7','PUNE');");
 					Thread.sleep(GlobalConstants.MaxWait);
 					QueryEditor.ExecuteButton();
-					//Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.CancelQuery("BUTTON");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetFunction("select * from public.updatetable where dept ='PUNE'");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryResult.CurrentExport();
-					//QueryResult.ExportButton();
 					File file = new File(GlobalConstants.sCsvExportPath+"SDV_FUNVAL_DS_CNLQRY_MULTQRY_INSERT_007.csv");
 					if(file.exists())
 						file.delete();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"SDV_FUNVAL_DS_CNLQRY_MULTQRY_INSERT_007.csv");
-					/*	BaseActions.Winwait("Data Exported Successfully");
-					Thread.sleep(GlobalConstants.MinWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);*/
 					if(file.exists())
 					{
 						int RecordCount = QueryResult.RecordCount(GlobalConstants.sCsvExportPath+"SDV_FUNVAL_DS_CNLQRY_MULTQRY_INSERT_007.csv");
@@ -202,10 +198,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 						QueryResult.ResultWindow();
 						sFlag = QueryResult.CopyContent();
 						if(sFlag.contains("2758656"))
-							/*sFlag = sFlag.trim();
-						sFlag = sFlag.substring(Math.max(sFlag.length()-7,0));
-						int iCount = Integer.parseInt(sFlag);
-						if(iCount<=2758656 && iCount>0)*/
 							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						else
 						{
@@ -231,7 +223,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					QueryEditor.SetFunction("Insert into updatetable(select * from public.updatetable where eid = 23);");
 					QueryEditor.SetFunction("delete from updatetable;");
 					QueryEditor.ExecuteButton();
-					//Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.CancelQuery("BUTTON");
 					sFlag = QueryResult.ReadConsoleOutput("TERMINAL");
 					if(sFlag.contains("[INFO] Canceled the query on user request.")||sFlag.contains("[INFO] One or more queries after the canceled query are not executed"))
@@ -244,10 +235,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 						QueryResult.ResultWindow();
 						sFlag = QueryResult.CopyContent();
 						if(sFlag.contains("2758656"))
-							/*sFlag = sFlag.trim();
-						sFlag = sFlag.substring(Math.max(sFlag.length()-7,0));
-						int iCount = Integer.parseInt(sFlag);
-						if(iCount<=2758656 && iCount>0)*/
 							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						else
 						{
@@ -293,18 +280,12 @@ public class SR_Tools_DS_010_CAN_QRY {
 				{
 					BaseActions.ClearConsole("Normal");
 					QueryEditor.ClearEditor();
-					/*QueryEditor.SetFunction("Create view viewname as select * from updatetable;");
-					Thread.sleep(GlobalConstants.MinWait);
-					QueryEditor.ExecuteButton();
-					Thread.sleep(GlobalConstants.MedWait);
-					QueryEditor.ClearEditor();*/
 					QueryEditor.SetFunction("select count(*)  from viewname;");
 					QueryEditor.SetFunction("select count(*)  from viewname;");
 					QueryEditor.SetFunction("select count(*)  from viewname;");
 					QueryEditor.SetFunction("select count(*)  from viewname;");
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.ExecuteButton();
-					//Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
 					sFlag = QueryResult.ReadConsoleOutput("TERMINAL");
 					if(sFlag.contains("[INFO] Canceled the query on user request.")||sFlag.contains("[INFO] One or more queries after the canceled query are not executed"))
@@ -317,9 +298,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"The Records are getting updated. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);						
 					}
-					/*QueryEditor.ClearEditor();
-					QueryEditor.SetFunction("drop view viewname;");
-					QueryEditor.ExecuteButton();*/	
 				}
 				if(sTestCaseID.equals("SDV_FUNINVAL_DS_CNLQRY_STATUSBAR_002"))
 				{
@@ -408,9 +386,7 @@ public class SR_Tools_DS_010_CAN_QRY {
 					QueryEditor.SetFunction("select count (*) from largedata;");
 					QueryEditor.SetFunction("select count (*) from largedata;");
 					QueryEditor.ExecuteButton();
-					//QueryEditor.SQLEditorMinMax("MIN");
 					Thread.sleep(GlobalConstants.MinWait);
-					//QueryEditor.SQLEditorMinMax("MAX");
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("SHORTCUT");
 					Thread.sleep(GlobalConstants.MinWait);
@@ -429,7 +405,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 				if(sTestCaseID.equals("SDV_FIA_DS_CNLQRY_007"))
 				{
 					Thread.sleep(GlobalConstants.MinWait);
-					//BaseActions.ClearConsole("Normal");
 					QueryEditor.ExecuteButton();
 					QueryEditor.CancelQuery("BUTTON");
 					QueryEditor.SaveQuery("SHORTCUT","SDV_FIA_DS_CNLQRY_007.sql", "OVERWRITE");
@@ -447,13 +422,11 @@ public class SR_Tools_DS_010_CAN_QRY {
 					}
 				}
 
-				//******************************************************************
 				if(sTestCaseID.equals("SDV_FIA_DS_CNLQRY_023"))
 				{
 					BaseActions.ClearConsole("Normal");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetFunction("select auto.insert_select_loop(1000000);");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
@@ -487,7 +460,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					BaseActions.ClearConsole("Normal");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetFunction("select auto.insert_select_loop(1000000);");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
@@ -533,7 +505,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					BaseActions.ClearConsole("Normal");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetFunction("select auto.insert_select_loop(1000000);");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
@@ -551,7 +522,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 						UtilityFunctions.KeyRelease(KeyEvent.VK_N, 1);
 						UtilityFunctions.KeyRelease(KeyEvent.VK_CONTROL, 1);
 						Thread.sleep(GlobalConstants.MinWait);
-						//BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sToolbarControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,ObjectBrowserElements.iNewConnxcord, ObjectBrowserElements.iNewConnycord);
 						Login.IDELogin("New Connection", sHost, sHostPort, sDBName, sUserName,sPassword,"PERMENANT");
 						Thread.sleep(GlobalConstants.MinWait);
 						sFlag = QueryResult.ReadConsoleOutput("GLOBAL");
@@ -580,8 +550,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					BaseActions.ClearConsole("Normal");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetQuery("select auto.insert_select_loop(1000000);");
-					//QueryEditor.SetFunction("select * from pg_am;select * from pg_amop;select * from pg_aggregate;select * from largedata;");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
@@ -594,8 +562,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 						UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 						UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
 						Thread.sleep(GlobalConstants.MedWait);
-						/*UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-						UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);*/
 						QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"BrowserExportResult.csv");
 						BaseActions.Winwait("Data Exported Successfully");
 						Thread.sleep(GlobalConstants.MinWait);
@@ -627,8 +593,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					BaseActions.ClearConsole("Normal");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetQuery("select auto.insert_select_loop(1000000);");
-					//QueryEditor.SetFunction("select * from pg_am;select * from pg_amop;select * from pg_aggregate;select * from largedata;");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
@@ -726,7 +690,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					BaseActions.ClearConsole("Normal");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetFunction("select auto.insert_select_loop(1000000);");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
@@ -803,11 +766,7 @@ public class SR_Tools_DS_010_CAN_QRY {
 					Login.LaunchIDE(GlobalConstants.sIDEPath);
 					//Login into IDE Tool
 					Login.IDELogin(sConnection,sHost,sHostPort,sDBName,sUserName,sPassword,"PERMENANT");
-
-					//BaseActions.ClearConsole("Normal");
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetQuery("select auto.insert_select_loop(1000000);");
-					//QueryEditor.SetFunction("select * from pg_am;select * from pg_amop;select * from pg_aggregate;select * from largedata;");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
@@ -821,7 +780,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 						{
 							DebugOperations.ClickContinue();
 							Thread.sleep(GlobalConstants.MedWait);
-							//DebugOperations.ClickConsoleTab();
 							sFlag=QueryResult.ReadConsoleOutput("GLOBAL");
 							if(sFlag.contains("Debugging completed.") && sFlag.contains("Executed Successfully.."))
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
@@ -849,11 +807,7 @@ public class SR_Tools_DS_010_CAN_QRY {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
 					Login.DebugWindows();
 					Thread.sleep(GlobalConstants.MedWait);
-					//BaseActions.ClearConsole("Normal");
-					//QueryEditor.ClearEditor();
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetQuery("select auto.insert_select_loop(1000000);");
-					//QueryEditor.SetFunction("select * from pg_am;select * from pg_amop;select * from pg_aggregate;select * from largedata;");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
@@ -864,7 +818,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT, 1);
 					Thread.sleep(GlobalConstants.MinWait);
-					//BaseActions.MouseClick(DebugElements.wDebugpane,"",DebugElements.wDebugFunction,DebugElements.sMouseButton,DebugElements.iButtonClick,200,14);
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.DebugSession();
 					String sDebugConnection = DebugOperations.DebugConnection(DebugPassword);
@@ -879,8 +832,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 						Login.DebugWindows();
 						Thread.sleep(GlobalConstants.MedWait);
 						sFlag = QueryResult.ReadConsoleOutput("TERMINAL");
-						/*BaseActions.MouseClick(DebugElements.wDebugpane,"",DebugElements.wDebugFunction,DebugElements.sMouseButton,DebugElements.iButtonClick,200,14);
-						Thread.sleep(GlobalConstants.MedWait);*/
 						DebugOperations.TerminateDebugging();
 						Thread.sleep(GlobalConstants.MinWait);
 						UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
@@ -888,7 +839,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 						UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
 						UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
 						Thread.sleep(GlobalConstants.MinWait);
-						//System.out.println(sFlag);
 						if(sFlag.contains("[INFO] Canceled the query on user request.")||sFlag.contains("[INFO] One or more queries after the canceled query are not executed"))
 						{
 							Login.DebugWindows();
@@ -966,7 +916,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 					BaseActions.ClearConsole("Normal");
 					QueryEditor.ClearEditor();
 					QueryEditor.SetQuery(sInputQuery);
-					//QueryEditor.SetQuery("select auto.insert_select_loop(1000000);");
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryEditor.CancelQuery("BUTTON");
@@ -1012,8 +961,6 @@ public class SR_Tools_DS_010_CAN_QRY {
 			if(!sStatus.isEmpty())
 				UtilityFunctions.WriteToText(sTextResultFile, sFinalStatus);
 		}
-		//Save the Excel result to HTML
-		//UtilityFunctions.SaveResult(ResultExcel,"Query_Format");
 	}//end of main
 
 }

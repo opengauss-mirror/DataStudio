@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.bl.serverdatacache;
@@ -23,11 +34,6 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * 
  * Description: The Class SynonymMetaData.
  * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020.
- *
- * @author c00550043
- * @version
- * @since Mar7, 2020
  */
 public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPDBMSObject, ISynonymMetaData {
     /**
@@ -172,8 +178,6 @@ public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPD
      * Gets the owner.
      *
      * @return the owner
-     * @Author: c00550043
-     * @Date: Mar 12, 2020
      * @Title: getOwner
      * @Description: get the owner
      */
@@ -185,8 +189,6 @@ public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPD
      * Sets the owner.
      *
      * @param owner the owner
-     * @Author: c00550043
-     * @Date: Mar 12, 2020
      * @Title: setOwner
      * @Description: set the owner
      */
@@ -198,8 +200,6 @@ public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPD
      * Gets the object owner.
      *
      * @return the object owner
-     * @Author: c00550043
-     * @Date: Mar 12, 2020
      * @Title: getObjectOwner
      * @Description: get the object owner
      */
@@ -211,8 +211,6 @@ public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPD
      * Sets the object owner.
      *
      * @param objectOwner the object owner
-     * @Author: c00550043
-     * @Date: Mar 12, 2020
      * @Title: setObejctOwner
      * @Description: set the object owner
      */
@@ -224,8 +222,6 @@ public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPD
      * Gets the object name.
      *
      * @return the object name
-     * @Author: c00550043
-     * @Date: Mar 12, 2020
      * @Title: getObjectName
      * @Description: get the object name
      */
@@ -237,8 +233,6 @@ public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPD
      * Sets the object name.
      *
      * @param objectName the object name
-     * @Author: c00550043
-     * @Date: Mar 12, 2020
      * @Title: setObjectName
      * @Description: set the object name
      */
@@ -253,8 +247,6 @@ public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPD
      * @param isCasecade if is casecade
      * @throws DatabaseOperationException the database operation exception
      * @throws DatabaseCriticalException the database critical exception
-     * @Author: c00550043
-     * @Date: Nov 8, 2019
      * @Title: dropSynonym
      * @Description: drop synonym
      */

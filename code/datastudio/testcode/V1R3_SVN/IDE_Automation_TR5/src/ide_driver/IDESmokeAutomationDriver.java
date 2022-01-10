@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /************************************************************************************************
 TITLE - IDE AUTOMATION SMOKE DRIVER
 DESCRIPTION - THIS PROGRAM CONTROLS THE ENTIRE SMOKE AUTOMATION REGRESSION FOR IDE
@@ -42,41 +57,7 @@ public class IDESmokeAutomationDriver {
 		String sPassword = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 5);
 		//Login into IDE Tool
 		Login.IDELogin(sConnection, sHost, sHostPort, sDBName, sUserName,sPassword,"PERMENANT");
-		/*SmokeTestAutomation.Syntax_Highlight_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		Login.IDELogout();
-		Thread.sleep(GlobalConstants.MedWait);
 		
-		
-		Login.LaunchIDE(GlobalConstants.sIDEPath);
-		//Getting Login Credentials from IDE_Smoke_Test_Data file and
-		UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 0);
-		UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 1);
-		UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 2);
-		UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 3);
-		UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 4);
-		UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 1, 5);
-		//Login into IDE Tool
-		Login.IDELogin(sConnection, sHost, sHostPort, sDBName, sUserName,sPassword,"PERMENANT");
-		SmokeTestAutomation.Query_Format_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		Login.IDELogout();*/
-		
-		
-		
-		
-		//SmokeTestAutomation.Query_Exe_Status_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Plan_Cost_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Mutiple_Query_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Auto_Filter_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Save_Open_SQL_Smoke("Smoke_Test_Data", "Smoke_Test_Results", sResultExcel, sTextResultFile);
-		//SmokeTestAutomation.Import_Table_Data_Smoke("Smoke_Test_Data", "Smoke_Test_Results", sResultExcel, sTextResultFile);
-		//SmokeTestAutomation.Export_CSV_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Auto_Suggest_Smoke("Smoke_Test_Data", "Smoke_Test_Results", sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Cancel_Query_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Cancel_Export_Import_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Object_Property_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Edit_Table_Data_Smoke("Smoke_Test_Data", "Smoke_Test_Results", sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Base_Features_Smoke("Smoke_Test_Data","Smoke_Test_Results",sResultExcel,sTextResultFile);
-		//SmokeTestAutomation.Debug_Operation_Smoke("Smoke_Test_Data", "Smoke_Test_Results", sResultExcel,sTextResultFile);
 		SmokeTestAutomation.V1R3_New_Features("Smoke_Test_Data", "Smoke_Test_Results", sResultExcel,sTextResultFile);
 
 
