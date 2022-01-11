@@ -42,7 +42,8 @@ import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 
 /**
- * Title: class Description: The Class ObjectGroup. 
+ * Title: class Description: The Class ObjectGroup.
+ * 
  * @param <T> the generic type
  * @since 17 May, 2019
  */

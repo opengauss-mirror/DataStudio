@@ -12,6 +12,7 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
+ 
 package com.huawei.mppdbide.bl.errorlocator;
 
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
