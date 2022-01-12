@@ -749,7 +749,7 @@ public class DBConnectionDialog extends ConnectionDialog {
         addPswdUi(bodyComposite);
 
         Label lblSavePswdOptions = new Label(bodyComposite, SWT.NULL);
-        lblSavePswdOptions.setText(MessageConfigLoader.getProperty(IMessagesConstants.CONN_DIALOG_SAVE_PSWD));
+        lblSavePswdOptions.setText(MessageConfigLoader.getProperty(IMessagesConstants.CONN_DIALOG_SAVE_CIPHER));
         addPasswordSaveOptions(bodyComposite);
 
         Label lblSSLEnable = new Label(bodyComposite, SWT.NONE);
@@ -1012,7 +1012,7 @@ public class DBConnectionDialog extends ConnectionDialog {
 
     private void addSslPasswordui(Composite bodyComposite, GridLayout valueFieldLayout) {
         final Label sslPassword = new Label(bodyComposite, SWT.NULL);
-        sslPassword.setText(MessageConfigLoader.getProperty(IMessagesConstants.SSL_PASSWORD));
+        sslPassword.setText(MessageConfigLoader.getProperty(IMessagesConstants.SSL_CIPHER));
         Composite sslPasswordComposite = new Composite(bodyComposite, SWT.NULL);
         sslPasswordComposite.setLayout(valueFieldLayout);
         sslPasswordComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -1848,9 +1848,9 @@ public class DBConnectionDialog extends ConnectionDialog {
         info.setPrd(cmdLinePassword.getPrd());
         cmdLinePassword.clearPssrd();
 
-        if (parameterMap.containsKey(IDSCommandlineOptions.SAVE_PASSWORD)) {
-            String savePwdStr = parameterMap.get(IDSCommandlineOptions.SAVE_PASSWORD);
-            if (savePwdStr.equals(IDSCommandlineOptions.SAVE_PASSWORD_DONT_SAVE)) {
+        if (parameterMap.containsKey(IDSCommandlineOptions.SAVE_CIPHER)) {
+            String savePwdStr = parameterMap.get(IDSCommandlineOptions.SAVE_CIPHER);
+            if (savePwdStr.equals(IDSCommandlineOptions.SAVE_CIPHER_DONT_SAVE)) {
                 info.setSavePrdOption(SavePrdOptions.DO_NOT_SAVE);
             } else {
                 info.setSavePrdOption(SavePrdOptions.CURRENT_SESSION_ONLY);
@@ -2448,8 +2448,8 @@ public class DBConnectionDialog extends ConnectionDialog {
             public void run() {
                 MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.WARNING, true,
                         IconUtility.getIconImage(IiconPath.ICO_TOOL_32X32, this.getClass()),
-                        MessageConfigLoader.getProperty(IMessagesConstants.PASSWORD_EXPIRY_MSG_TITLE),
-                        MessageConfigLoader.getProperty(IMessagesConstants.PASSWORD_EXPIRY_INFORMATION),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRY_MSG_TITLE),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRY_INFORMATION),
                         MessageConfigLoader.getProperty(IMessagesConstants.BTN_OK));
             }
         });
@@ -2489,8 +2489,8 @@ public class DBConnectionDialog extends ConnectionDialog {
                 } else if (exception instanceof PasswordExpiryException) {
                     MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.WARNING, true,
                             IconUtility.getIconImage(IiconPath.ICO_TOOL_32X32, this.getClass()),
-                            MessageConfigLoader.getProperty(IMessagesConstants.PWD_EXPIRE_CONFIRMATION),
-                            MessageConfigLoader.getProperty(IMessagesConstants.PWD_EXPIRED),
+                            MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRE_CONFIRMATION),
+                            MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRED),
                             new String[] {MessageConfigLoader.getProperty(IMessagesConstants.BTN_OK)}, 0);
                 } else {
                     MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.ERROR, true,

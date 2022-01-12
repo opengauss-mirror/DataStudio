@@ -62,7 +62,7 @@ public interface IDSCommandlineOptionValidationUtils {
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 3) " + IDSCommandlineOptions.HOST_PORT
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 4) " + IDSCommandlineOptions.DB_NAME
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 5) " + IDSCommandlineOptions.USER_NAME
-                + MPPDBIDEConstants.LINE_SEPARATOR + " 6) " + IDSCommandlineOptions.SAVE_PASSWORD
+                + MPPDBIDEConstants.LINE_SEPARATOR + " 6) " + IDSCommandlineOptions.SAVE_CIPHER
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 7) " + IDSCommandlineOptions.SSL_ENABLE
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 8) " + IDSCommandlineOptions.SSL_CLIENT_CERT
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 9) " + IDSCommandlineOptions.SSL_CLIENT_KEY
@@ -142,9 +142,9 @@ public interface IDSCommandlineOptionValidationUtils {
      */
     public static String formInvalidPasswordSaveOptionErrorMsg() {
         return MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_ERROR) + " "
-                + MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_INVALID_SAVE_PASSWORD_VALUE)
-                + MPPDBIDEConstants.LINE_SEPARATOR + "1) " + IDSCommandlineOptions.SAVE_PASSWORD_CURR_SESSION
-                + MPPDBIDEConstants.LINE_SEPARATOR + "2) " + IDSCommandlineOptions.SAVE_PASSWORD_DONT_SAVE;
+                + MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_INVALID_SAVE_CIPHER_VALUE)
+                + MPPDBIDEConstants.LINE_SEPARATOR + "1) " + IDSCommandlineOptions.SAVE_CIPHER_CURR_SESSION
+                + MPPDBIDEConstants.LINE_SEPARATOR + "2) " + IDSCommandlineOptions.SAVE_CIPHER_DONT_SAVE;
     }
 
     /**
@@ -262,7 +262,7 @@ public interface IDSCommandlineOptionValidationUtils {
      */
     public static List<String> getSavePasswordValueList() {
         return Stream
-                .of(IDSCommandlineOptions.SAVE_PASSWORD_CURR_SESSION, IDSCommandlineOptions.SAVE_PASSWORD_DONT_SAVE)
+                .of(IDSCommandlineOptions.SAVE_CIPHER_CURR_SESSION, IDSCommandlineOptions.SAVE_CIPHER_DONT_SAVE)
                 .collect(Collectors.toList());
     }
 

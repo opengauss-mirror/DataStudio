@@ -168,7 +168,7 @@ public class RenameDatabase {
 
         @Override
         protected String getHeaderPswd() {
-            return MessageConfigLoader.getProperty(IMessagesConstants.CURRENT_USER_PWD_TO_CONNECT_TO_DB);
+            return MessageConfigLoader.getProperty(IMessagesConstants.CURRENT_USER_CIPHER_TO_CONNECT_TO_DB);
         }
     }
 

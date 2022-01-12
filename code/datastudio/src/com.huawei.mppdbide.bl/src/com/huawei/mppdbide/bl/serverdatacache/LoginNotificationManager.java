@@ -208,7 +208,7 @@ public class LoginNotificationManager {
             if (!isLoginAllowedOnPasswordExpiry) {
                 db.setConnected(false);
                 throw new PasswordExpiryException(
-                        MessageConfigLoader.getProperty(IMessagesConstants.ERR_PASSWORD_EXPIRED));
+                        MessageConfigLoader.getProperty(IMessagesConstants.ERR_CIPHER_EXPIRED));
             }
         }
     }

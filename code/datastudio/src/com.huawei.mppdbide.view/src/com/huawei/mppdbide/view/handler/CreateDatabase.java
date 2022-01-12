@@ -251,7 +251,7 @@ public class CreateDatabase {
         @Override
         protected String getHeaderPswd() {
             // start DTS2016012610981
-            return MessageConfigLoader.getProperty(IMessagesConstants.CURRENT_USER_PASSWORD_TO_CONNECT_TO_DB);
+            return MessageConfigLoader.getProperty(IMessagesConstants.CURRENT_USER_CIPHER_TO_CONNECT_TO_DB);
             // end DTS2016012610981
         }
     }

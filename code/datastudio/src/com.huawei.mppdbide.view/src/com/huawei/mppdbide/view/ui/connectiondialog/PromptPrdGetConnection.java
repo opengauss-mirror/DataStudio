@@ -43,7 +43,7 @@ public class PromptPrdGetConnection {
      * or other cases, throws exception
      */
 
-    private static final String INVALID_USERNAME_PASSWORD_OLAP = "Invalid username/password";
+    private static final String INVALID_USERNAME_CIPHER_OLAP = "Invalid username/password";
     private static int returnVal;
     private static String msg;
 
@@ -134,7 +134,7 @@ public class PromptPrdGetConnection {
         } catch (MPPDBIDEException exception) {
             msg = getServerErrorMessage(exception);
 
-            if (msg.contains(INVALID_USERNAME_PASSWORD_OLAP)) {
+            if (msg.contains(INVALID_USERNAME_CIPHER_OLAP)) {
                 MPPDBIDELoggerUtility.error(
                         MessageConfigLoader.getProperty(IMessagesConstants.MSG_HINT_DATABASE_CRITICAL_ERROR),
                         exception);

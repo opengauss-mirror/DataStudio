@@ -84,7 +84,7 @@ public class NewDbConnectionCommandline {
     public void execute(ParameterizedCommand parameterizedCommand ) {
         Map<String, String> parameterMap = parameterizedCommand.getParameterMap();
         CmdLineCharObject cmdLinePassword = promptForPassword(); 
-        boolean isValidationSuccess = validateCmdLinePassword(IDSCommandlineOptions.USER_PASSWORD, cmdLinePassword);
+        boolean isValidationSuccess = validateCmdLinePassword(IDSCommandlineOptions.USER_CIPHER, cmdLinePassword);
         /*
          * Close Datastudio workbench if connection param validation
          * fails
@@ -185,9 +185,9 @@ public class NewDbConnectionCommandline {
                 MPPDBIDELoggerUtility.error("Prefence.save returned exception while saving to disk :", exception);
             }
             System.out.println(MessageConfigLoader
-                    .getProperty(IMessagesConstants.DS_COMMANDLINE_PRESS_ENTER_FOLLOWED_BY_PASSWORD));
+                    .getProperty(IMessagesConstants.DS_COMMANDLINE_PRESS_ENTER_FOLLOWED_BY_CIPHER));
         } else {
-            System.out.println(MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_ENTER_PASSWORD));
+            System.out.println(MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_ENTER_CIPHER));
         }      
         char[] prdArr = System.console().readPassword();
         CmdLineCharObject lCmdLineCharObject = new CmdLineCharObject();

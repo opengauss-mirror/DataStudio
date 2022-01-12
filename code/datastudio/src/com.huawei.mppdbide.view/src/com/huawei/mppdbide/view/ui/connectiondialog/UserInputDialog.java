@@ -290,7 +290,7 @@ public abstract class UserInputDialog extends Dialog implements IDialogWorkerInt
         if (passwordprompt) {
             Label lblSaveOption = new Label(curComposite, SWT.NONE);
             lblSaveOption.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-            lblSaveOption.setText(MessageConfigLoader.getProperty(IMessagesConstants.CONN_DIALOG_SAVE_PSWD));
+            lblSaveOption.setText(MessageConfigLoader.getProperty(IMessagesConstants.CONN_DIALOG_SAVE_CIPHER));
 
             savePswdOptions = new Combo(curComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
             String[] saveOptions = null;

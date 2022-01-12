@@ -56,7 +56,7 @@ public class DropSynonymWorker extends PromptPasswordUIWorkerJob {
      */
     public DropSynonymWorker(String objName, ISynonymMetaData selectdSynonym, StatusMessage statsMsg,
             boolean isCascade) {
-        super(objName, MPPDBIDEConstants.CANCELABLEJOB, IMessagesConstants.VALIDATE_PASSWORD_FAIL);
+        super(objName, MPPDBIDEConstants.CANCELABLEJOB, IMessagesConstants.VALIDATE_CIPHER_FAIL);
         this.synonymMetaData = selectdSynonym;
         this.staMsg = statsMsg;
         this.isCasecade = isCascade;

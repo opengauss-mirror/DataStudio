@@ -178,7 +178,9 @@ public class ImportExcelExecuter {
             for (int index = 0; index < subList.size(); index++) {
                 kcount = setValuesPeriodExecuteExcInner(subList, columnDataType, preState, kcount, index);
             }
-            preState = dbCon.getPrepareStmt(preState.toString());
+            String preparedStatementString = preState.toString();
+            dbCon.closeStatement(preState);
+            preState = dbCon.getPrepareStmt(preparedStatementString);
             validateForCancel(preState);
         } finally {
             dbCon.closeStatement(preState);

@@ -124,7 +124,7 @@ public class ConnectToDB {
      * @since 17 May, 2019
      */
     private final class ConnectDBWorker extends UIWorkerJob {
-        private static final String INVALID_USERNAME_PASSWORD_OLAP = "Invalid username/password";
+        private static final String INVALID_USERNAME_CIPHER_OLAP = "Invalid username/password";
         private static final String YOU_CANNOT_CHANGE_THE_STATE_FROM_CONNECT_TO_CONNECT = "You cannot change the state from CONNECT to CONNECT";
         private Database db;
         private BottomStatusBar btmStatusBar;
@@ -260,8 +260,8 @@ public class ConnectToDB {
             if (exception instanceof PasswordExpiryException) {
                 MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.WARNING, true,
                         IconUtility.getIconImage(IiconPath.ICO_TOOL_32X32, this.getClass()),
-                        MessageConfigLoader.getProperty(IMessagesConstants.PWD_EXPIRE_CONFIRMATION),
-                        MessageConfigLoader.getProperty(IMessagesConstants.PWD_EXPIRED),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRE_CONFIRMATION),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRED),
                         new String[] {MessageConfigLoader.getProperty(IMessagesConstants.BTN_OK)}, 0);
             }
         }
@@ -300,7 +300,7 @@ public class ConnectToDB {
                     MessageConfigLoader.getProperty(IMessagesConstants.UNABLE_TO_CONNECT_TO_DATABASE_DB, db.getName(),
                             MPPDBIDEConstants.LINE_SEPARATOR, msg));
 
-            String invalidMessageOLAP = INVALID_USERNAME_PASSWORD_OLAP;
+            String invalidMessageOLAP = INVALID_USERNAME_CIPHER_OLAP;
 
             if (exception.getServerMessage() != null && exception.getServerMessage().contains(invalidMessageOLAP)) {
                 PasswordDialog dialogHelper = new PasswordDialog(Display.getCurrent().getActiveShell(), db);
@@ -415,8 +415,8 @@ public class ConnectToDB {
 
                 MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.WARNING, true,
                         IconUtility.getIconImage(IiconPath.ICO_TOOL_32X32, this.getClass()),
-                        MessageConfigLoader.getProperty(IMessagesConstants.PWD_EXPIRE_CONFIRMATION),
-                        MessageConfigLoader.getProperty(IMessagesConstants.PWD_YET_TO_EXPIRE, deadLineTime),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRE_CONFIRMATION),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_YET_TO_EXPIRE, deadLineTime),
                         MessageConfigLoader.getProperty(IMessagesConstants.BTN_OK));
 
             }
@@ -434,8 +434,8 @@ public class ConnectToDB {
             public void run() {
                 MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.WARNING, true,
                         IconUtility.getIconImage(IiconPath.ICO_TOOL_32X32, this.getClass()),
-                        MessageConfigLoader.getProperty(IMessagesConstants.PASSWORD_EXPIRY_MSG_TITLE),
-                        MessageConfigLoader.getProperty(IMessagesConstants.PASSWORD_EXPIRY_INFORMATION),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRY_MSG_TITLE),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRY_INFORMATION),
                         MessageConfigLoader.getProperty(IMessagesConstants.BTN_OK));
             }
         });

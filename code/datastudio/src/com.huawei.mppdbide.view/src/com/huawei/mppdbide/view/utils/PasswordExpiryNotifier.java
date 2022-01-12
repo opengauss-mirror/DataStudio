@@ -60,8 +60,8 @@ public class PasswordExpiryNotifier {
                 if (deadLine > Math.abs(0.0f) && deadLine <= Math.abs(notifyTime)) {
                     MPPDBIDEDialogs.generateMessageDialog(MESSAGEDIALOGTYPE.WARNING, true,
                             IconUtility.getIconImage(IiconPath.ICO_TOOL_32X32, this.getClass()),
-                            MessageConfigLoader.getProperty(IMessagesConstants.PWD_EXPIRE_CONFIRMATION),
-                            MessageConfigLoader.getProperty(IMessagesConstants.PWD_YET_TO_EXPIRE, deadLineTime),
+                            MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRE_CONFIRMATION),
+                            MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_YET_TO_EXPIRE, deadLineTime),
                             MessageConfigLoader.getProperty(IMessagesConstants.BTN_OK));
                 }
 
