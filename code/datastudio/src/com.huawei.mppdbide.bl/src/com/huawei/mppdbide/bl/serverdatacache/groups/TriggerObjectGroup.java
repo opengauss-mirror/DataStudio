@@ -35,6 +35,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 /**
  * Title: the class TriggerObjectGroup
  * Description: the class TriggerObjectGroup
+ *
+ * @since 3.0.0
  */
 public class TriggerObjectGroup extends OLAPObjectGroup<TriggerMetaData> {
     private static final String QUERY_ALL_TRIGGER = "select t.oid as oid, t.tgrelid as tableoid,"

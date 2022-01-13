@@ -53,6 +53,7 @@ import com.huawei.mppdbide.utils.messaging.MessageQueue;
  * 
  * Description: The Class DBConnection.
  * 
+ * @since 3.0.0
  */
 public class DBConnection {
 

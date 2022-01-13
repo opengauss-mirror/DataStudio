@@ -13,7 +13,6 @@
  * See the Mulan PSL v2 for more details.
  */
 
-
 package com.huawei.mppdbide.adapter.driver;
 
 import java.sql.SQLException;
@@ -35,7 +34,8 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
  * Title: class
  * 
  * Description: The Class DBMSDriverManager.
- * 
+ *
+ * @since 3.0.0
  */
 public final class DBMSDriverManager {
 

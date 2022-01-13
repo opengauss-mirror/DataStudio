@@ -39,6 +39,8 @@ import com.huawei.mppdbide.utils.messaging.MessageQueue;
 
 /**
  * Title: class Description: The Class StmtExecutor. 
+ *
+ * @since 3.0.0
  */
 public class StmtExecutor {
     private static final String CURSOR_QUERY_PREPEND = "CURSOR %s NO SCROLL FOR %s";

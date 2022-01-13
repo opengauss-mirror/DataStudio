@@ -19,7 +19,8 @@ import com.huawei.mppdbide.bl.serverdatacache.ColumnMetaData;
 
 /**
  * Title: ERAttribute
- * 
+ *
+ * @since 3.0.0
  */
 public class ERAttribute extends AbstractERAttribute {
 

@@ -48,7 +48,8 @@ import com.huawei.mppdbide.utils.security.SecureUtil;
  * Title: class
  * 
  * Description: The Class GaussConnection.
- * 
+ *
+ * @since 3.0.0
  */
 public class GaussConnection implements IDBConnectionWrapper {
 

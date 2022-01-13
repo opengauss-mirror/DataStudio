@@ -21,6 +21,7 @@ package com.huawei.mppdbide.bl.queryparser;
  * 
  * Description: The Interface IParseContextGetter.
  * 
+ * @since 3.0.0
  */
 public interface IParseContextGetter {
 

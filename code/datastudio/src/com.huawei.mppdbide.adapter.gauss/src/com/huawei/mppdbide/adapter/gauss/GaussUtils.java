@@ -33,7 +33,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * Title: class
  * 
  * Description: The Class GaussUtils.
- * 
+ *
+ * @since 3.0.0
  */
 public class GaussUtils {
 

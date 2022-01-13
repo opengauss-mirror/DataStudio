@@ -20,6 +20,7 @@ import com.huawei.mppdbide.bl.serverdatacache.ServerObject;
 /**
  * Title: IERAttribute 
  *
+ * @since 3.0.0
  */
 public abstract class AbstractERAttribute extends AbstractERNode<ServerObject> {
     /**

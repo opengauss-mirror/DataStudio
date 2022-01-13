@@ -21,6 +21,7 @@ package com.huawei.mppdbide.adapter.keywordssyntax;
  * 
  * Description: The Class Keywords.
  * 
+ * @since 3.0.0
  */
 public class Keywords implements KeywordsIf {
     private String[] reservedkeywords = {"ADD", "ALL", "ANALYZE", "AND", "ANY", "ARRAY", "AS", "ASC", "BEGIN",

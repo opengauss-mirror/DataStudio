@@ -29,6 +29,7 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
 /**
  * Title: AbstractEREntity
  * 
+ * @since 3.0.0
  */
 public abstract class AbstractEREntity extends AbstractERNode<ServerObject> {
     /** 

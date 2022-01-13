@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.utils;
@@ -28,12 +39,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * Title: class
  * 
  * Description: The Class OsCommandExecutor.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class OsCommandExecutor {
     private String[] command;
@@ -83,12 +90,6 @@ public class OsCommandExecutor {
      * 
      * Description: The Class InputStreamGobbler. This class captures error
      * messages of the new process (gs_dump), and handles accordingly in DS code
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author g00408002
-     * @version [DataStudio 6.5.1, 19 July, 2019]
-     * @since 19 July, 2019
      */
     class InputStreamGobbler extends Thread {
         InputStream is;
@@ -164,12 +165,6 @@ public class OsCommandExecutor {
      * Description: The Class InputStreamGobbler. This class works to provide
      * user input to gs_dump, which it expects from DS For DS, it is handled by
      * an OutputStream
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author g00408002
-     * @version [DataStudio 6.5.1, 19 July, 2019]
-     * @since 19 July, 2019
      */
     class OutputStreamGobbler extends Thread {
         char[] param;

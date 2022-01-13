@@ -23,6 +23,7 @@ import org.apache.commons.collections4.trie.PatriciaTrie;
  * 
  * Description: The Class SQLSyntax.
  * 
+ * @since 3.0.0
  */
 public class SQLSyntax {
 

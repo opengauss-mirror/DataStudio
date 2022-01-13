@@ -17,9 +17,8 @@ package com.huawei.mppdbide.bl.erd.model;
 
 /**
  * Title: AbstractERAssociation
- * 
- * Description:
- * 
+ *
+ * @since 3.0.0
  */
 public abstract class AbstractERAssociation {
     /** 

@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui.table;
@@ -60,12 +71,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: class
  * 
  * Description: The Class IndexUI.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class IndexUI {
 
@@ -294,7 +301,6 @@ public class IndexUI {
         txtIndexNameGD.verticalIndent = -5;
         txtIndexName.setLayoutData(txtIndexNameGD);
 
-        // DTS2014111203329 start
         UIVerifier.verifyTextSize(txtIndexName, 63);
         // use an existing image
         Image image = IconUtility.getIconImage(IiconPath.MANDATORY_FIELD, this.getClass());
@@ -669,14 +675,12 @@ public class IndexUI {
             @Override
             public void widgetSelected(SelectionEvent event) {
                 int selectedIdx = tblIndexCols.getSelectionIndex();
-                // start DTS2016012703380
                 if (selectedIdx > -1 && selectedIdx < (tblIndexCols.getItemCount() - 1)) {
                     IndexedColumnExpr col = indexCols.get(selectedIdx);
                     indexCols.remove(selectedIdx);
                     indexCols.add(selectedIdx + 1, col);
                     repopulateIndexedCols();
                 }
-                // end DTS2016012703380
             }
 
             @Override
@@ -978,7 +982,7 @@ public class IndexUI {
         Iterator<Tablespace> tableSpaceItr = this.server.getTablespaceGroup().getSortedServerObjectList().iterator();
         boolean hasNext = tableSpaceItr.hasNext();
         Tablespace tablespace = null;
-        cmbTablespace.removeAll(); // DTS2016012708124 Change
+        cmbTablespace.removeAll();
         while (hasNext) {
             tablespace = tableSpaceItr.next();
             cmbTablespace.add(tablespace.getName());
@@ -1062,7 +1066,6 @@ public class IndexUI {
 
         // throws exception when the index name is empty and no index columns
         validateIndexNameAndCols();
-        // DTS2014103006593
         if (tableMetaData != null) {
             List<IndexMetaData> metaDatas = tableMetaData.getIndexArrayList();
 
@@ -1200,7 +1203,6 @@ public class IndexUI {
         }
 
         updateAMCombo();
-        // start DTS2016012708124
         if (null != idx.getAccessMethod()) {
             cmbAccessMethod.setText(idx.getAccessMethod().getName());
         }
@@ -1212,7 +1214,6 @@ public class IndexUI {
         if (null != idx.getIndexType() && !"".equals(idx.getIndexType())) {
             cmbIndexType.setText(idx.getIndexType());
         }
-        // end DTS2016012708124
         this.indexCols = idx.getIndexedColumns();
         refreshColumns();
     }
@@ -1227,7 +1228,6 @@ public class IndexUI {
 
     }
 
-    // DTS2014102906540 end
 
     /**
      * Handle ORC selection.

@@ -30,6 +30,7 @@ import com.huawei.mppdbide.adapter.keywordssyntax.SQLSyntax;
  * 
  * Description: The Interface IConnectionDriver.
  * 
+ * @since 3.0.0
  */
 public interface IConnectionDriver {
 

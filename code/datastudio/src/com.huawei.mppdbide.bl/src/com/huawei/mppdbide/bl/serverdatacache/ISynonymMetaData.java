@@ -26,7 +26,8 @@ import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
  * Title: Class
  * 
  * Description: The Interface ISynonymMetaData.
- * 
+ *
+ * @since 3.0.0
  */
 public interface ISynonymMetaData {
     /**

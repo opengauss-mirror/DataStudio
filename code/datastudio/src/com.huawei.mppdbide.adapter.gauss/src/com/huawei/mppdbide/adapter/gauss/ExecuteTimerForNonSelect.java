@@ -28,6 +28,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * 
  * Description: The Class ExecuteTimerForNonSelect.
  * 
+ * @since 3.0.0
  */
 public class ExecuteTimerForNonSelect {
     private DBConnection dbConn;

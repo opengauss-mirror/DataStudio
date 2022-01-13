@@ -33,7 +33,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * Title: Class
  * 
  * Description: The Class SynonymMetaData.
- * 
+ *
+ * @since 3.0.0
  */
 public class SynonymMetaData extends BatchDropServerObject implements GaussOLAPDBMSObject, ISynonymMetaData {
     /**

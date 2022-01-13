@@ -24,6 +24,7 @@ import org.osgi.framework.BundleContext;
  * 
  * Description: The Class Activator.
  * 
+ * @since 3.0.0
  */
 public class Activator implements BundleActivator {
 

@@ -44,6 +44,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 /**
  * Title: ExportObjetDataManager
  * 
+ * @since 3.0.0
  */
 public class ExportObjectDataManager {
     private static final String CURSOR_QUERY_PREPEND = "CURSOR %s NO SCROLL FOR %s";

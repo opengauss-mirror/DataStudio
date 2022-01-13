@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.sequence.olap;
@@ -86,12 +97,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: class
  * 
  * Description: The Class CreateSequenceDialoge.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class CreateSequenceDialoge extends Dialog {
 
@@ -632,9 +639,7 @@ public class CreateSequenceDialoge extends Dialog {
      */
     protected void addCopyMenuItem(Menu menu) {
         menuCopy = new MenuItem(menu, SWT.PUSH);
-        // DTS2016011900019 Starts
         menuCopy.setText(MessageConfigLoader.getProperty(IMessagesConstants.STATUS_MSG_PLVIEWER_OPTION_COPY));
-        // DTS2016011900019 Ends
         menuCopy.addSelectionListener(new PLEditorCopySelectionListener());
         menuCopy.setImage(IconUtility.getIconImage(IiconPath.ICO_COPY, this.getClass()));
     }
@@ -678,9 +683,7 @@ public class CreateSequenceDialoge extends Dialog {
      */
     protected void addSelectAllMenuItem(Menu menu) {
         menuSelectAll = new MenuItem(menu, SWT.PUSH);
-        // DTS2016011900019 Starts
         menuSelectAll.setText(MessageConfigLoader.getProperty(IMessagesConstants.STATUS_MSG_PLVIEWER_OPTION_SELECTALL));
-        // DTS2016011900019 Ends
         menuSelectAll.addSelectionListener(new PLEditorSelectAllListener());
     }
 
@@ -1098,12 +1101,6 @@ public class CreateSequenceDialoge extends Dialog {
      * Title: class
      * 
      * Description: The Class ClearErrorMessage.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class ClearErrorMessage implements KeyListener {
 
@@ -1137,12 +1134,6 @@ public class CreateSequenceDialoge extends Dialog {
      * Title: class
      * 
      * Description: The Class SequenceHelper.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private static final class SequenceHelper implements VerifyListener {
 
@@ -1225,12 +1216,6 @@ public class CreateSequenceDialoge extends Dialog {
      * Title: class
      * 
      * Description: The Class LoadTableInSequenceWorker.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class LoadTableInSequenceWorker extends PromptPasswordUIWorkerJob {
         private TableMetaData tableMetaDataOfSelected;

@@ -13,7 +13,6 @@
  * See the Mulan PSL v2 for more details.
  */
 
-
 package com.huawei.mppdbide.adapter.driver;
 
 import java.nio.file.Path;
@@ -34,8 +33,8 @@ import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
  * Title: class
  * 
  * Description: The Class Gauss200V1R6Driver.
- * 
  *
+ * @since 3.0.0
  */
 public class Gauss200V1R6Driver extends AbstractConnectionDriver {
 

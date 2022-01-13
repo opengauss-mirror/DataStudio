@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui;
@@ -70,12 +81,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: class
  * 
  * Description: The Class SqlHistory.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class SqlHistory extends Dialog {
 
@@ -413,12 +420,6 @@ public class SqlHistory extends Dialog {
      * Title: class
      * 
      * Description: The Class LoadsqlterminalClass.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class LoadsqlterminalClass implements SelectionListener {
 
@@ -439,12 +440,6 @@ public class SqlHistory extends Dialog {
      * Title: class
      * 
      * Description: The Class LoadsqlclosehistoryClass.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class LoadsqlclosehistoryClass implements SelectionListener {
 
@@ -487,12 +482,6 @@ public class SqlHistory extends Dialog {
      * Title: class
      * 
      * Description: The Class DeletesqlClass.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class DeletesqlClass implements SelectionListener {
 
@@ -545,12 +534,6 @@ public class SqlHistory extends Dialog {
      * Title: class
      * 
      * Description: The Class DeleteAllsqlClass.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class DeleteAllsqlClass implements SelectionListener {
 
@@ -631,12 +614,6 @@ public class SqlHistory extends Dialog {
      * Title: class
      * 
      * Description: The Class PinsqlClass.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class PinsqlClass implements SelectionListener {
 
@@ -666,12 +643,6 @@ public class SqlHistory extends Dialog {
      * Title: class
      * 
      * Description: The Class UnpinsqlClass.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class UnpinsqlClass implements SelectionListener {
 

@@ -21,6 +21,7 @@ package com.huawei.mppdbide.adapter.keywordssyntax;
  * 
  * Description: The Class KeywordsToTrieConverter.
  * 
+ * @since 3.0.0
  */
 public class KeywordsToTrieConverter {
 

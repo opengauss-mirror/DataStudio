@@ -33,7 +33,8 @@ import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
  * Title: class
  * 
  * Description: The Class Gauss200V1R7Driver.
- * 
+ *
+ * @since 3.0.0
  */
 public class Gauss200V1R7Driver extends AbstractConnectionDriver {
     private static volatile Gauss200V1R7Driver v1r7Driver;

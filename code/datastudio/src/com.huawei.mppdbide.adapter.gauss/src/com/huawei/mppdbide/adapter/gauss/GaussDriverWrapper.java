@@ -31,6 +31,7 @@ import com.huawei.mppdbide.adapter.keywordssyntax.SQLSyntax;
  * 
  * Description: The Class GaussDriverWrapper.
  * 
+ * @since 3.0.0
  */
 public class GaussDriverWrapper implements IConnectionDriver {
     private AbstractConnectionDriver driverInstance;

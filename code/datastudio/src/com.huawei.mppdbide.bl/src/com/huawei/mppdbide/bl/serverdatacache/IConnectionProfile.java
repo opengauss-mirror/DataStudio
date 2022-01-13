@@ -22,7 +22,8 @@ import com.huawei.mppdbide.bl.serverdatacache.connectioninfo.conif.IServerConnec
  * Title: interface
  * 
  * Description: The Interface IConnectionProfile.
- * 
+ *
+ * @since 3.0.0
  */
 public interface IConnectionProfile {
 

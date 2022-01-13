@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui.terminal;
@@ -62,23 +73,15 @@ import com.huawei.mppdbide.view.utils.icon.IconUtility;
 import com.huawei.mppdbide.view.utils.icon.IiconPath;
 
 /**
- * Title: class Description: The Class BatchDropDisplayUIManager. Copyright (c)
- * Huawei Technologies Co., Ltd. 2012-2019.
+ * Title: class Description: The Class BatchDropDisplayUIManager.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager implements IDSListener {
     private static final Object LOCK = new Object();
 
     /**
-     * Title: enum Description: The Enum BatchDropOperState. Copyright (c)
-     * Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: enum Description: The Enum BatchDropOperState.
      */
     private static enum BatchDropOperState {
         INIT, START, FINISHED, ROLLBACK_STOP_CANCEL;
@@ -119,12 +122,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
     }
 
     /**
-     * Title: enum Description: The Enum BatchDropAllowed. Copyright (c) Huawei
-     * Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: enum Description: The Enum BatchDropAllowed.
      */
     private static enum BatchDropAllowed {
         DROPALLOWED, NODBFOUND, MULTIDBFOUND, DROPNOTALLOWED;
@@ -830,12 +828,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
     }
 
     /**
-     * Title: class Description: The Class BatchDropUIPref. Copyright (c) Huawei
-     * Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class BatchDropUIPref.
      */
     private static class BatchDropUIPref extends GridUIPreference {
 
@@ -905,12 +898,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
     }
 
     /**
-     * Title: class Description: The Class BatchDropWindowDetails. Copyright (c)
-     * Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class BatchDropWindowDetails.
      */
     private class BatchDropWindowDetails implements IWindowDetail {
         private static final String DROP_OBJECTS_WINDOW = "com.huawei.mppdbide.partstack.id.batchdelete";

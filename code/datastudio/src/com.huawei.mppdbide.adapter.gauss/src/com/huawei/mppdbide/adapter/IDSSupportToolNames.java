@@ -20,7 +20,8 @@ package com.huawei.mppdbide.adapter;
  * Title: interface
  * 
  * Description: The Interface IDSSupportToolNames.
- * 
+ *
+ * @since 3.0.0
  */
 public interface IDSSupportToolNames {
     String JDBC_JAR_FILE_PATH = "JDBC_JAR_FILE_PATH";

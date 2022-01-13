@@ -34,6 +34,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * 
  * Description: The Class AbstractConnectionDriver.
  * 
+ * @since 3.0.0
  */
 public abstract class AbstractConnectionDriver implements IConnectionDriver {
     private String driverName;

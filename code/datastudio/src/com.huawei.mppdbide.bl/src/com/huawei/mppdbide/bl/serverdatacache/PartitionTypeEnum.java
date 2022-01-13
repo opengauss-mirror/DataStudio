@@ -25,6 +25,7 @@ import java.util.Map;
  *
  * Description: The Class PartitionTypeEnum
  *
+ * @since 3.0.0
  */
 public enum PartitionTypeEnum {
     BY_RANGE("r", "BY RANGE"),

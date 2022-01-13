@@ -29,7 +29,8 @@ import com.huawei.mppdbide.utils.messaging.MessageType;
  * Title: class
  * 
  * Description: The Class GaussMppDbNoticeListner.
- * 
+ *
+ * @since 3.0.0
  */
 public class GaussMppDbNoticeListner implements NoticeListener {
     private IMessageQueue msgQ;

@@ -21,7 +21,8 @@ import java.util.ArrayList;
 /**
  * 
  * Title: SQLHistoryFileMetadata
- * 
+ *
+ * @since 3.0.0
  */
 public class SQLHistoryFileMetadata implements Serializable {
     private static final long serialVersionUID = 3505657588142448599L;

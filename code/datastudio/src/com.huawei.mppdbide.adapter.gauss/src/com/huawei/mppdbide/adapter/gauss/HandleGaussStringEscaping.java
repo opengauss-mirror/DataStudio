@@ -29,6 +29,7 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * 
  * Description: The Class HandleGaussStringEscaping.
  * 
+ * @since 3.0.0
  */
 public class HandleGaussStringEscaping {
 

@@ -20,6 +20,8 @@ package com.huawei.mppdbide.adapter.gauss;
  * Title: class
  * 
  * Description: The Class Datatype.
+ *
+ * @since 3.0.0
  */
 public class Datatype {
     private String typename;

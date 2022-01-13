@@ -39,7 +39,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * Title: class
  * 
  * Description: The Class SynonymObjectGroup.
- * 
+ *
+ * @since 3.0.0
  */
 public class SynonymObjectGroup extends OLAPObjectGroup<SynonymMetaData> {
     private static final String QUERY_FOR_ALL_NORMAL_TABLES_BY_NAMESPACE_ID = "select  tbl.relname relname "

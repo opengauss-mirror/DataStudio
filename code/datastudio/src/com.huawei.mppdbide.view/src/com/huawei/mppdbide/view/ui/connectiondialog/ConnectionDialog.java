@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui.connectiondialog;
@@ -56,12 +67,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: class
  * 
  * Description: The Class ConnectionDialog.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020.
  *
- * @author s00428892
- * @version [DataStudio 8.0.2, 01 Apr, 2020]
- * @since 01 Apr, 2020
+ * @since 3.0.0
  */
 public class ConnectionDialog extends Dialog {
 
@@ -405,12 +412,6 @@ public class ConnectionDialog extends Dialog {
      * Title: class
      * 
      * Description: The Class TextLengthVerifyListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     protected static final class TextLengthVerifyListner implements VerifyListener {
         @Override
@@ -431,12 +432,6 @@ public class ConnectionDialog extends Dialog {
      * Title: class
      * 
      * Description: The Class PortKeyListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     protected static final class PortKeyListner implements KeyListener {
         protected PortKeyListner() {
@@ -520,12 +515,6 @@ public class ConnectionDialog extends Dialog {
      * Title: class
      * 
      * Description: The Class HandleDeleteProfile.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     protected final class HandleDeleteProfile implements SelectionListener {
         @Override

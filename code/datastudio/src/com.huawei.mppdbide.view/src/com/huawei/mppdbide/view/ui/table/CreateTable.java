@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui.table;
@@ -108,12 +119,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: class
  * 
  * Description: The Class CreateTable.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class CreateTable extends Dialog implements IDialogWorkerInteraction {
 
@@ -697,9 +704,8 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
 
         addDeleteColumnBtnUi(grpColumns);
 
-        // DTS2014103006724 start
         addEditColumnUi(grpColumns);
-        // DTS2014103006724 end
+
         addMoveUoColumnUi(grpColumns);
 
         addMoveDownClmUi(grpColumns);
@@ -1336,7 +1342,6 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         });
         btnDelConstraint.setText(DELETE);
 
-        // DTS2014103006724 start
         Button btnEditConstrnt = new Button(tableConstraintBtnsComposite, SWT.NONE);
         GridData btnEditConstrntGD = new GridData(SWT.FILL, SWT.BOTTOM, true, true);
         btnEditConstrntGD.heightHint = 30;
@@ -1350,8 +1355,6 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
             }
         });
         btnEditConstrnt.setText(EDIT);
-
-        // DTS2014103006724 end
 
     }
 
@@ -1422,9 +1425,9 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         cons = constraintUI.getConstraint(!isConstraintsUpdate);
 
         if (null == cons) {
-            // DTS2014103006593 start
+
             setErrorMsg(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_CONSTRAINT_MSG));
-            // DTS2014103006593 end
+
             return;
         }
 
@@ -1433,9 +1436,9 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
 
         this.newTable.addConstraint(cons);
         constraintUI.setParentTable(null);
-        // DTS2014103006724 start
+
         constraintUI.clearConstraintData();
-        // DTS2014103006724 end
+
     }
 
     /**
@@ -1448,14 +1451,13 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
             constraintUI.setConstraintData(newTable.getConstraints().getItem(selectedindex));
             removeConstraint();
         } else {
-            // DTS2016012702337 Fix starts
+
             setErrorMsg(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_CONST_EDIT_MSG));
-            // DTS2016012702337 Fix ends
+
         }
         isConstraintsUpdate = true;
     }
 
-    // DTS2014103006724 end
 
     /**
      * Removes the constraint.
@@ -1497,9 +1499,9 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         }
 
         if (ColumnUtil.isColumnNameValid(newTempColumn)) {
-            // start DTS2014103006593
+
             setErrorMsg(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_VALID_NAME));
-            // DTS2014103006593 end
+
             return;
         }
         if (ColumnUtil.isDataTypeValid(newTempColumn)) {
@@ -1509,9 +1511,9 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         if (isClmUpdate) {
             enableDisableItems(ADD, DELETE, true);
         }
-        // DTS2014103006724 start
+
         updateColumnByIndex(newTempColumn);
-        // DTS2014103006724 end
+
         addColumnInAllColumnTables(newTempColumn.columnDetails(3, true));
         columnUI.clearColumnDetails();
         isClmUpdate = false;
@@ -1782,12 +1784,6 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      * Title: class
      * 
      * Description: The Class BtnBackSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class BtnBackSelectionAdapter extends SelectionAdapter {
         @Override
@@ -1800,9 +1796,9 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
                     indexUi.refreshColumns();
                 }
                 tabFolder.setSelection(curTab - 1);
-                // DTS2014102906540 start
+
                 setFocusOnText(curTab - 1);
-                // DTS2014102906540 end
+
             }
 
         }
@@ -1812,13 +1808,7 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      * 
      * Title: class
      * 
-     * Description: The Class BtnNxtSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Description: The Class BtnNxtSelectionAdapter
      */
     private class BtnNxtSelectionAdapter extends SelectionAdapter {
         @Override
@@ -1848,9 +1838,7 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
                 }
                 tabFolder.setSelection(curTab + 1);
 
-                // DTS2014102906540 start
                 setFocusOnText(curTab + 1);
-                // DTS2014102906540 end
             }
         }
     }
@@ -1860,20 +1848,12 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      * Title: class
      * 
      * Description: The Class TabFolderSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class TabFolderSelectionAdapter extends SelectionAdapter {
         @Override
         public void widgetSelected(SelectionEvent event) {
             int curTab = tabFolder.getSelectionIndex();
-            // DTS2014102906540 start
             setFocusOnText(curTab);
-            // DTS2014102906540 end
 
             if (CREATE_TABLE_GENERAL_INFO != curTab) {
                 try {
@@ -1976,12 +1956,6 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      * Title: class
      * 
      * Description: The Class FinishBtnSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class FinishBtnSelectionAdapter extends SelectionAdapter {
         @Override
@@ -2104,13 +2078,11 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      * @param e1 the e 1
      */
     protected void hanldeCreateTableError(MPPDBIDEException e1) {
-        // start DTS2014103006491
         String msg = e1.getServerMessage();
         msg = getDBErrorMessage(e1, msg);
 
         msg = getPosition(msg);
 
-        // DTS2014103006491 end
         setErrorMsg(msg);
         ObjectBrowserStatusBarProvider.getStatusBar().displayMessage(Message.getError(MessageConfigLoader
                 .getProperty(IMessagesConstants.CREATE_TABLE_CREATE_ERROR, newTable.getBottombarDisplayName())));
@@ -2621,13 +2593,12 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      */
     protected void addColumnInAllColumnTables(String[] rowdata) {
         TableItem tableItem = null;
-        // DTS2014103006724 start
+
         tableItem = createTableItemForColumns();
 
         tableItem.setText(rowdata);
 
         addColumnsInConstraintsUI(rowdata);
-        // DTS2014103006724 end
 
         resetIndexExpression();
     }
@@ -2776,9 +2747,8 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         tblclmnIndexName.setData(MPPDBIDEConstants.SWTBOT_KEY,
                 "ID_TBL_COL_CREATE_TBL_TBL_INDEX_COL_INDEXDEFINITION_001");
         tblclmnIndexName.setWidth(450);
-        // DTS2014102908367 start
+
         tblclmnIndexName.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_INDEX_DEF));
-        // DTS2014102908367 end
 
         Composite indexDefButtonsComposite = getIndexDefBtnComp(indexDefinitionComposite);
 
@@ -2964,7 +2934,7 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         Font font = resMangr.createFont(FontDescriptor.createFrom("Courier New", 10, SWT.NORMAL));
 
         textSqlPreview.getTextWidget().setFont(font);
-        // DTS2016050415166 start
+
         Menu createSeqMenu = new Menu(getControl());
         textSqlPreview.getTextWidget().setMenu(createSeqMenu);
         addCopyMenuItem(createSeqMenu);
@@ -3020,9 +2990,9 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      */
     protected void addCopyMenuItem(Menu menu) {
         menuCopy = new MenuItem(menu, SWT.PUSH);
-        // DTS2016011900019 Starts
+
         menuCopy.setText(MessageConfigLoader.getProperty(IMessagesConstants.STATUS_MSG_PLVIEWER_OPTION_COPY));
-        // DTS2016011900019 Ends
+
         menuCopy.addSelectionListener(new PLEditorCopySelectionListener());
         menuCopy.setImage(IconUtility.getIconImage(IiconPath.ICO_COPY, this.getClass()));
     }
@@ -3034,9 +3004,9 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      */
     protected void addSelectAllMenuItem(Menu menu) {
         menuSelectAll = new MenuItem(menu, SWT.PUSH);
-        // DTS2016011900019 Starts
+
         menuSelectAll.setText(MessageConfigLoader.getProperty(IMessagesConstants.STATUS_MSG_PLVIEWER_OPTION_SELECTALL));
-        // DTS2016011900019 Ends
+
         menuSelectAll.addSelectionListener(new PLEditorSelectAllListener());
     }
 
@@ -3507,13 +3477,7 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      * 
      * Title: class
      * 
-     * : The Class TextLengthVerifyListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Description: The Class TextLengthVerifyListner.
      */
     private static final class TextLengthVerifyListner implements VerifyListener {
         @Override
@@ -3528,6 +3492,5 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
             }
         }
     }
-    // DTS2018091600275 end
 
 }

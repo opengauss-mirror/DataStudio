@@ -26,6 +26,8 @@ import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 
 /**
  * Title: TriggerMetaData for use
+ *
+ * @since 3.0.0
  */
 public class TriggerMetaData extends BatchDropServerObject implements GaussOLAPDBMSObject {
     private boolean enable = true;

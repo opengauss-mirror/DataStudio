@@ -23,9 +23,8 @@ import com.huawei.mppdbide.utils.security.SecureUtil;
 
 /**
  * Title: ServerUtil
- * 
- * Description:
- * 
+ *
+ * @since 3.0.0
  */
 public class ServerUtil {
     /**
