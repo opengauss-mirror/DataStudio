@@ -2026,7 +2026,7 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
      * @throws DatabaseOperationException the database operation exception
      */
     protected void validateTableFillFactor() throws DatabaseOperationException {
-        if (null == spinnerFillFactor) {
+        if (spinnerFillFactor == null) {
             return;
         }
 
@@ -2845,7 +2845,7 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         public void widgetSelected(SelectionEvent event) {
             setErrorMsg("");
             int idx = tblIndexes.getSelectionIndex();
-            if (-1 == idx) {
+            if (idx == -1) {
                 setErrorMsg(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_CLM_DELETE));
                 return;
             }
@@ -3278,7 +3278,6 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
             Matcher matcher = pattern.matcher(tableTblConstraints.getItem(tableConstraintSize - (index + 1)).getText());
 
             removeConstraintOnMatch(tableConstraintSize, sizeOfConstraintMetaDataList, index, matcher);
-
         }
     }
 
@@ -3293,10 +3292,8 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
     private void removeConstraintOnMatch(int tableConstraintSize, int sizeOfConstraintMetaDataList, int index,
             Matcher matcher) {
         if (matcher.find()) {
-
             tableTblConstraints.remove(tableConstraintSize - (index + 1));
             newTable.getConstraintMetaDataList().remove(sizeOfConstraintMetaDataList - (index + 1));
-
         }
     }
 
@@ -3308,7 +3305,6 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         if (getTable.getItemCount() > 0) {
             removeCOnstraintClmFromTable(getTable);
         }
-
     }
 
     /**
@@ -3366,7 +3362,6 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
         }
         refreshObjInObjectBrowser();
         disposeCurrShell();
-
     }
 
     /**
@@ -3402,7 +3397,6 @@ public class CreateTable extends Dialog implements IDialogWorkerInteraction {
     @Override
     public void onCriticalExceptionUIAction(DatabaseCriticalException dbCrticalException) {
         hanldeCreateTableError(dbCrticalException);
-
     }
 
     /**

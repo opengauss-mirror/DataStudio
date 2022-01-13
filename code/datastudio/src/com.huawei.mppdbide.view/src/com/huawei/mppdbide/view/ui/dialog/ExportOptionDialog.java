@@ -314,7 +314,7 @@ public class ExportOptionDialog extends ImportExportDialog {
      * @return true, if is ok button to enabled
      */
     protected boolean isOkButtonToEnabled() {
-        if (null != agreementBtn) {
+        if (agreementBtn != null) {
             return !outputFolder.getText().isEmpty() && agreementBtn.getSelection() && checkSelectedColumns();
         } else {
             return !outputFolder.getText().isEmpty() && checkSelectedColumns();
@@ -390,7 +390,7 @@ public class ExportOptionDialog extends ImportExportDialog {
             core.setFilePath(outputPath);
         } catch (DatabaseOperationException databaseOperationException) {
             String message = databaseOperationException.getServerMessage();
-            if (null == message) {
+            if (message == null) {
                 message = databaseOperationException.getDBErrorMessage();
             } else if (databaseOperationException.getCause() instanceof IOException) {
 
@@ -447,7 +447,7 @@ public class ExportOptionDialog extends ImportExportDialog {
      */
     @Override
     protected void handleShellCloseEvent() {
-        if (null != confirmationBtn && !UIDisplayFactoryProvider.getUIDisplayStateIf().isDisclaimerReq()) {
+        if (confirmationBtn != null && !UIDisplayFactoryProvider.getUIDisplayStateIf().isDisclaimerReq()) {
             UIDisplayFactoryProvider.getUIDisplayStateIf().setDisclaimerReq(true);
         }
         super.handleShellCloseEvent();
@@ -457,7 +457,7 @@ public class ExportOptionDialog extends ImportExportDialog {
      * Cancel pressed.
      */
     protected void cancelPressed() {
-        if (null != confirmationBtn && !UIDisplayFactoryProvider.getUIDisplayStateIf().isDisclaimerReq()) {
+        if (confirmationBtn != null && !UIDisplayFactoryProvider.getUIDisplayStateIf().isDisclaimerReq()) {
             UIDisplayFactoryProvider.getUIDisplayStateIf().setDisclaimerReq(true);
         }
         super.cancelPressed();

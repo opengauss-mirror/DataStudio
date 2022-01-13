@@ -39,6 +39,7 @@ public interface ISensitiveExceptionsFilter {
      * useless for debugging
      */
     /**
+     * isSensitiveException
      *
      * @param throwable the throwable
      * @return is sensitive exception or not

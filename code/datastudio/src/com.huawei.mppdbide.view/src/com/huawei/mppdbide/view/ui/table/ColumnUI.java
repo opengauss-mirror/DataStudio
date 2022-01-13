@@ -757,10 +757,10 @@ public class ColumnUI {
         }
 
         if (!isUpdate) {
-            if (null != tableColList) {
+            if (tableColList != null) {
                 numRows = tableColList.getItemCount();
                 TableItem tableItem = null;
-                while (0 != numRows) {
+                while (numRows != 0) {
                     tableItem = tableColList.getItem(numRows - 1);
                     if (tableItem.getText(0).equals(colname) && chkColumnNameCase.getSelection()) {
                         duplicateName = true;

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
  *
  * openGauss is licensed under Mulan PSL v2.
@@ -6,7 +6,7 @@
  * You may obtain a copy of Mulan PSL v2 at:
  *
  *           http://license.coscl.org.cn/MulanPSL2
- *        
+ *
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
  * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
@@ -44,6 +44,8 @@ import com.huawei.mppdbide.view.terminal.ExecutionPlanWorker;
  * 
  * Description:The Enum PLAN. Explain plan tab, that is positioned same as
  * result tab for a SQL terminal
+ *
+ * @since 3.0.0
  */
 
 enum PLAN {

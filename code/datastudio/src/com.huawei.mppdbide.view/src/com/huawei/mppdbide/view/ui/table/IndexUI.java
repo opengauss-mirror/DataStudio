@@ -1087,12 +1087,12 @@ public class IndexUI {
 
         int fillFactorValue = Integer.parseInt(userInput);
         if (txtIndexName != null) {
-            if (null == index) {
+            if (index == null) {
                 index = new IndexMetaData(txtIndexName.getText().trim());
             } else {
                 index.setName(txtIndexName.getText().trim());
             }
-        } else if (null == index) {
+        } else if (index == null) {
             throw new DatabaseOperationException(IMessagesConstants.ERR_INDEX_NAME_EMPTY);
         }
         setIndexTableAndNamespace(fillFactorValue);

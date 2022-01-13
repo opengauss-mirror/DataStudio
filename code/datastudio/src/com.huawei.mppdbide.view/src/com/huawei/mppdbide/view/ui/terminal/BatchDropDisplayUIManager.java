@@ -506,7 +506,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
              * run
              */
             public void run() {
-                if (null != gridComponent && null != gridComponent.getToolbar()) {
+                if (gridComponent != null && gridComponent.getToolbar() != null) {
                     gridComponent.getToolbar().updateBatchDropRunsLabel(objectDropSuccessCnt, objectDropTotalCnt);
                 }
             }
@@ -524,7 +524,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
              * run
              */
             public void run() {
-                if (null != gridComponent && null != gridComponent.getToolbar()) {
+                if (gridComponent != null && gridComponent.getToolbar() != null) {
                     gridComponent.getToolbar().updateBatchDropErrorsLabel(objectDropFailureCnt);
                 }
             }
@@ -542,7 +542,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
              * run
              */
             public void run() {
-                if (null != gridComponent && null != gridComponent.getToolbar()) {
+                if (gridComponent != null && gridComponent.getToolbar() != null) {
                     gridComponent.getToolbar().updateBatchDropErrorsLabel(objectDropFailureCnt);
                 }
             }
@@ -560,7 +560,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
              * run
              */
             public void run() {
-                if (null != gridComponent && null != gridComponent.getToolbar()) {
+                if (gridComponent != null && gridComponent.getToolbar() != null) {
                     gridComponent.getToolbar().updateBatchDropRunsLabel(objectDropSuccessCnt, objectDropTotalCnt);
                 }
             }
@@ -632,7 +632,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
     }
 
     private void handleStopButtonOper() {
-        if (null == dataProvider) {
+        if (dataProvider == null) {
             return;
         }
         // Pause the worker thread
@@ -659,7 +659,7 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
      * @return the int
      */
     public int handleStopOperation() {
-        if (null == dataProvider) {
+        if (dataProvider == null) {
             return 0;
         }
         if (checkAndUpdateState(BatchDropOperState.ROLLBACK_STOP_CANCEL)) {
@@ -1130,37 +1130,37 @@ public class BatchDropDisplayUIManager extends AbstractResultDisplayUIManager im
      */
     @PreDestroy
     public void preDestroy() {
-        if (null != this.gridComponent) {
+        if (this.gridComponent != null) {
             this.gridComponent.onPreDestroy();
             this.gridComponent = null;
         }
 
-        if (null != this.eventTable) {
+        if (this.eventTable != null) {
             this.eventTable.unhookall();
             this.eventTable = null;
         }
 
-        if (null != objectsToDrop) {
+        if (objectsToDrop != null) {
             this.objectsToDrop.clear();
             this.objectsToDrop = null;
         }
 
-        if (null != this.batchDropWorker) {
+        if (this.batchDropWorker != null) {
             this.batchDropWorker.preDestroy();
             this.batchDropWorker = null;
         }
 
-        if (null != this.consoleMessageWindowDummy) {
+        if (this.consoleMessageWindowDummy != null) {
             this.consoleMessageWindowDummy.preDestroy();
             this.consoleMessageWindowDummy = null;
         }
 
-        if (null != this.objectsToDropParent) {
+        if (this.objectsToDropParent != null) {
             this.objectsToDropParent.clear();
             this.objectsToDropParent = null;
         }
 
-        if (null != this.userRoleToDropParent) {
+        if (this.userRoleToDropParent != null) {
             this.userRoleToDropParent.clear();
             this.userRoleToDropParent = null;
         }

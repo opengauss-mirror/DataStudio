@@ -459,7 +459,7 @@ public class SqlHistory extends Dialog {
                 t.dispose();
             }
 
-            if (null != terminal) {
+            if (terminal != null) {
                 terminal.getTerminalCore().setSelectedQuery(sb.toString());
                 terminal.resetSQLTerminalButton();
                 terminal.resetAutoCommitButton();
@@ -577,7 +577,7 @@ public class SqlHistory extends Dialog {
 
     private void deleteSQLHistory(int type, TableItem[] items) {
         this.manager = SQLHistoryFactory.getInstance();
-        if (0 == type) {
+        if (type == 0) {
             List<SQLHistoryItem> historyItems = new LinkedList<SQLHistoryItem>();
             int counter = 0;
             for (TableItem item : items) {
@@ -587,7 +587,7 @@ public class SqlHistory extends Dialog {
                     counter++;
                 }
             }
-            if (0 != counter) {
+            if (counter != 0) {
                 manager.deleteHistoryItems(historyItems);
             }
             sourceViewer.getDocument().set("");

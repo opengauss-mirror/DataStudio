@@ -573,12 +573,12 @@ public class ColumnComponent extends Dialog {
      * @return true, if is ok button to enabled
      */
     private boolean isOkButtonToEnabledForExport() {
-        if (null != agreementBtn && !agreementBtn.isDisposed()) {
-            return agreementBtn.getSelection() && null != outputFolder && !outputFolder.isDisposed()
+        if (agreementBtn != null && !agreementBtn.isDisposed()) {
+            return agreementBtn.getSelection() && outputFolder != null && !outputFolder.isDisposed()
                     && !outputFolder.getText().isEmpty() && checkSelectedColumns();
 
         } else {
-            return null != outputFolder && !outputFolder.isDisposed() && !outputFolder.getText().isEmpty()
+            return outputFolder != null && !outputFolder.isDisposed() && !outputFolder.getText().isEmpty()
                     && checkSelectedColumns();
         }
     }

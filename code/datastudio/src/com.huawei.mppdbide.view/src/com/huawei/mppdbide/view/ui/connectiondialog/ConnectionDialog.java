@@ -532,7 +532,7 @@ public class ConnectionDialog extends Dialog {
                 String[] item = (String[]) object;
                 IServerConnectionInfo info = profileManager.getProfile(item[0]);
                 String conectionName = "";
-                if (null != info) {
+                if (info != null) {
                     conectionName = info.getConectionName();
                 }
                 Server server = DBConnProfCache.getInstance().getServerByName(conectionName);
@@ -551,7 +551,7 @@ public class ConnectionDialog extends Dialog {
                     viewer.remove(object);
                 }
                 try {
-                    if (null != info) {
+                    if (info != null) {
                         profileManager.deleteProfile(info);
                     }
                 } catch (DatabaseOperationException e1) {

@@ -216,7 +216,7 @@ public abstract class UserComboDialog extends AbstractDialog {
     public void setOkButtonEnabled(boolean isEnabled) {
         this.isOkButtonEnable = isEnabled;
 
-        if (null != okButton) {
+        if (okButton != null) {
             if (!okButton.isDisposed()) {
                 okButton.setEnabled(isEnabled);
             }
