@@ -12,6 +12,7 @@ import com.huawei.mppdbide.bl.serverdatacache.OBJECTTYPE;
 import com.huawei.mppdbide.bl.serverdatacache.SequenceMetadata;
 import com.huawei.mppdbide.bl.serverdatacache.SynonymMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.groups.DebugObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ForeignTableGroup;
@@ -19,6 +20,7 @@ import com.huawei.mppdbide.bl.serverdatacache.groups.OLAPObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SequenceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SynonymObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TableObjectGroup;
+import com.huawei.mppdbide.bl.serverdatacache.groups.TriggerObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ViewObjectGroup;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 
@@ -43,6 +45,7 @@ public class SearchNamespace extends Namespace {
     private ForeignTableGroup searchForeigntables;
     private SequenceObjectGroup searchsequence;
     private SynonymObjectGroup searchSynonym;
+    private TriggerObjectGroup searchTrigger;
 
     /**
      * Instantiates a new search namespace.
@@ -60,7 +63,7 @@ public class SearchNamespace extends Namespace {
         searchForeigntables = new ForeignTableGroup(OBJECTTYPE.FOREIGN_TABLE_GROUP, this);
         searchsequence = new SequenceObjectGroup(OBJECTTYPE.SEQUENCE_GROUP, this);
         searchSynonym = new SynonymObjectGroup(OBJECTTYPE.SYNONYM_GROUP, this);
-
+        searchTrigger = new TriggerObjectGroup(this);
     }
 
     @Override
@@ -97,6 +100,11 @@ public class SearchNamespace extends Namespace {
     public SynonymObjectGroup getSynonymGroup() {
         return this.searchSynonym;
     }
+    
+    @Override
+    public TriggerObjectGroup getTriggerObjectGroup() {
+    	return this.searchTrigger;
+	}
 
     @Override
     public ForeignTableGroup getForeignTablesGroup() {
@@ -137,6 +145,9 @@ public class SearchNamespace extends Namespace {
         }
         if (searchSynonym.getSize() > 0) {
             objectGroup.add(this.getSynonymGroup());
+        }
+        if (searchTrigger.getSize() > 0) {
+            objectGroup.add(this.getTriggerObjectGroup());
         }
 
         return objectGroup.toArray();
@@ -218,6 +229,16 @@ public class SearchNamespace extends Namespace {
     public void addToSynonymGroup(SynonymMetaData syn) {
         getSynonymGroup().addToGroup(syn);
         getDatabase().getSearchPoolManager().addsynonymToSearchPool(syn);
+    }
+
+    /**
+     * Adds the to trigger group.
+     *
+     * @param triggerMetaData the trigger metadata
+     */
+    public void addToTrigerGroup(TriggerMetaData triggerMetaData) {
+        getTriggerObjectGroup().addToGroup(triggerMetaData);
+        getDatabase().getSearchPoolManager().addTriggerToSearchPool(triggerMetaData);
     }
 
     /**
