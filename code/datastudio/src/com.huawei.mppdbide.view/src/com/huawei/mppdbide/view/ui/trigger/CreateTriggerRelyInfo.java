@@ -47,6 +47,13 @@ public interface CreateTriggerRelyInfo {
      * @return List<String> the table name list
      */
     List<String> getTableNames();
+    
+    /**
+     * description: get view names
+     *
+     * @return List<String> the view name list
+     */
+    List<String> getViewNames();
 
     /**
      * description: get function names
