@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /*************************************************************************
 TITLE - EXPORT QUERY RESULT
 DESCRIPTION - THIS PROGRAM COVERS THE BELOW TEST SCRIPTS
@@ -68,8 +83,6 @@ public class AR_Tools_IDE_040_003_EXP_CSV {
 				 *************************************************************************/
 				if(sTestCaseID.equals("SDV_FUNVAL_PLIDE_RSLTWDW_EXPORT_001"))
 				{
-					/*BaseActions.MouseClick(ConsoleResultElements.wConsoleResult,"",ConsoleResultElements.sMouseClick,
-							ConsoleResultElements.sMouseButton,ConsoleResultElements.iClick,ConsoleResultElements.iConsolexcord,ConsoleResultElements.iConsoleycord);*/
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
 					QueryResult.CurrentExport();
 					File file = new File(GlobalConstants.sCsvExportPath+"ExportResult.csv");
@@ -122,39 +135,6 @@ public class AR_Tools_IDE_040_003_EXP_CSV {
 					UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
 					
-					
-				/*	
-					BaseActions.MouseClick(ConsoleResultElements.wConsoleResult,"",ConsoleResultElements.sMouseClick,
-							ConsoleResultElements.sMouseButton,ConsoleResultElements.iClick,ConsoleResultElements.iConsolexcord,ConsoleResultElements.iConsoleycord);
-					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
-					QueryResult.CurrentExport();
-					File file = new File(GlobalConstants.sCsvExportPath+"EmptyTableExportResult.csv");
-					if(file.exists())
-						file.delete();
-					Thread.sleep(GlobalConstants.MedWait);
-					QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"EmptyTableExportResult.csv");
-					BaseActions.Winwait("Data Exported Successfully");
-					Thread.sleep(GlobalConstants.MinWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
-					if(file.exists())
-					{
-						int RecordCount = QueryResult.RecordCount(GlobalConstants.sCsvExportPath+"EmptyTableExportResult.csv")-1;
-						if(RecordCount == 0)
-							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						else
-						{
-							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
-							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Exported files have either no header or more data than header for a query with no result. Please refer screenshot "+sTestCaseID+".jpg");
-							UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						}
-					}
-					else
-					{
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Exported file is not saved in the desired location. Please refer screenshot "+sTestCaseID+".jpg");
-						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-					}*/
 				}
 
 
@@ -164,8 +144,6 @@ public class AR_Tools_IDE_040_003_EXP_CSV {
 				 *************************************************************************/
 				if(sTestCaseID.equals("SDV_FUNVAL_PLIDE_RSLTWDW_EXPORT_003"))
 				{
-					/*BaseActions.MouseClick(ConsoleResultElements.wConsoleResult,"",ConsoleResultElements.sMouseClick,
-							ConsoleResultElements.sMouseButton,ConsoleResultElements.iClick,ConsoleResultElements.iConsolexcord,ConsoleResultElements.iConsoleycord);*/
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
 					QueryResult.CurrentExport();
 					File file = new File(GlobalConstants.sCsvExportPath+"ExportResult1.csv");
@@ -203,9 +181,6 @@ public class AR_Tools_IDE_040_003_EXP_CSV {
 				 *************************************************************************/
 				if(sTestCaseID.equals("SDV_FUNERR_PLIDE_RSLTWDW_EXPORT_013"))
 				{
-
-					/*BaseActions.MouseClick(ConsoleResultElements.wConsoleResult,"",ConsoleResultElements.sMouseClick,
-							ConsoleResultElements.sMouseButton,ConsoleResultElements.iClick,ConsoleResultElements.iConsolexcord,ConsoleResultElements.iConsoleycord);*/
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
 					QueryResult.CurrentExport();
 					Thread.sleep(GlobalConstants.MedWait);
@@ -232,9 +207,6 @@ public class AR_Tools_IDE_040_003_EXP_CSV {
 				 *************************************************************************/
 				if(sTestCaseID.equals("SDV_FUNERR_PLIDE_RSLTWDW_EXPORT_014"))
 				{
-
-					/*BaseActions.MouseClick(ConsoleResultElements.wConsoleResult,"",ConsoleResultElements.sMouseClick,
-							ConsoleResultElements.sMouseButton,ConsoleResultElements.iClick,ConsoleResultElements.iConsolexcord,ConsoleResultElements.iConsoleycord);*/
 					QueryEditor.SingleQueryExe(sInputQuery,sQueryType);
 					QueryResult.CurrentExport();
 					Thread.sleep(GlobalConstants.MedWait);
@@ -294,8 +266,6 @@ public class AR_Tools_IDE_040_003_EXP_CSV {
 			if(!sStatus.isEmpty())
 				UtilityFunctions.WriteToText(sTextResultFile, sFinalStatus);
 		}
-		//Save the Excel result to HTML
-		//UtilityFunctions.SaveResult(ResultExcel,"Export_CSV");
 	}//end of main
 }//end of class
 

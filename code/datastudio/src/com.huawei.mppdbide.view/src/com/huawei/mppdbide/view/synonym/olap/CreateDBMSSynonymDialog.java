@@ -1,5 +1,16 @@
 /*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020. All rights reserved.
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.synonym.olap;
@@ -79,12 +90,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: Class
  * 
  * Description: The Class CreateDBMSSynonymDialog.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020.
  *
- * @author c00550043
- * @version
- * @since Mar7, 2020
+ * @since 3.0.0
  */
 public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInteraction {
 
@@ -276,10 +283,9 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: addTabFolder
      * @Description: add tab folder
+     *
      * @param composite the composite
      *
      */
@@ -291,12 +297,10 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: gWX7
-     * @Date: Mar 7, 2020
      * @Title: addMainCompositeGDataProperties
      * @Description: add main composite grid data properties
-     * @param mainCompositeGData the grid data
      *
+     * @param mainCompositeGData the grid data
      */
     private void addMainCompositeGDataProperties(GridData mainCompositeGData) {
         mainCompositeGData.horizontalAlignment = SWT.FILL;
@@ -312,12 +316,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
      * Title: Class
      * 
      * Description: The class addFolderSelectionListener
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020.
-     *
-     * @author c00550043
-     * @version
-     * @since Mar 7, 2020
      */
     private class AddFolderSelectionListener extends SelectionAdapter {
         @Override
@@ -330,10 +328,9 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Nov 6, 2020
      * @Title: createGeneralInfoGUI
      * @Description: Create the genaral info gui.
+     *
      * @throws MPPDBIDEException the MPPDBIDE exception
      *
      */
@@ -363,12 +360,10 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Nov 6, 2020
      * @Title: addSynonymName
      * @Description: add the synonym name ui
-     * @param composite the composite
      *
+     * @param composite the composite
      */
     private void addSynonymNameUI(Composite composite) {
         Label synonymNameLabel = new Label(composite, SWT.NONE);
@@ -386,12 +381,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
      * Title: Class
      * 
      * Description: The Class SynonymNameLengthVerifier
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020.
-     *
-     * @author c00550043
-     * @version
-     * @since Mar 7, 2020
      */
     private static class SynonymNameLengthVerifier implements VerifyListener {
         private static final int MAX_FILE_LENGTH = 65;
@@ -414,12 +403,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
      * Title: Class
      * 
      * Description: the Class SynonymNameKeyListener
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2020.
-     *
-     * @author c00550043
-     * @version
-     * @since Mar 7, 2020
      */
     private class SynonymNameKeyListener implements KeyListener {
         @Override
@@ -439,12 +422,10 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Nov 6, 2020
      * @Title: addObjectOwnerSelectorUi
      * @Description: Add the object owner ui.
-     * @param composite the composite
      *
+     * @param composite the composite
      */
     private void addObjectOwnerSelectorUI(Composite composite) {
         Label objectOwnerLabel = new Label(composite, SWT.NONE);
@@ -457,12 +438,10 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 9, 2020
      * @Title: addObjectTypeSelectorUi
      * @Description: Add the object type ui.
-     * @param composite the composite
      *
+     * @param composite the composite
      */
     private void addObjectTypeSelectorUI(Composite composite) {
         Label objectTypeLabel = new Label(composite, SWT.NONE);
@@ -475,12 +454,10 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Nov 6, 2020
      * @Title: addObjectNameSelectorUi
      * @Description: Add the object name ui.
-     * @param composite the composite
      *
+     * @param composite the composite
      */
     private void addObjectNameSelectorUI(Composite composite) {
         Label objectNameLabel = new Label(composite, SWT.NONE);
@@ -515,8 +492,7 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
      * Adds the if not exist UI.
      *
      * @param composite the composite
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
+     *
      * @Title: addIfNotExistUI
      * @Description: add if not exist ui
      */
@@ -528,12 +504,10 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 6, 2020
      * @Title: getObjectOwnerSelector
      * @Description: get the object owner selector
-     * @param objectOwnerSelector the combo
      *
+     * @param objectOwnerSelector the combo
      */
     private void getObjectOwnerSelector(final Combo objectOwnerSelector) {
         ArrayList<Namespace> namespaceList = synonymObjectGroup.getDatabase().getAllNameSpaces();
@@ -563,8 +537,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 9, 2020
      * @Title: getObjectTypeSelector
      * @Description: get the object owner selector
      * @param objectTypeSelector the combo
@@ -604,8 +576,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: validateObjectType
      * @Description: When the object type is switched, verify the objectType.
      *
@@ -628,8 +598,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: validateObjectName
      * @Description: When the object owner is switched, verify the objectName.
      *
@@ -658,8 +626,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: getObjectNameList
      * @Description: get object name List
      * @return the object name list
@@ -682,8 +648,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: getObjectTypeList
      * @Description: get object type List
      * @return the object type list
@@ -709,8 +673,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 9,2020
      * @Title: getObjectTypeSelector
      * @Description: get object type selector
      * @param objectNameSelector the object type selector
@@ -728,8 +690,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: addSqlPreviewInfoGUI
      * @Description: add the sql preview info ui
      *
@@ -807,8 +767,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: setSynonymInfo
      * @Description: set the synonym info
      *
@@ -823,8 +781,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: addErrorMsgUI
      * @Description: add error msg ui
      * @param composite the composite
@@ -840,8 +796,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: setErrorMsg
      * @Description: set the error msg
      * @param errMsg the error msg
@@ -858,8 +812,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
 
     /**
      * 
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: isSynonymNameSelectorEmpty
      * @Description: Checks if is synonym name empty.
      * @return true, if the synonym name is empty
@@ -874,8 +826,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: isSynonymNamelengthValid
      * @Description: Checks if is synonym name length valid.
      * @return true, if is the synonym name length valid
@@ -891,8 +841,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: isObjectOwnerSelectorEmpty
      * @Description: Checks if is object owner empty.
      * @return true, if the object owner is empty
@@ -907,8 +855,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: isObjectNameSelectorEmpty
      * @Description: Checks if is object name empty.
      * @return true, if the object name is empty
@@ -923,8 +869,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 9, 2020
      * @Title: isObjectTypeSelectorEmpty
      * @Description: Checks if is object type empty.
      * @return true, if the object type is empty
@@ -939,8 +883,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: validateTextInputs
      * @Description: validate the input text
      * @return true, if successful
@@ -1067,8 +1009,6 @@ public class CreateDBMSSynonymDialog extends Dialog implements IDialogWorkerInte
     }
 
     /**
-     * @Author: c00550043
-     * @Date: Mar 7, 2020
      * @Title: hanldeCreateSynonymError
      * @Description: hanlde create synonym error
      * @param mppdbIdeException the mppdbide exception

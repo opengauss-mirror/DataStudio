@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.presentation.objectproperties;
@@ -35,12 +46,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * Title: class
  * 
  * Description: The Class PropertiesTableImpl.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class PropertiesTableImpl implements IServerObjectProperties {
     private static final String TABLE_DESC = "tableDesc";
@@ -168,7 +175,6 @@ public class PropertiesTableImpl implements IServerObjectProperties {
         props.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.TABLE_PROPERTIES_TABLE_NAME),
                 tableName).getProp());
 
-        // DTS2014110708770 start
         String tblSpcName = rs.getString("spcname");
         if ("DEFAULT".equals(tblSpcName)) {
             tblSpcName = defaultTableSpaceName;
@@ -176,7 +182,6 @@ public class PropertiesTableImpl implements IServerObjectProperties {
         props.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.TABLESPACE_MSG), tblSpcName)
                 .getProp());
 
-        // DTS2014110708770 end
         props.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.IS_TEMP),
                 table.isTempTable() ? "true" : "false").getProp());
         String tabletype = rs.getString("relpersistence");
@@ -488,12 +493,6 @@ public class PropertiesTableImpl implements IServerObjectProperties {
      * Title: enum
      * 
      * Description: The Enum TableType.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private enum TableType {
 

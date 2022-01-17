@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /*************************************************************************
 TITLE - Auto Suggest Feature
 DESCRIPTION - THIS PROGRAM COVERS THE BELOW TEST SCRIPTS
@@ -416,7 +431,6 @@ public class DS_002_AUTO_SUGGEST {
 				{
 					String sDebugPassword=UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, "IDELogin", 1, 5);
 					DebugOperations.DebugObjectBrowser_Open();
-					//DebugOperations.SetBreakPoint(10);
 					DebugOperations.DebugSession();
 					String sDebugConnection = DebugOperations.DebugConnection(sDebugPassword);
 					MultipleTerminal.SelectTerminal(2);
@@ -429,7 +443,6 @@ public class DS_002_AUTO_SUGGEST {
 						UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
 						QueryEditor.AutoSuggestInvoke();
 						sContents = QueryEditor.CopyEditor();
-						//DebugOperations.ClickContinue();
 						Login.DisplayDebugWindows();
 						if(sContents.contains("automationschema123.smoke1()"))
 						{
@@ -466,7 +479,6 @@ public class DS_002_AUTO_SUGGEST {
 					QueryEditor.SelectDBConnection();
 					MultipleTerminal.OpenNewTerminal();
 					MultipleTerminal.TerminalSetText(2, "autoschema123.");
-					//QueryEditor.SetQuery("autoschema123.");
 					QueryEditor.AutoSuggestInvoke();
 					sContents = QueryEditor.AutoSuggestCopy();
 					ObjectBrowserPane.disconnectDB(2);
@@ -517,7 +529,5 @@ public class DS_002_AUTO_SUGGEST {
 			if(!sStatus.isEmpty())
 				UtilityFunctions.WriteToText(sTextResultFile, sFinalStatus);
 		}
-		//Save the Excel result to HTML
-		//UtilityFunctions.SaveResult(ResultExcel,"Execution_Status");
 	}//end of main
 }//end of class

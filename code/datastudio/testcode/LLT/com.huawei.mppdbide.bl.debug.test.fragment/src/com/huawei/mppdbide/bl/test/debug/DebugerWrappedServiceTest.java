@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 
@@ -33,12 +44,8 @@ import com.huawei.mppdbide.debuger.vo.VersionVo;
 
 /**
  * Title: DebugerWrappedServiceTest for use
- * Description: 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author z00588921
- * @version [DataStudio for openGauss 2020-12-16]
- * @since 2020-12-16
+ * @since 3.0.0
  */
 public class DebugerWrappedServiceTest extends DebugerJdbcTestCaseBase {
     protected WrappedDebugService wrappedDebugService;
@@ -64,7 +71,6 @@ public class DebugerWrappedServiceTest extends DebugerJdbcTestCaseBase {
     
     @Override
     protected void startDebugService() throws SQLException, InterruptedException {
-//        super.startDebugService();
         serviceFactory = createServiceFactory();
         queryService = serviceFactory.getQueryService();
         functionVo = queryService.queryFunction(funcDescAddTest.proname);
@@ -97,13 +103,13 @@ public class DebugerWrappedServiceTest extends DebugerJdbcTestCaseBase {
             stackLockField.set(state, false);
             state.setState(newState);
         } catch (NoSuchFieldException | SecurityException e) {
-            // TODO Auto-generated catch block
+            // Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
+            // Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
+            // Auto-generated catch block
             e.printStackTrace();
         }
     }

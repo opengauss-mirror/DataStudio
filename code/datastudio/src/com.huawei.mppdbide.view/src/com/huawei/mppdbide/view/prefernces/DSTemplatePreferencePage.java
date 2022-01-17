@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.prefernces;
@@ -123,12 +134,8 @@ import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
  * Title: class
  * 
  * Description: The Class DSTemplatePreferencePage.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class DSTemplatePreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -165,12 +172,6 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
      * Title: class
      * 
      * Description: The Class TemplateDialog.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     public static class TemplateDialog extends StatusDialog {
 
@@ -179,12 +180,6 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
          * Title: class
          * 
          * Description: The Class TextViewerAction.
-         * 
-         * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-         *
-         * @author pWX553609
-         * @version [DataStudio 6.5.1, 17 May, 2019]
-         * @since 17 May, 2019
          */
         private static class TextViewerAction extends Action implements IUpdate {
 
@@ -886,12 +881,6 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
      * Title: class
      * 
      * Description: The Class TemplateLabelProvider.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private static class TemplateLabelProvider extends LabelProvider implements ITableLabelProvider {
 
@@ -1844,12 +1833,6 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
      * Title: class
      * 
      * Description: The Class TemplateViewerComparator.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private static final class TemplateViewerComparator extends ViewerComparator {
         private int sortColumn;
@@ -1915,12 +1898,6 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
      * Title: class
      * 
      * Description: The Class TemplateColumnSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class TemplateColumnSelectionAdapter extends SelectionAdapter {
         private final TableColumn tableColumn;

@@ -1,9 +1,21 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /*************************************************************************
 TITLE - PLAN AND COST
 DESCRIPTION - FUNCTIONS WITH RESPECT PLAN AND COST WINDOW
-AUTHORS - AWX321822
-CREATED DATE - 22-NOV-2015
-LAST UPDATED DATE - 14-DEC-2015
 *************************************************************************/
 
 package script_library;
@@ -93,16 +105,6 @@ public class PlanCost {
 		String sFlag = null;
 		String sConsoleOutput;
 		QueryResult.ReadConsoleOutput("TERMINAL");
-		/*//BaseActions.Click(ConsoleResultElements.wConsoleResult, "", ConsoleResultElements.sConsolePane);
-		Thread.sleep(GlobalConstants.MinWait);
-		r.keyPress(KeyEvent.VK_CONTROL);
-		r.keyPress(KeyEvent.VK_A);
-		r.keyRelease(KeyEvent.VK_CONTROL);
-		r.keyRelease(KeyEvent.VK_A);
-		r.keyPress(KeyEvent.VK_CONTROL);
-		r.keyPress(KeyEvent.VK_C);
-		r.keyRelease(KeyEvent.VK_CONTROL);
-		r.keyRelease(KeyEvent.VK_C);*/
 		Thread.sleep(GlobalConstants.MedWait);
 		sConsoleOutput = QueryResult.ReadConsoleOutput("TERMINAL");
 		String[] sMessages = sValidationMessage.split(",");

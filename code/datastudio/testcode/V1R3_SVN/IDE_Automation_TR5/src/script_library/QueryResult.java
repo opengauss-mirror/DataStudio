@@ -1,9 +1,21 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /*************************************************************************
 TITLE - QUERY RESULT
 DESCRIPTION - FUNCTIONS WITH RESPECT TO QUERY CONSOLE/RESULT WINDOW
-AUTHORS - AWX321824
-CREATED DATE - 16-NOV-2015
-LAST UPDATED DATE - 16-NOV-2015
 MODIFICATION HISTORY - 
 TEST CASES COVERED - NA
  *************************************************************************/
@@ -46,11 +58,6 @@ public class QueryResult {
 	{
 		AutoItX x = new AutoItX();
 		Thread.sleep(GlobalConstants.ModWait);
-		/*	UtilityFunctions.KeyPress(KeyEvent.VK_CONTROL, 1);
-		UtilityFunctions.KeyPress(KeyEvent.VK_TAB, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_CONTROL, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_TAB, 1);*/
-		//BaseActions.MouseClick(ConsoleResultElements.wConsoleResult, "", ConsoleResultElements.sMouseClick, ConsoleResultElements.sMouseButton, ConsoleResultElements.iClick, ConsoleResultElements.iResultxcord, ConsoleResultElements.iResultycord);
 		Thread.sleep(GlobalConstants.MedWait);
 		BaseActions.Focus(SaveAsElements.wResult, "", SaveAsElements.sMouseClick);
 		BaseActions.MouseClick(SaveAsElements.wResult, "", SaveAsElements.sMouseClick, SaveAsElements.sMouseButton, SaveAsElements.iClick, SaveAsElements.iCurrentResultxcord,SaveAsElements.iCurrrentResultycord );
@@ -279,7 +286,6 @@ public class QueryResult {
 
 	public static void ResultWindow() throws Exception
 	{
-		//BaseActions.MouseClick(ConsoleResultElements.wConsoleResult, "", ConsoleResultElements.sMouseClick, ConsoleResultElements.sMouseButton, ConsoleResultElements.iClick, ConsoleResultElements.iResultxcord, ConsoleResultElements.iResultycord);
 		UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_R, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
@@ -300,7 +306,6 @@ public class QueryResult {
 	public static String CopyContentFirstTime() throws Exception
 	{
 		AutoItX x = new AutoItX();
-		//BaseActions.MouseClick(SaveAsElements.wResult, "", SaveAsElements.sMouseClick, SaveAsElements.sMouseButton, SaveAsElements.iClick, SaveAsElements.iResultxcord,SaveAsElements.iResultycord );
 		UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
 		UtilityFunctions.KeyPress(KeyEvent.VK_R, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
@@ -321,8 +326,6 @@ public class QueryResult {
 		UtilityFunctions.KeyRelease(KeyEvent.VK_R, 1);
 		Thread.sleep(GlobalConstants.MinWait);
 		BaseActions.MouseClick(SaveAsElements.wResult, "", SaveAsElements.sMouseClick, SaveAsElements.sMouseButton, SaveAsElements.iClick, SaveAsElements.iResultxcord,SaveAsElements.iResultycord );
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_TAB, 2);
-	UtilityFunctions.KeyRelease(KeyEvent.VK_TAB, 2);*/
 		Thread.sleep(GlobalConstants.MinWait);
 		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);

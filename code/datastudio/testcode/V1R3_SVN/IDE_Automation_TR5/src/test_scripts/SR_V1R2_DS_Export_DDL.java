@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 
@@ -56,10 +71,6 @@ public class SR_V1R2_DS_Export_DDL {
 					ObjectBrowserPane.createSchemaObjectBrowser("TestSchema1");
 					String sPath = GlobalConstants.exportDDlPath + "TestSchema1.sql";
 					Thread.sleep(GlobalConstants.MedWait);
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);*/
 					ObjectBrowserPane.ObjectBrowserRefresh();
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 3);
@@ -87,7 +98,6 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("testschema1")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 
 					}
 
@@ -96,7 +106,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Unable to export DDL, exported file doesn't contain DDL of schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -133,14 +142,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("testschema2"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL, exported file doesn't contain DDL of schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -182,14 +189,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("createmaximumallowedschemanamechecktheschemaddlissavedinsqlform"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for maximum allowed schema name, exported file doesn't contain DDL of schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -218,14 +223,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("test schema with space,special chars **@@##^^!!"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for schema with Space, init caps and special characters, exported file doesn't contain DDL of schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -259,14 +262,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("testschemarenamed"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL, exported file doesn't contain DDL of schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -293,7 +294,6 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Export process interrupted")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 
 					else {
@@ -301,7 +301,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Export DDL works when schema is renamed and doesn't exist. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -331,7 +330,6 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Export process interrupted")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 
 					else {
@@ -339,7 +337,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Export DDL works when schema is dropped and doesn't exist. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -376,14 +373,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("commented"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for a schema with comments. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -415,7 +410,6 @@ public class SR_V1R2_DS_Export_DDL {
 							sFlag4.contains("index")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed"); 
 					}
 
 					else
@@ -423,7 +417,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for table with all possible combinations. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -452,8 +445,7 @@ public class SR_V1R2_DS_Export_DDL {
 							sFlag2.contains("INSERT INTO columnstore VALUES (3, 4);") && sFlag3.contains("INSERT INTO columnstore VALUES (7, 8);") &&
 							sFlag4.contains("INSERT INTO columnstore VALUES (9, 10);")){
 
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed"); 
+						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed"); 
 					}
 
 					else
@@ -461,7 +453,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for column store table with data. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -486,14 +477,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("compressedtable"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for compressed table, exported file doesn't contain DDL of the table. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -523,7 +512,6 @@ public class SR_V1R2_DS_Export_DDL {
 							sFlag4.contains("INSERT INTO replication VALUES (5, 6);")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed"); 
 					}
 
 					else
@@ -531,7 +519,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for Replication table with data. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -556,14 +543,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("maxcolumns"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for table with maximum columns and huge volume of data, exported file doesn't contain DDL of the table. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -590,14 +575,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("chinesedata"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for table with chinese dataa. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -627,7 +610,6 @@ public class SR_V1R2_DS_Export_DDL {
 							sFlag4.contains("INSERT INTO specialcharacters VALUES ('@@@@@@@@@@@@', '**********');")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed"); 
 					}
 
 					else
@@ -635,7 +617,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for table with special characters. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -665,8 +646,7 @@ public class SR_V1R2_DS_Export_DDL {
 							sFlag2.contains("INSERT INTO diffdatatype VALUES (3, true, 'ghi', 'c');") && sFlag3.contains("INSERT INTO diffdatatype VALUES (5, true, 'mno', 'e');") &&
 							sFlag4.contains("INSERT INTO diffdatatype VALUES (4, false, 'jkl', 'd');")){
 
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed"); 
+						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed"); 
 					}
 
 					else
@@ -674,7 +654,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for table with different data types. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -702,8 +681,7 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("maxdatalength") && 
 							sFlag2.contains("INSERT INTO maxdatalength VALUES (9223372036854775806);") && sFlag3.contains("INSERT INTO maxdatalength VALUES (9223372036854775807);")){
 
-						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed"); 
+						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed"); 
 					}
 
 					else
@@ -711,7 +689,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for table with maximum data length. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -736,7 +713,6 @@ public class SR_V1R2_DS_Export_DDL {
 						BaseActions.Click(ObjectBrowserElements.wFileOverwrite, "", ObjectBrowserElements.bFileOverwriteYes);
 						Thread.sleep(GlobalConstants.MedWait);
 						BaseActions.Click(ObjectBrowserElements.wExportFinish, "", ObjectBrowserElements.bExportFinishOK);
-						//System.out.println(sTestCaseID + "passed"); 
 					}
 
 					else {
@@ -744,7 +720,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Message is not shown for overwriting the file when exported again. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -771,14 +746,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("Table with Caps,Initchars,****"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for table with Capital letters, white spaces, special characters, etc. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -813,14 +786,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("pg_aggregate"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for system table. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -856,14 +827,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag1.contains("refreshed")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to perform other operations when export is in progress. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -876,7 +845,6 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.equals("Success")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 
 					else {
@@ -884,7 +852,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to perform other insert operation in the same table when export is in progress. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -899,7 +866,6 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.equals("Success")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 
 					else {
@@ -907,7 +873,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to perform other insert operation in other table when export is in progress. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -933,7 +898,6 @@ public class SR_V1R2_DS_Export_DDL {
 					if(!sFlag.contains("INSERT")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 
 					else {
@@ -941,7 +905,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"INSERT query present in empty table. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -967,7 +930,6 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains(".sql")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 
 					else {
@@ -975,7 +937,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Export DDL could be saved in a format other than sql. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -1000,7 +961,6 @@ public class SR_V1R2_DS_Export_DDL {
 					if(!BaseActions.WinExists(ObjectBrowserElements.wExportFinish)){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 
 					else {
@@ -1008,7 +968,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"File overwrite operation performed even after cancelling it. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -1045,7 +1004,6 @@ public class SR_V1R2_DS_Export_DDL {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Export DDL works for dropped table. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 
 					}
 
@@ -1053,7 +1011,6 @@ public class SR_V1R2_DS_Export_DDL {
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						BaseActions.Click(ObjectBrowserElements.wExportFailed, "", ObjectBrowserElements.bExportFailedOK);
-						//System.out.println(sTestCaseID + "passed");
 					}
 
 				}
@@ -1082,14 +1039,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("sameschemaview1"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view from a table in same schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1119,14 +1074,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("multipleschemaview1"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view from a table in other schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1156,14 +1109,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("sameschemaview2"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view from a view in same schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1193,14 +1144,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("multipleschemaview2"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view from a view in another schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1230,14 +1179,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("view_anotherview_anothertable"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view from a view, table in another schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1272,14 +1219,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("all_all_tables"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view from a system view. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -1307,14 +1252,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("viewwithouttable"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view created without table. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1344,14 +1287,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("columnsview"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view created with sub-set of columns. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1381,14 +1322,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("View with @special***chars!!#$&^%"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view created with special characters, init caps, white spaces,etc. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 					String dropQuery = "DROP VIEW utl_raw." + "\"View with @special***chars!!#$&^%\"";
@@ -1424,14 +1363,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("complexview"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view created with complex query. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1461,14 +1398,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("chineseview"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for view created with Chinese comments. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1510,14 +1445,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.equalsIgnoreCase("Failed")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Export DDL works although the view is not available in the schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -1554,14 +1487,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("Schema: public;"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Export DDL doesnot show the updated schema name on moving the view to another schema . Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 				}
 
@@ -1602,14 +1533,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for temp table. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 
@@ -1649,14 +1578,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.equalsIgnoreCase("Failed")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Export DDL works although the view is renamed and is not available in the schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -1695,14 +1622,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.equalsIgnoreCase("Failed")){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Export DDL works although the view is dropped and is not available in the schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 				}
@@ -1727,14 +1652,12 @@ public class SR_V1R2_DS_Export_DDL {
 					if(sFlag.contains("Successfully exported") && sFlag1.contains("CREATE OR REPLACE FUNCTION auto.auto1()"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println(sTestCaseID + "passed");
 					}
 					else
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,5,"Unable to export DDL for PLSQL Function/Procedure . Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println(sTestCaseID + "failed");
 					}
 
 

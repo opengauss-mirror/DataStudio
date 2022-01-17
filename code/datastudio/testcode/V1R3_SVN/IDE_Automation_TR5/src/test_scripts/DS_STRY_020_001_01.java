@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -100,7 +115,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -149,7 +163,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -196,7 +209,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -260,11 +272,6 @@ public class DS_STRY_020_001_01 {
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"SDV_V1R2_Expqort_001.csv");
 					Thread.sleep(GlobalConstants.MedWait);
-					/*BaseActions.Winwait("Data Exported Successfully");
-					Thread.sleep(GlobalConstants.MedWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
-					Thread.sleep(GlobalConstants.MinWait);*/
 					if(file.exists())
 					{
 						int RecordCount = QueryResult.RecordCount(GlobalConstants.sCsvExportPath+"SDV_V1R2_Expqort_001.csv");
@@ -300,11 +307,6 @@ public class DS_STRY_020_001_01 {
 					Thread.sleep(GlobalConstants.MedWait);
 					QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"SDV_V1R2_Importq_002.csv");
 					Thread.sleep(GlobalConstants.MedWait);
-					/*BaseActions.Winwait("Data Exported Successfully");
-					Thread.sleep(GlobalConstants.MedWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);*/
-					//Thread.sleep(GlobalConstants.MinWait);
 					if(file.exists())
 					{
 						int RecordCount = QueryResult.RecordCount(GlobalConstants.sCsvExportPath+"SDV_V1R2_Importq_002.csv");
@@ -384,7 +386,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -418,7 +419,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -452,7 +452,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -538,7 +537,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					if(BaseActions.WinExists("Connection Error"))
@@ -547,7 +545,6 @@ public class DS_STRY_020_001_01 {
 						Thread.sleep(GlobalConstants.MedWait);
 						UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
 						UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE,1);
-						//BaseActions.Click("Enter Password", "", "Button2");
 					}
 					else
 					{
@@ -566,7 +563,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -613,7 +609,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -711,7 +706,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -745,7 +739,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();
@@ -779,7 +772,6 @@ public class DS_STRY_020_001_01 {
 					QueryEditor.SingleQueryExe(sDatabaseQuery,sQueryType);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SelectConnection();

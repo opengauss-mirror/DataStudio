@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.presentation.synonym.olap;
@@ -14,12 +25,8 @@ import com.huawei.mppdbide.utils.MPPDBIDEConstants;
  * Title: Class
  * 
  * Description: The Class SynonymInfo.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author gWX773294
- * @version
- * @since Nov 6, 2019
+ * @since 3.0.0
  */
 public class SynonymInfo {
 
@@ -44,8 +51,6 @@ public class SynonymInfo {
      * Gets the namespace.
      *
      * @return the namespace
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: getNamespace
      * @Description: get the namespace
      */
@@ -57,8 +62,6 @@ public class SynonymInfo {
      * Gets the z namespace name.
      *
      * @return get the namespace name
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: getSynonymName
      * @Description: get synonym name
      */
@@ -70,8 +73,6 @@ public class SynonymInfo {
      * Gets the owner.
      *
      * @return the owner
-     * @Author: gWX773294
-     * @Date: Nov 15, 2019
      * @Title: getSynonymName
      * @Description: get the owner
      */
@@ -83,8 +84,6 @@ public class SynonymInfo {
      * Sets the owner.
      *
      * @param owner the owner
-     * @Author: gWX773294
-     * @Date: Nov 15, 2019
      * @Title: setSynonymName
      * @Description: set the owner
      */
@@ -96,8 +95,6 @@ public class SynonymInfo {
      * Gets the synonym name.
      *
      * @return the synonym name
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: getSynonymName
      * @Description: get synonym name
      */
@@ -109,8 +106,6 @@ public class SynonymInfo {
      * Sets the synonym name.
      *
      * @param synonymName the synonym name
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: setSynonymName
      * @Description: set the synonym name
      */
@@ -122,8 +117,6 @@ public class SynonymInfo {
      * Gets the object owner.
      *
      * @return the object owner
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: getObjectOwner
      * @Description: get the object owner
      */
@@ -135,8 +128,6 @@ public class SynonymInfo {
      * Sets the object owner.
      *
      * @param objectOwner the object owner
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: setObjectOwner
      * @Description: set the object owner
      */
@@ -148,8 +139,6 @@ public class SynonymInfo {
      * Gets the object type.
      *
      * @return the object type
-     * @Author: c00550043
-     * @Date: Mar9 , 2020
      * @Title: getObjectType
      * @Description: get the object type
      */
@@ -161,8 +150,6 @@ public class SynonymInfo {
      * Sets the object owner.
      *
      * @param objectOwner the object owner
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: setObjectOwner
      * @Description: set the object owner
      */
@@ -174,8 +161,6 @@ public class SynonymInfo {
      * Gets the object name.
      *
      * @return the object name
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: getObjectName
      * @Description: get the object name
      */
@@ -187,8 +172,6 @@ public class SynonymInfo {
      * Sets the object name.
      *
      * @param objectName the object name
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: setObjectName
      * @Description: set the object name
      */
@@ -200,8 +183,6 @@ public class SynonymInfo {
      * Checks if is replace if exist.
      *
      * @return true, if selected replace if exist button
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: isReplaceIfExist
      * @Description: check if select replace if exist button
      */
@@ -213,8 +194,6 @@ public class SynonymInfo {
      * Sets the replace if exist.
      *
      * @param replaceIfExist the new replace if exist
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: setReplaceIfExist
      * @Description: set replace if exist
      */
@@ -236,8 +215,6 @@ public class SynonymInfo {
      * Generate create synonym sql.
      *
      * @return String generated sql
-     * @Author: gWX773294
-     * @Date: Nov 7, 2019
      * @Title: generateCreateSynonymSql
      * @Description: generate create synonym sql
      */

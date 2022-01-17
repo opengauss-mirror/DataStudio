@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+ 
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -526,19 +541,6 @@ public class Base_IndexMgnt {
 
 				if(sTestCaseID.equals("GaussIDE_FUNC_CreateIndex_144_812")){          // user defined index "test" should be created
 
-					/*Thread.sleep(GlobalConstants.MedWait);
-                            	TablespaceFunctions.tablespace_Navigation();
-            					Thread.sleep(GlobalConstants.MinWait);
-            					TablespaceFunctions.openTableSpace();
-            					BaseActions.Winwait(TablespaceElements.wTablespaceTitle);
-            					TablespaceFunctions.tablespaceCreation("NAME", "Auto1");
-            					TablespaceFunctions.tablespaceCreation("LOCATION", "/home/SP1C10SIT/test/demo1/demo2/DEMO3/AUTO1/AUto2/AUTO3");
-            					Thread.sleep(GlobalConstants.MedWait);
-            					TablespaceFunctions.maxSize("1000", 'M');
-            					TablespaceFunctions.button("OK");
-            					BaseActions.Winwait("Tablespace Successfully Created");
-            					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-            					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);*/
 					Thread.sleep(GlobalConstants.MedWait);
 					CreateTableWizardFunctions.openCreateTableWizard();
 					BaseActions.Winwait(CreateTableWizardElements.wTitle);

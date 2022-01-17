@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -42,7 +57,6 @@ public class TableMgnt_New {
 				if (sTestCaseID.equals("GaussIDE_FUNC_CreateTable_093_070")) {
 
 					UtilityFunctions.WriteToExcel(ResultExcel, sARNumber, i+2, 3, "Yes");
-					//ObjectBrowserPane.objectBrowserExpansion("Single");
 					CreateTableWizardFunctions.openCreateTableWizard();
 					BaseActions.Winwait(CreateTableWizardElements.wTitle);
 					Thread.sleep(GlobalConstants.MedWait);
@@ -360,7 +374,6 @@ public class TableMgnt_New {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+4,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+4,5,"unable to create table with DEFER/UNIQUE .Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println("Fail");
 					}
 					ObjectBrowserPane.DropTable("auto", "testtable");
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
@@ -522,14 +535,12 @@ public class TableMgnt_New {
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println( sTestCaseID+ "passed");
-						// System.out.println( "passed");
 					}
 
 					else{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Unable to rename the table. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println("fail");
 					}
 					ObjectBrowserPane.DropTable("auto", "TestTable");
 					Thread.sleep(GlobalConstants.MinWait);
@@ -588,7 +599,6 @@ public class TableMgnt_New {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Table is created with invalid name. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-						//System.out.println("fail");
 					}
 
 
@@ -598,14 +608,11 @@ public class TableMgnt_New {
 
 					Thread.sleep(GlobalConstants.MedWait);
 					ObjectBrowserPane.Auto_Table_Navigation();
-					//UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					//UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
 					ObjectBrowserPane.vacuum();
 
 					sFlag= QueryResult.ReadConsoleOutput("GLOBAL");
 					Thread.sleep(GlobalConstants.MinWait);
 					if (sFlag.contains("successfully vacuumed")) {
-						//UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println(sTestCaseID+"passed");
 					}
 
@@ -657,7 +664,6 @@ public class TableMgnt_New {
 							sFlag3.contains("[INFO] Renamed"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-						//System.out.println("passed");
 						System.out.println(sTestCaseID+"passed");
 					}
 					else {
@@ -673,7 +679,6 @@ public class TableMgnt_New {
 
 				if (sTestCaseID.equals("GaussIDE_FUNC_EditTable_104_070")) {
 
-					//UtilityFunctions.WriteToExcel(ResultExcel, sARNumber, i+2, 3, "Yes");
 					CreateTableWizardFunctions.openCreateTableWizard();
 					BaseActions.Winwait(CreateTableWizardElements.wTitle);
 					Thread.sleep(GlobalConstants.MedWait);
@@ -717,10 +722,8 @@ public class TableMgnt_New {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println(sTestCaseID + "passed");
 
-						//System.out.println("passed");
 					}
 					else {
-						//System.out.println("Fail");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Unable to set Schema. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
@@ -798,7 +801,6 @@ public class TableMgnt_New {
 						UtilityFunctions.KeyPress(KeyEvent.VK_F4, 1);
 						UtilityFunctions.KeyRelease(KeyEvent.VK_SHIFT, 1);
 						UtilityFunctions.KeyRelease(KeyEvent.VK_F4, 1);
-						//System.out.println("passed");
 					}
 					else {
 						System.out.println(sTestCaseID+"Fail");
@@ -826,8 +828,6 @@ public class TableMgnt_New {
 					Thread.sleep(GlobalConstants.MinWait);
 					BaseActions.MouseClick(CreateTableWizardElements.wTitle, "", CreateTableWizardElements.sTabControlID, "left", 1, CreateTableWizardElements.xIndexCord, CreateTableWizardElements.yIndexCord);
 
-					//Thread.sleep(GlobalConstants.MinWait);
-					//CreateTableWizardFunctions.TableDesc("Create a table with table name as DescTable and Description of table text box having very large text");
 					CreateTableWizardFunctions.indexName("FirstIndex");
 					CreateTableWizardFunctions.addColumnIndex(1);
 					CreateTableWizardFunctions.indexName("SecondIndex");
@@ -837,7 +837,6 @@ public class TableMgnt_New {
 					CreateTableWizardFunctions.SQLPreviewCopy();
 					CreateTableWizardFunctions.Button("FINISH");
 					Thread.sleep(GlobalConstants.MedWait);
-					//ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					ObjectBrowserPane.Auto_Table_Navigation();
 					Thread.sleep(GlobalConstants.MedWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
@@ -848,9 +847,6 @@ public class TableMgnt_New {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_S, 2);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-					//CreateTableWizardFunctions.resetTableSpace("pg_default");
-
-					//	sFlag = QueryResult.ReadConsoleOutput("GLOBAL");
 					Thread.sleep(GlobalConstants.MinWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
@@ -900,18 +896,15 @@ public class TableMgnt_New {
 					ObjectBrowserPane.CreateSchema("sh1");
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					QueryEditor.SingleQueryExe("CREATE TABLE sh1.testtable1 (c1 bigint)","notreq");
-					//ueryEditor.SingleQueryExe("CREATE INDEX i1 ON s1.t1 (c1) WITH (FILLFACTOR=100)","notreq");
 					ObjectBrowserPane.InsertTable("sh1", "testtable1", 1);
 					ObjectBrowserPane.CreateSchema("sh2");
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
 
 					QueryEditor.SingleQueryExe("CREATE TABLE sh2.testtable2 (c2 bigint)","notreq");
-					//eryEditor.SingleQueryExe("CREATE INDEX i2 ON s2.t2 (c2) WITH (FILLFACTOR=100)","notreq");
 					ObjectBrowserPane.InsertTable("sh2", "testtable2", 1);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
-					//	ObjectBrowserPane.Auto_Table_Navigation();
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT,3);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,3);
 					UtilityFunctions.KeyPress(KeyEvent.VK_S, 2);
@@ -927,7 +920,6 @@ public class TableMgnt_New {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
 					Thread.sleep(GlobalConstants.MinWait);
 					ObjectBrowserPane.setSchema();
-					//BaseActions.Click(TablePropertyElements.sSchemaTitle, "", TablePropertyElements.btnOK);
 					UtilityFunctions.KeyPress(KeyEvent.VK_S, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_S, 1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 2);
@@ -936,7 +928,6 @@ public class TableMgnt_New {
 					sFlag = QueryResult.ReadConsoleOutput("GLOBAL");
 					if (sFlag.contains("Moved")) {
 
-						//System.out.println("passed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println(sTestCaseID + "passed");
 					}
@@ -963,14 +954,10 @@ public class TableMgnt_New {
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					QueryEditor.SingleQueryExe("CREATE TABLE sh1.testtable1 (c1 bigint)","notreq");
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
-					//QueryEditor.SingleQueryExe("CREATE INDEX i11 ON s1.t1 (c1) WITH (FILLFACTOR=100)","notreq");
-					//ObjectBrowserPane.InsertTable("s1", "t1", 1);
 
 					ObjectBrowserPane.CreateSchema("sh2");
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					QueryEditor.SingleQueryExe("CREATE TABLE sh2.testtable1 (c1 bigint)","notreq");
-					//	QueryEditor.SingleQueryExe("CREATE INDEX i22 ON s2.t1 (c2) WITH (FILLFACTOR=100)","notreq");
-					//	ObjectBrowserPane.InsertTable("s2", "t1", 1);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT,3);
@@ -994,14 +981,11 @@ public class TableMgnt_New {
 
 					sFlag=BaseActions.WinGetText(ObjectBrowserElements.wSetSchema);
 
-					//b=BaseActions.WinExists(ObjectBrowserElements.wSetSchema);
-					//sFlag1 = QueryResult.ReadConsoleOutput("GLOBAL");
 					if(sFlag.contains("ERROR: relation \"testtable1\" already exists in schema \"sh1\""))
 					{
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println(sTestCaseID + " passed");
-						//System.out.println( "passed");
 					}
 					else {
 						System.out.println( sTestCaseID+"Fail");
@@ -1020,7 +1004,6 @@ public class TableMgnt_New {
 				//Mapped GaussIDE_FUNC_CreateTable_025_070GaussIDE_FUNC_CreateTable_026_070GaussIDE_FUNC_CreateTable_027_070
 				if (sTestCaseID.equals("GaussIDE_FUNC_InVal_CreateTable_248_070")) 
 				{
-					//UtilityFunctions.WriteToExcel(ResultExcel, sARNumber, i+2, 3, "Yes");
 					UtilityFunctions.WriteToExcel(ResultExcel, sARNumber, i+2, 3, "Yes");
 					Thread.sleep(GlobalConstants.MedWait);
 					CreateTableWizardFunctions.openCreateTableWizard();
@@ -1053,10 +1036,8 @@ public class TableMgnt_New {
 
 					CreateTableWizardFunctions.Button("FINISH");
 					Thread.sleep(GlobalConstants.MinWait);
-					//sFlag1 = QueryResult.ReadConsoleOutput("GLOBAL");
 
 					if (sFlag.contains("REPLICATION") && sFlag1.contains("HASH")) {
-						//System.out.println("passed");
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println(sTestCaseID + "passed");
 
@@ -1115,17 +1096,14 @@ public class TableMgnt_New {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
 					Thread.sleep(GlobalConstants.MinWait);
 
-					//sFlag=UtilityFunctions.GetClipBoard();
 					sFlag=x.clipGet();
 
-					//System.out.println(sFlag);
 					Thread.sleep(GlobalConstants.MinWait);
 					UtilityFunctions.KeyPress(KeyEvent.VK_SHIFT, 1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_F4, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_SHIFT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_F4, 1);
 					ObjectBrowserPane.DropIndex("auto", "I1");
-					//BaseActions.ClearConsole("GLOBAL");
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MedWait);
 
@@ -1135,12 +1113,9 @@ public class TableMgnt_New {
 					UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
 					ObjectBrowserPane.analyze();
-					//ObjectBrowserPane.objectBrowserRefresh("SINGLE");
 					Thread.sleep(GlobalConstants.MinWait);
 					ObjectBrowserPane.tablePropertyFunctionOpen();
 					Thread.sleep(GlobalConstants.MinWait);
-					//	BaseActions.ControlMouseClick(sButton, iXcord, iYcord, iClicks, iSpeed);
-					//BaseActions.MouseClick(title, "", controlID, "left", 1, a, b);
 
 					UtilityFunctions.KeyPress(KeyEvent.VK_H, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_H, 1);
@@ -1153,16 +1128,12 @@ public class TableMgnt_New {
 					UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
 					Thread.sleep(GlobalConstants.MinWait);
-					//sFlag1=UtilityFunctions.GetClipBoard();
 					sFlag1=x.clipGet();
-					//System.out.println(sFlag1);
 					Thread.sleep(GlobalConstants.MinWait);
-					//
 					if(sFlag.contains("Has Index::True") && sFlag1.contains("Has Index::False") ){
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println( sTestCaseID+ "passed");
-						//System.out.println("passed");
 					}
 					else {
 						System.out.println( sTestCaseID+"Fail");
@@ -1184,7 +1155,6 @@ public class TableMgnt_New {
 					CreateTableWizardFunctions.openCreateTableWizard();
 					BaseActions.Winwait(CreateTableWizardElements.wTitle);
 					Thread.sleep(GlobalConstants.MedWait);
-					//CreateTableWizardFunctions.CreateTableWizard();
 					CreateTableWizardFunctions.TableName("Shaifali","No");
 					CreateTableWizardFunctions.Button("NEXT");
 					CreateTableWizardFunctions.AddCloumn("Col1", "No");
@@ -1266,7 +1236,6 @@ public class TableMgnt_New {
 					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);
-					//sFlag=UtilityFunctions.GetClipBoard();
 					sFlag=x.clipGet();
 					Thread.sleep(GlobalConstants.MinWait);
 					if(sFlag.contains("Normal"))
@@ -1275,16 +1244,6 @@ public class TableMgnt_New {
 						Thread.sleep(GlobalConstants.MinWait);
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println(sTestCaseID + "passed");
-
-						//	System.out.println("passed");
-						//Thread.sleep(GlobalConstants.MinWait);
-						/*BaseActions.Focus(CreateTableWizardElements.wCreateTitle, "", CreateTableWizardElements.wproperty);
-					UtilityFunctions.KeyPress(KeyEvent.VK_SHIFT, 1);
-					UtilityFunctions.KeyPress(KeyEvent.VK_F4, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_F4, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_SHIFT, 1);
-						 */
-
 
 					}
 					else {
@@ -1343,8 +1302,6 @@ public class TableMgnt_New {
 
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 						System.out.println(sTestCaseID+"passed");
-						//System.out.println("passed");
-						//	\"sh\".\"t1\" table to \"auto\".\"t1\"
 
 					}
 					else{

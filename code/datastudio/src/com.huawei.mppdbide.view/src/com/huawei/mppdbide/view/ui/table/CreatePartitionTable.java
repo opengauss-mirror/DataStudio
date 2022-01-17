@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui.table;
@@ -47,13 +58,8 @@ import com.huawei.mppdbide.view.core.statusbar.ObjectBrowserStatusBarProvider;
  * 
  * Description: The Class CreatePartitionTable.
  * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
-
 public class CreatePartitionTable extends CreateTable {
 
     /* Step: 6 - Partition */
@@ -215,12 +221,6 @@ public class CreatePartitionTable extends CreateTable {
      * Title: class
      * 
      * Description: The Class BtnBackSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class BtnBackSelectionAdapter extends SelectionAdapter {
         @Override
@@ -237,9 +237,7 @@ public class CreatePartitionTable extends CreateTable {
                     partitionUI.refreshColumns();
                 }
                 tabFolder.setSelection(currentTab - 1);
-                // DTS2014102906540 start
                 setFocusOnText(currentTab - 1);
-                // DTS2014102906540 end
             }
 
         }
@@ -250,12 +248,6 @@ public class CreatePartitionTable extends CreateTable {
      * Title: class
      * 
      * Description: The Class BtnNxtSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class BtnNxtSelectionAdapter extends SelectionAdapter {
         @Override
@@ -288,9 +280,7 @@ public class CreatePartitionTable extends CreateTable {
                 }
                 tabFolder.setSelection(currentTab + 1);
 
-                // DTS2014102906540 start
                 setFocusOnText(currentTab + 1);
-                // DTS2014102906540 end
             }
         }
     }
@@ -300,20 +290,12 @@ public class CreatePartitionTable extends CreateTable {
      * Title: class
      * 
      * Description: The Class TabFolderSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class TabFolderSelectionAdapter extends SelectionAdapter {
         @Override
         public void widgetSelected(SelectionEvent event) {
             int curTab = tabFolder.getSelectionIndex();
-            // DTS2014102906540 start
             setFocusOnText(curTab);
-            // DTS2014102906540 end
 
             if (CREATE_TABLE_GENERAL_INFO != curTab) {
                 try {
@@ -341,14 +323,7 @@ public class CreatePartitionTable extends CreateTable {
      * Title: class
      * 
      * Description: The Class FinishBtnSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
-    // DTS2014102906540 end
     private class FinishBtnSelectionAdapter extends SelectionAdapter {
         @Override
         public void widgetSelected(SelectionEvent event) {
@@ -766,14 +741,12 @@ public class CreatePartitionTable extends CreateTable {
      *
      * @param event the event
      */
-    // Start DTS2018112804216
     @Override
     protected void updateTableFields(int event) {
         if (event == CREATE_TABLE_SQL_PREVIEW) {
             createTableSqlPreview();
         }
     }
-    // End DTS2018112804216
 
     /**
      * Button toggling.

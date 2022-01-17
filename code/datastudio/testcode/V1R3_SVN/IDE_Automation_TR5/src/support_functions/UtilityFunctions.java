@@ -1,9 +1,21 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /*************************************************************************
 TITLE - UTILITY FUNCTIONS
 DESCRIPTION - REGULAR REUSABLE FUNCTIONS 
-AUTHORS - AWX321824
-CREATED DATE - 16-NOV-2015
-LAST UPDATED DATE - 24-NOV-2015
 MODIFICATION HISTORY - 
 TEST CASES COVERED - NA
  *************************************************************************/
@@ -154,7 +166,6 @@ public class UtilityFunctions {
 		ScreenshotPath = GlobalConstants.TestResultPath+ResultExcel+"/Screenshots";
 		new File(ResultPath).mkdir();
 		new File(ScreenshotPath).mkdir();
-		//File ResultFile = new File(TestResultPath.concat(ResultExcel+".xlsx"));
 		File ResultFile = new File(ResultPath.concat("/").concat(ResultExcel+".xlsx"));
 		File TemplateFile = new File(GlobalConstants.TestResultPath.concat(TemplateExcel));
 		ResultFile.createNewFile();
@@ -439,7 +450,6 @@ public class UtilityFunctions {
 				String sStatus=UtilityFunctions.GetExcelCellValue(sResultExcel,"Smoke_Test_Results",i+2,5);
 				if(sStatus.equals("Passed")||sStatus.equals("Failed"))
 				{
-					//String sFinalStatus = sTestCaseID+" "+sStatus;
 					String sFinalStatus = sTestCaseID+" Passed";
 					UtilityFunctions.WriteToText(sTextResultFile, sFinalStatus);
 				}
@@ -479,7 +489,6 @@ public class UtilityFunctions {
 			BufferedImage screenFullImage = r.createScreenCapture(screenRect);
 			ImageIO.write(screenFullImage, sFormat, new File(sFileName));
 			String file1 = GlobalConstants.ActualImage+"/"+Actual+".png";
-			//String file1 = GlobalConstants.ActualImage+Feature+"/"+Actual+".png";
 			String file2 = GlobalConstants.ExpectedImage+"/"+ExpectedWC+".png";
 			String file3 = GlobalConstants.ExpectedImage+"/"+ExpectedWOC+".png";
 			Boolean Result = null;

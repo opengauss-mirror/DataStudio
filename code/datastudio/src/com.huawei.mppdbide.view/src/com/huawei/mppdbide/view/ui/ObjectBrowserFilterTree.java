@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui;
@@ -77,17 +88,9 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
 
 /**
  * Title: ObjectBrowserFilterTree
- * 
- * Description:
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * 
- * @author pWX759367
- * @version [DataStudio 6.5.1, 16-Sep-2019]
- * @since 16-Sep-2019
+ * @since 3.0.0
  */
-
 public class ObjectBrowserFilterTree extends Composite implements Observer {
 
     /**
@@ -956,15 +959,6 @@ public class ObjectBrowserFilterTree extends Composite implements Observer {
 
     /**
      * Title: MouseTrackListenerToClearButton
-     * 
-     * Description:
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * 
-     * @author pWX759367
-     * @version [DataStudio 6.5.1, 16-Sep-2019]
-     * @since 16-Sep-2019
      */
 
     private static final class MouseTrackListenerToClearButton implements MouseTrackListener {
@@ -998,15 +992,6 @@ public class ObjectBrowserFilterTree extends Composite implements Observer {
 
     /**
      * Title: MouseListenerToClearButton
-     * 
-     * Description:
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * 
-     * @author pWX759367
-     * @version [DataStudio 6.5.1, 16-Sep-2019]
-     * @since 16-Sep-2019
      */
 
     private final class MouseListenerToClearButton extends MouseAdapter {
@@ -1077,10 +1062,6 @@ public class ObjectBrowserFilterTree extends Composite implements Observer {
     /**
      * Title: Abstract class BasicUIJob
      * Description: Abstract class BasicUIJob
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @version [DataStudio 2.1.0, 3-Nov.-2021]
-     * @since 3-Nov.-2021
      */
     public abstract class BasicUIJob extends Job {
         private Display cachedDisplay;

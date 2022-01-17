@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -103,8 +118,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					ObjectBrowserPane.TableRefresh();
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);*/
 					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"primarytable.csv", "OPEN");
 					BaseActions.Winwait("Data Import failed");
 					Thread.sleep(GlobalConstants.MedWait);
@@ -131,13 +144,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					/** 
 					 * Test cases modified as per the changed error message 
 					 */
-				/*	UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);
-					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"foriegntable.csv", "OPEN");
-					BaseActions.Winwait("Data Import failed");
-			        Thread.sleep(GlobalConstants.MedWait);	 		 
-					UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);*/
 					sFlag = QueryResult.ReadConsoleOutput("LOCAL").replace("\"", "");
 					if(sFlag.contains("[ERROR] Execution failed.")) 
 					{
@@ -160,8 +166,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					ObjectBrowserPane.TableRefresh();
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
-				/*	UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);*/
 					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"uniquetable.csv", "OPEN");
 					BaseActions.Winwait("Data Import failed");
 					Thread.sleep(GlobalConstants.MedWait);
@@ -188,8 +192,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					ObjectBrowserPane.TableRefresh();
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);*/
 					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"checktable.csv", "OPEN");
 					BaseActions.Winwait("Data Import failed");
 					Thread.sleep(GlobalConstants.MedWait);
@@ -216,8 +218,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					ObjectBrowserPane.TableRefresh();
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);*/
 					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"notnulltable.csv", "OPEN");
 					BaseActions.Winwait("Data Import failed");
 					Thread.sleep(GlobalConstants.MedWait);
@@ -236,7 +236,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					}
 					QueryEditor.SingleQueryExe("DROP TABLE auto_import.notnulltable", sQueryType);
 					ObjectBrowserPane.TableRefresh();
-					//BaseActions.ClearConsole("GLOBAL");
 				}
 				if(sTestCaseID.equals("PTS_SR.V1R2.DS.001_STR_3_Functional_Invalid_6"))
 				{
@@ -244,8 +243,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					ObjectBrowserPane.TableRefresh();
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);*/
 					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"defaulttable.csv", "OPEN");
 					BaseActions.Winwait("Data Imported Successfully");
 					Thread.sleep(GlobalConstants.MedWait);
@@ -265,7 +262,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					}
 					QueryEditor.SingleQueryExe("DROP TABLE auto_import.defaulttable", sQueryType);
 					ObjectBrowserPane.TableRefresh();
-					//BaseActions.ClearConsole("GLOBAL");
 				}
 				if(sTestCaseID.equals("PTS_SR.V1R2.DS.001_STR_3_Functional_Invalid_8"))
 				{
@@ -273,8 +269,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					ObjectBrowserPane.TableRefresh();
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);*/
 					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"columnmismatch.csv", "OPEN");
 					BaseActions.Winwait("Data Import failed");
 					Thread.sleep(GlobalConstants.MedWait);
@@ -301,8 +295,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					ObjectBrowserPane.TableRefresh();
 					UtilityFunctions.KeyPress(KeyEvent.VK_RIGHT, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_RIGHT,1);
-					/*UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN,1);*/
 					ObjectBrowserPane.TableImportWithoutWait(GlobalConstants.sCsvImportPath+"datatypemismatch.csv", "OPEN");
 					BaseActions.Winwait("Data Import failed");
 					Thread.sleep(GlobalConstants.MedWait);
@@ -323,15 +315,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					ObjectBrowserPane.TableRefresh();
 					Thread.sleep(GlobalConstants.MinWait);
 
-					/*BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, 1,136,64);
-					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_LEFT,1);
-					BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, 2,88,28);
-					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_LEFT,1);
-					BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, 2,80,9);
-					UtilityFunctions.KeyPress(KeyEvent.VK_LEFT, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_LEFT,1);*/
 					UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_Q,1);
@@ -464,7 +447,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 						sFlag = QueryEditor.SingleQueryExe("select * from auto_import_table.employee where ename='DaveTest';", "Table");
 						
 						if(sFlag.contains("Records fetched: 1"))
-						//if(sFlag.contains("Total result records fetched: 1"))
 						{
 							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,4,"Passed");
 						}
@@ -666,9 +648,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+3,3,"Yes");
 
 					String sFileName = GlobalConstants.sCsvImportPath+"employee.csv";
-					//ObjectBrowserPane.DropTable("auto_import_table","import");
-					//sFlag = ObjectBrowserPane.CreateTable("auto_import_table","import");
-					//ObjectBrowserPane.ObjectBrowserRefresh();
 					sFlag="Success";
 					if(sFlag.equals("Success"))
 					{
@@ -742,19 +721,13 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					if(sFlag.contains(" [INFO] Data successfully imported to the table auto_import_table.nulltable")&&sFlag.contains("[INFO] Total rows imported: 9"))
 					{
 						QueryEditor.SingleQueryExe("select * from auto_import_table.nulltable", "Valid");
-						//QueryResult.ResultWindow();
 						QueryResult.CurrentExport();//export to current export
 						File file = new File(GlobalConstants.sCsvExportPath+"文件.csv");
 						if(file.exists())
 							file.delete();
 						Thread.sleep(GlobalConstants.MedWait);
-						//						Thread.sleep(GlobalConstants.MinWait);
 						QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"文件.csv");
 						Thread.sleep(GlobalConstants.MedWait);
-						/*BaseActions.Winwait("Data Exported Successfully");
-						Thread.sleep(GlobalConstants.MedWait);
-						UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-						UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 						if(file.exists())
 						{
 							int RecordCount = QueryResult.RecordCount(GlobalConstants.sCsvExportPath+"文件.csv");
@@ -798,7 +771,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 					if(sFlag.contains(" [INFO] Data successfully imported to the table auto_import_table.nulltable")&&sFlag.contains("[INFO] Total rows imported: 9"))
 					{
 						QueryEditor.SingleQueryExe("select * from auto_import_table.nulltable", "Valid");
-						//QueryResult.ResultWindow();
 						QueryResult.CurrentExport(); //from export to current export
 						File file = new File(GlobalConstants.sCsvExportPath+"NullvaluesExport.csv");
 						if(file.exists())
@@ -806,10 +778,6 @@ public class PTS_SR_V1R2_DS_001_STR_3_IMP_TBL_DAT {
 						Thread.sleep(GlobalConstants.MedWait);
 						QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"NullvaluesExport.csv");
 						Thread.sleep(GlobalConstants.MedWait);
-						/*BaseActions.Winwait("Data Exported Successfully");
-						Thread.sleep(GlobalConstants.MedWait);
-						UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-						UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 						if(file.exists())
 						{
 							int RecordCount = QueryResult.RecordCount(GlobalConstants.sCsvExportPath+"NullvaluesExport.csv");

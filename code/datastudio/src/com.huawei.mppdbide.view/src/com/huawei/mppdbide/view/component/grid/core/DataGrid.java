@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.component.grid.core;
@@ -177,12 +188,8 @@ import ca.odell.glazedlists.matchers.TextMatcherEditor;
  * Title: class
  * 
  * Description: The Class DataGrid.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class DataGrid {
 
@@ -1008,12 +1015,6 @@ public class DataGrid {
      * Title: class
      * 
      * Description: The Class DSGridLayerConfiguration.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     static final class DSGridLayerConfiguration extends DefaultGridLayerConfiguration {
 
@@ -1704,12 +1705,6 @@ public class DataGrid {
      * Title: class
      * 
      * Description: The Class DSGridTextFilterator.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class DSGridTextFilterator implements TextFilterator<IDSGridDataRow> {
         private String encoding;
@@ -1911,12 +1906,6 @@ public class DataGrid {
      * Title: class
      * 
      * Description: The Class CopyDataWithPrefAction.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class CopyDataWithPrefAction extends CopyDataAction {
         @Override
@@ -1931,12 +1920,6 @@ public class DataGrid {
      * Title: class
      * 
      * Description: The Class CopyDataWithoutPrefAction.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class CopyDataWithoutPrefAction extends CopyDataAction {
         @Override
@@ -1981,12 +1964,6 @@ public class DataGrid {
      * Title: class
      * 
      * Description: The Class PasteDataWithPrefAction.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class PasteDataWithPrefAction extends PasteDataAction {
         @Override
@@ -2084,12 +2061,6 @@ public class DataGrid {
      * Title: class
      * 
      * Description: The Class DataGridContext.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private static class DataGridContext implements IDataGridContext {
         private IDSGridDataProvider dp;
@@ -2204,12 +2175,6 @@ public class DataGrid {
      * Title: class
      * 
      * Description: The Class RightClickShowMenuConfiguration.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     class RightClickShowMenuConfiguration extends AbstractUiBindingConfiguration {
         private Menu menu;
@@ -2277,12 +2242,6 @@ public class DataGrid {
          * Title: class
          * 
          * Description: The Class ShowMenuConditional.
-         * 
-         * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-         *
-         * @author pWX553609
-         * @version [DataStudio 6.5.1, 17 May, 2019]
-         * @since 17 May, 2019
          */
         private class ShowMenuConditional implements MenuListener {
 
@@ -2427,12 +2386,6 @@ public class DataGrid {
          * Title: class
          * 
          * Description: The Class ShowCopyToExcelMenuItemProvider.
-         * 
-         * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-         *
-         * @author pWX553609
-         * @version [DataStudio 6.5.1, 17 May, 2019]
-         * @since 17 May, 2019
          */
         private class ShowCopyToExcelMenuItemProvider implements IMenuItemProvider {
 
@@ -2514,12 +2467,6 @@ public class DataGrid {
          * Title: class
          * 
          * Description: The Class ShowCopyMenuItemProvider.
-         * 
-         * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-         *
-         * @author pWX553609
-         * @version [DataStudio 6.5.1, 17 May, 2019]
-         * @since 17 May, 2019
          */
         private class ShowCopyMenuItemProvider implements IMenuItemProvider {
             @Override
@@ -2563,12 +2510,6 @@ public class DataGrid {
          * Title: class
          * 
          * Description: The Class ShowSearchItemProvider.
-         * 
-         * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-         *
-         * @author pWX553609
-         * @version [DataStudio 6.5.1, 17 May, 2019]
-         * @since 17 May, 2019
          */
         private class ShowSearchItemProvider implements IMenuItemProvider {
 
@@ -2612,12 +2553,6 @@ public class DataGrid {
          * Title: class
          * 
          * Description: The Class ShowSetNullItemProvider.
-         * 
-         * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-         *
-         * @author pWX553609
-         * @version [DataStudio 6.5.1, 17 May, 2019]
-         * @since 17 May, 2019
          */
         private class ShowSetNullItemProvider implements IMenuItemProvider {
 
@@ -2657,12 +2592,6 @@ public class DataGrid {
          * Title: class
          * 
          * Description: The Class ShowGenerateInsertItemProvider.
-         * 
-         * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-         *
-         * @author pWX553609
-         * @version [DataStudio 6.5.1, 17 May, 2019]
-         * @since 17 May, 2019
          */
         private class ShowGenerateInsertItemProvider implements IMenuItemProvider {
 
@@ -2778,12 +2707,6 @@ public class DataGrid {
          * Title: class
          * 
          * Description: The Class ShowExpotDataItemProvider.
-         * 
-         * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-         *
-         * @author pWX553609
-         * @version [DataStudio 6.5.1, 17 May, 2019]
-         * @since 17 May, 2019
          */
         private class ShowExpotDataItemProvider implements IMenuItemProvider {
 

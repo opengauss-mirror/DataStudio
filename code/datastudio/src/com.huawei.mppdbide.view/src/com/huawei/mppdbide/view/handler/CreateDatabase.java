@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.handler;
@@ -47,12 +58,8 @@ import com.huawei.mppdbide.view.workerjob.UIWorkerJob;
  * Title: class
  * 
  * Description: The Class CreateDatabase.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class CreateDatabase {
 
@@ -75,7 +82,6 @@ public class CreateDatabase {
             return;
         }
         Server selectedServer = dbGroup.getServer();
-        // DTS2014102808375 start
         if (selectedServer != null) {
             CreateRenamDatabaseDialog createDbDialog = new CreateDatabaseInner(shell, selectedServer, shell);
 
@@ -88,7 +94,6 @@ public class CreateDatabase {
      *
      * @return true, if successful
      */
-    // DTS2014102808375 end
     @CanExecute
     public boolean canExecute() {
         DatabaseObjectGroup dbGroup = IHandlerUtilities.getSelectedDBGroup();
@@ -122,12 +127,6 @@ public class CreateDatabase {
      * Title: class
      * 
      * Description: The Class CreateDatabaseInner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class CreateDatabaseInner extends CreateRenamDatabaseDialog {
         private final Shell shell;
@@ -250,9 +249,7 @@ public class CreateDatabase {
 
         @Override
         protected String getHeaderPswd() {
-            // start DTS2016012610981
             return MessageConfigLoader.getProperty(IMessagesConstants.CURRENT_USER_PASSWORD_TO_CONNECT_TO_DB);
-            // end DTS2016012610981
         }
     }
 
@@ -261,12 +258,6 @@ public class CreateDatabase {
      * Title: class
      * 
      * Description: The Class CreateDBWorkerJob.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class CreateDBWorkerJob extends UIWorkerJob {
 
@@ -360,11 +351,9 @@ public class CreateDatabase {
             if (null == msg) {
                 msg = dbOperationException.getDBErrorMessage();
             }
-            // Bala issue List #12 start
             if (msg.contains("Position:")) {
                 msg = msg.split("Position:")[0];
             }
-            // Bala issue List #12 end
             dialog.printErrorMessage(MessageConfigLoader.getProperty(IMessagesConstants.ERROR_WHILE_CREATING_DATABASE,
                     MPPDBIDEConstants.LINE_SEPARATOR, msg));
             okBtn.setEnabled(true);
