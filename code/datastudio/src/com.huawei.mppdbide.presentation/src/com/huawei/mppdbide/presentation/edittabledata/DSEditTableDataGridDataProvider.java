@@ -855,6 +855,7 @@ public class DSEditTableDataGridDataProvider extends DSResultSetGridDataProvider
         int colCount = getColumnDataProvider().getColumnCount();
         Object[] value = new Object[colCount];
         emptyRow.createNewRow(value);
+        emptyRow.setOriginalValues(value.clone());
         emptyRow.setIncludeEncoding(BLPreferenceManager.getInstance().getBLPreference().isIncludeEncoding());
         emptyRow.setEncoding(super.getEncoding());
         addToInsertList(emptyRow);
@@ -872,6 +873,7 @@ public class DSEditTableDataGridDataProvider extends DSResultSetGridDataProvider
     protected IDSGridDataRow createRowFromValues(Object[] rowValues) {
         DSEditTableDataGridRow row = new DSEditTableDataGridRow(eventTable, this);
         row.setValues(rowValues);
+        row.setOriginalValues(rowValues.clone());
         row.setIncludeEncoding(isIncludeEncoding());
 
         return row;
