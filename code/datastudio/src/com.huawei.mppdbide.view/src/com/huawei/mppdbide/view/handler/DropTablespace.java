@@ -4,6 +4,7 @@
 
 package com.huawei.mppdbide.view.handler;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
@@ -133,15 +134,16 @@ public class DropTablespace {
 
         @Override
         public void onOperationalExceptionUIAction(DatabaseOperationException e) {
+            String errorMsg = e.getServerMessage();
+            int index = StringUtils.indexOf(errorMsg, "ERROR:");
+            if (index < 0) {
+                index = 0;
+            }
+
+            String errorTip = StringUtils.substring(errorMsg, index);
             MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.ERROR, true,
-                    MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHEN_DROPPING_TABLESPACE),
-                    MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHILE_DROPPING_TABLESPACE_MESSAGE,
-                            tablespace.getServer().getServerConnectionInfo().getConectionName(), tablespace.getName()));
-            ObjectBrowserStatusBarProvider.getStatusBar()
-                    .displayMessage(Message.getError(
-                            MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHILE_DROPPING_TABLESPACE_MESSAGE,
-                                    tablespace.getServer().getServerConnectionInfo().getConectionName(),
-                                    tablespace.getName())));
+                MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHEN_DROPPING_TABLESPACE), errorTip);
+            ObjectBrowserStatusBarProvider.getStatusBar().displayMessage(Message.getError(errorTip));
         }
 
         @Override
