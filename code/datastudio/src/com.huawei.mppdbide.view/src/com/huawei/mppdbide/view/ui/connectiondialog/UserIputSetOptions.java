@@ -171,7 +171,7 @@ public abstract class UserIputSetOptions extends Dialog {
         HashMap<String, String> data = new HashMap<String, String>(10);
         Pattern pattern = Pattern.compile("[\\{\\}\\=\\, ]++");
         String[] split = pattern.split(fileOption);
-        for (int index = 0; index + 2 <= split.length; index += 2) {
+        for (int index = 0; index <= split.length - 2; index += 2) {
             data.put(split[index], split[index + 1]);
         }
         return data;
