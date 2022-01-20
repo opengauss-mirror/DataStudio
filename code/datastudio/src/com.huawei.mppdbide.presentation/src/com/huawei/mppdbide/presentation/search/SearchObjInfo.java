@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.presentation.search;
@@ -13,13 +24,8 @@ import com.huawei.mppdbide.utils.MPPDBIDEConstants;
  * 
  * Description: The Class SearchObjInfo.
  * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
-
 public class SearchObjInfo {
 
     /**
@@ -101,6 +107,18 @@ public class SearchObjInfo {
             + "syn.synobjschema,syn.synowner ";
 
     /**
+     * The Constant TRIGGER_FAST_LOAD_PRIVILAGE
+     */
+    public static final String TRIGGER_FAST_LOAD_PRIVILAGE = "select t.oid as oid, t.tgrelid as tableoid, t.tgname, ns.nspname as nsname, c.relnamespace "
+    		+ "as relnamespace, t.tgfoid as functionoid,t.tgtype as tgtype, t.tgenabled as tgenable, pg_get_triggerdef(t.oid) as ddlmsg ";
+
+    /**
+     * TRIGGER_FAST_LOAD_PRIVILAGE_WHERE
+     */
+    public static final String TRIGGER_FAST_LOAD_PRIVILAGE_WHERE = "from pg_trigger t left join pg_class c on t.tgrelid = c.oid inner join "
+    		+ "pg_namespace ns on c.relnamespace=ns.oid and c.relnamespace =";
+    
+    /**
      * The Constant SYNONYM_FROM_CLASS
      */
     public static final String SYNONYM_FROM_CLASS = " from pg_synonym syn";
@@ -116,6 +134,7 @@ public class SearchObjInfo {
     private boolean funProcSelected;
     private boolean sequenceSelected;
     private boolean synonymSelected;
+    private boolean triggerSelected;
 
     /**
      * Gets the selectedserver.
@@ -326,6 +345,10 @@ public class SearchObjInfo {
         return synonymSelected;
     }
 
+    public boolean isTriggerSelected() {
+        return triggerSelected;
+    }
+
     /**
      * Sets the synonym selected.
      *
@@ -333,6 +356,10 @@ public class SearchObjInfo {
      */
     public void setSynonymSelected(boolean synonymSelected) {
         this.synonymSelected = synonymSelected;
+    }
+    
+    public void setTriggerSelected(boolean triggerSelected) {
+        this.triggerSelected = triggerSelected;
     }
 
     private String getRegularExpression() {
@@ -446,6 +473,32 @@ public class SearchObjInfo {
             builder.append(" and relname ");
             builder.append(getExpressionForNameMatch(searchIndex));
         }
+        return builder.toString();
+    }
+
+    /**
+     * Form search query for triggers.
+     *
+     * @param nsoid
+     * @param searchIndex
+     * @param privilegeFlag
+     * @param nodeGroupPrivilegeFlag
+     * @return
+     */
+	public String formSearchQueryForTriggers(long nsoid, SearchNameMatchEnum searchIndex, boolean privilegeFlag,
+            boolean nodeGroupPrivilegeFlag) {
+        StringBuilder builder = new StringBuilder(TRIGGER_FAST_LOAD_PRIVILAGE);
+        if (searchIndex == SearchNameMatchEnum.REGULAR_EXPRESSION) {
+            builder.append(", regexp_matches(tgname, ?) ");
+        }
+                
+        builder.append(TRIGGER_FAST_LOAD_PRIVILAGE_WHERE);
+        builder.append(nsoid);
+        if (searchIndex != SearchNameMatchEnum.REGULAR_EXPRESSION) {
+            builder.append(" and tgname ");
+            builder.append(getExpressionForNameMatch(searchIndex));
+        }
+       
         return builder.toString();
     }
 

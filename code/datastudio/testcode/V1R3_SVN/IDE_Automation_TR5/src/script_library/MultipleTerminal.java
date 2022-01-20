@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+ 
 package script_library;
 
 import java.awt.event.KeyEvent;
@@ -49,10 +64,6 @@ public class MultipleTerminal {
 		UtilityFunctions.KeyPress(KeyEvent.VK_O, 1);
 		UtilityFunctions.KeyRelease(KeyEvent.VK_O, 1);
 
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_UP, 3);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_UP, 3);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER, 1);*/
 	}
 
 	public static void SelectTerminal(int iTerminalNumber) throws Exception{
@@ -142,16 +153,13 @@ public class MultipleTerminal {
 		switch(sOperation)
 		{
 		case "COPY":
-			//x.mouseClick("left", 455, 475, 1,50);
 			x.mouseClick("left", 375, 375, 1,50);
 			break;
 		case "EXPORT ALL":
-			//x.mouseClick("left", 475, 475, 1,50);
 			x.mouseClick("left", 399, 372, 1,50);
 			
 			break;
 		case "EXPORT CURRENT":	
-			//x.mouseClick("left", 495, 475, 1,50);
 			x.mouseClick("left", 424, 374, 1,50);
 			break;
 		default :

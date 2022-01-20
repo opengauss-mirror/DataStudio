@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -58,7 +73,6 @@ public static void main(String sARNumber) throws Exception {
 							if(sFlag.equals("FirstColumn")){
 								
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								//System.out.println(sTestCaseID + "passed");
 								
 							}
 							
@@ -67,7 +81,6 @@ public static void main(String sARNumber) throws Exception {
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Column details are not populated in the input field after clicking on Edit button. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								//System.out.println(sTestCaseID + "failed");
 							}
 						
 						}
@@ -80,7 +93,6 @@ public static void main(String sARNumber) throws Exception {
 							if(sFlag.equals("FirstColumn")){
 								
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								//System.out.println(sTestCaseID + "passed");
 								
 							}
 							
@@ -89,7 +101,6 @@ public static void main(String sARNumber) throws Exception {
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Column name is not available in the table of columns. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								//System.out.println(sTestCaseID + "failed");
 							}
 						}
 						
@@ -100,7 +111,6 @@ public static void main(String sARNumber) throws Exception {
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Edit button still exists after clicking on it. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								//System.out.println(sTestCaseID + "failed");
 								
 								
 							}
@@ -111,7 +121,6 @@ public static void main(String sARNumber) throws Exception {
 										BaseActions.ObjExists(CreateTableWizardElements.wTitle, "Cancel", CreateTableWizardElements.bCancelControlID)){
 									
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-									//System.out.println(sTestCaseID + "passed");
 									
 								}
 								else{
@@ -119,7 +128,6 @@ public static void main(String sARNumber) throws Exception {
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Update and Cancel button are not available on clicking Edit button. Please refer screenshot "+sTestCaseID+".jpg");
 									UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-									//System.out.println(sTestCaseID + "failed");
 								}
 								
 								
@@ -136,7 +144,6 @@ public static void main(String sARNumber) throws Exception {
 							if(b1==false && b2==false){
 								
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								//System.out.println(sTestCaseID + "passed");
 								
 							}
 							
@@ -145,7 +152,6 @@ public static void main(String sARNumber) throws Exception {
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Back and Next buttons are still enabled on clicking Edit. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								//System.out.println(sTestCaseID + "failed");
 							}
 						}
                            
@@ -159,7 +165,6 @@ public static void main(String sARNumber) throws Exception {
 							if(b==false){
 								
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								//System.out.println(sTestCaseID + "passed");
 								
 							}
 							
@@ -168,7 +173,6 @@ public static void main(String sARNumber) throws Exception {
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Finish button is still enabled after clicking on Edit button. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								//System.out.println(sTestCaseID + "failed");
 							}
 						}
                            
@@ -196,7 +200,6 @@ public static void main(String sARNumber) throws Exception {
 							if(b1==false && b2==false && b3==false){
 								
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								//System.out.println(sTestCaseID + "passed");
 								Thread.sleep(GlobalConstants.MedWait);
 								UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
 								UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
@@ -211,7 +214,6 @@ public static void main(String sARNumber) throws Exception {
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 								UtilityFunctions.KeyPress(KeyEvent.VK_ESCAPE, 1);
 								UtilityFunctions.KeyRelease(KeyEvent.VK_ESCAPE, 1);
-								//System.out.println(sTestCaseID + "failed");
 							}
 						}
                            
@@ -243,7 +245,6 @@ public static void main(String sARNumber) throws Exception {
    								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
    								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Update and Cancel button still exist even after clicking on Update button. Please refer screenshot "+sTestCaseID+".jpg");
    								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-   								//System.out.println(sTestCaseID + "failed");
    								
    								
    							}
@@ -253,7 +254,6 @@ public static void main(String sARNumber) throws Exception {
    								if(BaseActions.ObjExists(CreateTableWizardElements.wTitle, "Add", CreateTableWizardElements.bColumnAddcontrolID)){
    									
    									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-   									//System.out.println(sTestCaseID + "passed");
    									
    								}
    								else{
@@ -261,7 +261,6 @@ public static void main(String sARNumber) throws Exception {
    									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
    									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Add button is not available on clicking Update button. Please refer screenshot "+sTestCaseID+".jpg");
    									UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-   									//System.out.println(sTestCaseID + "failed");
    								}
    								
    								
@@ -277,7 +276,6 @@ public static void main(String sARNumber) throws Exception {
 							if(sFlag.equals("FirstColumnEdited")){
 								
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-								//System.out.println(sTestCaseID + "passed");
 								
 							}
 							
@@ -286,7 +284,6 @@ public static void main(String sARNumber) throws Exception {
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Updated column name is not available in the table of columns after clicking on Update button. Please refer screenshot "+sTestCaseID+".jpg");
 								UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-								//System.out.println(sTestCaseID + "failed");
 							}
 						}
 	                       
@@ -315,7 +312,6 @@ public static void main(String sARNumber) throws Exception {
 	   								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Top section doesnot get cleared and the bottom table viewer gets changed on clicking Cancel button. Please refer screenshot "+sTestCaseID+".jpg");
 									UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-									//System.out.println(sTestCaseID + "failed");
 	   								
 									
 								}
@@ -323,7 +319,6 @@ public static void main(String sARNumber) throws Exception {
 								else{
 									
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-									//System.out.println(sTestCaseID + "passed");
 								}
 							}
 	                       
@@ -355,7 +350,6 @@ public static void main(String sARNumber) throws Exception {
 	 	   							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
 	 	   						    Thread.sleep(GlobalConstants.MedWait);
 	 	   						    CreateTableWizardFunctions.Button("CANCEL");
- 									//System.out.println(sTestCaseID + "passed");
 	 	   								
 	 	   							}
 	 								
@@ -365,7 +359,6 @@ public static void main(String sARNumber) throws Exception {
 	 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Wizard allows to make other changes while Edit is in operation. Please refer screenshot "+sTestCaseID+".jpg");
 	 									UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 	 									CreateTableWizardFunctions.Button("CANCEL");
-	 									//System.out.println(sTestCaseID + "failed");
 	 								}
 	 							}
 	                       
@@ -389,14 +382,12 @@ public static void main(String sARNumber) throws Exception {
 								
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
  	   						    Thread.sleep(GlobalConstants.MedWait);
-							    //System.out.println(sTestCaseID + "passed");
 							}
 							else{
 								
 								UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
 									UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Wizard does not show error message on giving invalid data while adding column. Please refer screenshot "+sTestCaseID+".jpg");
 									UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-									//System.out.println(sTestCaseID + "failed");
 								
 							}
 	                       }

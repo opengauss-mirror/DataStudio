@@ -1,6 +1,18 @@
-/**
- * 
+/*
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
+
 package com.huawei.mppdbide.test.presentation.properties;
 
 import java.sql.SQLException;
@@ -54,8 +66,9 @@ import com.mockrunner.mock.jdbc.MockResultSet;
 import static org.junit.Assert.*;
 
 /**
- * @author aWX353263
+ * Title: SequenceTest
  *
+ * @since 3.0.0
  */
 public class SequenceTest extends BasicJDBCTestCaseAdapter
 {
@@ -111,7 +124,6 @@ public class SequenceTest extends BasicJDBCTestCaseAdapter
         serverInfo.setPrivilegeBasedObAccess(true);
         ConnectionProfileManagerImpl.getInstance().getDiskUtility().setOsCurrentUserFolderPath(".");
         ConnectionProfileManagerImpl.getInstance().generateSecurityFolderInsideProfile(serverInfo);
-        // profileId = connProfCache.initConnectionProfile(serverInfo);
     }
 
     /*
@@ -383,13 +395,6 @@ public class SequenceTest extends BasicJDBCTestCaseAdapter
             
             MockViewUtils.createNamespace(preparedstatementHandler, 10,
                     "newSchema");
-            // MockViewUtils.createViewMetadata(preparedstatementHandler, 10,
-            // 2);
-            /*
-             * MockViewUtils.createViewColunmMetadata(preparedstatementHandler,
-             * 1, 10);
-             */
-            // MockViewUtils.DropView(preparedstatementHandler, "mytestview1");
             profileId = connProfCache.initConnectionProfile(serverInfo,status);
             Database database = connProfCache.getDbForProfileId(profileId);
             database.getServer().setServerCompatibleToNodeGroup(true);

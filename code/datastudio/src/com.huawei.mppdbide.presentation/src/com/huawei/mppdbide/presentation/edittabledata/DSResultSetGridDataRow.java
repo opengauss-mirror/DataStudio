@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.presentation.edittabledata;
@@ -16,17 +27,14 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * Title: class
  * 
  * Description: The Class DSResultSetGridDataRow.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class DSResultSetGridDataRow implements IDSGridDataRow {
 
     /** The values. */
     protected Object[] values;
+    protected Object[] originalValues;
     private String encoding;
     private boolean isIncludeEncoding;
     private DSResultSetGridDataProvider dsResultSetGridDataProvider;
@@ -37,6 +45,15 @@ public class DSResultSetGridDataRow implements IDSGridDataRow {
     public DSResultSetGridDataRow(DSResultSetGridDataProvider dsResultSetGridDataProvider) {
         this.encoding = null;
         this.dsResultSetGridDataProvider = dsResultSetGridDataProvider;
+    }
+
+    /**
+     * Sets the originalValues.
+     *
+     * @param rowValues the new values
+     */
+    public void setOriginalValues(Object[] rowValues) {
+        this.originalValues = rowValues;
     }
 
     /**
@@ -64,6 +81,21 @@ public class DSResultSetGridDataRow implements IDSGridDataRow {
             return "";
         }
 
+    }
+
+	public Object[] getOriginalValues() {
+		return originalValues;
+	}
+
+    public Object getOriginalValue(int columnIndex) {
+        if (originalValues != null && columnIndex >= 0 && columnIndex < originalValues.length) {
+            if (isIncludeEncoding() && !isUnstructuredDatatype(columnIndex)) {
+                return getEncodedValue(originalValues[columnIndex]);
+            }
+            return originalValues[columnIndex];
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -165,5 +197,4 @@ public class DSResultSetGridDataRow implements IDSGridDataRow {
     public void setIncludeEncoding(boolean isIncludeDSEncoding) {
         this.isIncludeEncoding = isIncludeDSEncoding;
     }
-
 }

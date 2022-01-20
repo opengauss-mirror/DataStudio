@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui;
@@ -41,12 +52,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: class
  * 
  * Description: The Class FindAndReplaceDialog.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class FindAndReplaceDialog extends Dialog {
     private TextViewer textViewer;
@@ -374,12 +381,6 @@ public class FindAndReplaceDialog extends Dialog {
      * Title: class
      * 
      * Description: The Class CloseSelection.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class CloseSelection extends SelectionAdapter {
         @Override
@@ -395,12 +396,6 @@ public class FindAndReplaceDialog extends Dialog {
      * Title: class
      * 
      * Description: The Class ReplaceAllSelection.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class ReplaceAllSelection extends SelectionAdapter {
         @Override
@@ -414,12 +409,6 @@ public class FindAndReplaceDialog extends Dialog {
      * Title: class
      * 
      * Description: The Class ReplaceSelection.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class ReplaceSelection extends SelectionAdapter {
         @Override
@@ -452,12 +441,6 @@ public class FindAndReplaceDialog extends Dialog {
      * Title: class
      * 
      * Description: The Class FindSelection.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class FindSelection extends SelectionAdapter {
         @Override

@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.handler;
@@ -89,12 +100,9 @@ import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
 import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
 
 /**
- * Title: class Description: The Class RefreshObjectBrowserItem. Copyright (c)
- * Huawei Technologies Co., Ltd. 2012-2019.
+ * Title: class Description: The Class RefreshObjectBrowserItem.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class RefreshObjectBrowserItem {
 
@@ -164,9 +172,7 @@ public class RefreshObjectBrowserItem {
             final Object obj, String cmd) throws OutOfMemoryError {
         StringBuilder objectName = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);
         Database db = null;
-        // Bala issue List #2 start
         Server server = null;
-        // Bala issue List #2 end
 
         int index = 0;
         ObjectBrowser objectBrowser = UIElement.getInstance().getObjectBrowserModel();
@@ -1094,14 +1100,11 @@ public class RefreshObjectBrowserItem {
                     }
                 }
             });
-
-            // Bala issue List #2 start
             if (null == db) {
                 UIDisplayFactoryProvider.getUIDisplayStateIf().handleServerCriticalError(exception, server);
             } else {
                 UIDisplayFactoryProvider.getUIDisplayStateIf().handleDBCriticalError(exception, dbConnProfile);
             }
-            // Bala issue List #2 end
         }
         return Status.OK_STATUS;
     }
@@ -1296,12 +1299,7 @@ public class RefreshObjectBrowserItem {
     }
 
     /**
-     * Title: class Description: The Class HandleObjSel. Copyright (c) Huawei
-     * Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class HandleObjSel.
      */
     private static class HandleObjSel implements Runnable {
         @Override
@@ -1349,9 +1347,7 @@ public class RefreshObjectBrowserItem {
                 MPPDBIDELoggerUtility.info("Object may have been dropped");
                 return false;
             }
-            // DTS2016010408984 Starts
             Display.getDefault().asyncExec(new DisplaySourceCodeInEditor(newSqlObject));
-            // DTS2016010408984 Ends
         }
 
         return true;
@@ -1386,21 +1382,14 @@ public class RefreshObjectBrowserItem {
                 MPPDBIDELoggerUtility.warn("Object may have been dropped");
 
             }
-            // DTS2016010408984 Starts
             Display.getDefault().asyncExec(new DisplaySourceCodeInEditor(newSqlObject));
-            // DTS2016010408984 Ends
         }
 
         return (null == newSqlObject) ? false : true;
     }
 
     /**
-     * Title: class Description: The Class DisplaySourceCodeInEditor. Copyright
-     * (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class DisplaySourceCodeInEditor.
      */
     private static final class DisplaySourceCodeInEditor implements Runnable {
         private final DebugObjects sqlDebugObject;
@@ -1458,12 +1447,7 @@ public class RefreshObjectBrowserItem {
     }
 
     /**
-     * Title: class Description: The Class RefreshDisplayHandler. Copyright (c)
-     * Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class RefreshDisplayHandler.
      */
     private static final class RefreshDisplayHandler implements Runnable {
         private final Object obj;
@@ -1586,7 +1570,6 @@ public class RefreshObjectBrowserItem {
     private boolean isRefreshPossible() {
         Object obj = IHandlerUtilities.getObjectBrowserSelectedObject();
 
-        // DTS2016072611558 Fix Starts
         if (obj instanceof Server) {
             return findActiveDb(obj);
         }
@@ -1618,7 +1601,6 @@ public class RefreshObjectBrowserItem {
             }
         }
 
-        // DTS2016072611558 Fix Ends
         boolean isInstanceTrueCheck = validateForNamespaceChild(obj);
 
         boolean isInstanceTrue = validateForNamespaceChildGroup(obj, isInstanceTrueCheck);

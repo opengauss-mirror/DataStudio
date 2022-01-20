@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.core;
@@ -53,12 +64,9 @@ import com.huawei.mppdbide.view.utils.icon.IconUtility;
 import com.huawei.mppdbide.view.utils.icon.IiconPath;
 
 /**
- * Title: class Description: The Class ConsoleMessageWindow. Copyright (c)
- * Huawei Technologies Co., Ltd. 2012-2019.
+ * Title: class Description: The Class ConsoleMessageWindow.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class ConsoleMessageWindow extends SelectMenuItem {
     private TextViewer textViewer;
@@ -72,12 +80,7 @@ public class ConsoleMessageWindow extends SelectMenuItem {
     private MessageQueue msgQueue;
 
     /**
-     * Title: enum Description: The Enum LOGTYPE. Copyright (c) Huawei
-     * Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: enum Description: The Enum LOGTYPE.
      */
     private enum LOGTYPE {
         ERROR, WARNING, INFO, FATAL, NOTICE, LOGTYPE_BUTT
@@ -334,12 +337,7 @@ public class ConsoleMessageWindow extends SelectMenuItem {
     }
 
     /**
-     * Title: class Description: The Class LogMsgOnUICallback. Copyright (c)
-     * Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class LogMsgOnUICallback.
      */
     private class LogMsgOnUICallback implements Runnable {
         private String logMessage;
@@ -691,12 +689,7 @@ public class ConsoleMessageWindow extends SelectMenuItem {
     }
 
     /**
-     * Title: class Description: The Class LazyloadConsoleMessages. Copyright
-     * (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class LazyloadConsoleMessages.
      */
     private final class LazyloadConsoleMessages extends UIJob {
         private static final int SCHEDULE_TIME = 250;

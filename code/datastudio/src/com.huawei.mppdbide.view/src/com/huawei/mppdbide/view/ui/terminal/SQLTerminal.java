@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui.terminal;
@@ -152,12 +163,8 @@ import com.huawei.mppdbide.view.workerjob.UIWorkerJob;
  * Title: class
  * 
  * Description: The Class SQLTerminal.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart, SQLTerminalAutoSaveIf {
     private static final int BUTTIONS_NUMBER = 9;
@@ -650,15 +657,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
 
     /**
      * Title: SourceModifyListener
-     * 
-     * Description:
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * 
-     * @author sWX316469
-     * @version [DataStudio 6.5.1, 16-Oct-2019]
-     * @since 16-Oct-2019
      */
 
     public class SourceModifyListener implements ModifyListener {
@@ -968,12 +966,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Title: class
      * 
      * Description: The Class AnnotationConfiguration.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private static final class AnnotationConfiguration implements IInformationControlCreator {
 
@@ -993,12 +985,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Title: class
      * 
      * Description: The Class AnnotationHover.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     // annotation hover manager
     private class AnnotationHover implements IAnnotationHover, ITextHover {
@@ -1679,17 +1665,8 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
 
     /**
      * 
-     * 
-     * @Author: wWX633190
-     * 
-     * @Date: April 15,4
-     * 
      * @Title: createRollbackButton
-     * 
      * @Description: Create a manual rollback button
-     *
-     * 
-     * 
      */
     private void createRollbackButton() {
         Composite rollbackComposite = new Composite(toolbarComposite, SWT.None);
@@ -1757,18 +1734,9 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
     }
 
     /**
-     * 
-     * 
-     * @Author: wWX633190
-     * 
-     * @Date: April 15,4
-     * 
+     *  
      * @Title: createCommitButton
-     * 
      * @Description: Create a manual submit button
-     *
-     * 
-     * 
      */
     private void createCommitButton() {
         Composite commitComposite = new Composite(toolbarComposite, SWT.None);
@@ -2304,12 +2272,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Title: class
      * 
      * Description: The Class SQLTerminalResultConfig.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class SQLTerminalResultConfig implements IResultConfig {
 
@@ -2384,12 +2346,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Title: class
      * 
      * Description: The Class SelectionListenerHelper.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private static final class SelectionListenerHelper implements SelectionListener {
         private ECommandService cmdService;
@@ -2529,12 +2485,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Title: class
      * 
      * Description: The Class SqlTerminalHelper.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class SqlTerminalHelper {
 
@@ -3247,8 +3197,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Manual rollback.
      *
      * @param dbConnection the db connection
-     * @Author: wWX633190
-     * @Date: April 15, 2019
+     * 
      * @Title: manualRollback
      * @Description: Manually rollback the transaction
      */
@@ -3264,8 +3213,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Manual commit.
      *
      * @param dbConnection the db connection
-     * @Author: wWX633190
-     * @Date: April 15, 2019
+     * 
      * @Title: manualCommit
      * @Description: Manually commit the transaction
      */
@@ -3281,8 +3229,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Change transaction buttons status.
      *
      * @param status the status
-     * @Author: wWX633190
-     * @Date: April 15,2019
+     * 
      * @Title: changeTransactionButtonsStatus
      * @Description: Change the status of manual commit and rollback buttons
      */
@@ -3298,12 +3245,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Title: class
      * 
      * Description: The Class TransactionCommitWorker.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class TransactionCommitWorker extends TransactionWorker {
         private DBConnection dbConnection;
@@ -3331,12 +3272,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Title: class
      * 
      * Description: The Class TransactionRollbackWorker.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private final class TransactionRollbackWorker extends TransactionWorker {
         private DBConnection dbConnection;
@@ -3374,12 +3309,6 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Title: class
      * 
      * Description: The Class TransactionWorker.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private abstract class TransactionWorker extends UIWorkerJob {
         public TransactionWorker(String name, Object family) {
@@ -3440,8 +3369,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      *
      * @param executeMessage the execute message
      * @return the progress label for transaction
-     * @Author: wWX633190
-     * @Date: April 15,4
+     * 
      * @Title: getProgressBarLabel
      * @Description: Bottom status bar job information
      */
@@ -3465,8 +3393,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * @param diaTitle the dia title
      * @param diaBody the dia body
      * @param e the e
-     * @Author: wWX633190
-     * @Date: April 25, 2019
+     * 
      * @Title: generateExceptionLogAndDialog
      * @Description: Generate exception logs and dialogs
      */
@@ -3479,8 +3406,7 @@ public class SQLTerminal extends AbstractAutoSaveObject implements ISaveablePart
      * Change bottom bar.
      *
      * @param message the message
-     * @Author: wWX633190
-     * @Date: April 26, 2019
+     * 
      * @Title: changeBottomBar
      * @Description: Change objBrowserStatusbar message
      */

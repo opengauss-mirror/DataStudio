@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.presentation.exportdata;
@@ -24,16 +35,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 /**
  * Title: ExportZipData
  * 
- * Description:
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * 
- * @author xWX634836
- * @version [DataStudio 6.5.1, 11-Oct-2019]
- * @since Jun 14, 2019
+ * @since 3.0.0
  */
-
 public class ExportZipData {
     private ZipOutputStream out;
     private BufferedInputStream bis;
@@ -46,8 +49,6 @@ public class ExportZipData {
      * @param srcFilePath the src file path
      * @param zipFilePath the zip file path
      * @throws FileCompressException the file compress exception
-     * @Author: lijialiang(l00448174)
-     * @Date: Aug 12, 2019
      * @Title: doCompress
      * @Description: the entrance for performing compression
      */
@@ -149,8 +150,6 @@ public class ExportZipData {
      * @param zipFilePath the zip file path
      * @param fileSuffix the file suffix
      * @return the temp path str
-     * @Author: lijialiang(l00448174)
-     * @Date: Aug 14, 2019
      * @Title: getTempPathStr
      */
     public static String getTempPathStr(String zipFilePath, String fileSuffix, String tempPath) {

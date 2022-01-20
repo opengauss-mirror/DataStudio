@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.bl.serverdatacache;
@@ -41,12 +52,7 @@ import com.huawei.mppdbide.utils.loader.MessageConfigLoader;
 import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 /**
- * Title: class Description: The Class Namespace. Copyright (c) Huawei
- * Technologies Co., Ltd. 2012-2019.
- *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * Title: class Description: The Class Namespace.
  */
 
 public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObject, ILazyLoadObject, INamespace {
@@ -116,7 +122,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     /**
      * The Constant QUERY_DBG_OBJ_PRIVILEGE.
      */
-    public static final String QUERY_DBG_OBJ_PRIVILEGE = " and has_function_privilege(pr.oid, 'EXECUTE')";   
+    public static final String QUERY_DBG_OBJ_PRIVILEGE = " and has_function_privilege(pr.oid, 'EXECUTE')";
     private Set<String> errorTableList;
 
     /**
@@ -239,6 +245,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         clearCollection(foreigntables);
         clearCollection(sequence);
         clearCollection(synonyms);
+        clearCollection(triggerGroups);
     }
 
     /**
@@ -251,6 +258,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         foreigntables = null;
         sequence = null;
         synonyms = null;
+        triggerGroups = null;
     }
 
     /**
@@ -943,6 +951,10 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         synonyms.addToGroup(synonym);
     }
 
+    public void addTrigerToGroup(TriggerMetaData trigger) {
+    	triggerGroups.addToGroup(trigger);
+    }
+
     /**
      * Fetch level 2 view column info.
      *
@@ -1452,6 +1464,23 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     }
 
     /**
+     * Gets the searched triggers.
+     *
+     * @param tblId   the tbl id
+     * @param tblName the tbl name
+     * @return the searched trigger.
+     */
+    public TriggerMetaData getSearchedTrigger(int tblId, String tblName) {
+        TriggerMetaData triggerMetaData = getTriggerObjectGroup().getObjectById(tblId);
+        if (triggerMetaData == null) {
+            triggerMetaData = new TriggerMetaData(tblId, tblName);
+            addTrigerToGroup(triggerMetaData);
+        }
+        return triggerMetaData;
+    }
+
+
+    /**
      * Find exact matching child objects.
      *
      * @param prefix the prefix
@@ -1570,12 +1599,8 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     }
 
     /**
-     * Title: class Description: The Class NamespaceComparator. Copyright (c)
-     * Huawei Technologies Co., Ltd. 2012-2019.
+     * Title: class Description: The Class NamespaceComparator. 
      *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private static class NamespaceComparator implements Comparator<TableMetaData>, Serializable {
 
@@ -1622,6 +1647,8 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
             removeFromCollection(tables, obj);
         } else if (obj instanceof SynonymMetaData) {
             removeFromCollection(synonyms, obj);
+        } else if (obj instanceof TriggerMetaData) {
+            removeFromCollection(triggerGroups, obj);
         }
     }
 
@@ -1754,12 +1781,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     }
 
     /**
-     * Title: class Description: The Class TableViewManager. Copyright (c)
-     * Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class TableViewManager.
      */
     private class TableViewManager {
 
@@ -2102,12 +2124,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
     }
 
     /**
-     * Title: class Description: The Class DebugObjectsManager. Copyright (c)
-     * Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: class Description: The Class DebugObjectsManager.
      */
     private class DebugObjectsManager {
 
@@ -2444,8 +2461,6 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
      * Gets the synonyms.
      *
      * @return the synonyms
-     * @Author: c00550043
-     * @Date: Mar 8, 2020
      * @Title: getSynonyms
      * @Description: get the the synonyms
      */
@@ -2529,7 +2544,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * isSynoymSupported
-     * 
+     *
      * @return boolean isSynonym
      */
     public boolean isSynoymSupported() {
@@ -2538,7 +2553,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * setSynoymSupported
-     * 
+     *
      * @param isSynoymSupported boolean
      */
     public void setSynoymSupported(boolean isSynoymSupported) {
@@ -2547,7 +2562,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * validateView
-     * 
+     *
      * @return boolean value
      */
     public boolean validateView(long oid) {
@@ -2564,7 +2579,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * getTableObjectById
-     * 
+     *
      * @param oid long
      * @return PartitionTable object
      * @throws SQLException exception
@@ -2579,7 +2594,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * getForeignTableById
-     * 
+     *
      * @param oid value
      * @return object partition
      * @throws SQLException
@@ -2594,7 +2609,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * validateAndGetTableObjGrp
-     * 
+     *
      * @return boolean value
      */
     public boolean validateAndGetTableObjGrp(long oId) {
@@ -2604,7 +2619,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * validateTableWithId
-     * 
+     *
      * @param group grp
      * @return boolean
      */
@@ -2614,7 +2629,7 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * getTableObjGroup
-     * 
+     *
      * @return table object group
      */
     private TableObjectGroup getTableObjGroup(long oId) {
@@ -2627,16 +2642,16 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
 
     /**
      * removeTableFRomSearchPool
-     * 
+     *
      * @param name string
      */
     public void removeTableFRomSearchPool(String name) {
         getDatabase().getSearchPoolManager().getTableTrie().remove(name);
     }
-    
+
     /**
      * getNamespceComments namespace commenst
-     * 
+     *
      * @param conn connection
      * @return string query
      * @throws DatabaseOperationException exception
@@ -2669,10 +2684,10 @@ public class Namespace extends BatchDropServerObject implements GaussOLAPDBMSObj
         }
         return seqDDL.toString();
     }
-    
+
     /**
      * getErrorTableList
-     * 
+     *
      * @return list error table
      */
     public Set<String> getErrorTableList() {

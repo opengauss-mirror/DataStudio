@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -62,128 +77,6 @@ public class Demo {
 		else
 			BaseActions.Click(ExpQueryElements.wFileOpenWindow, "",ExpQueryElements.sCancelButton);
 		Thread.sleep(GlobalConstants.MedWait);
-
-
-		/*UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-		UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-		Thread.sleep(GlobalConstants.MinWait);
-		ObjectBrowserPane.Auto_Table_Navigation();
-		Thread.sleep(GlobalConstants.MinWait);
-		ObjectBrowserPane.setSchema();
-		Thread.sleep(GlobalConstants.MedWait);			
-		UtilityFunctions.KeyPress(KeyEvent.VK_A, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_A,1);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER,1);
-		BaseActions.Click(TablePropertyElements.sSchemaTitle, "", TablePropertyElements.btnOK);
-		Thread.sleep(GlobalConstants.MedWait);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-		UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-		Thread.sleep(GlobalConstants.MinWait);
-		ObjectBrowserPane.Auto_Table_Navigation();
-		Thread.sleep(GlobalConstants.MinWait);
-		UtilityFunctions.KeyPress(KeyEvent.VK_DOWN, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_DOWN, 1);
-		Thread.sleep(GlobalConstants.MinWait);
-		ViewFunctions.createViewObjectBrowser();
-		Thread.sleep(GlobalConstants.MinWait);
-		MultipleTerminal.TerminalEditorClear(2);
-		Thread.sleep(GlobalConstants.MinWait);
-		MultipleTerminal.SetFunction(2, "CREATE VIEW auto.sameview AS select * from auto.auto_largedata;");
-		Thread.sleep(GlobalConstants.MinWait);
-		QueryEditor.ExecuteButton();
-		Thread.sleep(GlobalConstants.MinWait);
-		String sFlag1 = MultipleTerminal.TerminalConsoleCopy(2);
-		//System.out.println(sFlag1);
-		MultipleTerminal.CloseTerminal(2);
-		Thread.sleep(GlobalConstants.MedWait);
-		ObjectBrowserPane.Auto_Import_Navigation();
-		Thread.sleep(GlobalConstants.MinWait);
-		ObjectBrowserPane.setSchema();
-		Thread.sleep(GlobalConstants.MedWait);			
-		UtilityFunctions.KeyPress(KeyEvent.VK_A, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_A,1);
-		UtilityFunctions.KeyPress(KeyEvent.VK_ENTER, 1);
-		UtilityFunctions.KeyRelease(KeyEvent.VK_ENTER,1);
-		BaseActions.Click(TablePropertyElements.sSchemaTitle, "", TablePropertyElements.btnOK);
-		 */
-
-
-		/*
-	public static String searchtext()
-	{
-		try {
-			String stringSearch = "02/22/17";
-			// Open the file c:\test.txt as a buffered reader
-			BufferedReader bf = new BufferedReader(new FileReader("C:\\Project_DB_Tool_Automation_Suite\\IDE\\IDE_Tool\\Data Studio\\logs\\Data Studio.log"));
-
-			// Start a line count and declare a string to hold our current line.
-			int linecount = 0;
-			String line;
-
-			// Let the user know what we are searching for
-			System.out.println("Searching for " + stringSearch + " in file...");
-
-			// Loop through each line, stashing the line into our line variable.
-			while (( line = bf.readLine()) != null){
-				// Increment the count and find the index of the word
-				linecount++;
-				int indexfound = line.indexOf(stringSearch);
-
-				// If greater than -1, means we found the word
-				if (indexfound > -1) {
-					System.out.println("Word was found at position " + indexfound + " on line " + linecount);
-				}
-			}
-
-			// Close the file after done searching
-			bf.close();
-		}
-		catch (IOException e) {
-			System.out.println("IO Error Occurred: " + e.toString());
-		}
-
-		return null ;
-	}
-
-	public static void main(String[] args) throws Exception {
-
-
-
-		try {
-			String stringSearch = "02/22/17";
-			// Open the file c:\test.txt as a buffered reader
-			BufferedReader bf = new BufferedReader(new FileReader("C:\\Project_DB_Tool_Automation_Suite\\IDE\\IDE_Tool\\Data Studio\\logs\\Data Studio.log"));
-
-			// Start a line count and declare a string to hold our current line.
-			int linecount = 0;
-			String line;
-
-			// Let the user know what we are searching for
-			System.out.println("Searching for " + stringSearch + " in file...");
-
-			// Loop through each line, stashing the line into our line variable.
-			while (( line = bf.readLine()) != null){
-				// Increment the count and find the index of the word
-				linecount++;
-				int indexfound = line.indexOf(stringSearch);
-
-				// If greater than -1, means we found the word
-				if (indexfound > -1) {
-					System.out.println("Word was found at position " + indexfound + " on line " + linecount);
-				}
-			}
-
-			// Close the file after done searching
-			bf.close();
-		}
-		catch (IOException e) {
-			System.out.println("IO Error Occurred: " + e.toString());
-		}*/
 	}
 
 
