@@ -70,7 +70,7 @@ public class PasswordDialog extends UserInputDialog {
      */
     @Override
     protected String getWindowTitle() {
-        return MessageConfigLoader.getProperty(IMessagesConstants.ENTRE_PASSWORD);
+        return MessageConfigLoader.getProperty(IMessagesConstants.ENTRE_CIPHER);
     }
 
     /**
@@ -80,7 +80,7 @@ public class PasswordDialog extends UserInputDialog {
      */
     @Override
     protected String getHeader() {
-        return MessageConfigLoader.getProperty(IMessagesConstants.ENTER_CURRENT_USER_PWD);
+        return MessageConfigLoader.getProperty(IMessagesConstants.ENTER_CURRENT_USER_CIPHER);
     }
 
     /**

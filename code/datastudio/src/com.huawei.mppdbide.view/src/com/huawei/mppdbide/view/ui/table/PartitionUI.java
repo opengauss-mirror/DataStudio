@@ -670,7 +670,7 @@ public class PartitionUI {
             } else {
                 isPartitionUpdate = true;
                 createPartitionTable
-                        .setErrorMsg(MessageConfigLoader.getProperty(IMessagesConstants.PARTITION_EDIT_MESSAGE));
+                        .setErrorMsg(MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EDIT_MESSAGE));
                 enableDisableItems(MessageConfigLoader.getProperty(IMessagesConstants.UPDATE_MSG),
                         MessageConfigLoader.getProperty(IMessagesConstants.CANCEL_MSG), false);
                 tblPartitions.getSelection()[0].setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));

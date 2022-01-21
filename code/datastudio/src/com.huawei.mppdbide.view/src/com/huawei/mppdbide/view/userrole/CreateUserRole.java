@@ -958,7 +958,7 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
 
         Label passwordName = new Label(grpTableProperties, SWT.LEFT);
         passwordName.setFont(FontAndColorUtility.getFont("Arial", 9, SWT.BOLD, grpTableProperties.getParent()));
-        passwordName.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_USERROLE_PASSWORD));
+        passwordName.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_USERROLE_CIPHER));
 
         int txtProp = SWT.BORDER | SWT.SINGLE | SWT.PASSWORD;
 
@@ -972,7 +972,7 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
 
         Label passwordName2 = new Label(grpTableProperties, SWT.LEFT);
         passwordName2.setFont(FontAndColorUtility.getFont("Arial", 9, SWT.BOLD, grpTableProperties.getParent()));
-        passwordName2.setText(MessageConfigLoader.getProperty(IMessagesConstants.ENTER_PASSWORD_TWICE));
+        passwordName2.setText(MessageConfigLoader.getProperty(IMessagesConstants.ENTER_CIPHER_TWICE));
 
         passwordInput2 = new Text(grpTableProperties, txtProp);
         GridData passwordInput2GD = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);

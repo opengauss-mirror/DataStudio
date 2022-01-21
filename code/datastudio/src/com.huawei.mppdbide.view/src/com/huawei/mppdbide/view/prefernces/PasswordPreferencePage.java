@@ -51,7 +51,7 @@ public class PasswordPreferencePage extends AbstractPreferencePage {
      * Instantiates a new password preference page.
      */
     public PasswordPreferencePage() {
-        super(MessageConfigLoader.getProperty(IMessagesConstants.PASSWORD_PREFERENCE_OPTION));
+        super(MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_PREFERENCE_OPTION));
     }
 
     /**
@@ -87,7 +87,7 @@ public class PasswordPreferencePage extends AbstractPreferencePage {
      */
     private void createPasswordExpiryGroup(Composite cmp1) {
         Group passwordExpireGr = new Group(cmp1, SWT.NONE);
-        passwordExpireGr.setText(MessageConfigLoader.getProperty(IMessagesConstants.PASSWORD_EXPIRY_TITLE));
+        passwordExpireGr.setText(MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_EXPIRY_TITLE));
         passwordExpireGr.setLayout(new GridLayout());
         passwordExpireGr.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 
@@ -122,7 +122,7 @@ public class PasswordPreferencePage extends AbstractPreferencePage {
      */
     private void createSavePasswordGroup(Composite cmp1) {
         Group savePasswordGrp = new Group(cmp1, SWT.NONE);
-        savePasswordGrp.setText(MessageConfigLoader.getProperty(IMessagesConstants.PASSWORD_PREFERENCE_OPTION_TITLE));
+        savePasswordGrp.setText(MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_PREFERENCE_OPTION_TITLE));
         savePasswordGrp.setLayout(new GridLayout());
         savePasswordGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
         yesButton = new Button(savePasswordGrp, SWT.RADIO);

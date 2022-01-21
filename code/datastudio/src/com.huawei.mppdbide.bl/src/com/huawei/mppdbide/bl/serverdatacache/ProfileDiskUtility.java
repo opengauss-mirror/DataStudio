@@ -561,7 +561,7 @@ public class ProfileDiskUtility {
             }
             server.deleteCharAt(server.length() - 1);
             exceptionList
-                    .add(MessageConfigLoader.getProperty(IMessagesConstants.PSWD_DECRYPT_ERROR_MSG, server.toString()));
+                    .add(MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_DECRYPT_ERROR_MSG, server.toString()));
             pswdDecFailList.clear();
         }
 

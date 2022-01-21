@@ -51,7 +51,7 @@ public interface IDSCommandlineOptions {
     String USER_NAME = "userName";
 
     /* database user password */
-    String USER_PASSWORD = "password";
+    String USER_CIPHER = "password";
 
     /*
      * save password option
@@ -60,16 +60,16 @@ public interface IDSCommandlineOptions {
      * 
      * Default value: current_session
      */
-    String SAVE_PASSWORD = "savePassword";
+    String SAVE_CIPHER = "savePassword";
 
     /* save password do not save option */
-    String SAVE_PASSWORD_DONT_SAVE = "do_not_save";
+    String SAVE_CIPHER_DONT_SAVE = "do_not_save";
 
     /* save password current session option */
-    String SAVE_PASSWORD_CURR_SESSION = "current_session";
+    String SAVE_CIPHER_CURR_SESSION = "current_session";
 
     /* save password default option */
-    String SAVE_PASSWORD_DEFAULT = SAVE_PASSWORD_CURR_SESSION;
+    String SAVE_CIPHER_DEFAULT = SAVE_CIPHER_CURR_SESSION;
 
     /* Enable SSL */
     String SSL_ENABLE = "sslEnable";

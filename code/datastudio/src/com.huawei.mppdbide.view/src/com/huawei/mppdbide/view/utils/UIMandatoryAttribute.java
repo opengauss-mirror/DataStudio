@@ -66,12 +66,12 @@ public final class UIMandatoryAttribute {
             }
             case PASSWORD_TOOLTIPS: {
                 // add for userrole by martin
-                tooltripName = MessageConfigLoader.getProperty(IMessagesConstants.ENTER_PASSWORD);
+                tooltripName = MessageConfigLoader.getProperty(IMessagesConstants.ENTER_CIPHER);
                 break;
             }
             case PASSWORD_TWICE_TOOLTIPS: {
                 // add for userrole by martin
-                tooltripName = MessageConfigLoader.getProperty(IMessagesConstants.ENTER_PASSWORD_TWICE);
+                tooltripName = MessageConfigLoader.getProperty(IMessagesConstants.ENTER_CIPHER_TWICE);
                 break;
             }
             default: {

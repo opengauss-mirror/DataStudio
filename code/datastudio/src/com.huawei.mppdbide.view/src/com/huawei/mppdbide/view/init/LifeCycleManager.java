@@ -195,7 +195,7 @@ public class LifeCycleManager {
 
             boolean isValidationSuccess = true;
             if (connParamMap.size() > 0 && System.console() != null) {
-                if (connParamMap.containsKey(IDSCommandlineOptions.USER_PASSWORD)) {
+                if (connParamMap.containsKey(IDSCommandlineOptions.USER_CIPHER)) {
                     handleUserPasswordEnteredInCommandline();
                     return;
                 }
@@ -269,7 +269,7 @@ public class LifeCycleManager {
                 case IDSCommandlineOptions.HOST_PORT: {
                     return validateHostPort(key, value);
                 }
-                case IDSCommandlineOptions.SAVE_PASSWORD: {
+                case IDSCommandlineOptions.SAVE_CIPHER: {
                     return validateSavePasswordOption(key, value);
                 }
                 default: {

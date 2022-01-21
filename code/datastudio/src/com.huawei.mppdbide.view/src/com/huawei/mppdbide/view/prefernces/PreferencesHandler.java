@@ -264,7 +264,7 @@ public class PreferencesHandler {
                 MessageConfigLoader.getProperty(IMessagesConstants.SECURITY_NODE), new SecurityPreferencePage());
 
         PreferenceNode passwordNode = new PreferenceNode(
-                MessageConfigLoader.getProperty(IMessagesConstants.PASSWORD_PREFERENCE_OPTION),
+                MessageConfigLoader.getProperty(IMessagesConstants.CIPHER_PREFERENCE_OPTION),
                 new PasswordPreferencePage());
         PreferenceNode securtiyDisclaimerNode = new PreferenceNode(
                 MessageConfigLoader.getProperty(IMessagesConstants.SECURITY_WARNING_OPTION),

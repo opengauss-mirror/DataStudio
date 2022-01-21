@@ -477,15 +477,16 @@ public class AESAlgorithmUtility {
      * @throws InvalidKeySpecException the invalid key spec exception
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public final String generatePBKDF(String password, boolean isGenWorkingKeyFlow)
+    public final String generatePBKDF(String pwdString, boolean isGenWorkingKeyFlow)
             throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         int iterations = MPPDBIDEConstants.PBKDF_ITERATIONS;
-        char[] chars = password.toCharArray();
+        char[] chars = pwdString.toCharArray();
         byte[] salt = isGenWorkingKeyFlow ? SecureRandomGenerator.getRandomNumber() : getSalt();
 
         PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
         byte[] hash = skf.generateSecret(spec).getEncoded();
+        Arrays.fill(chars, (char) 0x00);
         return toHex(hash);
     }
 
