@@ -122,9 +122,9 @@ public class PropertiesSynonymImpl implements IServerObjectProperties {
         str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_SYNONYM_NAME),
                 synonymMetaData.getName()).getProp());
         str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_SYNONYM_OWNER),
-                synonymMetaData.getOwner()).getProp());
-        str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_OBJECT_OWNER),
                 synonymMetaData.getObjectOwner()).getProp());
+        str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_OBJECT_OWNER),
+                synonymMetaData.getOwner()).getProp());
         str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_OBJECT_NAME),
                 synonymMetaData.getObjectName()).getProp());
         return str;
