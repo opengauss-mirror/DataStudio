@@ -1,7 +1,0 @@
-package object_repository;
-
-public class ErrorElements {
-
-	/*Parameters for error windows and elements*/
-	public static String wExePlanError = "Execution Plan For Multiple Queries";
-}
