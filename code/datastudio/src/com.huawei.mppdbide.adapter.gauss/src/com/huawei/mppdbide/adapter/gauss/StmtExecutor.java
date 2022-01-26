@@ -272,9 +272,7 @@ public class StmtExecutor {
             MPPDBIDELoggerUtility.info("ADAPTER: Sending user query execution request to server");
             MPPDBIDELoggerUtility.perf("EXECUTION", ILogger.PERF_EXECUTE_STMT, true);
             if (preparedStmt != null) {
-                // DTS2015111110302 Fix starts
                 preparedStmt.setFetchSize(fetchCount);
-                // DTS2015111110302 Fix ends
                 retType = preparedStmt.execute();
                 setOutResultList(null);
             } else if (stmt != null) {

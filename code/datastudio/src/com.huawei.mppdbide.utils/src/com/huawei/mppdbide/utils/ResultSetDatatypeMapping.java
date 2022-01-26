@@ -435,10 +435,8 @@ public final class ResultSetDatatypeMapping {
     /**
      * returns Interval Year to Month value.
      *
-     * @author aWX553586
      * @param interval the interval
      * @return String
-     * @since 21 August, 2019
      */
     private static String getIntervalYrToMonthValue(String interval) {
         StringBuilder intervalDS = new StringBuilder(MPPDBIDEConstants.STRING_BUILDER_CAPACITY);

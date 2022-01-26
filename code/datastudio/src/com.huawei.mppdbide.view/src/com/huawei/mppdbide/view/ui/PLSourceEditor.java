@@ -1043,10 +1043,8 @@ public class PLSourceEditor extends AbstractAutoSaveObject
     private void addExecDbObjectMenuItem(Menu menu) {
         final ExecuteEditorItem executeEditorItem = new ExecuteEditorItem();
         menuExecDBObj = new MenuItem(menu, SWT.PUSH);
-        // DTS2016011900019 Starts
         menuExecDBObj.setText(
                 MessageConfigLoader.getProperty(IMessagesConstants.STATUS_MSG_PLVIEWER_OPTION_EXECUTE_DB_OBJECT));
-        // DTS2016011900019 Ends
         menuExecDBObj.addSelectionListener(new ExecObjSelectListener(executeEditorItem));
         menuExecDBObj.setImage(IconUtility.getIconImage(IiconPath.ICO_RUN, this.getClass()));
     }
