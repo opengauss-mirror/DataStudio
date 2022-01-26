@@ -25,7 +25,7 @@ import com.huawei.mppdbide.presentation.resultsetif.IConsoleResult;
 /**
  * Title: ExecutionPlanQueryExecuteContext
  * 
- * Description:The Class ExecutionPlanQueryExecuteContext.@author a00415838 this
+ * Description:The Class ExecutionPlanQueryExecuteContext.this
  * context is used in case of explain query is re-executed due to refresh from
  * execution plan tab
  *

@@ -21,8 +21,6 @@ DESCRIPTION - THIS PROGRAM COVERS THE BELOW TEST SCRIPTS
 3.SDV_FIA_PLIDE_RSLTWDW_EXPORT_010_587-->Export query result from Object browser.
 4.SDV_FUNVAL_PLIDE_RSLTWDW_EXPORT_004-->Export query result after moving to different page.
 5.SDV_FUNVAL_PLIDE_RSLTWDW_EXPORT_002-->Export zero records to csv file from the icon.
-6.DTS2015120808516-->IDE allows to export the file in txt file.
-7.DTS2015120808334-->IDE allows to save the file with no file name.
  *************************************************************************/
 
 package test_scripts;

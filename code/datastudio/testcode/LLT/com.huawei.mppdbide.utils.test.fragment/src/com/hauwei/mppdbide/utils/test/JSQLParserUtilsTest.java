@@ -901,12 +901,12 @@ public class JSQLParserUtilsTest
     	assertFalse(queryResultEditSupported);
     }
     
-    /* Test cases for customer issue : DTS2018122006310  
+    /* 
      * Table is not editable when query like below is given 
      * SELECT a.* FROM table as a */
     
     @Test
-    public void test_DTS2018122006310_01()
+    public void test_issue_01()
     {
         boolean queryResultEditSupported = false;
         try
@@ -922,7 +922,7 @@ public class JSQLParserUtilsTest
     }
     
     @Test
-    public void test_DTS2018122006310_02()
+    public void test_issue_02()
     {
         boolean queryResultEditSupported = false;
         try
@@ -938,7 +938,7 @@ public class JSQLParserUtilsTest
     }
     
     @Test
-    public void test_DTS2018122006310_03()
+    public void test_issue_03()
     {
         boolean queryResultEditSupported = false;
         try
@@ -954,7 +954,7 @@ public class JSQLParserUtilsTest
     }
     
     @Test
-    public void test_DTS2018122006310_04()
+    public void test_issue_04()
     {
         boolean queryResultEditSupported = false;
         try
@@ -970,7 +970,7 @@ public class JSQLParserUtilsTest
     }
     
     @Test
-    public void test_DTS2018122006310_05()
+    public void test_issue_05()
     {
         boolean queryResultEditSupported = false;
         try

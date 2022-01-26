@@ -232,10 +232,6 @@ public class ObjectBrowser implements Observer, ObjectBrowserIf {
 
         viewer.addSelectionChangedListener(new OBSelectionChangedListener());
 
-        // Defect fix for DTS2013012908852 Start
-        // DTS2013012908852: Code is removed as part of <Batch Drop>
-        // Defect fix for DTS2013012908852 End
-
         viewer.addTreeListener(new TreeviwerHelper());
 
         viewer.addSelectionChangedListener(new ViewerSelectionChangeListener());
@@ -665,7 +661,6 @@ public class ObjectBrowser implements Observer, ObjectBrowserIf {
      * Refresh.
      */
     public void refresh() {
-        // DTS2014102803122 start
         viewer.getTree().setRedraw(false);
 
         viewer.setInput(DBConnProfCache.getInstance().getServersList());

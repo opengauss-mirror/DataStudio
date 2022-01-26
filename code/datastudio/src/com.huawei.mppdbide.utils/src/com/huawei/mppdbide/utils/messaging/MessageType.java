@@ -24,6 +24,6 @@ package com.huawei.mppdbide.utils.messaging;
  * @since 3.0.0
  */
 public enum MessageType {
-    NOTICE, // Start DTS2013011407363
+    NOTICE, 
     INFO, WARN, ERROR
 }
