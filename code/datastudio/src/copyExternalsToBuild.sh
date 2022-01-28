@@ -10,8 +10,6 @@ rm -rf ../docs
 rm -rf $DEST/../build
 rm -rf $DEST/db_assistant
 
-rm -rf $DEST/com.huawei.mppdbide.presentation/src-test/com/huawei/mppdbide/test-libs
-mkdir $DEST/com.huawei.mppdbide.presentation/src-test/com/huawei/mppdbide/test-libs
 cp $SOURCE/platform/Gauss200/gs_jdbc/gsjdbc4.jar $DEST/com.huawei.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/hamcrest-api-1.0.jar $DEST/com.huawei.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $DEST/com.huawei.mppdbide.presentation/src-test/.
@@ -92,7 +90,7 @@ cp $SOURCE/3rd_src/target/dependency/jsqlparser-3.2.jar $TEST/com.huawei.mppdbid
 cp $SOURCE/3rd_src/target/dependency/org.eclipse.osgi-3.9.1.v20130814-1242.jar $TEST/com.huawei.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-io-2.11.0.jar $TEST/com.huawei.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/powermock-api-mockito-1.6.6.jar $TEST/com.huawei.mppdbide.bl.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/cpowermock-api-mockito-common-1.6.6.jar $TEST/com.huawei.mppdbide.bl.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/powermock-api-mockito-common-1.6.6.jar $TEST/com.huawei.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/powermock-api-support-1.6.6.jar $TEST/com.huawei.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/powermock-core-1.6.6.jar $TEST/com.huawei.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/powermock-api-easymock-1.6.6.jar $TEST/com.huawei.mppdbide.bl.test.fragment/lib/.
