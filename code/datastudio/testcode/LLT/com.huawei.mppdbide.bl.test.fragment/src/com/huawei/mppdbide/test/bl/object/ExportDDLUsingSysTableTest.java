@@ -1,7 +1,5 @@
 package com.huawei.mppdbide.test.bl.object;
 
-import static org.junit.Assert.fail;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +76,7 @@ public class ExportDDLUsingSysTableTest extends BasicJDBCTestCaseAdapter {
     int processTimeout = MPPDBIDEConstants.PROCESS_TIMEOUT;
 
     @Before
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         super.setUp();
         CommonLLTUtils.runLinuxFilePermissionInstance();
         connection = new MockConnection();
@@ -120,7 +118,7 @@ public class ExportDDLUsingSysTableTest extends BasicJDBCTestCaseAdapter {
     }
 
     @After
-    public void tearDown() throws Exception {
+    protected void tearDown() throws Exception {
         super.tearDown();
 
         database = connProfCache.getDbForProfileId(profileId);

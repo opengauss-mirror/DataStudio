@@ -15,10 +15,6 @@
 
 package com.huawei.mppdbide.test.bl.table;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.Arrays;

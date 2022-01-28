@@ -101,6 +101,7 @@ public class SetFilePermissionHelper
     
     /**
      * Create file attributes
+     * @author S00902246
      *
      */
     private static final class DSFileAttributes implements FileAttribute<List<AclEntry>>
