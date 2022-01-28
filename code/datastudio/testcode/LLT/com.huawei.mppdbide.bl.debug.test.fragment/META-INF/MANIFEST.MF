@@ -6,17 +6,17 @@ Bundle-Version: 1.0.0
 Bundle-Vendor: HUAWEI
 Fragment-Host: com.huawei.mppdbide.bl;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ClassPath: lib/MockRunner/commons-logging-1.0.4.jar,
- lib/MockRunner/jakarta-oro-2.0.8.jar,
- lib/MockRunner/jdom.jar,
- lib/MockRunner/xml-apis.jar,
+Bundle-ClassPath: lib/commons-logging-1.0.4.jar,
+ lib/oro-2.0.8.jar,
+ lib/jdom-2.0.2.jar,
+ lib/xml-apis-1.0.b2.jar,
  lib/hamcrest-api-1.0.jar,
- lib/easyMock/easymock-3.1.jar,
+ lib/easymock-4.3.jar,
  lib/log4j-1.2.15.jar,
  .,
  lib/junit-4.11.jar,
- lib/org.apache.commons.io_2.2.0.v201405211200.jar,
- lib/MockRunner/mockrunner-jdbc.jar
+ lib/commons-io-2.11.0.jar,
+ lib/mockrunner-jdbc-2.0.6.jar
 Require-Bundle: org.junit;bundle-version="4.12.0",
  org.apache.log4j;bundle-version="1.2.15",
  com.huawei.mppdbide.util,

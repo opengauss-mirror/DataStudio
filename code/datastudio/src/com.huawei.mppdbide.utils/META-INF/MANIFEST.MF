@@ -27,5 +27,5 @@ Export-Package: .,
  com.huawei.mppdbide.utils.stringparse
 Import-Package: net.sf.jsqlparser.schema
 Bundle-ClassPath: .,
- log4j-api-2.13.2.jar,
- log4j-core-2.13.2.jar
+ log4j-api-2.17.1.jar,
+ log4j-core-2.17.1.jar
