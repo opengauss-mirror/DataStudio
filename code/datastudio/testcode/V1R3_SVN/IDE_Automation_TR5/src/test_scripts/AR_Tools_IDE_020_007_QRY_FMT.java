@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /*************************************************************************
 TITLE - QUERY FORMAT
 DESCRIPTION - THIS PROGRAM COVERS THE BELOW TEST SCRIPTS
@@ -46,7 +61,6 @@ public class AR_Tools_IDE_020_007_QRY_FMT {
 				sInputQuery = UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, sARNumber, i,4);
 				sExpectedQuery=UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, sARNumber, i,5);
 				UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
-				//String sFormat[] = sExpectedQuery.split(":");
 				QueryEditor.QueryFormat(sInputQuery,sFormatType);
 				sFlag = QueryEditor.QueryFormatValidation(sExpectedQuery, sInputQuery);
 				UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
@@ -70,7 +84,5 @@ public class AR_Tools_IDE_020_007_QRY_FMT {
 			if(!sStatus.isEmpty())
 				UtilityFunctions.WriteToText(sTextResultFile, sFinalStatus);
 		}
-		//Save the Excel result to HTML
-		//UtilityFunctions.SaveResult(ResultExcel,"Query_Format");
 	}//end of main
 }//end of class

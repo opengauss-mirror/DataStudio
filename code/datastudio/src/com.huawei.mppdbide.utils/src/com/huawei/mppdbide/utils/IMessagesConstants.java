@@ -1,16 +1,24 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.utils;
 
 /**
- * Title: interface Description: The Interface IMessagesConstants. Copyright (c)
- * Huawei Technologies Co., Ltd. 2012-2019.
+ * Title: interface Description: The Interface IMessagesConstants.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public interface IMessagesConstants extends IMessagesConstantsOne {
 
@@ -142,11 +150,11 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String ERR_WHILE_EXPORTING = "ERR_WHILE_EXPORTING";
 
-    String PWD_EXPIRE_CONFIRMATION = "PWD_EXPIRE_CONFIRMATION";
+    String CIPHER_EXPIRE_CONFIRMATION = "CIPHER_EXPIRE_CONFIRMATION";
 
-    String PWD_EXPIRED = "PWD_EXPIRED";
+    String CIPHER_EXPIRED = "CIPHER_EXPIRED";
 
-    String PWD_YET_TO_EXPIRE = "PWD_YET_TO_EXPIRE";
+    String CIPHER_YET_TO_EXPIRE = "CIPHER_YET_TO_EXPIRE";
 
     String MSG_LOADED = "MSG_LOADED";
 
@@ -566,7 +574,7 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String UNLIMITED_SIZE = "UNLIMITED_SIZE";
 
-    String PSWD_DECRYPT_ERROR_MSG = "PSWD_DECRYPT_ERROR_MSG";
+    String CIPHER_DECRYPT_ERROR_MSG = "CIPHER_DECRYPT_ERROR_MSG";
 
     String TABLESPACE_CREATION_SUCCEEDED = "TABLESPACE_CREATION_SUCCEEDED";
 
@@ -574,7 +582,7 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String RUN_IN_BACK_GROUND = "RUN_IN_BACK_GROUND";
 
-    String CONN_DIALOG_SAVE_PSWD = "CONN_DIALOG_SAVE_PSWD";
+    String CONN_DIALOG_SAVE_CIPHER = "CONN_DIALOG_SAVE_CIPHER";
 
     String SHORTCUT_MAPPER = "SHORTCUT_MAPPER";
 
@@ -984,7 +992,7 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String ROOTCERT_FILETEXT = "ROOTCERT_FILETEXT";
 
-    String SSL_PASSWORD = "SSL_PASSWORD";
+    String SSL_CIPHER = "SSL_CIPHER";
 
     String CTAB_GENERAL = "CTAB_GENERAL";
 
@@ -1012,9 +1020,9 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String SESSION_SETTNG_NODE = "SESSION_SETTNG_NODE";
 
-    String PASSWORD_PREFERENCE_OPTION = "PASSWORD_PREFERENCE_OPTION";
+    String CIPHER_PREFERENCE_OPTION = "CIPHER_PREFERENCE_OPTION";
 
-    String PASSWORD_PREFERENCE_OPTION_TITLE = "PASSWORD_PREFERENCE_OPTION_TITLE";
+    String CIPHER_PREFERENCE_OPTION_TITLE = "CIPHER_PREFERENCE_OPTION_TITLE";
 
     String YES_OPTION = "YES_OPTION";
 
@@ -1265,17 +1273,17 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String PREFERENCE_RESTART_REQUIRED_MSG = "PREFERENCE_RESTART_REQUIRED_MSG";
 
-    String PARTITION_EDIT_MESSAGE = "PARTITION_EDIT_MESSAGE";
+    String CIPHER_EDIT_MESSAGE = "CIPHER_EDIT_MESSAGE";
 
-    String PASSWORD_EXPIRY_TITLE = "PASSWORD_EXPIRY_TITLE";
+    String CIPHER_EXPIRY_TITLE = "CIPHER_EXPIRY_TITLE";
 
     String YES_EXPIRY_OPTION = "YES_EXPIRY_OPTION";
 
     String NO_EXPIRY_OPTION = "NO_EXPIRY_OPTION";
 
-    String PASSWORD_EXPIRY_MSG_TITLE = "PASSWORD_EXPIRY_MSG_TITLE";
+    String CIPHER_EXPIRY_MSG_TITLE = "CIPHER_EXPIRY_MSG_TITLE";
 
-    String PASSWORD_EXPIRY_INFORMATION = "PASSWORD_EXPIRY_INFORMATION";
+    String CIPHER_EXPIRY_INFORMATION = "CIPHER_EXPIRY_INFORMATION";
 
     String SHOW_USER_MSG_ON_TABLE_UPDATE_TITLE = "SHOW_USER_MSG_ON_TABLE_UPDATE_TITLE";
 
@@ -1375,7 +1383,7 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String SHOW_DDL_FAILED_TITLE = "SHOW_DDL_FAILED";
 
-    String ERR_PASSWORD_EXPIRED = "ERR_PASSWORD_EXPIRED";
+    String ERR_CIPHER_EXPIRED = "ERR_CIPHER_EXPIRED";
 
     String ERR_TO_BEGIN_TRANSACTION = "ERR_TO_BEGIN_TRANSACTION";
 
@@ -2519,7 +2527,7 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String CREATE_USERROLE_NAME = "CREATE_USERROLE_NAME";
 
-    String CREATE_USERROLE_PASSWORD = "CREATE_USERROLE_PASSWORD";
+    String CREATE_USERROLE_CIPHER = "CREATE_USERROLE_CIPHER";
 
     String CREATE_USERROLE_PRIVILEGE = "CREATE_USERROLE_PRIVILEGE";
 
@@ -2567,11 +2575,11 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
 
     String ENTER_ROLE_NAME = "ENTER_ROLE_NAME";
 
-    String ENTER_PASSWORD = "ENTER_PASSWORD";
+    String ENTER_CIPHER = "ENTER_CIPHER";
 
     String CREATE_USERROLE_PAS_NOT_MATCH = "CREATE_USERROLE_PAS_NOT_MATCH";
 
-    String ENTER_PASSWORD_TWICE = "ENTER_PASSWORD_TWICE";
+    String ENTER_CIPHER_TWICE = "ENTER_CIPHER_TWICE";
 
     String CREATE_USERROLE_ALL = "CREATE_USERROLE_ALL";
 

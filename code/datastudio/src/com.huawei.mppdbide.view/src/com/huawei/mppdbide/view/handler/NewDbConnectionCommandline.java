@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.handler;
@@ -51,12 +62,8 @@ import com.huawei.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
  * Title: class
  * 
  * Description: The Class NewDbConnection for commandline argument support.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author g00408002
- * @version [DataStudio 8.0.1, 20 Nov, 2019]
- * @since 20 Nov, 2019
+ * @since 3.0.0
  */
 public class NewDbConnectionCommandline {
 
@@ -84,7 +91,7 @@ public class NewDbConnectionCommandline {
     public void execute(ParameterizedCommand parameterizedCommand ) {
         Map<String, String> parameterMap = parameterizedCommand.getParameterMap();
         CmdLineCharObject cmdLinePassword = promptForPassword(); 
-        boolean isValidationSuccess = validateCmdLinePassword(IDSCommandlineOptions.USER_PASSWORD, cmdLinePassword);
+        boolean isValidationSuccess = validateCmdLinePassword(IDSCommandlineOptions.USER_CIPHER, cmdLinePassword);
         /*
          * Close Datastudio workbench if connection param validation
          * fails
@@ -185,9 +192,9 @@ public class NewDbConnectionCommandline {
                 MPPDBIDELoggerUtility.error("Prefence.save returned exception while saving to disk :", exception);
             }
             System.out.println(MessageConfigLoader
-                    .getProperty(IMessagesConstants.DS_COMMANDLINE_PRESS_ENTER_FOLLOWED_BY_PASSWORD));
+                    .getProperty(IMessagesConstants.DS_COMMANDLINE_PRESS_ENTER_FOLLOWED_BY_CIPHER));
         } else {
-            System.out.println(MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_ENTER_PASSWORD));
+            System.out.println(MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_ENTER_CIPHER));
         }      
         char[] prdArr = System.console().readPassword();
         CmdLineCharObject lCmdLineCharObject = new CmdLineCharObject();

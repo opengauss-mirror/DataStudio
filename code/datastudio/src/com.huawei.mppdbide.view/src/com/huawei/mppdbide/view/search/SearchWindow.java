@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.search;
@@ -108,12 +119,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: class
  * 
  * Description: The Class SearchWindow.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class SearchWindow implements Observer {
 
@@ -127,6 +134,7 @@ public class SearchWindow implements Observer {
     private Button viewCheck;
     private Button sequenceCheck;
     private Button synonymCheck;
+    private Button triggerCheck;
     private Text searchText;
     private Combo nameMatchCombo;
     private Button matchCaseCheck;
@@ -324,12 +332,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class ResultViewerKeyListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class ResultViewerKeyListner implements KeyListener {
 
@@ -362,12 +364,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class ResultViewerSelectionChangeListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class ResultViewerSelectionChangeListner implements ISelectionChangedListener {
 
@@ -530,6 +526,11 @@ public class SearchWindow implements Observer {
         synonymCheck.setText(MessageConfigLoader.getProperty(IMessagesConstants.SYNONYM_GROUP_NAME));
         synonymCheck.setSelection(true);
         synonymCheck.addSelectionListener(new ButtonSelectionListner());
+        
+        triggerCheck = new Button(withinComposite, SWT.CHECK);
+        triggerCheck.setText(MessageConfigLoader.getProperty(IMessagesConstants.TRIGGER_GROUP_NAME));
+        triggerCheck.setSelection(true);
+        triggerCheck.addSelectionListener(new ButtonSelectionListner());
 
     }
 
@@ -538,12 +539,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class ButtonSelectionListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class ButtonSelectionListner implements SelectionListener {
 
@@ -837,12 +832,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class TreeviwerHelper.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class TreeviwerHelper implements ITreeViewerListener {
 
@@ -866,12 +855,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class ConnectionListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class ConnectionListner implements SelectionListener {
         @Override
@@ -903,12 +886,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class DatabaseListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class DatabaseListner implements SelectionListener {
 
@@ -941,12 +918,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class SchemaListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class SchemaListner implements SelectionListener {
 
@@ -979,12 +950,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class CancelListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class CancelListner implements SelectionListener {
 
@@ -1008,12 +973,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class SearchListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class SearchListner implements SelectionListener {
 
@@ -1024,7 +983,7 @@ public class SearchWindow implements Observer {
 
             }
             if (schemaCombo.getSelectionIndex() >= 0 && tableCheck.getSelection() || funProcCheck.getSelection()
-                    || viewCheck.getSelection() || sequenceCheck.getSelection() || synonymCheck.getSelection()) {
+                    || viewCheck.getSelection() || sequenceCheck.getSelection() || synonymCheck.getSelection() || triggerCheck.getSelection()) {
                 searchCore.clearData();
                 getUserInPut();
                 boolean isConnection = false;
@@ -1082,12 +1041,6 @@ public class SearchWindow implements Observer {
      * Title: class
      * 
      * Description: The Class SearchVerifyListner.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class SearchVerifyListner implements VerifyListener {
 
@@ -1153,6 +1106,7 @@ public class SearchWindow implements Observer {
         searchObjInfo.setMatchCase(matchCaseCheck.getSelection());
         searchObjInfo.setSequenceSelected(sequenceCheck.getSelection());
         searchObjInfo.setSynonymSelected(synonymCheck.getSelection());
+        searchObjInfo.setTriggerSelected(triggerCheck.getSelection());
 
     }
 

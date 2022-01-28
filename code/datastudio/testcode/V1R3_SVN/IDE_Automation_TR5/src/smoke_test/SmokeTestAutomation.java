@@ -1,10 +1,22 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /*************************************************************************
 TITLE - SMOKE TEST AUTOMATION SUITE
 DESCRIPTION - THIS AUTOMATION SUITE COVERS THE SMOKE TEST CASES-
 -BASED ON EACH DROP
-AUTHORS - AWX321822, AWX321824
-CREATED DATE - 18-NOV-2015
-LAST UPDATED DATE - 24-NOV-2015
 TEST CASES COVERED - REFER IDE_Smoke_Test_Data.xlsx IN TEST DATA FOLDER
  *************************************************************************/
 
@@ -57,9 +69,7 @@ public class SmokeTestAutomation {
 				sExpectedQuery=UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, sSheetName, i,6);
 				UtilityFunctions.WriteToExcel(ResultExcel,sSheetName,i+2,3,"Yes");
 				String sMultiLineQuery[] = sInputQuery.split(":");
-				//String sFormat[] = sExpectedQuery.split(":");
 				QueryEditor.SetMultiLineQuery(sMultiLineQuery);
-				//BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sToolbarControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,ObjectBrowserElements.iToolbarFormatxcord, ObjectBrowserElements.iToolbarFormatycord);
 				UtilityFunctions.KeyPress(KeyEvent.VK_CONTROL, 1);
 				UtilityFunctions.KeyPress(KeyEvent.VK_SHIFT, 1);
 				UtilityFunctions.KeyPress(KeyEvent.VK_F, 1);
@@ -166,7 +176,6 @@ public class SmokeTestAutomation {
 					File file = new File(GlobalConstants.sCsvExportPath+"ExportResult.csv");
 					if(file.exists())
 						file.delete();
-					//Thread.sleep(GlobalConstants.MedWait);
 					QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"ExportResult.csv");
 					if(file.exists())
 					{
@@ -199,7 +208,6 @@ public class SmokeTestAutomation {
 						File file = new File(GlobalConstants.sCsvExportPath+"EmptyResult.csv");
 						if(file.exists())
 							file.delete();
-						//Thread.sleep(GlobalConstants.MedWait);
 						QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"EmptyResult.csv");
 						if(file.exists())
 						{
@@ -239,7 +247,6 @@ public class SmokeTestAutomation {
 						for(int j=1;j<=2;j++)
 						{
 							QueryEditor.SingleQueryExe("INSERT INTO public.ExportTable2(empid,ename,salary,deptno) values("+j+",'Dave',25000,10);","Valid");
-							//Thread.sleep(GlobalConstants.MinWait);
 						}
 
 						QueryResult.NextRecords("3");
@@ -249,7 +256,6 @@ public class SmokeTestAutomation {
 						File file = new File(GlobalConstants.sCsvExportPath+"ExportResult.csv");
 						if(file.exists())
 							file.delete();
-						//Thread.sleep(GlobalConstants.MedWait);
 						QueryResult.SaveCsv(GlobalConstants.sCsvExportPath+"ExportResult.csv");
 						if(file.exists())
 						{
@@ -566,8 +572,6 @@ public class SmokeTestAutomation {
 		//OPening Function to Debug
 		DebugOperations.DebugObjectBrowser_Open();
 		for(int i=1;i<=iRowCount;i++)
-			//for(int i=28;i<=42;i++)
-			//for(int i=43;i<=54;i++)
 		{
 			//Get the ARNumber and Execute flag from data sheet and execute the test case based on the Execute flag
 			String sARNumber=UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, sSheetName, i, 1);
@@ -611,7 +615,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_CALLSTCK_11"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.SetBreakPoint(13);
 					DebugOperations.DebugSession();
@@ -656,7 +659,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_VAROPR_FUNC_025"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.SetBreakPoint(13);
 					DebugOperations.DebugSession();
@@ -696,8 +698,7 @@ public class SmokeTestAutomation {
 					DebugOperations.DebugObjectBrowser_Close();
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_VAROPR_PROC_024"))
-				{
-					//DebugOperations.DebugObjectBrowser();						
+				{					
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.DebugSession();
 					sDebugConnection = DebugOperations.DebugConnection(DebugPassword);
@@ -723,7 +724,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_PROC_020"))
 				{
-					//DebugOperations.DebugObjectBrowser();0
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(12);
 					DebugOperations.DebugSession();
@@ -791,7 +791,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_FUNC_018"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.SetBreakPoint(12);
 					DebugOperations.DebugSession();
@@ -822,7 +821,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_PROC_021"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.DebugSession();
@@ -850,7 +848,6 @@ public class SmokeTestAutomation {
 				}
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_DEBUG_PROC_01"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(12);
 					DebugOperations.SetBreakPoint(13);
 					DebugOperations.DebugSession();
@@ -880,7 +877,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_PROC_017"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(12);
 					DebugOperations.SetBreakPoint(13);
 					DebugOperations.DebugSession();
@@ -908,7 +904,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_BRKMGMT_04"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(14);
 					DebugOperations.DebugSession();
@@ -936,8 +931,7 @@ public class SmokeTestAutomation {
 					DebugOperations.DebugObjectBrowser_Close();
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_VAROPR_FUNC_024"))
-				{
-					//DebugOperations.DebugObjectBrowser();						
+				{					
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.DebugSession();
 					sDebugConnection = DebugOperations.DebugConnection(DebugPassword);
@@ -962,8 +956,7 @@ public class SmokeTestAutomation {
 					DebugOperations.DebugObjectBrowser_Close();
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_FUNC_017"))
-				{
-					//DebugOperations.DebugObjectBrowser();						
+				{					
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(13);
 					DebugOperations.DebugSession();
@@ -992,7 +985,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_PROC_019"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.DebugSession();
@@ -1020,7 +1012,6 @@ public class SmokeTestAutomation {
 				}		
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_VIEWSRCCOD_0009001"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(12);
 					DebugOperations.DebugSession();
 					sDebugConnection = DebugOperations.DebugConnection(DebugPassword);
@@ -1049,7 +1040,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_DEBUG_PROC_03"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(12);
 					DebugOperations.DebugSession();
@@ -1080,7 +1070,6 @@ public class SmokeTestAutomation {
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_BRKMGMT_08"))
 				{
 					ArrayList<String> lstStatus = new ArrayList<String>();
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.DebugSession();
 					sDebugConnection = DebugOperations.DebugConnection(DebugPassword);
@@ -1133,7 +1122,6 @@ public class SmokeTestAutomation {
 
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_VIEWSRCCOD_0009001_748"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(12);
 					DebugOperations.DebugSession();
@@ -1163,7 +1151,6 @@ public class SmokeTestAutomation {
 
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_BRKMGMT_PROC_05"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(13);
 					DebugOperations.DebugSession();
@@ -1243,7 +1230,6 @@ public class SmokeTestAutomation {
 
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_DEBUG_FUNC_01"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(12);
 					DebugOperations.DebugSession();
@@ -1272,7 +1258,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_DEBUG_PROC_06"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.DebugSession();
@@ -1302,7 +1287,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_PROC_018"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.DebugSession();
@@ -1330,7 +1314,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_FUNC_019"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.DebugSession();
@@ -1359,7 +1342,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_BRKMGMT_06"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.DebugSession();
 					sDebugConnection = DebugOperations.DebugConnection(DebugPassword);
@@ -1391,7 +1373,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_STEPOPR_FUNC_020"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.DebugSession();
@@ -1419,7 +1400,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_BRKMGMT_07"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.SetBreakPoint(13);
 					DebugOperations.DebugSession();
@@ -1452,7 +1432,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_VAROPR_PROC_025"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(11);
 					DebugOperations.SetBreakPoint(13);
 					DebugOperations.DebugSession();
@@ -1494,7 +1473,6 @@ public class SmokeTestAutomation {
 				}	
 				if(sTestCaseID.equals("SDV_SMOKE_PLIDE_DBG_BRKMGMT_10"))
 				{
-					//DebugOperations.DebugObjectBrowser();
 					DebugOperations.SetBreakPoint(10);
 					DebugOperations.DebugSession();
 					sDebugConnection = DebugOperations.DebugConnection(DebugPassword);
@@ -1586,30 +1564,6 @@ public class SmokeTestAutomation {
 				sInputQuery=UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, sSheetName, i,5);
 				sQueryType=UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, sSheetName, i,9);
 				UtilityFunctions.WriteToExcel(ResultExcel,sResultSheetName,i+2,4,"Yes");
-
-				/*if(sTestCaseID.equals("GaussIDE_SMOKE_ConnMgmt_001"))
-				{
-					ObjectBrowserPane.newConnection();
-					Thread.sleep(GlobalConstants.MinWait);
-					String sConnection = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 2, 0);
-					String sHost = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 2, 1);
-					String sHostPort = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 2, 2);
-					String sDBName = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 2, 3);
-					String sUserName = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 2, 4);
-					String sPassword = UtilityFunctions.GetExcelCellValue(GlobalConstants.sSmokeTestDataFile, "IDELogin", 2, 5);
-					BaseActions.ClearConsole("GLOBAL");
-					BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sToolbarControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks,ObjectBrowserElements.iNewConnxcord, ObjectBrowserElements.iNewConnycord);
-					Login.IDELogin(sConnection, sHost, sHostPort, sDBName, sUserName,sPassword,"PERMENANT");
-					sFlag = QueryResult.ReadConsoleOutput("TERMINAL");
-					if(sFlag.contains("connected successfully"))
-						UtilityFunctions.WriteToExcel(ResultExcel,sResultSheetName,i+2,5,"Passed");
-					else
-					{
-						UtilityFunctions.WriteToExcel(ResultExcel,sResultSheetName,i+2,5,"Failed");
-						UtilityFunctions.WriteToExcel(ResultExcel,sResultSheetName,i+2,6,"Error occured while making multiple connection. Please refer screenshot "+sTestCaseID+".jpg");
-						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
-					}
-				}*/
 
 				if(sTestCaseID.equals("GaussIDE_SMOKE_ViewObjects_170"))
 				{
@@ -1889,7 +1843,6 @@ public class SmokeTestAutomation {
 					if(sExpectedQuery.contains("select * from auto_import_table.employee;"))
 					{
 						QueryEditor.ExecuteButton();
-						//BaseActions.Click(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sExeButton);
 						Thread.sleep(GlobalConstants.MedWait);
 						QueryResult.CurrentExport();
 						File file = new File((new StringBuilder(String.valueOf(GlobalConstants.sCsvExportPath))).append("employee.csv").toString());
@@ -2103,7 +2056,6 @@ public class SmokeTestAutomation {
 						sFlag1 = "Fail";
 					BaseActions.SetText(ExecQueryElements.wSQLTerminal, "", ExecQueryElements.sFunctionEditor,"auto.");
 					sContents = QueryEditor.AutoSuggestCopy();
-					//QueryEditor.CloseActiveEditor();
 					if(sContents.contains("auto - NAMESPACE")&&sContents.contains("auto1() - integer - auto - FUNCTION"))
 						sFlag2 = "Pass";
 					else
@@ -2293,7 +2245,6 @@ public class SmokeTestAutomation {
 
 				if(sTestCaseID.equals("PTS_TOR.080.001_Functional_valid_4"))
 				{
-					//BaseActions.MouseClick("Data Studio", "", "SysTreeView321", "left", 1, 155, 118);
 					UtilityFunctions.KeyPress(KeyEvent.VK_ALT,1);
 					UtilityFunctions.KeyPress(KeyEvent.VK_Q,1);
 					UtilityFunctions.KeyRelease(KeyEvent.VK_Q,1);

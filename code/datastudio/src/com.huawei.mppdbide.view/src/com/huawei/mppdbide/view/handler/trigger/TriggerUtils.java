@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.handler.trigger;
@@ -13,7 +24,9 @@ import com.huawei.mppdbide.bl.serverdatacache.ColumnMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.Database;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TableObjectGroup;
+import com.huawei.mppdbide.bl.serverdatacache.groups.ViewObjectGroup;
 import com.huawei.mppdbide.utils.IMessagesConstants;
 import com.huawei.mppdbide.utils.exceptions.DatabaseCriticalException;
 import com.huawei.mppdbide.utils.exceptions.DatabaseOperationException;
@@ -25,11 +38,8 @@ import com.huawei.mppdbide.view.ui.trigger.CreateTriggerParam;
 /**
  * Title: class
  * Description: The Class TriggerUtils.
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author z00588921
- * @version [openGauss DataStudio 1.0.1, 30,04,2021]
- * @since 30,04,2021
+ * @since 3.0.0
  */
 public class TriggerUtils {
     /**
@@ -83,6 +93,21 @@ public class TriggerUtils {
             tableNameList.add(tableData.getName());
         }
         return tableNameList;
+    }
+    
+    /**
+     * Get view names
+     *
+     * @param ViewObjectGroup the view group
+     * @return List<String> the view name list
+     */
+    public static List<String> getViewNames(ViewObjectGroup  viewGroup) {        
+        ArrayList<ViewMetaData> viewList = viewGroup.getSortedServerObjectList();
+        ArrayList<String> viewNameList = new ArrayList<String>();
+        for (ViewMetaData viewData : viewList) {
+            viewNameList.add(viewData.getName());
+        }
+        return viewNameList;
     }
 
     /**

@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 /************************************************************************************************
 TITLE - IDE AUTOMATION DRIVER
 DESCRIPTION - THIS PROGRAM CONTROLS THE ENTIRE SDV AUTOMATION REGRESSION FOR IDE
@@ -71,21 +86,7 @@ public class IDEAutomationDriverScript {
 		String sPassword=UtilityFunctions.GetExcelCellValue(GlobalConstants.sFunctionalTestDataFile, "IDELogin", 1, 5);
 		Login.IDELogin(sConnection,sHost,sHostPort,sDBName,sUserName,sPassword,"PERMENANT");//********
 		Thread.sleep(GlobalConstants.MaxWait);
-		//Login into IDE Tool
-		/*String sLoginStatus;
-		int iLoginAttempt=0;
-		do
-		{	
-			//Launching the IDE Tool Application
-			Login.LaunchIDE(GlobalConstants.sIDEPath);
-			Thread.sleep(GlobalConstants.MaxWait);
-			sLoginStatus = Login.IDELogin(sConnection, sHost, sHostPort, sDBName, sUserName,sPassword);
-			Thread.sleep(GlobalConstants.MaxWait);
-			Thread.sleep(GlobalConstants.MaxWait);
-			iLoginAttempt = iLoginAttempt + 1;
-			if(iLoginAttempt == 5)
-				System.exit(0);
-		}while(sLoginStatus != "Connected");*/
+
 		//Getting Execute Status from Driver Data Table
 		int iRowCount = UtilityFunctions.GetRowCount(GlobalConstants.sFunctionalTestDataFile, "IDE_Driver");
 	    for(int i=1;i<=iRowCount;i++)

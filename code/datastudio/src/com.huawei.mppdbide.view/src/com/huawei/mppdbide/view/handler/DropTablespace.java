@@ -1,9 +1,21 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.handler;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
@@ -30,12 +42,8 @@ import com.huawei.mppdbide.view.workerjob.UIWorkerJob;
  * Title: class
  * 
  * Description: The Class DropTablespace.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class DropTablespace {
     /**
@@ -73,12 +81,6 @@ public class DropTablespace {
      * Title: class
      * 
      * Description: The Class DropTablespaceWorker.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
 
     private static final class DropTablespaceWorker extends UIWorkerJob {
@@ -133,15 +135,16 @@ public class DropTablespace {
 
         @Override
         public void onOperationalExceptionUIAction(DatabaseOperationException e) {
+            String errorMsg = e.getServerMessage();
+            int index = StringUtils.indexOf(errorMsg, "ERROR:");
+            if (index < 0) {
+                index = 0;
+            }
+
+            String errorTip = StringUtils.substring(errorMsg, index);
             MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.ERROR, true,
-                    MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHEN_DROPPING_TABLESPACE),
-                    MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHILE_DROPPING_TABLESPACE_MESSAGE,
-                            tablespace.getServer().getServerConnectionInfo().getConectionName(), tablespace.getName()));
-            ObjectBrowserStatusBarProvider.getStatusBar()
-                    .displayMessage(Message.getError(
-                            MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHILE_DROPPING_TABLESPACE_MESSAGE,
-                                    tablespace.getServer().getServerConnectionInfo().getConectionName(),
-                                    tablespace.getName())));
+                MessageConfigLoader.getProperty(IMessagesConstants.ERR_WHEN_DROPPING_TABLESPACE), errorTip);
+            ObjectBrowserStatusBarProvider.getStatusBar().displayMessage(Message.getError(errorTip));
         }
 
         @Override

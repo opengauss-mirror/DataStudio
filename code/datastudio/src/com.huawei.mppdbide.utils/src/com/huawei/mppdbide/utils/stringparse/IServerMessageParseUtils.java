@@ -1,16 +1,19 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.utils.stringparse;
-/**
- * Title: class Description: The Class IServerMessageParseUtils. Copyright
- * (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * @author g00408002
- * @version [DataStudio 8.0.1, 17 Jan, 2020]
- * @since 17 Jan, 2020
- */
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,16 +21,8 @@ import java.util.regex.Pattern;
 /** 
  * Title: IServerMessageParseUtils
  * 
- * Description:
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * 
- * @author s00428892
- * @version [DataStudio 6.5.1, Apr 9, 2020]
- * @since Apr 9, 2020
+ * @since 3.0.0
  */
-
 public interface IServerMessageParseUtils {
     /**
      * String constant ioClient

@@ -2,6 +2,7 @@ package com.huawei.mppdbide.test.adapter;
 
 import static org.junit.Assert.fail;
 
+import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

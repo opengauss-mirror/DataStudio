@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.init;
@@ -9,12 +20,8 @@ package com.huawei.mppdbide.view.init;
  * Title: interface IDSCommandlineOptions
  * 
  * Description: string constants for ds commandline connection support
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author g00408002
- * @version [DataStudio 8.0.1, 20 Nov, 2019]
- * @since 20 Nov, 2019
+ * @since 3.0.0
  */
 public interface IDSCommandlineOptions {
 
@@ -44,7 +51,7 @@ public interface IDSCommandlineOptions {
     String USER_NAME = "userName";
 
     /* database user password */
-    String USER_PASSWORD = "password";
+    String USER_CIPHER = "password";
 
     /*
      * save password option
@@ -53,16 +60,16 @@ public interface IDSCommandlineOptions {
      * 
      * Default value: current_session
      */
-    String SAVE_PASSWORD = "savePassword";
+    String SAVE_CIPHER = "savePassword";
 
     /* save password do not save option */
-    String SAVE_PASSWORD_DONT_SAVE = "do_not_save";
+    String SAVE_CIPHER_DONT_SAVE = "do_not_save";
 
     /* save password current session option */
-    String SAVE_PASSWORD_CURR_SESSION = "current_session";
+    String SAVE_CIPHER_CURR_SESSION = "current_session";
 
     /* save password default option */
-    String SAVE_PASSWORD_DEFAULT = SAVE_PASSWORD_CURR_SESSION;
+    String SAVE_CIPHER_DEFAULT = SAVE_CIPHER_CURR_SESSION;
 
     /* Enable SSL */
     String SSL_ENABLE = "sslEnable";

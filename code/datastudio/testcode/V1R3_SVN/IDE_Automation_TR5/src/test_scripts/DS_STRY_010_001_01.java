@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -42,7 +57,6 @@ public class DS_STRY_010_001_01 {
 				{
 					Thread.sleep(GlobalConstants.MedWait);
 					BaseActions.ClearConsole("GLOBAL");
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					DebugOperations.DebugObjectBrowser_Open();
 					DebugOperations.DebugOption("Shortcut");
 					DebugOperations.DebugConnection(sPassword);
@@ -169,7 +183,6 @@ public class DS_STRY_010_001_01 {
 				}
 				if(sTestCaseID.equals("SDV_V1R2_Token_Based_Functional_Valid_001"))
 				{
-					//DebugOperations.DebugObjectBrowser_Open();
 					BaseActions.ClearConsole("GLOBAL");
 					DebugOperations.SetBreakPoint(8);
 					DebugOperations.SetBreakPoint(9);
@@ -271,7 +284,6 @@ public class DS_STRY_010_001_01 {
 					Login.LaunchIDE(GlobalConstants.sIDEPath);
 					//Login to IDE
 					Login.IDELogin(sConnection, sHost, sHostPort, sDBName, sUserName,sPassword,"PERMENANT");
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					DebugOperations.DebugObjectBrowser_Open();
 					DebugOperations.DebugOption("Shortcut");
 					DebugOperations.DebugConnection(sPassword);
@@ -296,7 +308,6 @@ public class DS_STRY_010_001_01 {
 					Login.LaunchIDE(GlobalConstants.sIDEPath);
 					//Login to IDE
 					Login.IDELogin(sConnection, sHost, sHostPort, sDBName, sUserName,sPassword,"PERMENANT");
-					//ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					DebugOperations.DebugObjectBrowser_Open();
 					DebugOperations.DebugOption("Shortcut");
 					DebugOperations.DebugConnection(sPassword);
@@ -432,10 +443,6 @@ public class DS_STRY_010_001_01 {
 						else
 						{
 							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed"); //Need to change
-
-							/*UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
-							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Debug Port prompt window is displayed in same cluster for different user. Please refer screenshot "+sTestCaseID+".jpg");
-							UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);*/
 						}
 					}
 					else
@@ -485,9 +492,6 @@ public class DS_STRY_010_001_01 {
 						else
 						{
 							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");
-							/*UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Failed");
-							UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Debug Port prompt window is displayed in same cluster for different user. Please refer screenshot "+sTestCaseID+".jpg");
-							UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);*/
 						}
 					}
 					else

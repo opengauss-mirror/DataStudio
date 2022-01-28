@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.bl.serverdatacache;
@@ -22,12 +33,6 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * 
  * Description:
  * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * 
- * @author sWX316469
- * @version [DataStudio 6.5.1, 25-Jun-2020]
- * @since 25-Jun-2020
  */
 
 public class SynonymUtil {
@@ -51,8 +56,6 @@ public class SynonymUtil {
      * @param dbConnection the db connection
      * @throws DatabaseOperationException the database operation exception
      * @throws DatabaseCriticalException the database critical exception
-     * @Author: c00550043
-     * @Date: Mar 12, 2020
      * @Title: fetchSynonyms
      * @Description: Fetch Synonyms.
      */

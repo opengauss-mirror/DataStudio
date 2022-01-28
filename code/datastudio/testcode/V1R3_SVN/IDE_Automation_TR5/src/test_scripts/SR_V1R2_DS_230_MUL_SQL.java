@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -202,10 +217,6 @@ public class SR_V1R2_DS_230_MUL_SQL {
 					Thread.sleep(GlobalConstants.MedWait);
 					sFlag1 = QueryResult.ReadConsoleOutput("TERMINAL").trim();
 					Thread.sleep(GlobalConstants.MinWait);
-					/*QueryEditor.SelectDBConnection();
-					Thread.sleep(GlobalConstants.MinWait);
-					MultipleTerminal.OpenNewTerminal();
-					Thread.sleep(GlobalConstants.MinWait);*/
 					MultipleTerminal.TerminalEditorClear(2);
 					Thread.sleep(GlobalConstants.MinWait);
 					MultipleTerminal.SetFunction(2, "select * from pg_class;");
@@ -405,7 +416,6 @@ public class SR_V1R2_DS_230_MUL_SQL {
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
 
 					BaseActions.MouseClick(DebugElements.wDebugpane, "","SWT_Window0116", DebugElements.sMouseButton,DebugElements.iClick, 6, 144);//setting breakpoint at 9
-					//DebugOperations.SetBreakPoint(9);
 					Thread.sleep(GlobalConstants.MedWait);
 					Login.DebugWindows();
 					Thread.sleep(GlobalConstants.MedWait);

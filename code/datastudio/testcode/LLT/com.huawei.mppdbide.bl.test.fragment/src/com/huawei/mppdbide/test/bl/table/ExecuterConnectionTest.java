@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package com.huawei.mppdbide.test.bl.table;
 
 import static org.junit.Assert.assertEquals;
@@ -38,8 +53,9 @@ import com.mockrunner.mock.jdbc.JDBCMockObjectFactory;
 import com.mockrunner.mock.jdbc.MockResultSet;
 
 /**
- * @author a00900918
+ * title:ExecuterConnectionTest
  * 
+ * @since 3.0.0
  */
 public class ExecuterConnectionTest extends BasicJDBCTestCaseAdapter
 {
@@ -222,104 +238,13 @@ public class ExecuterConnectionTest extends BasicJDBCTestCaseAdapter
         }
         catch (MPPDBIDEException e)
         {
-//            assertEquals("SQL Error Code = null"+System.lineSeparator() + 
-//                    "Connection failed.".trim() 
-//                    , e.getServerMessage().trim());
+
         }
         catch (Exception e)
         {
-           // fail("Not expected to come here.");
+
         }
     }
-
-    /**
-     * TOR ID : TTA.BL.CONNECT002.FUNC.002
-     * Test Case id : TTA.BL.CONNECT002.FUNC.002_002
-     * Description : Validate the exception handling on invalid parameters
-     * 
-     * This testcase fails because of framework issue, has to be fixed.
-     */
-    /*@Test
-    public void testTTA_BL_CONNECT002_FUNC_002_002()
-    {
-        GaussMockObjectFactoryToFailConnection mockObjectFactory = new GaussMockObjectFactoryToFailConnection();
-        createJDBCTestModule(mockObjectFactory);
-
-        mockObjectFactory.createMockDriver();
-        GaussMockDriverFailConnection failMockDriver = (GaussMockDriverFailConnection) mockObjectFactory
-                .getMockDriver();
-        failMockDriver.setFailOnConnectionCount(2);
-        setJDBCMockObjectFactory(mockObjectFactory);
-
-        CommonLLTUtils.prepareConnectionResultSets(getJDBCMockObjectFactory());
-
-        Properties props = new Properties();
-        props.put("user", "myusername");
-        props.put("passwrod", "mypassword");
-
-        try
-        {
-            profileId = DBConnProfCache.getInstance().initConnectionProfile(
-                    serverInfo);
-            connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-            //connectionProfile.connectToServer();
-            fail("Exception has to be thrown, when connection fail.");
-        }
-        catch (MPPDBIDEException e)
-        {
-            assertTrue(failMockDriver.isAllConnectionsClosed());
-            assertEquals("Connection failed.", e.getServerMessage());
-        }
-        catch (Exception e)
-        {
-            fail("Not expected to come here.");
-        }
-    }
-*/
-    /**
-     * TOR ID : TTA.BL.CONNECT002.FUNC.003
-     * Test Case id : TTA.BL.CONNECT002.FUNC.003_001
-     * Description : Validate the exception handling on invalid parameters
-     * 
-     * This testcase fails because of framework issue, has to be fixed.
-     */
-    /*@Test
-    public void testTTA_BL_CONNECT002_FUNC_003_001()
-    {
-        GaussMockObjectFactoryToFailConnection mockObjectFactory = new GaussMockObjectFactoryToFailConnection();
-        mockObjectFactory.createMockDriver();
-        setJDBCMockObjectFactory(mockObjectFactory);
-        mockObjectFactory.setActiveConnection(3);
-        JDBCTestModule testmodule = createJDBCTestModule(mockObjectFactory);
-        setJDBCTestModule(testmodule);
-
-        CommonLLTUtils.prepareConnectionResultSets(getJDBCMockObjectFactory());
-
-        try
-        {
-            profileId = DBConnProfCache.getInstance().initConnectionProfile(
-                    serverInfo);
-            connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-            //connectionProfile.connectToServer();
-            connectionProfile.getExecutor().connectToDebugServer(serverInfo, profileId);
-            assertEquals(5, mockObjectFactory.getConnectionCount());
-            assertTrue(connectionProfile.getExecutor().getDebugVersion().contains("PostgreSQL 9.2"));
-           // assertTrue(connectionProfile.getExecutor().getDriverVersion().contains("1.0")); 
-            //assertTrue(connectionProfile.getExecutor().getServerVersion().contains("GaussDB"));
-            
-            verifySQLStatementExecuted("SELECT pldbg_create_listener()");
-        }
-        catch (MPPDBIDEException e)
-        {
-            fail("[TTA.BL.CONNECT002.FUNC.003_001] Exception thrown when 3 "
-                    + "connections are expected to be created.");
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            fail("Not expected to come here.");
-        }
-    }*/
 
     /**
      * TOR ID : TTA.BL.CONNECT002.FUNC.004
@@ -359,9 +284,7 @@ public class ExecuterConnectionTest extends BasicJDBCTestCaseAdapter
         }
         catch (MPPDBIDEException e)
         {
-//            assertEquals("SQL Error Code = null"+System.lineSeparator() + 
-//                    "Connection failed.".trim()
-//                    , e.getServerMessage().trim());
+
         }
         catch (Exception e)
         {
@@ -404,7 +327,6 @@ public class ExecuterConnectionTest extends BasicJDBCTestCaseAdapter
             profileId = DBConnProfCache.getInstance().initConnectionProfile(
                     serverInfo, status);
             connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-           // connectionProfile.connectToServer();
 
             DBConnProfCache.getInstance().destroyConnection(connectionProfile);
                 
@@ -447,7 +369,6 @@ public class ExecuterConnectionTest extends BasicJDBCTestCaseAdapter
             profileId = DBConnProfCache.getInstance().initConnectionProfile(
                     serverInfo,status);
             connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-           // connectionProfile.connectToServer();
             DBConnProfCache.getInstance().destroyConnection(connectionProfile);
                   
             assertTrue(failMockDriver.isAllConnectionsClosed());
@@ -488,7 +409,6 @@ public class ExecuterConnectionTest extends BasicJDBCTestCaseAdapter
             profileId = DBConnProfCache.getInstance().initConnectionProfile(
                     serverInfo,status);
             connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-           // connectionProfile.connectToServer();
             DBConnProfCache.getInstance().destroyConnection(connectionProfile);
                    
             assertTrue(failMockDriver.isAllConnectionsClosed());
@@ -502,115 +422,6 @@ public class ExecuterConnectionTest extends BasicJDBCTestCaseAdapter
             fail("Not expected to come here.");
         }
     }
-
-    /*@Test
-    public void testTTAGetVersion_001()
-    {
-        GaussMockObjectFactoryToFailConnection mockObjectFactory = new GaussMockObjectFactoryToFailConnection();
-        mockObjectFactory.createMockDriver();
-        setJDBCMockObjectFactory(mockObjectFactory);
-        mockObjectFactory.setActiveConnection(3);
-        JDBCTestModule testmodule = createJDBCTestModule(mockObjectFactory);
-        setJDBCTestModule(testmodule);
-
-        CommonTestUtils.prepareConnectionResultSets(getJDBCMockObjectFactory());
-
-        try
-        {
-            profileId = DBConnProfCache.getInstance().initConnectionProfile(
-                    serverInfo);
-            connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-           // connectionProfile.connectToServer();
-            assertEquals(3, mockObjectFactory.getConnectionCount());
-            assertTrue(connectionProfile.getExecutor().getDebugVersion().contains("PostgreSQL 9.2"));
-            //assertTrue(connectionProfile.getExecutor().getDriverVersion().contains("1.0")); 
-            //assertTrue(connectionProfile.getExecutor().getServerVersion().contains("GaussDB"));
-            
-            verifySQLStatementExecuted("SELECT * from version");
-        }
-        catch (MPPDBIDEException e)
-        {
-            fail("[TTA.BL.CONNECT002.FUNC.003_001] Exception thrown when 3 "
-                    + "connections are expected to be created.");
-        }
-        catch (Exception e)
-        {
-            fail("Not expected to come here.");
-        }
-    }*/
-    
-    /*@Test
-    public void testTTAExecutor_001()
-    {
-        Object resultObject = null;
-        try
-        {
-
-            
-            profileId = DBConnProfCache.getInstance().initConnectionProfile(
-                    serverInfo);
-            connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-            Executor executor = connectionProfile.getExecutor();
-            String query = "SELECT func1() from dual";
-            
-            while(!Thread.currentThread().isInterrupted())
-            {
-                Thread.currentThread().interrupt();
-            }
-            
-            resultObject = executor.execute(query, connectionProfile.getProfileId());
-            
-
-            fail("Test case failed.");
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            assertTrue(true);
-        }
-        finally
-        {
-            DBConnProfCache.getInstance().destroyConnection(connectionProfile);
-        }
-    }*/
-    
-    /*@Test
-    public void testTTA_BL_CONNECT002_FUNC_002_012()
-    {
-        GaussMockObjectFactoryToFailConnection mockObjectFactory = new GaussMockObjectFactoryToFailConnection();
-        createJDBCTestModule(mockObjectFactory);
-
-        mockObjectFactory.createMockDriver();
-        GaussMockDriverFailConnection failMockDriver = (GaussMockDriverFailConnection) mockObjectFactory
-                .getMockDriver();
-        failMockDriver.setFailOnConnectionCount(2);
-        failMockDriver.setConnectFail(true);
-        setJDBCMockObjectFactory(mockObjectFactory);
-
-        CommonLLTUtils.prepareConnectionResultSets(getJDBCMockObjectFactory());
-
-        Properties props = new Properties();
-        props.put("user", "myusername");
-        props.put("passwrod", "mypassword");
-
-        try
-        {
-            profileId = DBConnProfCache.getInstance().initConnectionProfile(
-                    serverInfo);
-            connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-            //connectionProfile.connectToServer();
-            fail("Exception has to be thrown, when connection fail.");
-        }
-        catch (MPPDBIDEException e)
-        {
-            assertTrue(failMockDriver.isAllConnectionsClosed());
-            assertEquals("Throwing SQL exception intentionally.", e.getServerMessage());
-        }
-        catch (Exception e)
-        {
-            fail("Not expected to come here.");
-        }
-    }*/
     
     @Test
     public void testTTA_BL_CONNECT002_FUNC_002_112()
@@ -637,7 +448,6 @@ public class ExecuterConnectionTest extends BasicJDBCTestCaseAdapter
             profileId = DBConnProfCache.getInstance().initConnectionProfile(
                     serverInfo, status);
             connectionProfile = DBConnProfCache.getInstance().getDbForProfileId(profileId);
-            //connectionProfile.connectToServer();
             fail("Exception has to be thrown, when connection fail.");
         }
         catch (MPPDBIDEException e)

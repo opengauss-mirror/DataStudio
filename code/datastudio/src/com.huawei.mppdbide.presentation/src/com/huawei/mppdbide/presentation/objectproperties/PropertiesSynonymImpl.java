@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.presentation.objectproperties;
@@ -28,12 +39,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * Title: Class
  * 
  * Description: The Class ZPropertiesSynonymImpl
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author gWX773294
- * @version
- * @since 11-Nov-2019
+ * @since 3.0.0
  */
 public class PropertiesSynonymImpl implements IServerObjectProperties {
     private SynonymMetaData synonymMetaData;
@@ -81,8 +88,6 @@ public class PropertiesSynonymImpl implements IServerObjectProperties {
     }
 
     /**
-     * @Author: gWX773294
-     * @Date: 12-Nov-2019
      * @Title: getSynonymProperties
      * @Description: get the synonym properties
      * @param conn the db connection
@@ -122,9 +127,9 @@ public class PropertiesSynonymImpl implements IServerObjectProperties {
         str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_SYNONYM_NAME),
                 synonymMetaData.getName()).getProp());
         str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_SYNONYM_OWNER),
-                synonymMetaData.getOwner()).getProp());
-        str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_OBJECT_OWNER),
                 synonymMetaData.getObjectOwner()).getProp());
+        str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_OBJECT_OWNER),
+                synonymMetaData.getOwner()).getProp());
         str.add(new ServerProperty(MessageConfigLoader.getProperty(IMessagesConstants.PROPERTIES_OBJECT_NAME),
                 synonymMetaData.getObjectName()).getProp());
         return str;

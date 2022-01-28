@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.core.sourceeditor;
@@ -119,12 +130,9 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
 import com.huawei.mppdbide.view.workerjob.UIWorkerJob;
 
 /**
- * Title: class Description: The Class PLSourceEditorCore. Copyright (c) Huawei
- * Technologies Co., Ltd. 2012-2019.
+ * Title: class Description: The Class PLSourceEditorCore.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public final class PLSourceEditorCore extends SelectMenuItem implements IPropertyChangeListener {
     private static final String FORMAT_COMMAND_ID = "com.huawei.mppdbide.command.id.format";
@@ -225,12 +233,7 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
     private ResourceManager resManager;
 
     /**
-     * Title: enum Description: The Enum EDITORACTIONKEY. Copyright (c) Huawei
-     * Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
+     * Title: enum Description: The Enum EDITORACTIONKEY.
      */
     private enum EDITORACTIONKEY {
         NOKEY, AUTO_SUGGEST, CODE_TEMPLATE, KEY_AUTO_SUGGEST, INSERT_AUTO_SUGGEST
@@ -1237,9 +1240,7 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
      */
     private void addCutMenuItem(Menu menuItem) {
         menuCut = new MenuItem(menuItem, SWT.PUSH);
-        // DTS2016011900019 Starta
         menuCut.setText(MessageConfigLoader.getProperty(IMessagesConstants.STATUS_MSG_PLVIEWER_OPTION_CUT));
-        // DTS2016011900019 Ends
         menuCut.addSelectionListener(new SelectionListener() {
 
             @Override
@@ -1262,9 +1263,7 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
      */
     private void addPasteMenuItem(Menu menuItem) {
         menuPaste = new MenuItem(menuItem, SWT.PUSH);
-        // DTS2016011900019 Starts
         menuPaste.setText(MessageConfigLoader.getProperty(IMessagesConstants.STATUS_MSG_PLVIEWER_OPTION_PASTE));
-        // DTS2016011900019 Ends
         menuPaste.addSelectionListener(new SelectionListener() {
 
             @Override

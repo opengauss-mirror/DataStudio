@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.init;
@@ -23,13 +34,8 @@ import com.huawei.mppdbide.view.ui.connectiondialog.IDBConnectionValidationRegEx
  * Description: The Class IDSCommandlineOptionValidationUtils : Utility class
  * for DS commandline argument support.
  * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * @author g00408002
- * @version [DataStudio 8.0.1, 20 Nov, 2019]
- * @since 20 Nov, 2019
+ * @since 3.0.0
  */
-
 public interface IDSCommandlineOptionValidationUtils {
 
     /**
@@ -62,7 +68,7 @@ public interface IDSCommandlineOptionValidationUtils {
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 3) " + IDSCommandlineOptions.HOST_PORT
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 4) " + IDSCommandlineOptions.DB_NAME
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 5) " + IDSCommandlineOptions.USER_NAME
-                + MPPDBIDEConstants.LINE_SEPARATOR + " 6) " + IDSCommandlineOptions.SAVE_PASSWORD
+                + MPPDBIDEConstants.LINE_SEPARATOR + " 6) " + IDSCommandlineOptions.SAVE_CIPHER
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 7) " + IDSCommandlineOptions.SSL_ENABLE
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 8) " + IDSCommandlineOptions.SSL_CLIENT_CERT
                 + MPPDBIDEConstants.LINE_SEPARATOR + " 9) " + IDSCommandlineOptions.SSL_CLIENT_KEY
@@ -142,9 +148,9 @@ public interface IDSCommandlineOptionValidationUtils {
      */
     public static String formInvalidPasswordSaveOptionErrorMsg() {
         return MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_ERROR) + " "
-                + MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_INVALID_SAVE_PASSWORD_VALUE)
-                + MPPDBIDEConstants.LINE_SEPARATOR + "1) " + IDSCommandlineOptions.SAVE_PASSWORD_CURR_SESSION
-                + MPPDBIDEConstants.LINE_SEPARATOR + "2) " + IDSCommandlineOptions.SAVE_PASSWORD_DONT_SAVE;
+                + MessageConfigLoader.getProperty(IMessagesConstants.DS_COMMANDLINE_INVALID_SAVE_CIPHER_VALUE)
+                + MPPDBIDEConstants.LINE_SEPARATOR + "1) " + IDSCommandlineOptions.SAVE_CIPHER_CURR_SESSION
+                + MPPDBIDEConstants.LINE_SEPARATOR + "2) " + IDSCommandlineOptions.SAVE_CIPHER_DONT_SAVE;
     }
 
     /**
@@ -262,7 +268,7 @@ public interface IDSCommandlineOptionValidationUtils {
      */
     public static List<String> getSavePasswordValueList() {
         return Stream
-                .of(IDSCommandlineOptions.SAVE_PASSWORD_CURR_SESSION, IDSCommandlineOptions.SAVE_PASSWORD_DONT_SAVE)
+                .of(IDSCommandlineOptions.SAVE_CIPHER_CURR_SESSION, IDSCommandlineOptions.SAVE_CIPHER_DONT_SAVE)
                 .collect(Collectors.toList());
     }
 

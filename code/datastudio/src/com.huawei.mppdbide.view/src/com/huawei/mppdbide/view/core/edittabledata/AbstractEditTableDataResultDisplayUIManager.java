@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.core.edittabledata;
@@ -76,12 +87,8 @@ import com.huawei.mppdbide.view.workerjob.UIWorkerJob;
  * Title: class
  * 
  * Description: The Class AbstractEditTableDataResultDisplayUIManager.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author gWX773294
- * @version
- * @since 03 September, 2019
+ * @since 3.0.0
  */
 public abstract class AbstractEditTableDataResultDisplayUIManager extends AbstractResultDisplayUIManager
         implements IDSListener {
@@ -962,12 +969,6 @@ public abstract class AbstractEditTableDataResultDisplayUIManager extends Abstra
      * Title: class
      * 
      * Description: The Class EditTableDataGridUIPref.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     public class EditTableDataGridUIPref extends GridUIPreference {
         /**
@@ -1137,12 +1138,6 @@ public abstract class AbstractEditTableDataResultDisplayUIManager extends Abstra
      * Title: class
      * 
      * Description: The Class RefreshEditTableMetaDataWorker.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class RefreshEditTableMetaDataWorker extends UIWorkerJob {
 
@@ -1225,12 +1220,6 @@ public abstract class AbstractEditTableDataResultDisplayUIManager extends Abstra
      * Title: class
      * 
      * Description: The Class RowEffectedConfirmation.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     public static class RowEffectedConfirmation implements IRowEffectedConfirmation {
 

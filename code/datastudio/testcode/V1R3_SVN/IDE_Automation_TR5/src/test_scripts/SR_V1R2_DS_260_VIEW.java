@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -83,8 +98,6 @@ public class SR_V1R2_DS_260_VIEW {
 					MultipleTerminal.CloseTerminal(2);
 					Thread.sleep(GlobalConstants.MinWait);
 					ViewFunctions.view_Refresh();
-					/*QueryEditor.SingleQueryExe("Drop view auto.sameview;", "InValid");
-					Thread.sleep(GlobalConstants.MinWait);*/
 				}
 
 				if(sTestCaseID.equals("PTS_TOR.260.001_Functional_valid_07"))
@@ -115,8 +128,6 @@ public class SR_V1R2_DS_260_VIEW {
 					Thread.sleep(GlobalConstants.MinWait);
 					ViewFunctions.view_Refresh();
 					Thread.sleep(GlobalConstants.MinWait);
-					/*QueryEditor.SingleQueryExe("Drop view auto.diffview;", "InValid");
-					Thread.sleep(GlobalConstants.MinWait);*/
 				}
 
 				if(sTestCaseID.equals("PTS_TOR.260.001_Functional_valid_08"))
@@ -287,7 +298,6 @@ public class SR_V1R2_DS_260_VIEW {
 					UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,3,"Yes");
 					ViewFunctions.Auto_Table_View_Navigation();
 					Thread.sleep(GlobalConstants.MinWait);
-					//BaseActions.MouseClick(ObjectBrowserElements.wTitle, "", ObjectBrowserElements.sControlID, ObjectBrowserElements.sButton, ObjectBrowserElements.nclicks, 116, 99);//to click on the view tab
 					ViewFunctions.createViewObjectBrowser();
 					Thread.sleep(GlobalConstants.MinWait);
 					MultipleTerminal.TerminalEditorClear(2);
@@ -313,10 +323,6 @@ public class SR_V1R2_DS_260_VIEW {
 					QueryEditor.SingleQueryExe("Drop view auto.sysview;", "InValid");
 					Thread.sleep(GlobalConstants.MinWait);
 					ViewFunctions.view_Refresh();
-					/*ViewFunctions.Temp_Schema_Navigation();
-					Thread.sleep(GlobalConstants.MedWait);
-					ViewFunctions.Temp_Schema_Navigation();
-					Thread.sleep(GlobalConstants.MedWait);*/
 				}
 
 				if(sTestCaseID.equals("PTS_TOR.260.001_Functional_valid_14"))
@@ -377,9 +383,6 @@ public class SR_V1R2_DS_260_VIEW {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"Unable to Create a view without table.Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
-					/*MultipleTerminal.CloseTerminal(2);
-					Thread.sleep(GlobalConstants.MinWait);
-					 */
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.SingleQueryExe("Drop view auto.notableview;", "InValid");
 					Thread.sleep(GlobalConstants.MinWait);

@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.userrole;
@@ -71,12 +82,8 @@ import com.huawei.mppdbide.view.utils.icon.IiconPath;
  * Title: class
  * 
  * Description: The Class CreateUserRole.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
 
@@ -563,11 +570,6 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
     /**
      * Title: class
      * Description: The Class FinishBtnSelectionAdapter.
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     protected class FinishBtnSelectionAdapter extends SelectionAdapter {
 
@@ -600,10 +602,6 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
     /**
      * Title: class
      * Description: The Class BtnCancelSelectionAdapter.
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @version [DataStudio 2.1.0, 13 Nov., 2021]
-     * @since 13 Nov., 2021
      */
     private class BtnCancelSelectionAdapter extends SelectionAdapter {
         @Override
@@ -615,11 +613,6 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
     /**
      * Title: class
      * Description: The Class BtnBackSelectionAdapter.
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class BtnBackSelectionAdapter extends SelectionAdapter {
         @Override
@@ -629,9 +622,7 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
             if (curTab > 0) {
                 updateTableFields(curTab - 1);
                 tabFolder.setSelection(curTab - 1);
-                // DTS2014102906540 start
                 setFocusOnText(curTab - 1);
-                // DTS2014102906540 end
             }
 
         }
@@ -670,12 +661,6 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
      * Title: class
      * 
      * Description: The Class BtnNxtSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class BtnNxtSelectionAdapter extends SelectionAdapter {
         @Override
@@ -692,9 +677,7 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
 
                     tabFolder.setSelection(curTab + 1);
 
-                    // DTS2014102906540 start
                     setFocusOnText(curTab + 1);
-                    // DTS2014102906540 end
                 }
             }
         }
@@ -705,12 +688,6 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
      * Title: class
      * 
      * Description: The Class TabFolderSelectionAdapter.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     private class TabFolderSelectionAdapter extends SelectionAdapter {
         @Override
@@ -779,7 +756,6 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
             msg = msg.split("Position:")[0];
         }
 
-        // DTS2014103006491 end
         setErrorMsg(msg);
         ObjectBrowserStatusBarProvider.getStatusBar().displayMessage(Message.getError(MessageConfigLoader
                 .getProperty(IMessagesConstants.CREATE_USERROLE_CREATE_ERROR, newUserRole.getName())));
@@ -982,7 +958,7 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
 
         Label passwordName = new Label(grpTableProperties, SWT.LEFT);
         passwordName.setFont(FontAndColorUtility.getFont("Arial", 9, SWT.BOLD, grpTableProperties.getParent()));
-        passwordName.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_USERROLE_PASSWORD));
+        passwordName.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_USERROLE_CIPHER));
 
         int txtProp = SWT.BORDER | SWT.SINGLE | SWT.PASSWORD;
 
@@ -996,7 +972,7 @@ public class CreateUserRole extends Dialog implements IDialogWorkerInteraction {
 
         Label passwordName2 = new Label(grpTableProperties, SWT.LEFT);
         passwordName2.setFont(FontAndColorUtility.getFont("Arial", 9, SWT.BOLD, grpTableProperties.getParent()));
-        passwordName2.setText(MessageConfigLoader.getProperty(IMessagesConstants.ENTER_PASSWORD_TWICE));
+        passwordName2.setText(MessageConfigLoader.getProperty(IMessagesConstants.ENTER_CIPHER_TWICE));
 
         passwordInput2 = new Text(grpTableProperties, txtProp);
         GridData passwordInput2GD = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);

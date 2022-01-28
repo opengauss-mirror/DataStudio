@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+ 
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -237,7 +252,6 @@ public class Base_SchemaMgnt {
 					QueryEditor.SingleQueryExe("create DATABASE AutotestDB","notreq");
 					Thread.sleep(GlobalConstants.MedWait);
 					ObjectBrowserPane.objectBrowserRefresh("SINGLE");
-					//Thread.sleep(GlobalConstants.MinWait);
 					ObjectBrowserPane.objectBrowserExpansion("SINGLE");
 					ObjectBrowserPane.connectToDB();
 					Thread.sleep(GlobalConstants.MedWait);
@@ -328,7 +342,6 @@ public class Base_SchemaMgnt {
 					}
 					MultipleTerminal.CloseTerminal(2);
 					Thread.sleep(GlobalConstants.MinWait);
-					//QueryEditor.SelectConnection();
 					ObjectBrowserPane.DropSchema("Testschema");
 					Thread.sleep(GlobalConstants.MinWait);
 					ObjectBrowserPane.DropSchema("Testschema1");

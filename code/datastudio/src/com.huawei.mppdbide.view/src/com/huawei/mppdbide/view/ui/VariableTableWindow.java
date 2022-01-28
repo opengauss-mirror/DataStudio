@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.view.ui;
@@ -40,10 +51,8 @@ import com.huawei.mppdbide.view.utils.UIElement;
 /**
  * Title: class
  * Description: The Class VariableTableWindow.
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @version [openGauss DataStudio 1.0.1, 04,12,2020]
- * @since 04,12,2020
+ * @since 3.0.0
  */
 public class VariableTableWindow extends WindowBase<VariableVo> {
     /**
@@ -125,11 +134,6 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
     /**
      * Title: show the variable table source data
      * Description: The Class DebugEditorItem.
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author z00588921
-     * @version [openGauss DataStudio 1.0.1, 04,01,2021]
-     * @since 04,01,2021
      */
     private static class VariableSourceData extends ListDebugSourceDataAdapter {
         private static final String SYSTEM_PARAMETER_STRING = "__gsdb_sql_cursor_attri_";
@@ -200,11 +204,6 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
     /**
      * Title: show the variable table header
      * Description: The Class DebugEditorItem.
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author z00588921
-     * @version [openGauss DataStudio 1.0.1, 04,01,2021]
-     * @since 04,01,2021
      */
     private static class VariableSourceDataHeader implements IDebugSourceDataHeader {
         @Override
@@ -224,11 +223,6 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
     /**
      * Title: enum variable title desc
      * Description: The Class DebugEditorItem.
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author z00588921
-     * @version [openGauss DataStudio 1.0.1, 04,01,2021]
-     * @since 04,01,2021
      */
     private static enum TitleDesc {
         VARIABLE(IMessagesConstants.DEBUG_VARIABLE_VARIABLE),

@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.utils;
@@ -9,12 +20,8 @@ package com.huawei.mppdbide.utils;
  * Title: interface
  * 
  * Description: The Interface IMessagesConstantsOne.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
     String DB_CONN_DIA_TITLE = "DB_CONN_DIA_TITLE";
@@ -760,8 +767,7 @@ public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
     String ERR_WHILE_RENAMING_DATABASE = "ERR_WHILE_RENAMING_DATABASE";
 
     String UNABLE_TO_CONNECT_TO_DATABASE = "UNABLE_TO_CONNECT_TO_DATABASE";
-
-    String CURRENT_USER_PWD_TO_CONNECT_TO_DB = "CURRENT_USER_PWD_TO_CONNECT_TO_DB";
+ 
     String UNABLE_TO_CONNECT_TO_DATABASE_DB = "UNABLE_TO_CONNECT_TO_DATABASE_DB";
 
     // RemoveServer
@@ -901,15 +907,15 @@ public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
 
     String NAME_OF_THE_DATABASE = "NAME_OF_THE_DATABASE";
     String CREATE_DATABASE = "CREATE_DATABASE";
-    String CURRENT_USER_PASSWORD_TO_CONNECT_TO_DB = "CURRENT_USER_PASSWORD_TO_CONNECT_TO_DB";
+    String CURRENT_USER_CIPHER_TO_CONNECT_TO_DB = "CURRENT_USER_CIPHER_TO_CONNECT_TO_DB";
 
     // ConnectToDB
     String SUCCESSFULLY_CONNECTED_TO = "SUCCESSFULLY_CONNECTED_TO";
     String CONNECTION_ERR = "CONNECTION_ERR";
     String LOADING_OBJECT_INTO_BROWSER = "LOADING_OBJECT_INTO_BROWSER";
     String OBJECT_SUCCESSFULLY_LOADED = "OBJECT_SUCCESSFULLY_LOADED";
-    String ENTRE_PASSWORD = "ENTRE_PASSWORD";
-    String ENTER_CURRENT_USER_PWD = "ENTER_CURRENT_USER_PWD";
+    String ENTRE_CIPHER = "ENTRE_CIPHER";
+    String ENTER_CURRENT_USER_CIPHER = "ENTER_CURRENT_USER_CIPHER";
 
     // ConfigCheckHandler
     String LOGIN_TIMEOUT_CHECKED_FAILED = "LOGIN_TIMEOUT_CHECKED_FAILED";

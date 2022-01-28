@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.bl.search;
@@ -12,6 +23,7 @@ import com.huawei.mppdbide.bl.serverdatacache.OBJECTTYPE;
 import com.huawei.mppdbide.bl.serverdatacache.SequenceMetadata;
 import com.huawei.mppdbide.bl.serverdatacache.SynonymMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.TableMetaData;
+import com.huawei.mppdbide.bl.serverdatacache.TriggerMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.ViewMetaData;
 import com.huawei.mppdbide.bl.serverdatacache.groups.DebugObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ForeignTableGroup;
@@ -19,6 +31,7 @@ import com.huawei.mppdbide.bl.serverdatacache.groups.OLAPObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SequenceObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.SynonymObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.TableObjectGroup;
+import com.huawei.mppdbide.bl.serverdatacache.groups.TriggerObjectGroup;
 import com.huawei.mppdbide.bl.serverdatacache.groups.ViewObjectGroup;
 import com.huawei.mppdbide.utils.MPPDBIDEConstants;
 
@@ -28,11 +41,6 @@ import com.huawei.mppdbide.utils.MPPDBIDEConstants;
  * 
  * Description: The Class SearchNamespace.
  * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
  */
 
 public class SearchNamespace extends Namespace {
@@ -43,6 +51,7 @@ public class SearchNamespace extends Namespace {
     private ForeignTableGroup searchForeigntables;
     private SequenceObjectGroup searchsequence;
     private SynonymObjectGroup searchSynonym;
+    private TriggerObjectGroup searchTrigger;
 
     /**
      * Instantiates a new search namespace.
@@ -60,7 +69,7 @@ public class SearchNamespace extends Namespace {
         searchForeigntables = new ForeignTableGroup(OBJECTTYPE.FOREIGN_TABLE_GROUP, this);
         searchsequence = new SequenceObjectGroup(OBJECTTYPE.SEQUENCE_GROUP, this);
         searchSynonym = new SynonymObjectGroup(OBJECTTYPE.SYNONYM_GROUP, this);
-
+        searchTrigger = new TriggerObjectGroup(this);
     }
 
     @Override
@@ -97,6 +106,11 @@ public class SearchNamespace extends Namespace {
     public SynonymObjectGroup getSynonymGroup() {
         return this.searchSynonym;
     }
+    
+    @Override
+    public TriggerObjectGroup getTriggerObjectGroup() {
+    	return this.searchTrigger;
+	}
 
     @Override
     public ForeignTableGroup getForeignTablesGroup() {
@@ -137,6 +151,9 @@ public class SearchNamespace extends Namespace {
         }
         if (searchSynonym.getSize() > 0) {
             objectGroup.add(this.getSynonymGroup());
+        }
+        if (searchTrigger.getSize() > 0) {
+            objectGroup.add(this.getTriggerObjectGroup());
         }
 
         return objectGroup.toArray();
@@ -218,6 +235,16 @@ public class SearchNamespace extends Namespace {
     public void addToSynonymGroup(SynonymMetaData syn) {
         getSynonymGroup().addToGroup(syn);
         getDatabase().getSearchPoolManager().addsynonymToSearchPool(syn);
+    }
+
+    /**
+     * Adds the to trigger group.
+     *
+     * @param triggerMetaData the trigger metadata
+     */
+    public void addToTrigerGroup(TriggerMetaData triggerMetaData) {
+        getTriggerObjectGroup().addToGroup(triggerMetaData);
+        getDatabase().getSearchPoolManager().addTriggerToSearchPool(triggerMetaData);
     }
 
     /**

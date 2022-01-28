@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.presentation.exportdata;
@@ -38,16 +49,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 /**
  * Title: ImportExcelExecuter
  * 
- * Description:
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * 
- * @author sWX316469
- * @version [DataStudio 6.5.1, 11-Oct-2019]
- * @since 11-Oct-2019
+ * @since 3.0.0
  */
-
 public class ImportExcelExecuter {
     private DBConnection dbCon;
     private ImportExportOption importExportoptions;
@@ -78,8 +81,6 @@ public class ImportExcelExecuter {
      *
      * @return the int
      * @throws DatabaseOperationException the database operation exception
-     * @Author: wWX633190
-     * @Date: July 1, 2019
      * @Title: executeExcImp
      * @Description: Import data execution method
      */
@@ -130,8 +131,6 @@ public class ImportExcelExecuter {
      *
      * @param countList the count list
      * @return the period excute max count
-     * @Author: wWX633190
-     * @Date: July 5,2019
      * @Title: getPeriodExcuteMaxCount
      * @Description: Get the maximum number of rows executed by the segment
      */
@@ -150,8 +149,6 @@ public class ImportExcelExecuter {
      *
      * @param subList the sub list
      * @throws DatabaseOperationException the database operation exception
-     * @Author: wWX633190
-     * @Date: July 4,2019
      * @Title: periodExecuteExc
      * @Description: Period execute excel data
      */
@@ -178,7 +175,9 @@ public class ImportExcelExecuter {
             for (int index = 0; index < subList.size(); index++) {
                 kcount = setValuesPeriodExecuteExcInner(subList, columnDataType, preState, kcount, index);
             }
-            preState = dbCon.getPrepareStmt(preState.toString());
+            String preparedStatementString = preState.toString();
+            dbCon.closeStatement(preState);
+            preState = dbCon.getPrepareStmt(preparedStatementString);
             validateForCancel(preState);
         } finally {
             dbCon.closeStatement(preState);
@@ -354,8 +353,6 @@ public class ImportExcelExecuter {
      * @param colCount the col count
      * @param subList the sub list
      * @return the string
-     * @Author: wWX633190
-     * @Date: July 4,2019
      * @Title: composeBatchFormatSql
      * @Description: Compose batch import excel format SQL
      */
@@ -415,8 +412,6 @@ public class ImportExcelExecuter {
      *
      * @param tablecolumns the tablecolumns
      * @return the object
-     * @Author: wWX633190
-     * @Date: July 4,2019
      * @Title: formatSelectedColumn
      * @Description: Format table column value
      */
@@ -448,8 +443,6 @@ public class ImportExcelExecuter {
      * @param cell the cell
      * @return the cel encode
      * @throws UnsupportedEncodingException the unsupported encoding exception
-     * @Author: wWX633190
-     * @Date: July 1, 2019
      * @Title: getCelEncode
      * @Description: Get the transcode string
      */
@@ -465,8 +458,6 @@ public class ImportExcelExecuter {
      * Gets the column datatype.
      *
      * @return the column datatype
-     * @Author: wWX633190
-     * @Date: July 1,2019
      * @Title: getColumnDatatype
      * @Description: Get the data type of the data table column
      */
@@ -542,8 +533,6 @@ public class ImportExcelExecuter {
      * Sets the cancel flag.
      *
      * @param iscancel the new cancel flag
-     * @Author: wWX633190
-     * @Date: July 4,2019
      * @Title: setCancelFlag
      * @Description: Set cancel query flag
      */

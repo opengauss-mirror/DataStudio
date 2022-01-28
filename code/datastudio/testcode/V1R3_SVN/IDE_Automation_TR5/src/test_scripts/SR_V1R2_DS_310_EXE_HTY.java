@@ -1,3 +1,18 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
 package test_scripts;
 
 import java.awt.event.KeyEvent;
@@ -387,8 +402,6 @@ public class SR_V1R2_DS_310_EXE_HTY {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"The pinned Sql Query is not loaded in sql terminal. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
-					/*ObjectBrowserPane.connectToDB();
-					Thread.sleep(GlobalConstants.MinWait);*/
 				}
 
 
@@ -444,7 +457,6 @@ public class SR_V1R2_DS_310_EXE_HTY {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"The Query is not loaded in the sql history. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
-					//ExecutionHistoryFunctions.closeExeHistory();
 				}
 				if(sTestCaseID.equals("SDV_FUN_VAL_DS_SQLExec_Hist_049"))
 				{
@@ -467,7 +479,6 @@ public class SR_V1R2_DS_310_EXE_HTY {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"The Pinned Query is not loaded in the sql history. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
-					//ExecutionHistoryFunctions.closeExeHistory();
 				}
 				if(sTestCaseID.equals("SDV_FUN_VAL_DS_SQLExec_Hist_051"))
 				{
@@ -849,8 +860,6 @@ public class SR_V1R2_DS_310_EXE_HTY {
 					Thread.sleep(GlobalConstants.MinWait);
 					QueryEditor.ExecuteButton();
 					Thread.sleep(GlobalConstants.MinWait);
-					/*QueryEditor.ClearEditor();
-					Thread.sleep(GlobalConstants.MinWait);*/
 					ExecutionHistoryFunctions.openExeHistory(1);
 					Thread.sleep(GlobalConstants.MinWait);
 					ExecutionHistoryFunctions.selectExeHistoryQuery(1);
@@ -1148,16 +1157,6 @@ public class SR_V1R2_DS_310_EXE_HTY {
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,5,"SQL History Window multiple connection to different DB. Please refer screenshot "+sTestCaseID+".jpg");
 						UtilityFunctions.TakeScreenshot(sTestCaseID, ResultExcel);
 					}
-					/*MultipleTerminal.CloseTerminal(2);
-					Thread.sleep(GlobalConstants.MinWait);
-					UtilityFunctions.KeyPress(KeyEvent.VK_ALT, 1);
-					UtilityFunctions.KeyPress(KeyEvent.VK_Q, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_ALT, 1);
-					UtilityFunctions.KeyRelease(KeyEvent.VK_Q, 1);
-					Thread.sleep(GlobalConstants.MinWait);	
-					ObjectBrowserPane.objectBrowserRefresh("DOUBLE");
-					ObjectBrowserPane.removeConnection();
-					Thread.sleep(GlobalConstants.MedWait);*/
 				}
 
 				if(sTestCaseID.equals("SDV_FUN_VAL_DS_SQLExec_Hist_068"))
@@ -1174,15 +1173,6 @@ public class SR_V1R2_DS_310_EXE_HTY {
 					MultipleTerminal.SelectTerminal(2);
 					Thread.sleep(GlobalConstants.MedWait);
 					sFlag1 = "select * from pg_am;";
-					/*Thread.sleep(GlobalConstants.MedWait);
-					BaseActions.Focus("Data Studio", "", "Button6");
-					Thread.sleep(GlobalConstants.MinWait);
-					BaseActions.Click("Data Studio", "", "Button6");
-					Thread.sleep(GlobalConstants.MinWait);//clicking execute history button
-					BaseActions.Winwait("SQL History - DSConnSP3");
-					Thread.sleep(GlobalConstants.MinWait);
-					Thread.sleep(GlobalConstants.MinWait);
-					ExecutionHistoryFunctions.closeExeHistory();*/
 					if(sFlag1.equals("select * from pg_am;"))
 					{
 						UtilityFunctions.WriteToExcel(ResultExcel,sARNumber,i+2,4,"Passed");

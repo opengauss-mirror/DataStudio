@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.utils.security;
@@ -48,12 +59,8 @@ import com.huawei.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * Title: class
  * 
  * Description: The Class AESAlgorithmUtility.
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
  *
- * @author pWX553609
- * @version [DataStudio 6.5.1, 17 May, 2019]
- * @since 17 May, 2019
+ * @since 3.0.0
  */
 public class AESAlgorithmUtility {
     /**
@@ -88,12 +95,6 @@ public class AESAlgorithmUtility {
      * Title: enum
      * 
      * Description: The Enum KeyPartFileCreateOption.
-     * 
-     * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
-     *
-     * @author pWX553609
-     * @version [DataStudio 6.5.1, 17 May, 2019]
-     * @since 17 May, 2019
      */
     public enum KeyPartFileCreateOption {
 
@@ -476,15 +477,16 @@ public class AESAlgorithmUtility {
      * @throws InvalidKeySpecException the invalid key spec exception
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public final String generatePBKDF(String password, boolean isGenWorkingKeyFlow)
+    public final String generatePBKDF(String pwdString, boolean isGenWorkingKeyFlow)
             throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         int iterations = MPPDBIDEConstants.PBKDF_ITERATIONS;
-        char[] chars = password.toCharArray();
+        char[] chars = pwdString.toCharArray();
         byte[] salt = isGenWorkingKeyFlow ? SecureRandomGenerator.getRandomNumber() : getSalt();
 
         PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
         byte[] hash = skf.generateSecret(spec).getEncoded();
+        Arrays.fill(chars, (char) 0x00);
         return toHex(hash);
     }
 

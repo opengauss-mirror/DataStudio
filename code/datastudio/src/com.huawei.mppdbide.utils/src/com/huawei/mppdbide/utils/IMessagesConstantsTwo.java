@@ -1,5 +1,16 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019. All rights reserved.
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
  */
 
 package com.huawei.mppdbide.utils;
@@ -7,16 +18,8 @@ package com.huawei.mppdbide.utils;
 /**
  * Title: IMessagesConstantsTwo
  * 
- * Description:
- * 
- * Copyright (c) Huawei Technologies Co., Ltd. 2012-2019.
- *
- * 
- * @author sWX316469
- * @version [DataStudio 6.5.1, 31-Dec-2019]
- * @since 31-Dec-2019
+ * @since 3.0.0
  */
-
 public interface IMessagesConstantsTwo {
     String EXECUTION_DYANMIC_TIME_LABEL = "EXECUTION_DYANMIC_TIME_LABEL";
 
@@ -124,7 +127,6 @@ public interface IMessagesConstantsTwo {
 
     String IMPORT_PROFILE_INCORRECT_FILE = "IMPORT_PROFILE_INCORRECT_FILE";
 
-    // Added by ywx715185
     String SHORTCUT_KEY_ALREADY_EXIST = "SHORTCUT_KEY_ALREADY_EXIST";
 
     String SELECT_SHORTCUT_KEY_AGAIN = "SELECT_SHORTCUT_KEY_AGAIN";
@@ -181,7 +183,7 @@ public interface IMessagesConstantsTwo {
 
     String INVALID_EXTENSION_MESSAGE = "INVALID_EXTENSION_MESSAGE";
 
-    String VALIDATE_PASSWORD_FAIL = "VALIDATE_PASSWORD_FAIL";
+    String VALIDATE_CIPHER_FAIL = "VALIDATE_CIPHER_FAIL";
 
     // openGauss excel format of table data import
 
@@ -402,7 +404,7 @@ public interface IMessagesConstantsTwo {
 
     String DS_COMMANDLINE_INVALID_HOST_PORT_VALUE = "DS_COMMANDLINE_INVALID_HOST_PORT_VALUE";
 
-    String DS_COMMANDLINE_INVALID_SAVE_PASSWORD_VALUE = "DS_COMMANDLINE_INVALID_SAVE_PASSWORD_VALUE";
+    String DS_COMMANDLINE_INVALID_SAVE_CIPHER_VALUE = "DS_COMMANDLINE_INVALID_SAVE_CIPHER_VALUE";
 
     String DS_COMMANDLINE_INVALID_SSL_ENABLE_VALUE = "DS_COMMANDLINE_INVALID_SSL_ENABLE_VALUE";
 
@@ -410,9 +412,9 @@ public interface IMessagesConstantsTwo {
 
     String DS_COMMANDLINE_ATTEMPTING_CONNECTION_MSG = "DS_COMMANDLINE_ATTEMPTING_CONNECTION_MSG";
 
-    String DS_COMMANDLINE_ENTER_PASSWORD = "DS_COMMANDLINE_ENTER_PASSWORD";
+    String DS_COMMANDLINE_ENTER_CIPHER = "DS_COMMANDLINE_ENTER_CIPHER";
     
-    String DS_COMMANDLINE_PRESS_ENTER_FOLLOWED_BY_PASSWORD = "DS_COMMANDLINE_PRESS_ENTER_FOLLOWED_BY_PASSWORD";
+    String DS_COMMANDLINE_PRESS_ENTER_FOLLOWED_BY_CIPHER = "DS_COMMANDLINE_PRESS_ENTER_FOLLOWED_BY_CIPHER";
     
     // DS Commandline parameter support end
 
