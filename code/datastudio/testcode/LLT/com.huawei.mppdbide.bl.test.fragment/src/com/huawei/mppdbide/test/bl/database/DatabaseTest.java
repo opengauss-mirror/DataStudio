@@ -287,7 +287,8 @@ public class DatabaseTest extends BasicJDBCTestCaseAdapter
             assertTrue(1 == database.getOid());
             assertTrue(database.isConnected());
             assertTrue(DatabaseHelper.fetchDBOid(database) == 1);
-            assertTrue(DatabaseUtils.getAllDBListInServer(database).size() == 2);
+            System.out.println(DatabaseUtils.getAllDBListInServer(database).size());
+            assertTrue(DatabaseUtils.getAllDBListInServer(database).size() == 1);
 
             assertTrue(database.getDebugObjectById(1, 1).getName()
                     .equalsIgnoreCase("auto1"));

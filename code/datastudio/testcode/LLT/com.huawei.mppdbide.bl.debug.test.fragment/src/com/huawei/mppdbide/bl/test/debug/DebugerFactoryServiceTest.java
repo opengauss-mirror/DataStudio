@@ -15,6 +15,8 @@
 
 package com.huawei.mppdbide.bl.test.debug;
 
+import static org.junit.Assert.*;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
