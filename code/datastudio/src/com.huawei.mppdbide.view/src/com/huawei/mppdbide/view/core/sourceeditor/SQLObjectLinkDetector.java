@@ -83,7 +83,7 @@ public class SQLObjectLinkDetector extends AbstractHyperlinkDetector {
 
         String[] prefixes = contentAssistUtil.getPrefixHyperLink(searchPrefix);
 
-        if (prefixes.length == 2 && prefixes.length <= 2) {
+        if (prefixes.length == 2) {
             if (prefixes[0].trim().startsWith("\"")) {
                 searchStart = searchStart + 1;
             }
