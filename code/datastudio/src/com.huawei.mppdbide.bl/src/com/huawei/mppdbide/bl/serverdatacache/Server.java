@@ -308,7 +308,7 @@ public class Server implements IConnectionProfile, GaussOLAPDBMSObject {
         if (hostLength > 25) {
             wrappedHost = this.serverHost.substring(0, 11) + "..."
                     + this.serverHost.substring(hostLength - 11, hostLength);
-        } else if (hostLength <= 25) {
+        } else {
             wrappedHost = this.serverHost;
         }
         return this.connectionName + " (" + wrappedHost + ':' + this.serverPort + ')';

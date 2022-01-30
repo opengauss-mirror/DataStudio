@@ -397,7 +397,7 @@ public class ConnectToDB {
 
         if (deadLineTime <= 0) {
             loggingAllowedAfterPasswordExpiry();
-        } else if (deadLineTime > 0 && deadLineTime <= notifyTime) {
+        } else if (deadLineTime <= notifyTime) {
             showPasswordExpiryWarningPopup(deadLineTime);
         }
 

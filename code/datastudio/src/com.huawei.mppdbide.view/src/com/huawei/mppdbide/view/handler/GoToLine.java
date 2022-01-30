@@ -71,7 +71,7 @@ public class GoToLine {
             lineNumber = dialog.getViewerLinenumber();
             if (flag) {
                 ((PLSourceEditor) partObject).getSourceEditorCore().goToLineNumber(lineNumber);
-            } else if (!flag) {
+            } else {
                 ((SQLTerminal) partObject).getTerminalCore().goToLineNumber(lineNumber);
             }
         }
