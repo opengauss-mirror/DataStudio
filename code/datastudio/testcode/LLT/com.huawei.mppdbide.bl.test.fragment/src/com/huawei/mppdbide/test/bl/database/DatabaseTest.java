@@ -3036,7 +3036,7 @@ public class DatabaseTest extends BasicJDBCTestCaseAdapter
     }
 
     @Test
-    public void testTTA_BL_DB_DTS2018060512835_FUNC_001()
+    public void testTTA_BL_DB_FUNC_001()
     {
         try
         {
@@ -6010,7 +6010,7 @@ public class DatabaseTest extends BasicJDBCTestCaseAdapter
     }
 
     @Test
-    public void testTTA_BL_DTS2018060512835_FUNC_002()
+    public void testTTA_BL_FUNC_002()
     {
 
         CommonLLTUtils.createTableRS(preparedstatementHandler);

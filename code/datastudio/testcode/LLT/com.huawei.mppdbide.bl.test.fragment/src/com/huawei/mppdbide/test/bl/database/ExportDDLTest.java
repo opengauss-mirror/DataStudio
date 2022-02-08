@@ -1,5 +1,10 @@
 package com.huawei.mppdbide.test.bl.database;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +76,7 @@ public class ExportDDLTest extends BasicJDBCTestCaseAdapter {
     int processTimeout = MPPDBIDEConstants.PROCESS_TIMEOUT;
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         CommonLLTUtils.runLinuxFilePermissionInstance();
         connection = new MockConnection();
@@ -114,7 +119,7 @@ public class ExportDDLTest extends BasicJDBCTestCaseAdapter {
     }
 
     @After
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
 
         database = connProfCache.getDbForProfileId(profileId);

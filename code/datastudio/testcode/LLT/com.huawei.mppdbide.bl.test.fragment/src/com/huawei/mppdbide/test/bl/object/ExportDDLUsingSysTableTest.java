@@ -76,7 +76,7 @@ public class ExportDDLUsingSysTableTest extends BasicJDBCTestCaseAdapter {
     int processTimeout = MPPDBIDEConstants.PROCESS_TIMEOUT;
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         CommonLLTUtils.runLinuxFilePermissionInstance();
         connection = new MockConnection();
@@ -118,7 +118,7 @@ public class ExportDDLUsingSysTableTest extends BasicJDBCTestCaseAdapter {
     }
 
     @After
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
 
         database = connProfCache.getDbForProfileId(profileId);
