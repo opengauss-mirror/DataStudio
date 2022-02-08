@@ -729,7 +729,7 @@ public class DBConnectionTest extends BasicJDBCTestCaseAdapter
             fetchRS2.addColumn("");
             fetchRS2.addRow(new Object[] {});
             preparedstatementHandler.prepareResultSet(serverSupportDdlQuery, fetchRS2);
-            assertFalse(dbConnection.getShowDDLSupportFromServer());
+            assertTrue(dbConnection.getShowDDLSupportFromServer());
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());

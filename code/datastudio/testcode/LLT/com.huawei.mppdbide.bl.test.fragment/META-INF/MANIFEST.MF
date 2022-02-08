@@ -5,8 +5,7 @@ Bundle-SymbolicName: com.huawei.mppdbide.bl.test.fragment
 Bundle-Version: 1.0.0
 Fragment-Host: com.huawei.mppdbide.bl;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ClassPath: lib/mockrunner-jdbc-2.0.6.jar,
- lib/mockrunner-core-2.0.6.jar,
+Bundle-ClassPath: lib/mockrunner-jdbc.jar,
  lib/oro-2.0.8.jar,
  lib/jdom-2.0.2.jar,
  lib/commons-logging-1.0.4.jar,
@@ -24,7 +23,10 @@ Bundle-ClassPath: lib/mockrunner-jdbc-2.0.6.jar,
  lib/powermock-api-support-1.6.6.jar,
  lib/powermock-core-1.6.6.jar,
  lib/powermock-api-easymock-1.6.6.jar,
- lib/powermock-api-mockito2-1.6.6.jar,
+ lib/powermock-module-junit4-legacy-1.6.6.jar,
+ lib/powermock-module-testng-1.6.6.jar,
+ lib/powermock-module-testng-common-1.6.6.jar,
+ lib/powermock-classloading-base-1.6.6.jar,
  lib/powermock-module-javaagent-1.6.6.jar,
  lib/powermock-module-junit4-1.6.6.jar,
  lib/powermock-module-junit4-common-1.6.6.jar,

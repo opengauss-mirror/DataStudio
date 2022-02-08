@@ -1,8 +1,6 @@
 
 package com.huawei.mppdbide.test.bl.table;
 
-import static org.junit.Assert.fail;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
