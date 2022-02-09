@@ -40,7 +40,7 @@ import org.opengauss.mppdbide.view.utils.BottomStatusBar;
  * 
  * Title: class
  * 
- * Description: a00415838 This context is used when "execution plan" button is
+ * Description: This context is used when "execution plan" button is
  * clicked on sql terminal for selected queries, and the plan is shown in a new
  * execution plan tab
  *
