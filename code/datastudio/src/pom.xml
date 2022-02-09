@@ -2,26 +2,26 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.huawei.plide.build</groupId>
+  <groupId>org.opengauss.plide.build</groupId>
   <artifactId>GAUSS_MPP_DB_IDE</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>com.huawei.dbdriver.jdbc.gauss</module>
+    <module>org.opengauss.dbdriver.jdbc.gauss</module>
 	<module>Common-collection</module>
 	<module>commons-csv</module>
 	<module>JSQLParser</module>
-    <module>com.huawei.mppdbide.utils</module>
-	<module>com.huawei.mppdbide.parser</module>
-    <module>com.huawei.mppdbide.adapter.gauss</module>
-    <module>com.huawei.mppdbide.debuger</module>
-    <module>com.huawei.mppdbide.bl</module>
-    <module>com.huawei.mppdbide.presentation</module>
-    <module>com.huawei.mppdbide.explainplan</module>
-	<module>com.huawei.mppdbide.editor.extension</module>
-    <module>com.huawei.mppdbide.view</module>
-    <module>com.huawei.mppdbide.feature</module>
-    <module>com.huawei.mppdbide.repository</module>
+    <module>org.opengauss.mppdbide.utils</module>
+	<module>org.opengauss.mppdbide.parser</module>
+    <module>org.opengauss.mppdbide.adapter.gauss</module>
+    <module>org.opengauss.mppdbide.debuger</module>
+    <module>org.opengauss.mppdbide.bl</module>
+    <module>org.opengauss.mppdbide.presentation</module>
+    <module>org.opengauss.mppdbide.explainplan</module>
+	<module>org.opengauss.mppdbide.editor.extension</module>
+    <module>org.opengauss.mppdbide.view</module>
+    <module>org.opengauss.mppdbide.feature</module>
+    <module>org.opengauss.mppdbide.repository</module>
 	</modules>
    <properties>
     <tycho-version>1.4.0</tycho-version>
@@ -49,16 +49,16 @@
 		<runSuite>**/*.class</runSuite>
       </properties>
       <modules>
-        <module>..\testcode\LLT\com.huawei.mppdbide.bl.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.utils.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.adapter.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.bl.debug.test.fragment</module>		
-		<module>..\testcode\LLT\com.huawei.mppdbide.editor.extension.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.parser.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.explainplan.test.fragment</module>
-		<!-- <module>..\testcode\LLT\com.huawei.mppdbide.bl.windows.test.fragment</module> -->
-		<!-- <module>..\testcode\LLT\com.huawei.mppdbide.presentation.windows.test.fragment</module> -->
-		<!-- <module>..\testcode\LLT\com.huawei.mppdbide.util.windows.test.fragment</module> -->
+        <module>..\testcode\LLT\org.opengauss.mppdbide.bl.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.utils.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.adapter.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.bl.debug.test.fragment</module>		
+		<module>..\testcode\LLT\org.opengauss.mppdbide.editor.extension.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.parser.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.explainplan.test.fragment</module>
+		<!-- <module>..\testcode\LLT\org.opengauss.mppdbide.bl.windows.test.fragment</module> -->
+		<!-- <module>..\testcode\LLT\org.opengauss.mppdbide.presentation.windows.test.fragment</module> -->
+		<!-- <module>..\testcode\LLT\org.opengauss.mppdbide.util.windows.test.fragment</module> -->
       </modules>
     </profile>
 	
@@ -83,13 +83,13 @@
 		<runSuite>**/*.class</runSuite>
       </properties>
 	  <modules>
-        <module>..\testcode\LLT\com.huawei.mppdbide.bl.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.utils.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.adapter.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.bl.debug.test.fragment</module>		
-		<module>..\testcode\LLT\com.huawei.mppdbide.editor.extension.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.parser.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.explainplan.test.fragment</module>
+        <module>..\testcode\LLT\org.opengauss.mppdbide.bl.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.utils.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.adapter.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.bl.debug.test.fragment</module>		
+		<module>..\testcode\LLT\org.opengauss.mppdbide.editor.extension.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.parser.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.explainplan.test.fragment</module>
       </modules>
     </profile>
 	
@@ -114,7 +114,7 @@
 		<runSuite>**/*.class</runSuite>
       </properties>
 	  <modules>
-        <module>..\testcode\LLT\com.huawei.mppdbide.bl.test.fragment</module>
+        <module>..\testcode\LLT\org.opengauss.mppdbide.bl.test.fragment</module>
       </modules>
     </profile>
 	
@@ -127,12 +127,12 @@
 		<presentation.skip>true</presentation.skip>
       </properties>
 	  <modules>
-        <module>..\testcode\LLT\com.huawei.mppdbide.utils.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.adapter.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.bl.debug.test.fragment</module>		
-		<module>..\testcode\LLT\com.huawei.mppdbide.editor.extension.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.parser.test.fragment</module>
-		<module>..\testcode\LLT\com.huawei.mppdbide.explainplan.test.fragment</module>
+        <module>..\testcode\LLT\org.opengauss.mppdbide.utils.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.adapter.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.bl.debug.test.fragment</module>		
+		<module>..\testcode\LLT\org.opengauss.mppdbide.editor.extension.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.parser.test.fragment</module>
+		<module>..\testcode\LLT\org.opengauss.mppdbide.explainplan.test.fragment</module>
       </modules>
     </profile>
 	
@@ -228,7 +228,7 @@
         </configuration>
       </plugin>
 	  <plugin>
-			<groupId>com.huawei.devtest</groupId>
+			<groupId>org.opengauss.devtest</groupId>
 			<artifactId>devtestcov-maven-plugin</artifactId>
 			<version>2.0.0-SNAPSHOT</version>
 			<configuration>

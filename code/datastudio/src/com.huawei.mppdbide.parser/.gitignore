@@ -1,4 +1,0 @@
-/bin/
-/src/com/huawei/mppdbide/parser/grammar/*.java
-/src/com/huawei/mppdbide/parser/grammar/*.tokens
-/target/
