@@ -1,0 +1,53 @@
+/* 
+ * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
+ *
+ * openGauss is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *
+ *           http://license.coscl.org.cn/MulanPSL2
+ *        
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
+package org.opengauss.mppdbide.gauss.sqlparser.stmt.node.listitem.create;
+
+import org.opengauss.mppdbide.gauss.sqlparser.stmt.node.TAbstractListItem;
+import org.opengauss.mppdbide.gauss.sqlparser.stmt.node.TExpression;
+import org.opengauss.mppdbide.gauss.sqlparser.stmt.node.TParseTreeNode;
+
+/**
+ * 
+ * Title: TCreateItem
+ *
+ * @since 3.0.0
+ */
+public class TCreateItem extends TAbstractListItem {
+    private TExpression table = null;
+    private TExpression expression = null;
+
+    public TExpression getTable() {
+        return table;
+    }
+
+    public void setTable(TExpression table) {
+        this.table = table;
+    }
+
+    @Override
+    public TParseTreeNode getStartNode() {
+        return table;
+    }
+
+    public TExpression getExpression() {
+        return expression;
+    }
+
+    public void setExpression(TExpression expression) {
+        this.expression = expression;
+    }
+
+}

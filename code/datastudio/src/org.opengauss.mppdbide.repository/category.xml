@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.opengauss.mppdbide.feature_1.0.0.qualifier.jar" id="org.opengauss.mppdbide.feature" version="1.0.0.qualifier">
+      <category name="org.opengauss.mppdbide.repository"/>
+   </feature>
+   <category-def name="org.opengauss.mppdbide.repository" label="Data Studio Repository">
+      <description>
+         Data Studio Repository
+      </description>
+   </category-def>
+</site>
