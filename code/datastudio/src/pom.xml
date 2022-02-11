@@ -26,7 +26,7 @@
     <properties>
         <tycho-version>1.4.0</tycho-version>
         <java.version>1.8</java.version>
-        <java8.home>C:/Program Files/HuaWei/jdk1.8.0_262</java8.home>
+        <java8.home>${env.JAVA_HOME}</java8.home>
 
         <!-- <maven.test.skip>true</maven.test.skip> -->
         <maven.compiler.source>1.8</maven.compiler.source>
