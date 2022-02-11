@@ -1,4 +1,4 @@
-package com.hauwei.mppdbide.utils.test;
+package org.opengauss.mppdbide.utils.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

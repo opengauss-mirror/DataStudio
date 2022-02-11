@@ -1,4 +1,4 @@
-package com.hauwei.mppdbide.explainplan.test;
+package org.opengauss.mppdbide.explainplan.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.hauwei.mppdbide.explainplan.mock.CommonLLTUtils;
+import org.opengauss.mppdbide.explainplan.mock.CommonLLTUtils;
 import org.opengauss.mppdbide.explainplan.nodetypes.BuffersInDetail;
 import org.opengauss.mppdbide.explainplan.nodetypes.HashDetail;
 import org.opengauss.mppdbide.explainplan.nodetypes.HashJoinDNDetails;

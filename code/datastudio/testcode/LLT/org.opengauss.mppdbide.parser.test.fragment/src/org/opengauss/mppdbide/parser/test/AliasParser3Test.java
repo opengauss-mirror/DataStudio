@@ -1,4 +1,4 @@
-package com.hauwei.mppdbide.parser.test;
+package org.opengauss.mppdbide.parser.test;
 
 import static org.junit.Assert.fail;
 

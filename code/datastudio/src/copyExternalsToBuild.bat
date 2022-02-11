@@ -27,15 +27,15 @@ xcopy %SOURCE%\3rd_src\target\dependency\gson-2.8.6.jar  %DEST%\org.opengauss.mp
 
 ::1. Copy the external files from platform, 3rd Src to respective src folders
 xcopy %SOURCE%\3rd_src\target\dependency\commons-collections4-4.4.jar %DEST%\Common-collection\. /Y /S /E
-xcopy %SOURCE%\3rd_src\target\dependency\poi-4.1.1.jar %DEST%\Common-collection\. /Y /S /E
-xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-4.1.1.jar %DEST%\Common-collection\. /Y /S /E
-xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-schemas-4.1.1.jar %DEST%\Common-collection\. /Y /S /E
+xcopy %SOURCE%\3rd_src\target\dependency\poi-4.1.2.jar %DEST%\Common-collection\. /Y /S /E
+xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-4.1.2.jar %DEST%\Common-collection\. /Y /S /E
+xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-schemas-4.1.2.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\xmlbeans-3.0.2.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\commons-compress-1.21.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\commons-math3-3.6.1.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\commons-csv-1.7.jar %DEST%\commons-csv\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\jsqlparser-3.2.jar %DEST%\JSQLParser\. /Y /S /E
-xcopy %SOURCE%\3rd_src\target\dependency\antlr4-runtime-4.7.2.jar %DEST%\org.opengauss.mppdbide.parser\. /Y /S /E
+xcopy %SOURCE%\3rd_src\target\dependency\antlr4-runtime-4.9.3.jar %DEST%\org.opengauss.mppdbide.parser\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\log4j-api-2.17.1.jar %DEST%\org.opengauss.mppdbide.utils\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\log4j-core-2.17.1.jar %DEST%\org.opengauss.mppdbide.utils\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\gson-2.8.6.jar %DEST%\org.opengauss.mppdbide.bl\. /Y /S /E
@@ -150,7 +150,7 @@ xcopy %SOURCE%\3rd_src\target\dependency\runtime_registry_compatibility-4.3.1.ja
 
 rmdir /Q /S %TEST%\org.opengauss.mppdbide.editor.extension.test.fragment\lib
 mkdir %TEST%\org.opengauss.mppdbide.editor.extension.test.fragment\lib
-xcopy %SOURCE%\3rd_src\target\dependency\antlr4-runtime-4.7.2.jar %TEST%\org.opengauss.mppdbide.editor.extension.test.fragment\lib\.
+xcopy %SOURCE%\3rd_src\target\dependency\antlr4-runtime-4.9.3.jar %TEST%\org.opengauss.mppdbide.editor.extension.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\log4j-1.2.15.jar  %TEST%\org.opengauss.mppdbide.editor.extension.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\commons-codec-1.15.jar %TEST%\org.opengauss.mppdbide.editor.extension.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\hamcrest-api-1.0.jar %TEST%\org.opengauss.mppdbide.editor.extension.test.fragment\lib\.
@@ -183,7 +183,7 @@ xcopy %SOURCE%\3rd_src\target\dependency\gson-2.8.6.jar %TEST%\org.opengauss.mpp
 xcopy %SOURCE%\3rd_src\target\dependency\log4j-1.2.15.jar %TEST%\org.opengauss.mppdbide.parser.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\commons-codec-1.15.jar %TEST%\org.opengauss.mppdbide.parser.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\junit-4.11.jar %TEST%\org.opengauss.mppdbide.parser.test.fragment\lib\.
-xcopy %SOURCE%\3rd_src\target\dependency\antlr4-runtime-4.7.2.jar %TEST%\org.opengauss.mppdbide.parser.test.fragment\lib\.
+xcopy %SOURCE%\3rd_src\target\dependency\antlr4-runtime-4.9.3.jar %TEST%\org.opengauss.mppdbide.parser.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\mockrunner-jdbc-2.0.6.jar %TEST%\org.opengauss.mppdbide.parser.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\mockrunner-core-2.0.6.jar %TEST%\org.opengauss.mppdbide.parser.test.fragment\lib\.
 
@@ -203,9 +203,9 @@ xcopy %SOURCE%\3rd_src\target\dependency\jsqlparser-3.2.jar  %TEST%\org.opengaus
 xcopy %SOURCE%\3rd_src\target\dependency\log4j-1.2.15.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\commons-codec-1.15.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\commons-io-2.11.0.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
-xcopy %SOURCE%\3rd_src\target\dependency\poi-4.1.1.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
-xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-4.1.1.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
-xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-schemas-4.1.1.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
+xcopy %SOURCE%\3rd_src\target\dependency\poi-4.1.2.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
+xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-4.1.2.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
+xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-schemas-4.1.2.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\xmlbeans-3.0.2.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\junit-4.11.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 

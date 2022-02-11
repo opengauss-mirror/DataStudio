@@ -1,4 +1,4 @@
-package com.hauwei.mppdbide.explainplan.mock;
+package org.opengauss.mppdbide.explainplan.mock;
 
 import static org.junit.Assert.fail;
 

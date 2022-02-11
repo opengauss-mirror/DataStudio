@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: OPENGAUSS
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
- antlr4-runtime-4.7.2.jar
+ antlr4-runtime-4.9.3.jar
 Import-Package: org.opengauss.mppdbide.bl.queryparser,
  org.opengauss.mppdbide.utils.logger
 Export-Package: org.opengauss.mppdbide.parser.alias,
