@@ -19,21 +19,22 @@
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.apache.commons.lang3" version="3.1.0" match="greaterOrEqual"/>
       <import plugin="org.opengauss.mppdbide.util" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.opengauss.mppdbide.adapter.gauss" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.swt" version="3.100.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.swt" version="3.115.100" match="greaterOrEqual"/>
       <import plugin="javax.inject" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.di" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.e4.ui.workbench" version="0.10.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.e4.ui.workbench" version="1.12.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.ui.di" version="0.10.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jface" version="3.8.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jface.text" version="3.8.0" match="greaterOrEqual"/>
       <import plugin="org.opengauss.mppdbide.bl" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui" version="3.103.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui" version="3.118.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.contexts" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.e4.ui.workbench.swt" version="0.10.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.e4.ui.workbench.swt" version="0.16.300" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.expressions" version="3.4.400" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.editors" version="3.8.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.editors" version="3.13.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.commands" version="0.10.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.resources" version="3.8.0" match="greaterOrEqual"/>
       <import plugin="org.apache.log4j" version="1.2.15" match="greaterOrEqual"/>

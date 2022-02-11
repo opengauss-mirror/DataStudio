@@ -327,7 +327,7 @@ public class ObjectBrowserFilterTree extends Composite implements Observer {
     private static final class ClearButtonAccessibleAdaptor extends AccessibleAdapter {
         @Override
         public void getName(AccessibleEvent event) {
-            event.result = WorkbenchSWTMessages.FilteredTree_AccessibleListenerClearButton;
+            event.result = WorkbenchSWTMessages.FilteredTree_FilterMessage;
         }
     }
 
@@ -347,7 +347,7 @@ public class ObjectBrowserFilterTree extends Composite implements Observer {
             if (filterTextString.length() == 0 || filterTextString.equals(initialText)) {
                 event.result = initialText;
             } else {
-                event.result = NLS.bind(WorkbenchSWTMessages.FilteredTree_AccessibleListenerFiltered,
+                event.result = NLS.bind(WorkbenchSWTMessages.FilteredTree_FilterMessage,
                         new String[] {filterTextString, String.valueOf(getFilteredItemsCount())});
             }
         }

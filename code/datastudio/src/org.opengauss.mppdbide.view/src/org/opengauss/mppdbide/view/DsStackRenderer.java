@@ -57,16 +57,6 @@ public class DsStackRenderer extends StackRenderer {
     private ECommandService commandService;
 
     /**
-     * Preference change.
-     *
-     * @param event the event
-     */
-    @Override
-    public void preferenceChange(PreferenceChangeEvent event) {
-        super.preferenceChange(event);
-    }
-
-    /**
      * Show tab.
      *
      * @param element the element
