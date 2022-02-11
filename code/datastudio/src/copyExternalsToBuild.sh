@@ -40,6 +40,7 @@ cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.3.jar $DEST/org.opengaus
 cp $SOURCE/3rd_src/target/dependency/log4j-api-2.17.1.jar $DEST/org.opengauss.mppdbide.utils/.
 cp $SOURCE/3rd_src/target/dependency/log4j-core-2.17.1.jar $DEST/org.opengauss.mppdbide.utils/.
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $DEST/org.opengauss.mppdbide.bl/.
+cp $SOURCE/3rd_src/target/dependency/commons-lang3-3.12.0.jar $DEST/org.opengauss.mppdbide.bl/.
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $DEST/org.opengauss.mppdbide.explainplan/.
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/3rd_src/target/dependency/guice-4.2.0.jar $DEST/org.opengauss.mppdbide.view/.
