@@ -6,4 +6,4 @@ Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.apache.commons.csv
 Bundle-ClassPath: .,
- commons-csv-1.7.jar
+ commons-csv-1.9.0.jar

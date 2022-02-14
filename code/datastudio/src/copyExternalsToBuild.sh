@@ -24,6 +24,7 @@ cp $SOURCE/3rd_src/target/dependency/cglib-nodep-3.3.0.jar $DEST/org.opengauss.m
 cp $SOURCE/3rd_src/target/dependency/easymock-4.3.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/objenesis-3.2.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/commons-codec-1.15.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
+cp $SOURCE/3rd_src/target/dependency/commons-lang3-3.12.0.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar  $DEST/org.opengauss.mppdbide.presentation/src-test/.
 
 #::1. Copy the external files from platform, 3rd Src to respective src folders
@@ -34,7 +35,8 @@ cp $SOURCE/3rd_src/target/dependency/poi-ooxml-schemas-4.1.2.jar $DEST/Common-co
 cp $SOURCE/3rd_src/target/dependency/xmlbeans-5.0.3.jar $DEST/Common-collection/.
 cp $SOURCE/3rd_src/target/dependency/commons-compress-1.21.jar $DEST/Common-collection/.
 cp $SOURCE/3rd_src/target/dependency/commons-math3-3.6.1.jar $DEST/Common-collection/.
-cp $SOURCE/3rd_src/target/dependency/commons-csv-1.7.jar $DEST/commons-csv/.
+cp $SOURCE/3rd_src/target/dependency/commons-csv-1.9.0.jar $DEST/commons-csv/.
+cp $SOURCE/3rd_src/target/dependency/commons-io-2.11.0.jar  $DEST/org.opengauss.mppdbide.bl/.
 cp $SOURCE/3rd_src/target/dependency/jsqlparser-3.2.jar $DEST/JSQLParser/.
 cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.3.jar $DEST/org.opengauss.mppdbide.parser/.
 cp $SOURCE/3rd_src/target/dependency/log4j-api-2.17.1.jar $DEST/org.opengauss.mppdbide.utils/.
