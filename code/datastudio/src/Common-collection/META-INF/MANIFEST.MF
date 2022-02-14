@@ -17,7 +17,7 @@ Export-Package: org.apache.commons.collections4,
  org.apache.poi.xssf.usermodel,
  org.apache.xmlbeans,
  org.openxmlformats.schemas.spreadsheetml.x2006.main
-Bundle-ClassPath: xmlbeans-3.0.2.jar,
+Bundle-ClassPath: xmlbeans-4.0.0.jar,
  commons-compress-1.21.jar,
  commons-collections4-4.4.jar,
  poi-4.1.2.jar,
