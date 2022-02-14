@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Common-collection
 Bundle-SymbolicName: Common-collection
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1
 Export-Package: org.apache.commons.collections4,
  org.apache.commons.collections4.trie,
  org.apache.commons.compress,
