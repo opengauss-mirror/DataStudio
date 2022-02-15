@@ -29,12 +29,12 @@
 	 <mirror>
 		<id>maven</id>
 		<mirrorOf>central</mirrorOf>
-		<url>http://szxy1.artifactory.cd-cloud-artifact.tools.huawei.com/artifactory/sz-maven-public/</url>
+		<url>http://mirrors.tools.huawei.com/maven/</url>
 	</mirror>   
 	<mirror>
 		<id>devtestmirror</id>
 		<mirrorOf>devtest-releases</mirrorOf>
-        <url>http://szxy1.artifactory.cd-cloud-artifact.tools.huawei.com/artifactory/sz-maven-public/</url>
+        <url>http://mirrors.tools.huawei.com/maven/</url>
 	</mirror>
   </mirrors>
   <profiles>
