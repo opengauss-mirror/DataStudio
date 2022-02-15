@@ -1,4 +1,4 @@
-package com.hauwei.mppdbide.explainplan.test;
+package org.opengauss.mppdbide.explainplan.test;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.hauwei.mppdbide.explainplan.mock.CommonLLTUtils;
+import org.opengauss.mppdbide.explainplan.mock.CommonLLTUtils;
 import org.opengauss.mppdbide.explainplan.ui.model.ExplainAnalyzePlanNodeTreeDisplayData;
 import org.opengauss.mppdbide.explainplan.ui.model.ExplainAnalyzePlanNodeTreeDisplayDataFactory;
 import org.opengauss.mppdbide.explainplan.ui.model.ExplainAnalyzePlanNodeTreeDisplayDataTreeFormat;

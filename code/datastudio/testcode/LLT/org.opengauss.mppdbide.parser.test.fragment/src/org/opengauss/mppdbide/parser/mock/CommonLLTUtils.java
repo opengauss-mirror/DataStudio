@@ -1,4 +1,4 @@
-package com.hauwei.mppdbide.parser.mock;
+package org.opengauss.mppdbide.parser.mock;
 
 import java.util.HashMap;
 import java.util.LinkedList;

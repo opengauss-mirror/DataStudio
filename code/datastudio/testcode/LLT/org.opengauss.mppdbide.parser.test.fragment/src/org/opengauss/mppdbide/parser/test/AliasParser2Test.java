@@ -1,4 +1,4 @@
-package com.hauwei.mppdbide.parser.test;
+package org.opengauss.mppdbide.parser.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.hauwei.mppdbide.parser.mock.CommonLLTUtils;
+import org.opengauss.mppdbide.parser.mock.CommonLLTUtils;
 import org.opengauss.mppdbide.parser.alias.AliasParser;
 
 public class AliasParser2Test

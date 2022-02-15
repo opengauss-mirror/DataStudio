@@ -1,5 +1,5 @@
 
-package com.hauwei.mppdbide.utils.test;
+package org.opengauss.mppdbide.utils.test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

@@ -16,7 +16,7 @@ Bundle-ClassPath: lib/commons-logging-1.0.4.jar,
  .,
  lib/commons-codec-1.15.jar,
  lib/junit-4.11.jar,
- lib/antlr4-runtime-4.7.2.jar,
+ lib/antlr4-runtime-4.9.3.jar,
  lib/mockrunner-jdbc-2.0.6.jar
 Require-Bundle: org.eclipse.e4.core.services;bundle-version="2.0.0",
  org.junit;bundle-version="4.12.0",

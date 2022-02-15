@@ -34,17 +34,11 @@ then
     unzip Data_Studio_win_64.zip
     rm -rf Data_Studio_win_64.zip
     cd "Data Studio"
-    cp "$code_path/../../../3rd_src/ds-temp-jars/DataStudio.bat" .
-    cp "$code_path/../../../3rd_src/ds-temp-jars/Data Studioc.exe" .
     rm *.p2bu
     find -path '*/linux*' -delete
     echo -e "{\"application_name\":\""$application_name"\", \"compiled_time\":\""$time_stamp"\", \"commit_id\":\""$commit_id"\"}" > version.json
 	cp -rf $info_path/openGauss* .
 	cp -rf "$info_path/Data Studio 2.1.0 Open Source Software Notice.doc" .
-	rm ./plugins/com.google.guava_21.0.0.v20170206-1425.jar
-    cp "$code_path/../../../3rd_src/guava-patch/com.google.guava_27.1.0.v20190517-1946.jar" ./plugins/
-    sed -i 's/21.0.0.v20170206-1425/27.1.0.v20190517-1946/g' artifacts.xml
-    sed -i 's/21.0.0.v20170206-1425/27.1.0.v20190517-1946/g' ./configuration/config.ini
     cd ..
     zip -r  DataStudio_win_64.zip "Data Studio"
     sha256sum DataStudio_win_64.zip > DataStudio_win_64.zip.sha256.txt

@@ -13,7 +13,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-package com.hauwei.mppdbide.utils.test;
+package org.opengauss.mppdbide.utils.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
