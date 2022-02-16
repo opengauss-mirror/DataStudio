@@ -35,6 +35,7 @@ then
     rm -rf Data_Studio_win_64.zip
     cd "Data Studio"
     rm *.p2bu
+    find ./ -name ckeditor -type d | xargs rm -rf
     find -path '*/linux*' -delete
     echo -e "{\"application_name\":\""$application_name"\", \"compiled_time\":\""$time_stamp"\", \"commit_id\":\""$commit_id"\"}" > version.json
 	cp -rf $info_path/openGauss* .
