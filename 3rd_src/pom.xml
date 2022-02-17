@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.apache.xmlbeans</groupId>
             <artifactId>xmlbeans</artifactId>
-            <version>5.0.3</version>
+            <version>3.1.0</version>
         </dependency>
 
         <dependency>
@@ -397,5 +397,18 @@
             <artifactId>runtime_registry_compatibility</artifactId>
             <version>4.3.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
+        </dependency>
+<!--
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11</version>
+        </dependency>
+-->
     </dependencies>
 </project>

@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.15.300",
  org.apache.commons.codec;bundle-version="1.10.0",
  org.apache.commons.io;bundle-version="2.6.0",
  JSQLParser;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: .,
  org.opengauss.mppdbide.utils,
