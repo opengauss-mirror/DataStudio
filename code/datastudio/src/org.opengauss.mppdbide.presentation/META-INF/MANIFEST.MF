@@ -4,7 +4,7 @@ Bundle-Name: Presentation
 Bundle-SymbolicName: org.opengauss.mppdbide.presentation
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: HUAWEI
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Import-Package: ca.odell.glazedlists,
  ca.odell.glazedlists.matchers,
  org.opengauss.mppdbide.adapter.gauss,

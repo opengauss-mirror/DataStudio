@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Common-collection
 Bundle-SymbolicName: Common-collection
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.0
 Export-Package: org.apache.commons.collections4,
  org.apache.commons.collections4.trie,
  org.apache.commons.compress,
@@ -17,10 +17,10 @@ Export-Package: org.apache.commons.collections4,
  org.apache.poi.xssf.usermodel,
  org.apache.xmlbeans,
  org.openxmlformats.schemas.spreadsheetml.x2006.main
-Bundle-ClassPath: xmlbeans-5.0.3.jar,
- commons-compress-1.21.jar,
- commons-collections4-4.4.jar,
+Bundle-ClassPath: xmlbeans-3.1.0.jar,
  poi-4.1.2.jar,
  poi-ooxml-4.1.2.jar,
  poi-ooxml-schemas-4.1.2.jar,
+ commons-collections4-4.4.jar,
+ commons-compress-1.21.jar,
  commons-math3-3.6.1.jar

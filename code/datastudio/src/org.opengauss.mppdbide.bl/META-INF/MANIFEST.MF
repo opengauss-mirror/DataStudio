@@ -4,7 +4,7 @@ Bundle-Name: MPPDBIDE_BL
 Bundle-SymbolicName: org.opengauss.mppdbide.bl
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Huawei Technologies
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.opengauss.mppdbide.bl,
  org.opengauss.mppdbide.bl.adapter.gauss,
  org.opengauss.mppdbide.bl.autosave,

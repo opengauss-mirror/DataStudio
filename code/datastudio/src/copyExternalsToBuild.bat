@@ -31,7 +31,7 @@ xcopy %SOURCE%\3rd_src\target\dependency\commons-collections4-4.4.jar %DEST%\Com
 xcopy %SOURCE%\3rd_src\target\dependency\poi-4.1.2.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-4.1.2.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-schemas-4.1.2.jar %DEST%\Common-collection\. /Y /S /E
-xcopy %SOURCE%\3rd_src\target\dependency\xmlbeans-5.0.3.jar %DEST%\Common-collection\. /Y /S /E
+xcopy %SOURCE%\3rd_src\target\dependency\xmlbeans-3.1.0.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\commons-compress-1.21.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\commons-math3-3.6.1.jar %DEST%\Common-collection\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\commons-csv-1.9.0.jar %DEST%\commons-csv\. /Y /S /E
@@ -209,7 +209,7 @@ xcopy %SOURCE%\3rd_src\target\dependency\commons-io-2.11.0.jar %TEST%\org.openga
 xcopy %SOURCE%\3rd_src\target\dependency\poi-4.1.2.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-4.1.2.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\poi-ooxml-schemas-4.1.2.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
-xcopy %SOURCE%\3rd_src\target\dependency\xmlbeans-5.0.3.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
+xcopy %SOURCE%\3rd_src\target\dependency\xmlbeans-3.1.0.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\junit-4.11.jar %TEST%\org.opengauss.mppdbide.presentation.windows.test.fragment\lib\.
 
 rmdir /Q /S %TEST%\org.opengauss.mppdbide.util.windows.test.fragment\lib

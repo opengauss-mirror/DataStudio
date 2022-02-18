@@ -26,9 +26,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -36,7 +33,6 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.Document;
 
 import org.opengauss.mppdbide.adapter.driver.Gauss200V1R7Driver;
 import org.opengauss.mppdbide.adapter.gauss.DBConnection;
