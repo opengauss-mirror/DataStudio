@@ -28,6 +28,7 @@
         <tycho-version>2.6.0</tycho-version>
         <java.version>11</java.version>
         <java8.home>${env.JAVA8_HOME}</java8.home>
+        <openjfx.home>${env.openjfx_home}</openjfx.home>
 
         <!-- <maven.test.skip>true</maven.test.skip> -->
         <maven.compiler.source>11</maven.compiler.source>
@@ -38,7 +39,7 @@
         <url.gef>http://${url.ip}${url.port}/eclipse/tools/gef/updates/releases/5.1.0_gef-master_5509/</url.gef>
         <url.efxclipse>http://${url.ip}${url.port}/eclipse/efxclipse/updates-released/3.5.0/site/</url.efxclipse>
         <url.eclipse>http://${url.ip}${url.port}/eclipse/releases/2021-12/202112081000/</url.eclipse>
-        <url.openjfx>https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx-11/repository/</url.openjfx>
+        <url.openjfx>${openjfx.home}</url.openjfx>
     </properties>
   
     <profiles>
