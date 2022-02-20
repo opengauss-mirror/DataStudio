@@ -47,6 +47,9 @@ cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $DEST/org.opengauss.mppdbide
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/3rd_src/target/dependency/guice-4.2.0.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/3rd_src/target/dependency/guava-30.1.1-jre.jar $DEST/org.opengauss.mppdbide.view/.
+cp $SOURCE/3rd_src/target/dependency/javafx-base-11.0.2-win.jar $DEST/org.opengauss.mppdbide.view/.
+cp $SOURCE/3rd_src/target/dependency/javafx-controls-11.0.2-win.jar $DEST/org.opengauss.mppdbide.view/.
+cp $SOURCE/3rd_src/target/dependency/javafx-graphics-11.0.2-win.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/platform/Gauss200/gs_jdbc/gsjdbc4.jar $DEST/org.opengauss.dbdriver.jdbc.gauss/.
 
 rm -rf $TEST/org.opengauss.mppdbide.adapter.test.fragment/lib

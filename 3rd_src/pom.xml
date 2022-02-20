@@ -4,9 +4,19 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.download</groupId>
     <artifactId>download</artifactId>
+    <parent>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx</artifactId>
+        <version>11.0.2</version>
+    </parent>
     <version>0.0.1</version>
     <name>common-lib</name>
 
+    <properties>
+        <!--<javafx.platform>linux</javafx.platform>-->
+        <javafx.version>11.0.2</javafx.version>   
+        <javafx.classifier>win</javafx.classifier>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.antlr</groupId>
@@ -396,6 +406,27 @@
             <groupId>com.anaptecs.jeaf.owalibs</groupId>
             <artifactId>runtime_registry_compatibility</artifactId>
             <version>4.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>${javafx.version}</version>
+            <classifier>${javafx.classifier}</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+            <classifier>${javafx.classifier}</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+            <classifier>${javafx.classifier}</classifier>
         </dependency>
     </dependencies>
 </project>
