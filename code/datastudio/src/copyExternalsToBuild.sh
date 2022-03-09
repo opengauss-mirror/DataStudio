@@ -38,7 +38,7 @@ cp $SOURCE/3rd_src/target/dependency/commons-math3-3.6.1.jar $DEST/Common-collec
 cp $SOURCE/3rd_src/target/dependency/commons-csv-1.9.0.jar $DEST/commons-csv/.
 cp $SOURCE/3rd_src/target/dependency/commons-io-2.11.0.jar  $DEST/org.opengauss.mppdbide.bl/.
 cp $SOURCE/3rd_src/target/dependency/jsqlparser-3.2.jar $DEST/JSQLParser/.
-cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.3.jar $DEST/org.opengauss.mppdbide.parser/.
+cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.2.jar $DEST/org.opengauss.mppdbide.parser/.
 cp $SOURCE/3rd_src/target/dependency/log4j-api-2.17.1.jar $DEST/org.opengauss.mppdbide.utils/.
 cp $SOURCE/3rd_src/target/dependency/log4j-core-2.17.1.jar $DEST/org.opengauss.mppdbide.utils/.
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $DEST/org.opengauss.mppdbide.bl/.
@@ -46,9 +46,9 @@ cp $SOURCE/3rd_src/target/dependency/commons-lang3-3.12.0.jar $DEST/org.opengaus
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $DEST/org.opengauss.mppdbide.explainplan/.
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/3rd_src/target/dependency/guava-30.1.1-jre.jar $DEST/org.opengauss.mppdbide.view/.
-cp $SOURCE/3rd_src/target/dependency/javafx-base-11.0.2-win.jar $DEST/org.opengauss.mppdbide.view/.
-cp $SOURCE/3rd_src/target/dependency/javafx-controls-11.0.2-win.jar $DEST/org.opengauss.mppdbide.view/.
-cp $SOURCE/3rd_src/target/dependency/javafx-graphics-11.0.2-win.jar $DEST/org.opengauss.mppdbide.view/.
+cp $SOURCE/3rd_src/target/dependency/javafx-base-18-ea+2-win.jar $DEST/org.opengauss.mppdbide.view/.
+cp $SOURCE/3rd_src/target/dependency/javafx-controls-18-ea+2-win.jar $DEST/org.opengauss.mppdbide.view/.
+cp $SOURCE/3rd_src/target/dependency/javafx-graphics-18-ea+2-win.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/platform/Gauss200/gs_jdbc/gsjdbc4.jar $DEST/org.opengauss.dbdriver.jdbc.gauss/.
 
 rm -rf $TEST/org.opengauss.mppdbide.adapter.test.fragment/lib
@@ -156,7 +156,7 @@ cp $SOURCE/3rd_src/target/dependency/runtime_registry_compatibility-4.3.1.jar $T
 
 rm -rf $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib
 mkdir $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib
-cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.3.jar $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.2.jar $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar  $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-codec-1.15.jar $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/hamcrest-api-1.0.jar $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
@@ -189,7 +189,7 @@ cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $TEST/org.opengauss.mppdbide
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-codec-1.15.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.3.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.2.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-jdbc-2.0.6.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-core-2.0.6.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 

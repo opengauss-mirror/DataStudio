@@ -165,6 +165,11 @@ public class TerminalExecutionSQLConnectionInfraTest extends BasicJDBCTestCaseAd
             {
                 notifyCancel = true;              
             }
+
+            @Override
+            public int compareTo(Object o) {
+                return 0;
+            }
         });
         assertTrue(notifyCancel);
         assertNull(conn1);      
@@ -208,6 +213,11 @@ public class TerminalExecutionSQLConnectionInfraTest extends BasicJDBCTestCaseAd
             {
              
             }
+
+            @Override
+            public int compareTo(Object o) {
+                return 0;
+            }
         });
 
         DBConnection conn2 = connInfra.getSecureConnection(new IUIWorkerJobNotifier()
@@ -224,6 +234,11 @@ public class TerminalExecutionSQLConnectionInfraTest extends BasicJDBCTestCaseAd
             public void setCancelled(boolean cancel)
             {
              
+            }
+
+            @Override
+            public int compareTo(Object o) {
+                return 0;
             }
         });
         assertNotNull(conn1);
@@ -262,6 +277,11 @@ public class TerminalExecutionSQLConnectionInfraTest extends BasicJDBCTestCaseAd
             {
              
             }
+
+            @Override
+            public int compareTo(Object o) {
+                return 0;
+            }
         });
 
         DBConnection conn2 = connInfra.getSecureConnection(new IUIWorkerJobNotifier()
@@ -278,6 +298,11 @@ public class TerminalExecutionSQLConnectionInfraTest extends BasicJDBCTestCaseAd
             public void setCancelled(boolean cancel)
             {
              
+            }
+
+            @Override
+            public int compareTo(Object o) {
+                return 0;
             }
         });
         assertNotNull(conn1);  
@@ -316,6 +341,11 @@ public class TerminalExecutionSQLConnectionInfraTest extends BasicJDBCTestCaseAd
             {
              
             }
+
+            @Override
+            public int compareTo(Object o) {
+                return 0;
+            }
         });
 
         DBConnection conn2 = connInfra.getSecureConnection(new IUIWorkerJobNotifier()
@@ -324,7 +354,7 @@ public class TerminalExecutionSQLConnectionInfraTest extends BasicJDBCTestCaseAd
             @Override
             public void setNotified(boolean notify)
             {
-                
+
                 
             }
             
@@ -332,6 +362,11 @@ public class TerminalExecutionSQLConnectionInfraTest extends BasicJDBCTestCaseAd
             public void setCancelled(boolean cancel)
             {
                 notifyCancel = true;
+            }
+
+            @Override
+            public int compareTo(Object o) {
+                return 0;
             }
         });
         assertNotNull(conn1);  

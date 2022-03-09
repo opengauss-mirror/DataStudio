@@ -7,21 +7,21 @@
     <parent>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx</artifactId>
-        <version>11.0.2</version>
+        <version>18-ea+2</version>
     </parent>
     <version>0.0.1</version>
     <name>common-lib</name>
 
     <properties>
         <!--<javafx.platform>linux</javafx.platform>-->
-        <javafx.version>11.0.2</javafx.version>   
+        <javafx.version>18-ea+2</javafx.version>
         <javafx.classifier>win</javafx.classifier>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
-            <version>4.9.3</version>
+            <version>4.9.2</version>
         </dependency>
 
         <dependency>
