@@ -44,7 +44,6 @@ xcopy %SOURCE%\3rd_src\target\dependency\gson-2.8.6.jar %DEST%\org.opengauss.mpp
 xcopy %SOURCE%\3rd_src\target\dependency\commons-lang3-3.12.0.jar %DEST%\org.opengauss.mppdbide.bl\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\gson-2.8.6.jar %DEST%\org.opengauss.mppdbide.explainplan\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\gson-2.8.6.jar %DEST%\org.opengauss.mppdbide.view\. /Y /S /E
-xcopy %SOURCE%\3rd_src\target\dependency\guice-4.2.0.jar %DEST%\org.opengauss.mppdbide.view\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\guava-30.1.1-jre.jar %DEST%\org.opengauss.mppdbide.view\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\javafx-base-18-ea+2-win.jar %DEST%\org.opengauss.mppdbide.view\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\javafx-controls-18-ea+2-win.jar %DEST%\org.opengauss.mppdbide.view\. /Y /S /E
