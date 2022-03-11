@@ -698,6 +698,13 @@ public class DSEditTableDataGridDataProvider extends DSResultSetGridDataProvider
                         .error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_QUERY_EXECUTION_FAILED));
                 throw new DatabaseOperationException(IMessagesConstants.ERR_QUERY_EXECUTION_FAILED);
             } else if (status && !isAtomic) {
+            	List<Integer> modifiedColumns = idsGridEditDataRow.getModifiedColumns();
+            	for (int i = 0; i < modifiedColumns.size(); i++) {
+     	            int index = modifiedColumns.get(i);
+     	            Object value = idsGridEditDataRow.getValue(index);
+     	            Object[] originalValues = ((DSEditTableDataGridRow)idsGridEditDataRow).getAllOriginal();
+     	            originalValues[index] = value;
+     	        }
                 decrementUpdatedRowCount();
             }
         }
