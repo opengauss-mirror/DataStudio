@@ -251,6 +251,7 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
 
         private Button okButton;
         private boolean disableOk = true;
+        private boolean canEdit;
 
         /**
          * Instantiates a new template dialog.
@@ -266,7 +267,8 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
                     : IMessagesConstants.CODE_TEMPLATE_DIALOG_TITLE_NEW;
 
             disableOk = !edit;
-
+            canEdit = edit;
+            
             String title = MessageConfigLoader.getProperty(titleCode);
             setTitle(title);
 
@@ -817,17 +819,20 @@ public class DSTemplatePreferencePage extends PreferencePage implements IWorkben
             String pattern = patternEditor.getDocument().get();
             newTemplate = TemplateFactory.getTemplate(name, descriptionText.getText(), pattern);
             TemplatePersistenceDataIf[] templateData = TemplateStoreManager.getInstance().getTemplateData(false);
-            Optional<TemplatePersistenceDataIf> existingTemplates = Arrays.stream(templateData)
-                .filter(template -> name.equals(template.getTemplate().getName()))
-                .findAny();
-            if (existingTemplates.isPresent()) {
-                Shell shell = Display.getCurrent().getActiveShell();
-                MessageDialog.openInformation(shell,
-                    MessageConfigLoader.getProperty(IMessagesConstants.CODE_TEMPLATE_PREFPAGE_TITLE),
-                    MessageConfigLoader.getProperty(IMessagesConstants.CODE_TEMPLATE_DUPLICATE_MSG, name));
-            } else {
-                super.okPressed();
+            if(!canEdit) {
+                Optional<TemplatePersistenceDataIf> existingTemplates = Arrays.stream(templateData)
+                        .filter(template -> name.equals(template.getTemplate().getName()))
+                        .findAny();
+                if (existingTemplates.isPresent()) {
+                    Shell shell = Display.getCurrent().getActiveShell();
+                    MessageDialog.openInformation(shell,
+                        MessageConfigLoader.getProperty(IMessagesConstants.CODE_TEMPLATE_PREFPAGE_TITLE),
+                        MessageConfigLoader.getProperty(IMessagesConstants.CODE_TEMPLATE_DUPLICATE_MSG, name));
+                    return;
+                } 
             }
+            
+            super.okPressed();
         }
 
         /**

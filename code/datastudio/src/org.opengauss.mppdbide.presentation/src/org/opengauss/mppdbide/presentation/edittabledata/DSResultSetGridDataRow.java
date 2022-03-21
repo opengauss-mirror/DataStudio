@@ -97,6 +97,15 @@ public class DSResultSetGridDataRow implements IDSGridDataRow {
             return "";
         }
     }
+    
+    /**
+     * Gets all original values.
+     *  
+     * @return the original array.
+     */
+    public Object[] getAllOriginal() {
+   	 return originalValues;
+    }
 
     /**
      * Gets the encoded value.
