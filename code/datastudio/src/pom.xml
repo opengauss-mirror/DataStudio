@@ -33,7 +33,7 @@
         <!-- <maven.test.skip>true</maven.test.skip> -->
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <url.ip>mirrors.tools.huawei.com</url.ip>
+        <url.ip>mirrors.ustc.edu.cn</url.ip>
         <url.port></url.port>
         <url.nattable>http://${url.ip}${url.port}/eclipse/nattable/releases/1.6.0/repository/</url.nattable>
         <url.gef>http://${url.ip}${url.port}/eclipse/tools/gef/updates/releases/5.1.0_gef-master_5509/</url.gef>
