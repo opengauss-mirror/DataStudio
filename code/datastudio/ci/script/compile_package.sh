@@ -9,7 +9,7 @@ commit_id=$(git rev-parse HEAD)
 cd $code_path
 sh copyExternalsToBuild.sh
 sleep 2
-mvn -B -f pom.xml -s $ci_path/settings.xml -gs $ci_path/settings.xml -nsu clean package -Dmaven.test.skip=true
+mvn -B -f pom.xml -nsu clean package -Dmaven.test.skip=true
 sleep 5
 
 echo "Packaging Datastudio files"
