@@ -258,7 +258,7 @@ openGauss Data Studio作为强大的数据库管理工具，主要支持如下�
 
   编译环境：eclipse RCP 2021-12版本
 
-  前置条件：已安装jdk8、jdk11和apache maven 3
+  前置条件：已安装jdk11和apache maven 3
 
 - ## 源码编译
 
@@ -287,14 +287,6 @@ openGauss Data Studio作为强大的数据库管理工具，主要支持如下�
   
   http://mirrors.ustc.edu.cn/eclipse/releases/2019-06/201906191000/
   ```
-
-  通过以下链接下载openjfx osgi模块包，解压到本地目录，并配置`openjfx.home`环境变量，配置为`file:\\\openjfx模块包路径`
-
-  ```sheel
-  https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx.p2-17.0.1.zip
-  ```
-
-  配置环境变量`JAVA8_HONE`，配置为jdk8的路径
 
   ### (3) 导入Maven工程
 
