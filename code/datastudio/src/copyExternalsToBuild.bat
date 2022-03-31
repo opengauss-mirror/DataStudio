@@ -49,6 +49,7 @@ xcopy %SOURCE%\3rd_src\target\dependency\javafx-base-18-ea+2-win.jar %DEST%\org.
 xcopy %SOURCE%\3rd_src\target\dependency\javafx-controls-18-ea+2-win.jar %DEST%\org.opengauss.mppdbide.view\. /Y /S /E
 xcopy %SOURCE%\3rd_src\target\dependency\javafx-graphics-18-ea+2-win.jar %DEST%\org.opengauss.mppdbide.view\. /Y /S /E
 xcopy %SOURCE%\platform\Gauss200\gs_jdbc\gsjdbc4.jar %DEST%\org.opengauss.dbdriver.jdbc.gauss\. /Y /S /E
+xcopy %SOURCE%\platform\Gauss200\gs_jdbc\javafx-swt.jar %DEST%\org.opengauss.mppdbide.view\. /Y /S /E
 
 rmdir /Q /S %TEST%\org.opengauss.mppdbide.adapter.test.fragment\lib
 mkdir %TEST%\org.opengauss.mppdbide.adapter.test.fragment\lib

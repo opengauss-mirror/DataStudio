@@ -27,8 +27,7 @@
         <!--<tycho-version>1.4.0</tycho-version>-->
         <tycho-version>2.6.0</tycho-version>
         <java.version>11</java.version>
-        <java8.home>${env.JAVA8_HOME}</java8.home>
-        <openjfx.home>${env.openjfx_home}</openjfx.home>
+        <openjfx.home>https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx-17.0.1/</openjfx.home>
 
         <!-- <maven.test.skip>true</maven.test.skip> -->
         <maven.compiler.source>11</maven.compiler.source>
@@ -174,7 +173,7 @@
                             <groupId>com.oracle</groupId>
                             <artifactId>javafx</artifactId>
                             <version>8.0.0-SNAPSHOT</version>
-                            <systemPath>${java8.home}/jre/lib/jfxswt.jar</systemPath>
+                            <systemPath>../../../platform/Gauss200/gs_jdbc/javafx-swt.jar</systemPath>
                             <scope>system</scope>
                         </extraClasspathElement>
                     </extraClasspathElements>
