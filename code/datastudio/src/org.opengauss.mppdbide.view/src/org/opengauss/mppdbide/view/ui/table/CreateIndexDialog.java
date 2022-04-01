@@ -138,7 +138,7 @@ public class CreateIndexDialog extends Dialog implements IDialogWorkerInteractio
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
         newShell.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_INDEX));
-        newShell.setSize(630, 600);
+        newShell.setSize(630, 610);
     }
 
     /**
