@@ -49,7 +49,6 @@ cp $SOURCE/3rd_src/target/dependency/guava-30.1.1-jre.jar $DEST/org.opengauss.mp
 cp $SOURCE/3rd_src/target/dependency/javafx-base-18-ea+2-win.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/3rd_src/target/dependency/javafx-controls-18-ea+2-win.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/3rd_src/target/dependency/javafx-graphics-18-ea+2-win.jar $DEST/org.opengauss.mppdbide.view/.
-cp $SOURCE/platform/Gauss200/gs_jdbc/javafx-swt.jar $DEST/org.opengauss.mppdbide.view/.
 cp $SOURCE/platform/Gauss200/gs_jdbc/gsjdbc4.jar $DEST/org.opengauss.dbdriver.jdbc.gauss/.
 
 rm -rf $TEST/org.opengauss.mppdbide.adapter.test.fragment/lib

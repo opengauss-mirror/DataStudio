@@ -27,7 +27,7 @@
         <!--<tycho-version>1.4.0</tycho-version>-->
         <tycho-version>2.6.0</tycho-version>
         <java.version>11</java.version>
-        <openjfx.home>https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx-17.0.1/</openjfx.home>
+        <javafx.home>${env.javafx_home}</javafx.home>
 
         <!-- <maven.test.skip>true</maven.test.skip> -->
         <maven.compiler.source>11</maven.compiler.source>
@@ -38,7 +38,7 @@
         <url.gef>http://${url.ip}${url.port}/eclipse/tools/gef/updates/releases/5.1.0_gef-master_5509/</url.gef>
         <url.efxclipse>http://${url.ip}${url.port}/eclipse/efxclipse/updates-released/3.5.0/site/</url.efxclipse>
         <url.eclipse>http://${url.ip}${url.port}/eclipse/releases/2021-12/202112081000/</url.eclipse>
-        <url.openjfx>${openjfx.home}</url.openjfx>
+        <url.openjfx>https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx-17.0.1/</url.openjfx>
     </properties>
   
     <profiles>
@@ -173,7 +173,7 @@
                             <groupId>com.oracle</groupId>
                             <artifactId>javafx</artifactId>
                             <version>8.0.0-SNAPSHOT</version>
-                            <systemPath>../../../platform/Gauss200/gs_jdbc/javafx-swt.jar</systemPath>
+                            <systemPath>${javafx.home}/lib/javafx-swt.jar</systemPath>
                             <scope>system</scope>
                         </extraClasspathElement>
                     </extraClasspathElements>
