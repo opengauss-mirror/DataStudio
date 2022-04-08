@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SQL助手</title>
+    <link href="css/enter_list.css" rel="stylesheet">
+    <link href="css/scrollBar.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/suggestionParser.js"></script>
+    <script src="js/errorcodeParser.js"></script>
+    <script src="js/stringReader.js"></script>
+    <script src="js/scrollBar.js"></script>
+    <link href="css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="safe_area">
+        <div class="buttontitlearea">
+            <div id="grammarNext" class="button-title-Item button-title-Item-sm center ">语法</div>
+            <div id="operationListNext" class="button-title-Item button-title-Item-md center active">操作列表</div>
+            <!-- <div id="beginnerGuideNext" class="button-title-Item button-title-Item-md center">新手入门</div>
+            <div id="caseNext" class="button-title-Item button-title-Item-sm center">案列</div> -->
+        </div>
+        <div class="contentArea">
+            <div id="responseList">
+                <div class="section-header">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="operationList.html">操作列表</a></li>
+                        <li class="breadcrumb-item font_color" id="operNameS" aria-current="page"></li>
+                    </ol>
+                </div>
+                <div class="operationName" id="operNameB"></div>
+                <div id="getdescriptioncontent" style="display: none"></div>
+                <div class="promptStatement">
+                    选择您要做的具体操作：
+                </div>
+                <div>
+                    <div id="noSubclass">
+                        <table class="operShowTable">
+                            <thead class="tablehead">
+                                <tr>
+                                    <th class='title_task'>任务</th>
+                                    <th class='title_cmd'>命令</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyTdbId">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="haveSubclass" class="hidden">
+                    </div>
+                </div>
+            </div>
+            <script src="js/enter_list.js"></script>
+        </div>
+</body>

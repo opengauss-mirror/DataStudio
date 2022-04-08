@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: gauss parser
+Bundle-SymbolicName: org.opengauss.mppdbide.parser
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: OPENGAUSS
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ClassPath: .,
+ antlr4-runtime-4.9.2.jar
+Import-Package: org.opengauss.mppdbide.bl.queryparser,
+ org.opengauss.mppdbide.utils.logger
+Export-Package: org.opengauss.mppdbide.parser.alias,
+ org.opengauss.mppdbide.parser.grammar,
+ org.opengauss.mppdbide.parser.runtimehandler,
+ org.antlr.v4.runtime,
+ org.antlr.v4.runtime.misc,
+ org.antlr.v4.runtime.tree

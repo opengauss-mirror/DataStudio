@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Data Studio" uid="mppdbide.product" id="org.opengauss.mppdbide.view.mppdbide" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-clearPersistedState  -consoleLineCount=5000 -logfolder=. -loginTimeout=180 -enableSSL=true -data
+@user.home/MyAppWorkspace -focusOnFirstResult=false
+      </programArgs>
+      <programArgsLin>--launcher.GTK_version 2
+      </programArgsLin>
+      <vmArgs>-Dosgi.requiredJavaVersion=1.11 -Xms40m -Xmx1200m -Dorg.osgi.framework.bundle.parent=ext -Dosgi.framework.extensions=org.eclipse.fx.osgi -Dorg.eclipse.swt.graphics.Resource.reportNonDisposed=false
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <launcher name="Data Studio">
+      <win useIco="false">
+         <bmp
+            winSmallHigh="icons/DataStudio ICO/datastudio-16x16x32.bmp"
+            winSmallLow="icons/DataStudio ICO/datastudio-16x16x8.bmp"
+            winMediumHigh="icons/DataStudio ICO/datastudio-32x32x32.bmp"
+            winMediumLow="icons/DataStudio ICO/datastudio-32x32x8.bmp"
+            winLargeHigh="icons/DataStudio ICO/datastudio-48x48x32.bmp"
+            winLargeLow="icons/DataStudio ICO/datastudio-48x48x8.bmp"
+            winExtraLargeHigh="icons/DataStudio ICO/datastudio-256x256x32.bmp"/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+      <plugin id="org.opengauss.mppdbide.adapter.gauss"/>
+      <plugin id="org.opengauss.mppdbide.bl"/>
+      <plugin id="org.opengauss.mppdbide.view"/>
+   </plugins>
+
+   <features>
+      <feature id="org.opengauss.mppdbide.feature" version="1.0.0.qualifier"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.emf.ecore"/>
+      <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.fx.runtime.min.feature" version="3.5.0.201902220600"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.apache.felix.scr" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+   </configurations>
+
+</product>

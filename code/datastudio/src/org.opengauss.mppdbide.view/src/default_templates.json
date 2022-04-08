@@ -1,0 +1,61 @@
+{
+	"version": "1.0.0",
+	"encoding": "utf8",
+	"templates": [{
+			"deleted": "false",
+			"description": "select",
+			"enabled": "true",
+			"name": "sl",
+			"pattern": "select",
+			"id": "sl"
+		},
+		{
+			"deleted": "false",
+			"description": "order by",
+			"enabled": "true",
+			"name": "o",
+			"pattern": "order by",
+			"id": "o"
+		},
+		{
+			"deleted": "false",
+			"description": "select from",
+			"enabled": "true",
+			"name": "sf",
+			"pattern": "select * from",
+			"id": "sf"
+		},
+		{
+			"deleted": "false",
+			"description": "delete from",
+			"enabled": "true",
+			"name": "df",
+			"pattern": "delete from",
+			"id": "df"
+		},
+		{
+			"deleted": "false",
+			"description": "insert into",
+			"enabled": "true",
+			"name": "is",
+			"pattern": "insert into select",
+			"id": "is"
+		},
+		{
+			"deleted": "false",
+			"description": "select row count",
+			"enabled": "true",
+			"name": "sc",
+			"pattern": "select count(*) from",
+			"id": "sc"
+		},
+		{
+			"deleted": "false",
+			"description": "select from",
+			"enabled": "true",
+			"name": "s*",
+			"pattern": "select * from",
+			"id": "s*"
+		}
+	]
+}

@@ -1,0 +1,189 @@
+@charset "utf-8"
+
+.windowTitle{
+font-size: 16px;
+font-family:"Microsoft YaHei";
+color: #ffffff;
+vertical-align:middle;
+padding-left:7px;
+}
+
+body
+{
+font-size: 14px;
+font-family:"Microsoft YaHei";
+color: #333333;
+line-height:1.3;
+background-color:#f5f7fa;
+padding:0 0 0 0;
+margin:0 0 0 0;
+}
+
+ul,li{margin:0px 0px 0px 5px;padding:0px 0px 0px 5px;}
+
+table
+{
+font-size: 14px;
+font-family:"Microsoft YaHei";
+}
+
+table caption
+{
+padding:10 0 8 0;
+}
+
+.fignone{
+padding:8 0 10 0;
+}
+
+.figcap{
+line-height:36px;
+}
+
+.notice{
+background:#fdfced;
+padding:8 0 5 5;
+}
+
+.note{
+background:#fdfced;
+padding:8 0 2 2;
+}
+
+.windowTitleText{
+font-size: 15px;
+font-family:"Microsoft YaHei";
+color: #ffffff;
+vertical-align:middle;
+padding-left:7px;
+font-weight:normal;
+}
+
+.div-ab{ float:none;width:99.6%;height:1px;padding:0 0 0 0;}
+.div-a{ float:left;width:50%;height:34px;padding:10 0 0 0;background-color:#83a3f0;vertical-align:middle;} 
+.div-b{ float:right;width:50%;height:34px;padding:10 0 0 0;background-color:#83A2F2;vertical-align:middle;} 
+.div-cd{ display:none;width:99.4%;height:100px;background:#eff4fe;border: 1px solid #83A2F2;} 
+.div-c{ float:left;width:90%;padding-top:15px} 
+.div-d{ float:right;width:10%;padding-top:15px} 
+.div-e{ display:none;width:99.4%;height:395px;background:#eff4fe;margin-top:0px;border: 1px solid #83A2F2;padding-top:10px}
+	
+.sectionTitle{
+font-size: 15px;
+font-family:"Microsoft YaHei";
+color: #005ebe;
+line-height:26px;
+valigh: middle;
+font-weight:normal;
+}
+
+.pText{
+line-height:20px;
+}
+
+.preText{
+font-size: 11px;
+background:#dfe8fa;
+padding:5 0 5 5;
+white-space: pre-wrap;
+white-space: -moz-pre-wrap;
+white-space: -pre-wrap;
+white-space: -o-pre-wrap;
+word-wrap: break-word;
+white-space: normal;
+line-height:16px;
+}
+
+
+.screen{
+font-size: 13px;
+background:#ebeef1;
+padding:5 0 5 5;
+line-height:22px;
+}
+
+.fieldExpText{
+font-size: 14px;
+font-family:"Microsoft YaHei";
+color: #777777;
+line-height:22px;
+}
+
+.sectionText{
+font-size: 14px;
+font-family:"Microsoft YaHei";
+color: #333333;
+line-height:24px;
+}
+
+.sectionSugTitle{
+font-size: 15px;
+font-family: "Microsoft YaHei";
+color: #ed6b44;
+}
+
+.sectionCmdTitle{
+font-size: 17px;
+font-family: "Microsoft YaHei";
+color: #005ebe;
+font-weight:normal;
+}
+
+.sectionTextRed{
+font-size: 14px;
+font-family:"Microsoft YaHei";
+color: #ed6b44;
+}
+
+a.linkText:link {
+font-size: 14px;
+font-family:"Microsoft YaHei";
+color: #016bd8;
+text-decoration: none;
+line-height:22px;
+}
+a.linkText:visited {
+font-size: 14px;
+font-family:"Microsoft YaHei";
+color: #9e46dc;
+text-decoration: none;
+line-height:22px;
+}
+a.linkText:hover {
+font-size: 14px;
+font-family:"Microsoft YaHei";
+color: #1c88f7;
+line-height:22px;
+}
+
+.hrStyle{
+height:0px; 
+border-top:1px solid #cccccc;
+border-right:0px;
+border-bottom:0px;
+border-left:0px';
+}
+
+.inputStyle{
+width:100%;
+height:24px;
+padding-left:4px;
+border-radius:4px;
+border:#83a3f0 1px solid;
+vertical-align:middle;
+}
+
+.buttonStyle{
+cursor:hand;
+padding:5 5 5 5;
+background-color:#83A2F2;
+color:white;
+vertical-align: middle;
+}
+pre.screen{
+padding:5px 5px 5px 5px;
+background-color:#F0F0F0;
+margin-top:2px;
+margin-bottom:2px;
+WORD-BREAK: break-all;
+WORD-WRAP: break-word;
+}

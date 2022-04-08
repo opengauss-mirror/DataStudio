@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SQL助手</title>
+    <link href="css/demo.css" rel="stylesheet">
+    <link href="css/scrollBar.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/suggestionParser.js"></script>
+    <script src="js/errorcodeParser.js"></script>
+    <script src="js/stringReader.js"></script>
+    <script src="js/scrollBar.js"></script>
+    <style type="text/css">
+        #keywordInfoBody>tr>td {
+            background-color: #eee;
+            color: #000;
+            cursor: pointer;
+        }
+        
+        #keywordInfoBody>tr>td:hover {
+            background-color: #069;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .showList {
+            position: absolute;
+            top: 58px;
+            left: 276px;
+            background: url(img/down.png) no-repeat right bottom;
+            width: 20px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .hideList {
+            position: absolute;
+            top: 58px;
+            left: 276px;
+            background: url(img/up.png) no-repeat right bottom;
+            width: 20px;
+            height: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <link href="css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="safe_area">
+        <div class="buttontitlearea">
+            <div id="grammar" class="button-title-Item button-title-Item-sm center active">语法</div>
+            <div id="operationList" class="button-title-Item button-title-Item-md center">操作列表</div>
+            <!-- <div id="beginnerGuide" class="button-title-Item button-title-Item-md center">新手入门</div>
+            <div id="case" class="button-title-Item button-title-Item-sm center">案列</div> -->
+        </div>
+        <div class="contentArea">
+            <div id="grammarContent">
+                <div class="grammar_content_title">
+                    <div class="grammar-item-one"><span class="grammar-font">所有语法：</span><input type="text" id="keyword" name="keyword" class="keywordselect" value="" autocomplete="off" onclick="hideKeyWord(false);" oninput="checkField(this.value)">
+                        <span id="listStatus" class="showList" onclick="hideOrShowKeyWord();"></span>
+                    </div>
+                    <div id="keywordInfo" class="keyInfoStyle">
+                        <table id="keywordListInfo" cellspacing="0px" width="100%" style="font-size:10px;line-height:12px;">
+                            <tbody id="keywordInfoBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="divSuggestion">
+                    <!-- <p>在中间窗口中，<span style="color:#ed6b44">选中SQL语句</span>，SQL助手会显示对应的<span style="color:#ed6b44">说明信息</span>。</p> -->
+                </div>
+            </div>
+            <!-- <div id="operationListContent" class="hidden">
+                <div class="operationTip">
+                    <p class="operationTipTnfo">通过操作列表，您只需要知道自己要“做什么”，就可以快速找到所需命令，而不需要事先知道命令名称。</p>
+                    <div class="operationTipselect"><b>选择您要做哪类操作?</b></div>
+                </div>
+                <div>
+                    <div class="functionalDimension">
+                        <div class="contentTitle">
+                            <b>功能维度</b>
+                        </div>
+                        <div id="funcDimen">
+                        </div>
+                    </div>
+                    <div class="sceneDimension">
+                        <div class="contentTitle">
+                            <b>场景维度</b>
+                        </div>
+                        <div id="scenDimen">
+                        </div>
+
+                    </div>
+                    <div class="operationalDimension">
+                        <div class="contentTitle">
+                            <b>操作维度</b>
+                        </div>
+                        <div id="operDimen">
+                        </div>
+                    </div>
+                </div>
+                <div id="beginnerContent" class="hidden">
+                    <input type="file" id="excel-file">
+                </div>
+                <div id="caseContent" class="hidden">
+                </div>
+            </div> -->
+
+        </div>
+        <script src="js/index.js"></script>
+        <script src="js/operationList.js"></script>
+</body>
