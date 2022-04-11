@@ -1,0 +1,156 @@
+body {
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: #333333;
+    line-height: 1.3;
+    background-color: #f5f7fa;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+
+
+/* 点击按钮进入后的CSS样式 */
+
+div.section-header ol.breadcrumb {
+    display: flex;
+    padding: 0px;
+    list-style: none;
+    margin-bottom: 0px;
+    background-color: #F7F7F7;
+    border-radius: 0px;
+}
+
+
+/* 首页字体颜色 */
+
+div.section-header li.breadcrumb-item a {
+    text-decoration: none;
+    color: #666666;
+}
+
+div.section-header {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    border-bottom: 1px dashed #c6c6c6;
+}
+
+li.breadcrumb-item {
+    padding: 0px;
+    margin: 0px;
+    font-size: 14px;
+    line-height: 15px;
+}
+
+
+/* +:代表相邻俩个元素之间 */
+
+div.section-header li.breadcrumb-item+li.breadcrumb-item::before {
+    content: ">";
+}
+
+div.operationName {
+    margin-left: 20px;
+    height: 16px;
+    font-size: 16px;
+    line-height: 15px;
+    margin-bottom: 20px;
+    color: #0470c4;
+}
+
+div.promptStatement {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    height: 15px;
+    font-size: 14px;
+    line-height: 15px;
+    color: #666666;
+}
+
+thead.tablehead {
+    background-color: #0371C3;
+    color: #FFFFFF;
+    width: 518px;
+    height: 23px;
+}
+
+table.operShowTable {
+    margin-left: 20px;
+}
+
+table {
+    background-color: #EFEFEF;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: calc(100% - 20px);
+}
+
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    font-size: 14px;
+    line-height: 15px;
+    height: 24px;
+}
+
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    font-size: 12px;
+    line-height: 15px;
+    height: 24px;
+}
+
+tr:nth-child(even) {
+    background-color: #E0E0E0;
+}
+
+tbody tr:hover {
+    background-color: rgb(127, 194, 245);
+}
+
+.font_color {
+    color: #0470c4;
+}
+
+.description {
+    background-color: #EFEFEF;
+    width: 100%;
+}
+
+.title_task {
+    width: 50px;
+}
+
+.title_cmd {
+    width: 100px;
+}
+
+
+/*第三级页面 */
+
+.grammaticalContent {
+    margin-left: 20px;
+}
+
+.sectionCmdTitle {
+    font-family: "Microsoft YaHei";
+    /* width: 101px;
+    height: 14px; */
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 15px;
+    letter-spacing: 0px;
+    color: #0470c4!important;
+    margin-bottom: 20px;
+}
+
+.sectionTitle {
+    font-size: 15px;
+    font-family: "Microsoft YaHei";
+    color: #005ebe;
+    line-height: 26px;
+    valigh: middle;
+    font-weight: normal;
+}

@@ -1,0 +1,4 @@
+/bin/
+/src/org/opengauss/mppdbide/parser/grammar/*.java
+/src/org/opengauss/mppdbide/parser/grammar/*.tokens
+/target/

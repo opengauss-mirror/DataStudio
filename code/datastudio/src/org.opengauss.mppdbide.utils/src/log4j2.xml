@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Properties>
+        <Property name="PropertiesConfig"></Property>
+        
+    </Properties>
+ 
+    <Appenders>
+        <RollingFile
+        	filePermissions="rw-------"
+    		name="LOGFILE"
+		    fileName="${sys:mppide.log:-.}"
+		    filePattern="${sys:mppide.log}_%i.log"
+		    ignoreExceptions="false">
+		    <PatternLayout   pattern="%d{MM/dd/yy hh:mm:ss a}  [%-5p] -%m%n" />
+		    <Policies>
+		        <SizeBasedTriggeringPolicy size="10000KB" />
+		    </Policies>
+		    <DefaultRolloverStrategy max="5" />
+		</RollingFile>
+		
+		<RollingFile
+        	filePermissions="rw-------"
+    		name="SECURITY"
+		    fileName="${sys:mppidesecurity.log:-.}"
+		    filePattern="${sys:mppidesecurity.log}_%i.log"
+		    ignoreExceptions="false">
+		    <PatternLayout   pattern="%d{MM/dd/yy hh:mm:ss a}  [%-5p] -%m%n" />
+		    <Policies>
+		        <SizeBasedTriggeringPolicy size="10000KB" />
+		    </Policies>
+		    <DefaultRolloverStrategy max="5" />
+		</RollingFile>
+		
+		<RollingFile
+        	filePermissions="rw-------"
+    		name="OPERATION"
+		    fileName="${sys:mppideoperation.log:-.}"
+		    filePattern="${sys:mppideoperation.log}_%i.log"
+		    ignoreExceptions="false">
+		    <PatternLayout   pattern="%d{MM/dd/yy hh:mm:ss a}  [%-5p] -%m%n" />
+		    <Policies>
+		        <SizeBasedTriggeringPolicy size="10000KB" />
+		    </Policies>
+		    <DefaultRolloverStrategy max="5" />
+		</RollingFile>
+		
+    </Appenders>
+    <Loggers>
+        <Logger name="dslogger" level="ERROR" additivity="false">
+            <appender-ref ref="LOGFILE" />
+        </Logger>
+        
+        <Logger name="security" level="INFO" additivity="false">
+            <appender-ref ref="SECURITY" />
+        </Logger>
+        
+        <Logger name="operation" level="INFO" additivity="false">
+            <appender-ref ref="OPERATION" />
+        </Logger>
+        
+        <Root level="ERROR">
+            <appender-ref ref="LOGFILE" />
+        </Root>
+    </Loggers>
+</Configuration>

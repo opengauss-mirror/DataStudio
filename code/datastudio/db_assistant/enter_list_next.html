@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SQL助手</title>
+    <link href="css/demo.css" rel="stylesheet">
+    <link href="css/enter_list.css" rel="stylesheet">
+    <link href="css/scrollBar.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/suggestionParser.js"></script>
+    <script src="js/errorcodeParser.js"></script>
+    <script src="js/stringReader.js"></script>
+    <script src="js/scrollBar.js"></script>
+    <link href="css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="safe_area">
+        <div class="buttontitlearea">
+            <div id="grammarNext" class="button-title-Item button-title-Item-sm center ">语法</div>
+            <div id="operationListNext" class="button-title-Item button-title-Item-md center active">操作列表</div>
+            <!-- <div id="beginnerGuideNext" class="button-title-Item button-title-Item-md center">新手入门</div>
+            <div id="caseNext" class="button-title-Item button-title-Item-sm center">案列</div> -->
+        </div>
+        <div class="contentArea">
+            <div id="responseList">
+                <div class="section-header">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="operationList.html">操作列表</a></li>
+                        <li class="breadcrumb-item" id="operNameS" aria-current="page"></li>
+                        <li class="breadcrumb-item font_color" id="operNameSnext" aria-current="page"></li>
+                    </ol>
+                </div>
+                <div class="grammaticalContent" id="operNameB"></div>
+                <div class="grammaticalContent" id="divSuggestion">
+                    <p>在中间窗口中，<span style="color:#ed6b44">选中SQL语句</span>，SQL助手会显示对应的<span style="color:#ed6b44">说明信息</span>。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/enter_list_next.js"></script>
+</body>
