@@ -1,36 +1,110 @@
-# DataStudio
+# Data Studio Introduction
 
-#### Description
-{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}
+## Version introduction
 
-#### Software Architecture
-Software architecture description
+This version is version 3.0.0 of opengauss Data Studio, which mainly provides the following functions:
 
-#### Installation
+- Manage / create database objects (functions, stored procedures, tables, views, sequences, triggers, etc.)
+- Execute SQL statements or SQL scripts
+- Create, execute, and debug functions or stored procedures
+- Table data addition, deletion, modification and query
+- Import / export table data
+- Display / export DDL
+- SQL assistant, formatting, execution history
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Feature introduction
 
-#### Instructions
+- Manage / create database objects
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+  Support the management / creation of database, schema, function, stored procedure, table, column, index, constraint, view, appearance, sequence, synonym, trigger, tablespace, user / role and other database objects
 
-#### Contribution
+- Execute SQL statement or SQL script
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+  Supports the execution of SQL statements or SQL scripts
 
+- Create, execute and debug functions / stored procedures
 
-#### Gitee Feature
+  It supports the creation, execution and debugging of functions / stored procedures. In the debugging process, stack and variable information can be displayed, and operations such as adding, deleting, enabling and disabling breakpoints are supported
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+- Table data addition, deletion, modification and query
+
+  Support the addition, deletion, modification and query of visual operation table data
+
+- Import / export table data
+
+  It supports the import and export of table data. The supported file formats include excel, CSV, txt and binary files
+
+- Import / export connection profile
+
+  Supports the import and export of connection configuration files
+
+- Display / export DDL
+
+  Support to display / export DDL of various database objects such as tables, functions / stored procedures, views, sequences, synonyms, etc
+
+- SQL assistant, formatting, execution history
+
+  It provides functions such as SQL assistant, editor, intelligent SQL prompt, formatting, historical SQL record, etc
+
+- security management
+
+  Support SSL secure network connection, user authority management, password management and other functions to ensure the security of the database in the management layer, application layer, system layer and network layer.
+
+## Precautions for version use
+
+- OpenGauss Data Studio is the only official client tool of openGauss database. Its built-in jdbc driver of openGauss is used together with openGauss database and cannot be used as a client tool of other databases
+- OpenGauss Data Studio is a Java application. When using it, make sure to configure the Java 11 + running environment
+
+# Source code compilation Guide
+
+Specific steps of Building Data Studio binary package through source code
+
+- ## Preconditions
+
+  1. Download and install jdk11 and configure ` JAVA_HOME ` environment variable 
+  2. Download and install Apache Maven 3.0 x. And configure ` M2_HOME ` environment variable 
+  3. Through  ` https://download2.gluonhq.com/openjfx/11.0.2/openjfx-11.0.2_windows-x64_bin-sdk.zip ` Download the JavaFX SDK dependency package and configure `javafx_ Home`environment variable with value of ${javafx-sdk-11.0.2}
+
+- ## Source Compilation
+
+  Enter the Data Studio source  ` src `  directory from the command line and run the script file
+
+  ```shell
+  cd ${Data_Studio_code}\code\datastudio\src
+  .\copyExternalsToBuild.bat(windows) or sh copyExternalsToBuild.sh(linux)
+  mvn clean package -Dmaven.test.skip=true
+  ```
+
+  The resulting installation package locations ：
+
+  ```shell
+  ${Data_Studio_code}\code\datastudio\build
+  ```
+
+# Participating Contributions
+
+**Participating Contributions**
+
+As an openGauss user, you can assist the openGauss community in a variety of ways. See [Community Contribution] for ways to participate in community contributions. https://opengauss.org/zh/contribution.html ), Here is a simple list of some ways for reference.
+
+**Special Interest Groups**
+
+OpenGauss brings together people of common interest to form different special interest groups (SIGs). Currently existing SIGs see [SIG List](https://opengauss.org/zh/contribution.html)。
+
+We welcome and encourage you to join an existing SIG or to create a new SIG, as described in the [SIG Management Guide]( https://opengauss.org/zh/contribution.html ).
+
+**Mailing Lists and Tasks**
+
+Welcome to actively help users solve problems in [mailing list]( https://opengauss.org/zh/community/mails.html ) and issue tasks (including [Code Warehouse Tasks](https://gitee.com/organizations/opengauss/issues) ) Questions raised. In addition, we welcome your question. These will help the openGauss community grow better.
+
+**Documentation**
+
+Not only can you contribute to the community by submitting code, but we also welcome your feedback on problems, difficulties, or suggestions for improving the usability and integrity of your documents. For example, problems in obtaining software or documentation, and difficulties in using the system. Welcome to pay attention to and improve the documentation module for the openGauss community.
+
+**IRC**
+
+OpenGauss also opens channels at IRC as an additional channel for community support and interaction. See  [openGauss IRC](https://opengauss.org/zh/community/onlineCommunication.html) for details.
+
+# Open source documentation should have a corresponding document license
+
+This document follows [Knowledge Sharing License Agreement CC 4.0](https://creativecommons.org/licenses/by/4.0/).
