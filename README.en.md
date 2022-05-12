@@ -61,25 +61,52 @@ Specific steps of Building Data Studio binary package through source code
 
 - ## Preconditions
 
-  1. Download and install jdk11 and configure ` JAVA_HOME ` environment variable 
-  2. Download and install Apache Maven 3.0 x. And configure ` M2_HOME ` environment variable 
-  3. Through  ` https://download2.gluonhq.com/openjfx/11.0.2/openjfx-11.0.2_windows-x64_bin-sdk.zip ` Download the JavaFX SDK dependency package and configure `javafx_ Home`environment variable with value of ${javafx-sdk-11.0.2}
+  1. Download and install jdk11 and configure `Java_ Home` environment variable. JDK recommended version 11.0.2
+
+  2. Download and install maven x. And configure `M2_ Home` environment variable. Maven recommends version 3.8.3
+
+  3. Adoption [https://gluonhq.com/products/javafx/](https://gitee.com/link?target=https%3A%2F%2Fgluonhq.com%2Fproducts%2Fjavafx%2F) Download SDK 17.0.2 to any local directory and unzip it to javafx-17.0.2
+
+  4. Adoption [https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx.p2-17.0.2.zip](https://gitee.com/link?target=https%3A%2F%2Fdownloads.efxclipse.bestsolution.at%2Fp2-repos%2Fopenjfx.p2-17.0.2.zip) Download openjfx p2-17.0.2. Zip and unzip to any local directory.
+
+  5. Configure POM file properties configuration information javafx.home and url.openjfx information .
+
+     ```
+     <javafx.home>local_directory\javafx-sdk-17.0.2</javafx.home>
+     <url.openjfx>file:\\\local_directory\openjfx.p2-17.0.2</url.openjfx>
+     ```
 
 - ## Source Compilation
 
-  Enter the Data Studio source  ` src `  directory from the command line and run the script file
+  1. Enter the src directory of Data Studio source code through git bash command line:
 
-  ```shell
-  cd ${Data_Studio_code}\code\datastudio\src
-  .\copyExternalsToBuild.bat(windows) or sh copyExternalsToBuild.sh(linux)
-  mvn clean package -Dmaven.test.skip=true
-  ```
+  2. Use mvn - version command to check and confirm Maven and JDK version information.
 
-  The resulting installation package locations ：
+     ```
+     $ mvn -version
+     Apache Maven 3.8.4 (9b656c72d54e5bacbed989b64718c159fe39b537)
+     Maven home: D:\tool\apache-maven-3.8.3 Java version: 11, vendor: Oracle Corporation, runtime: D:\tool\openjdk-11\jdk-11 Default locale: zh_CN, platform encoding: GBK OS name: "windows server 2016", version: "10.0", arch: "amd64", family: "windows"
+     ```
 
-  ```shell
-  ${Data_Studio_code}\code\datastudio\build
-  ```
+  3. Run compiled script
+
+     ```
+     cd ${Data_Studio_code}\code\datastudio\src
+     sh copyExternalsToBuild.sh
+     mvn clean package -Dmaven.test.skip=true
+     ```
+
+   4. The location of the generated  installation package is:
+
+      ```
+      ${Data_Studio_code}\code\datastudio\build
+      ```
+
+      
+
+      
+
+  
 
 # Participating Contributions
 

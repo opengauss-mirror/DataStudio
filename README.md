@@ -61,25 +61,51 @@
 
 - ## 前置条件
 
-  1. 下载安装JDK11，并配置`JAVA_HOME`环境变量
-  2. 下载安装apache maven3.x，并配置`M2_HOME`环境变量
-  3. 通过`https://download2.gluonhq.com/openjfx/11.0.2/openjfx-11.0.2_windows-x64_bin-sdk.zip`下载javafx sdk依赖包，并配置`javafx_home`环境变量，值为${javafx-sdk-11.0.2}
-
+  1. 下载安装JDK11，并配置`JAVA_HOME`环境变量。JDK推荐11.0.2版本
+  
+  2. 下载安装apache maven3.x，并配置`M2_HOME`环境变量。Maven推荐3.8.3版本
+  
+  3. 通过https://gluonhq.com/products/javafx/ 下载 javafx SDK 17.0.2版本SDK到本地并解压至任意目录。
+  
+  4. 通过https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx.p2-17.0.2.zip下载 openjfx.p2-17.0.2.zip并解压到本地任意目录。
+  
+  5. 配置pom文件properties配置信息 javafx.home 和 url.openjfx信息。
+  
+     ```xml
+     <javafx.home>本地路径\javafx-sdk-17.0.2</javafx.home>
+     <url.openjfx>file:\\\本地路径\openjfx.p2-17.0.2</url.openjfx>
+     ```
+  
+  
+  
 - ## 源码编译
 
-  通过命令行进入Data Studio源码src目录，并运行脚本文件
+  1. 通过 git bash 命令行进入Data Studio源码src目录:
 
-  ```shell
-  cd ${Data_Studio_code}\code\datastudio\src
-  .\copyExternalsToBuild.bat(windows) 或者 sh copyExternalsToBuild.sh(linux)
-  mvn clean package -Dmaven.test.skip=true
-  ```
+  2. 使用mvn -version命令 检查并确认 maven和JDK版本信息。
 
-  生成的安装包位置为：
+     ```shell
+     $ mvn -version
+      Apache Maven 3.8.4 (9b656c72d54e5bacbed989b64718c159fe39b537)
+      Maven home: D:\tool\apache-maven-3.8.3
+      Java version: 11, vendor: Oracle Corporation, runtime: D:\tool\openjdk-11\jdk-11
+      Default locale: zh_CN, platform encoding: GBK
+      OS name: "windows server 2016", version: "10.0", arch: "amd64", family: "windows"
+     ```
 
-  ```shell
-  ${Data_Studio_code}\code\datastudio\build
-  ```
+  3. 运行编译脚本
+
+     ```shell
+     cd ${Data_Studio_code}\code\datastudio\src
+     sh copyExternalsToBuild.sh
+     mvn clean package -Dmaven.test.skip=true
+     ```
+
+  4. 生成的安装包位置为：
+
+     ```shell
+     ${Data_Studio_code}\code\datastudio\build
+     ```
 
 # 参与贡献
 
