@@ -38,7 +38,7 @@
         <url.gef>http://${url.ip}${url.port}/eclipse/tools/gef/updates/releases/5.1.0_gef-master_5509/</url.gef>
         <url.efxclipse>http://${url.ip}${url.port}/eclipse/efxclipse/updates-released/3.5.0/site/</url.efxclipse>
         <url.eclipse>http://${url.ip}${url.port}/eclipse/releases/2021-12/202112081000/</url.eclipse>
-        <url.openjfx>https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx-17.0.1/</url.openjfx>
+        <url.openjfx>https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx-17.0.2/</url.openjfx>
     </properties>
   
     <profiles>

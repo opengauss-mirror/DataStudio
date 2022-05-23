@@ -203,14 +203,13 @@ public class GridResultDataSelectedCopyToExcel extends Observable {
         boolean fileExists = Files.exists(newPath);
         if (!fileExists) {
             Set<String> supportedAttr = newPath.getFileSystem().supportedFileAttributeViews();
-            FileAttribute<List<AclEntry>> fileAttributes = new DSFileAttributes(null);
             try {
-                newPath = Files.createDirectory(newPath, fileAttributes);
                 if (supportedAttr.contains("acl")) {
                     FilePermissionFactory.getFilePermissionInstance().createFileWithPermission(newPath.toString(), true,
                             null, true);
+                  
                 }
-            } catch (IOException | DatabaseOperationException exception) {
+            } catch (DatabaseOperationException exception) {
                 MPPDBIDELoggerUtility.error(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_FILE_FAIL_ERR),
                         exception);
             }
