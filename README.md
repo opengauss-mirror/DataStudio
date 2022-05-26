@@ -61,13 +61,17 @@
 
 - ## 前置条件
 
-  1. 下载安装JDK11，并配置`JAVA_HOME`环境变量。JDK推荐11.0.2版本
+  1. 下载安装JDK11 http://jdk.java.net/archive/ ，并配置`JAVA_HOME`环境变量。JDK推荐11.0.2版本
   
-  2. 下载安装apache maven3.x，并配置`M2_HOME`环境变量。Maven推荐3.8.3版本
+  2. 下载安装apache maven3.x，并配置`M2_HOME`环境变量。
+  
+     Maven推荐3.8.3版本 https://archive.apache.org/dist/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.zip
   
   3. 通过https://gluonhq.com/products/javafx/ 下载 javafx SDK 17.0.2版本SDK到本地并解压至任意目录。
   
-  4. 通过https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx.p2-17.0.2.zip下载 openjfx.p2-17.0.2.zip并解压到本地任意目录。
+  4. 通过https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx.p2-17.0.2.zip
+  
+     下载openjfx.p2-17.0.2.zip并解压到本地任意目录。
   
   5. 配置pom文件properties配置信息 javafx.home 和 url.openjfx信息。
   
@@ -75,9 +79,18 @@
      <javafx.home>本地路径\javafx-sdk-17.0.2</javafx.home>
      <url.openjfx>file:\\\本地路径\openjfx.p2-17.0.2</url.openjfx>
      ```
-  
-  
-  
+     
+     示例: 
+     
+     将下载好的javafx-sdk-17.0.2和openjfx.p2-17.0.2解压到本地目录D盘，配置pom
+     
+     ```xml
+     <javafx.home>D:\javafx-sdk-17.0.2</javafx.home>
+     <url.openjfx>file:\\\D:\openjfx.p2-17.0.2</url.openjfx>
+     ```
+     
+     
+
 - ## 源码编译
 
   1. 通过 git bash 命令行进入Data Studio源码src目录:
@@ -106,6 +119,14 @@
      ```shell
      ${Data_Studio_code}\code\datastudio\build
      ```
+
+# Eclipse-RCP开发注意事项
+
+在eclipse导入工程后，打开org.opengauss.mppdbide.repository工程的mppdbide.product文件，点击Launch an Eclipse application 运行启动工程。
+
+如果工程启动失败，则通过如下操作，配置当前运行环境后再运行。
+
+点击eclipse菜单 run-> run configurations -> Plug-ins -> Add Required Plug-ins -> validate Plug-ins -> Apply -> Run 启动工程
 
 # 参与贡献
 
