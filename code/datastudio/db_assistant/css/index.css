@@ -94,10 +94,7 @@ p {
 
 .grammar-item-goback {
     line-height: 22px;
-    /* display: inline-flex; */
-    position: fixed;
-    top: 60px;
-    left: 300px;
+    display: inline-block; 
     margin: 0 0 0 2;
     padding-left: 6px;
     padding-right: 1px;
