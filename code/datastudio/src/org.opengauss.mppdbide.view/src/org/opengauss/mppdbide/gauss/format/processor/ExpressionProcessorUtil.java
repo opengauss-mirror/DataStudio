@@ -40,7 +40,7 @@ public class ExpressionProcessorUtil {
     private static Map<String, List<String>> currentPreTextMap = new HashMap<>(10);
 
     static {
-        currentPreTextMap.put("=", Arrays.asList(":", ">", "<"));
+        currentPreTextMap.put("=", Arrays.asList(":", ">", "<", "!", "="));
         currentPreTextMap.put("<", Arrays.asList("=", ">"));
         currentPreTextMap.put(">", Arrays.asList("=", "<"));
         currentPreTextMap.put("!", Arrays.asList("="));
