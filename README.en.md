@@ -61,20 +61,33 @@ Specific steps of Building Data Studio binary package through source code
 
 - ## Preconditions
 
-  1. Download and install jdk11 and configure `Java_ Home` environment variable. JDK recommended version 11.0.2
+  1. Download and install jdk11 http://jdk.java.net/archive/  and configure `Java_ Home` environment variable. JDK recommended version 11.0.2
 
-  2. Download and install maven x. And configure `M2_ Home` environment variable. Maven recommends version 3.8.3
+  2. Download and install maven x. And configure `M2_ Home` environment variable. 
 
-  3. Adoption [https://gluonhq.com/products/javafx/](https://gitee.com/link?target=https%3A%2F%2Fgluonhq.com%2Fproducts%2Fjavafx%2F) Download SDK 17.0.2 to any local directory and unzip it to javafx-17.0.2
+     Maven recommends version 3.8.3  https://archive.apache.org/dist/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.zip
 
-  4. Adoption [https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx.p2-17.0.2.zip](https://gitee.com/link?target=https%3A%2F%2Fdownloads.efxclipse.bestsolution.at%2Fp2-repos%2Fopenjfx.p2-17.0.2.zip) Download openjfx p2-17.0.2. Zip and unzip to any local directory.
+  3. Adoption [https://gluonhq.com/products/javafx/](https://gitee.com/link?target=https%3A%2F%2Fgluonhq.com%2Fproducts%2Fjavafx%2F)  Download SDK 17.0.2 to any local directory and unzip it to javafx-17.0.2
+
+  4. Adoption [https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx.p2-17.0.2.zip](https://gitee.com/link?target=https%3A%2F%2Fdownloads.efxclipse.bestsolution.at%2Fp2-repos%2Fopenjfx.p2-17.0.2.zip)  Download openjfx p2-17.0.2. Zip and unzip to any local directory.
 
   5. Configure POM file properties configuration information javafx.home and url.openjfx information .
 
-     ```
+     ```xml
      <javafx.home>local_directory\javafx-sdk-17.0.2</javafx.home>
      <url.openjfx>file:\\\local_directory\openjfx.p2-17.0.2</url.openjfx>
      ```
+     
+     Example:
+     
+     Download javafx-sdk-17.0.2 and openjfx P2-17.0.2 unzip to disk D of the local directory，Configure .
+     
+     ```xml
+     <javafx.home>D:\javafx-sdk-17.0.2</javafx.home>
+     <url.openjfx>file:\\\D:\openjfx.p2-17.0.2</url.openjfx>
+     ```
+     
+     
 
 - ## Source Compilation
 
@@ -102,11 +115,15 @@ Specific steps of Building Data Studio binary package through source code
       ${Data_Studio_code}\code\datastudio\build
       ```
 
-      
 
-      
 
-  
+# Eclipse RCP development considerations
+
+After eclipse imports the project, open org Opengauss Mppdbide Mppdbide Product file, click launch an eclipse application to run the startup project.
+
+If the project fails to start, configure the current running environment and run it after the following operations.
+
+Click  run-> run configurations - > plug ins - > Add required plug ins - > validate plug ins - > apply - > run in eclipse menu to start the project
 
 # Participating Contributions
 
