@@ -134,21 +134,19 @@ public class PasswordPreferencePage extends AbstractPreferencePage {
         if (preferenceStore.getBoolean(SecurityOptionProviderForPreferences.SAVE_PD_PERMANENTLY)) {
             yesButton.setSelection(true);
         }
-		yesButton.setSelection(false);
-		yesButton.setEnabled(false);
-//        yesButton.addSelectionListener(
-//                new ButtonSelectionListener(SecurityOptionProviderForPreferences.SAVE_PD_PERMANENTLY, true));
+        yesButton.addSelectionListener(
+                new ButtonSelectionListener(SecurityOptionProviderForPreferences.SAVE_PD_PERMANENTLY, true));
 
         noButton = new Button(savePasswordGrp, SWT.RADIO);
 
         noButton.setText(' ' + MessageConfigLoader.getProperty(IMessagesConstants.NO_OPTION));
 
         Label noLabel = new Label(savePasswordGrp, SWT.NONE);
-		noButton.setSelection(true);
+
         noLabel.setText("      " + MessageConfigLoader.getProperty(IMessagesConstants.NO_TEXT));
-//        if (!preferenceStore.getBoolean(SecurityOptionProviderForPreferences.SAVE_PD_PERMANENTLY)) {
-//            noButton.setSelection(true);
-//        }
+        if (!preferenceStore.getBoolean(SecurityOptionProviderForPreferences.SAVE_PD_PERMANENTLY)) {
+            noButton.setSelection(true);
+        }
 
         noButton.addSelectionListener(
                 new ButtonSelectionListener(SecurityOptionProviderForPreferences.SAVE_PD_PERMANENTLY, false));
