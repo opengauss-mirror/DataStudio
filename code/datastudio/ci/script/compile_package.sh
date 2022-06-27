@@ -39,7 +39,7 @@ then
     find -path '*/linux*' -delete
     echo -e "{\"application_name\":\""$application_name"\", \"compiled_time\":\""$time_stamp"\", \"commit_id\":\""$commit_id"\"}" > version.json
 	cp -rf $info_path/openGauss* .
-	cp -rf "$info_path/Data Studio 2.1.0 Open Source Software Notice.doc" .
+	cp -rf "$info_path/Data Studio 3.0.0 Open Source Software Notice.doc" .
     cd ..
     zip -r  DataStudio_win_64.zip "Data Studio"
     sha256sum DataStudio_win_64.zip > DataStudio_win_64.zip.sha256.txt
