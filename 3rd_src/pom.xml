@@ -355,6 +355,10 @@
                     <groupId>org.eclipse.platform</groupId>
                     <artifactId>org.eclipse.e4.core.di</artifactId>
                 </exclusion>
+				<exclusion>
+					<groupId>org.osgi.service</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
             </exclusions>
         </dependency>
 
@@ -390,12 +394,11 @@
             <version>3.6.100</version>
         </dependency>
 
-        <dependency>
+      <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.osgi.services</artifactId>
             <version>3.5.100</version>
         </dependency>
-
         <dependency>
             <groupId>com.anaptecs.jeaf.owalibs</groupId>
             <artifactId>runtime_registry_compatibility</artifactId>
