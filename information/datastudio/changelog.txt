@@ -1,4 +1,4 @@
-﻿Data Studio 2.1.0
+﻿Data Studio 3.0.0
 =====================================================================================================
-This is the first version of Data Studio supporting openGauss 2.1.0
+This is the first version of Data Studio supporting openGauss 3.0.0
 =====================================================================================================
