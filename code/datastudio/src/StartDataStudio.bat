@@ -34,13 +34,11 @@ FOR /F "tokens=2 delims==" %%G in ('wmic os get OSLanguage /Value') DO SET OS_LA
 	)
 
 IF NOT EXIST """..\Data Studio.ini""" IF "%LANG%" == "ENG" ( 
-	
 	START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""Data Studio.ini file does not exist""","""Data Studio""",0,48)>nul"
 	Exit
 	)
 
 IF NOT EXIST """..\Data Studio.ini""" IF "%LANG%" == "CHZ" ( 
-	
 	START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""Data Studio.ini 文件不存在 ""","""Data Studio""",0,48)>nul"
 	Exit
 	)
@@ -72,30 +70,30 @@ FOR /F "tokens=2 delims=:" %%G in ('Systeminfo ^| Findstr "x64-based"') DO SET O
 
 :JAVA_BIT_CHECK
 	:: Step4 - Get the Java Version using wmic and check if it 64 Bit
-	Echo Checking for Java 8 64 bit Version .................
+	Echo Checking for Java 11 64 bit Version .................
 	SET JAVA_BIT_64=0
-	FOR /F "tokens=*" %%G in ('wmic product get name ^, version ^| findstr /B /C:"Java" ^| findstr "8" ^| findstr "64-bit"') DO SET JAVA_VERSION=%%G
+	FOR /F "tokens=*" %%G in ('wmic product get name ^, version ^| findstr /B /C:"Java" ^| findstr "11" ^| findstr "64-bit"') DO SET JAVA_VERSION=%%G
 
 	IF /I NOT "%JAVA_VERSION%" == "" (
 			SET JAVA_BIT_64=64
-			ECHO "Has Java 8 with 64 bit"
-			GOTO JAVA8_32BIT_CHECK
+			ECHO "Has Java 11 with 64 bit"
+			GOTO JAVA11_32BIT_CHECK
 			
 	)
 	
 
-:JAVA8_32BIT_CHECK
+:JAVA11_32BIT_CHECK
 
 	SET JAVA_BIT_32=0
 
-	Echo Checking for Java 8 32 bit Version .................
-	FOR /F "tokens=*" %%G in ('wmic product get name ^, version ^| findstr /B /C:"Java" ^| findstr "8" ^| findstr /V "64-bit" ^| findstr /V "Java\ Auto"') DO SET JAVA_VERSION1=%%G
+	Echo Checking for Java 11 32 bit Version .................
+	FOR /F "tokens=*" %%G in ('wmic product get name ^, version ^| findstr /B /C:"Java" ^| findstr "11" ^| findstr /V "64-bit" ^| findstr /V "Java\ Auto"') DO SET JAVA_VERSION1=%%G
 	
 	IF /I NOT "%JAVA_VERSION1%" == "" (
 	
 			SET JAVA_BIT_32=32
 			REM ECHO %JAVA_BIT_32%
-			ECHO "Has Java 8 with 32 bit"
+			ECHO "Has Java 11 with 32 bit"
 			GOTO CHECK_LANG
 		)
 	
@@ -110,18 +108,18 @@ FOR /F "tokens=2 delims=:" %%G in ('Systeminfo ^| Findstr "x64-based"') DO SET O
 	Echo Checking for Java minimum version ..............
 	
 
-	FOR /F "tokens=*" %%G in ('wmic product get name ^, version ^| findstr /B /C:"Java" ^| findstr /V "8"') DO SET JAVA_LOWER_VERSION=%%G
+	FOR /F "tokens=*" %%G in ('wmic product get name ^, version ^| findstr /B /C:"Java" ^| findstr /V "11"') DO SET JAVA_LOWER_VERSION=%%G
 
 		IF /I NOT "%JAVA_LOWER_VERSION%" == "" IF "%LANG%" == "ENG" (
 			
 			@echo off
-			START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""Data Studio is supported with minimum Java Version of 1.8. `n`nInstall Java version 1.8 in order to use Data Studio.""", """Unsupported Java Version""",0,48)>nul"
+			START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""Data Studio is supported with minimum Java Version of 11. `n`nInstall Java version 11 in order to use Data Studio.""", """Unsupported Java Version""",0,48)>nul"
 			GOTO EXIT
 		) 
 		IF /I NOT "%JAVA_LOWER_VERSION%" == "" IF "%LANG%" == "CHZ" (
 			
 			@echo off
-			START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""支持Data Studio的最低Java版本为1.8。`n`n 使用 Data Studio 前需安装 Java 1.8。 """, """ 不支持该 Java 版本 """,0,48)>nul"
+			START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""支持Data Studio的最低Java版本为11。`n`n 使用 Data Studio 前需安装 Java 11。 """, """ 不支持该 Java 版本 """,0,48)>nul"
 			GOTO EXIT
 		) 
 		
@@ -163,21 +161,21 @@ FOR /F "tokens=2 delims=:" %%G in ('Systeminfo ^| Findstr "x64-based"') DO SET O
 
 	IF %JAVA_BIT_64% == 64  IF %DS_BIT% == 32 IF %OS_BIT% == 64 (
 
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
-			START /MIN /B CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""You are attempting to run 32-bit Data Studio on: `n`n  . 64 bit OS `n . %OS_NAME%  `n . Java 1.8 64-bit JDK ^(Incompatible^) `n`n Please install Java 1.8 32-bit """, """Unsupported Java Version""",0,48)>nul"
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
+			START /MIN /B CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""You are attempting to run 32-bit Data Studio on: `n`n  . 64 bit OS `n . %OS_NAME%  `n . Java 11 64-bit JDK ^(Incompatible^) `n`n Please install Java 11 32-bit """, """Unsupported Java Version""",0,48)>nul"
 			GOTO EXIT
 	)		
 
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 64 IF %OS_BIT% == 64 (
 
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
-			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""You are attempting to run 64-bit Data Studio on: `n`n  . 64 bit OS `n . %OS_NAME%  `n . Java 1.8 32-bit JDK ^(Incompatible^) `n`n Please install Java 1.8 64-bit """, """Unsupported Java Version""",0,48)>nul"
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
+			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""You are attempting to run 64-bit Data Studio on: `n`n  . 64 bit OS `n . %OS_NAME%  `n . Java 11 32-bit JDK ^(Incompatible^) `n`n Please install Java 11 64-bit """, """Unsupported Java Version""",0,48)>nul"
 			GOTO EXIT
 	)		 
 
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 64 IF %OS_BIT% == 32 (
 
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
 			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""You are attempting to run 64-bit Data Studio on: `n`n  . 32 bit OS `n . %OS_NAME%  `n . DS Version 64 Bit ^(Incompatible^) `n`n Please install 32 bit DS """, """Unsupported DS Version""",0,48)>nul"
 			GOTO EXIT
 	)		 
@@ -186,18 +184,18 @@ FOR /F "tokens=2 delims=:" %%G in ('Systeminfo ^| Findstr "x64-based"') DO SET O
 	::Valid scenarios	
 
 	IF %JAVA_BIT_64% == 64  IF %DS_BIT% == 64 IF %OS_BIT% == 64 (
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
 			GOTO runDS 
 			GOTO EXIT
 	)		
 
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 32 IF %OS_BIT% == 32 (
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit "
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit "
 			GOTO runDS 
 			GOTO EXIT
 	) 
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 32 IF %OS_BIT% == 64 (
-		 	Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit "
+		 	Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit "
 			GOTO runDS 
 			GOTO EXIT
 	) 	
@@ -223,41 +221,41 @@ FOR /F "tokens=2 delims=:" %%G in ('Systeminfo ^| Findstr "x64-based"') DO SET O
 
 	IF %JAVA_BIT_64% == 64  IF %DS_BIT% == 32 IF %OS_BIT% == 64 (
 			
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
-			START /MIN /B CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""您试图在如下环境运行32位Data Studio：`n`n  . 64 位操作系统 `n . %OS_NAME%  `n . 64位Java 1.8 JDK ^（不兼容^） `n`n 请使用64位的Data Studio。 """, """不支持该 Data Studio 版本""",0,48)>nul"
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
+			START /MIN /B CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""您试图在如下环境运行32位Data Studio：`n`n  . 64 位操作系统 `n . %OS_NAME%  `n . 64位Java 11 JDK ^（不兼容^） `n`n 请使用64位的Data Studio。 """, """不支持该 Data Studio 版本""",0,48)>nul"
 			GOTO EXIT
 	)		
 
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 64 IF %OS_BIT% == 64 (
 
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
-			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""您试图在如下环境运行64位Data Studio： `n`n  . 64位操作系统 `n . %OS_NAME%  `n . 32位Java 1.8 JDK ^（不兼容^）`n`n 请安装64位Java 1.8。 """, """不支持该 Java 版本""",0,48)>nul"
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
+			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""您试图在如下环境运行64位Data Studio： `n`n  . 64位操作系统 `n . %OS_NAME%  `n . 32位Java 11 JDK ^（不兼容^）`n`n 请安装64位Java 11。 """, """不支持该 Java 版本""",0,48)>nul"
 			GOTO EXIT
 	)		 
 
 	REM ADDED NEW SCENARIO FOR JAVA 32 BIT AND DS 64 BIT AND OS 32 BIT
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 64 IF %OS_BIT% == 32 (
 
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
-			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""您试图在如下环境运行64位Data Studio： `n`n  . 32位操作系统 `n . %OS_NAME%  `n . 32位Java 1.8 JDK ^（不兼容^）`n`n 请使用32位的Data Studio。 """, """不支持该 Data Studio 版本""",0,48)>nul"
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
+			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""您试图在如下环境运行64位Data Studio： `n`n  . 32位操作系统 `n . %OS_NAME%  `n . 32位Java 11 JDK ^（不兼容^）`n`n 请使用32位的Data Studio。 """, """不支持该 Data Studio 版本""",0,48)>nul"
 			GOTO EXIT
 	)		
 	REM ADDED NEW SCENARIO
 ::Valid scenarios	
 
 	IF %JAVA_BIT_64% == 64  IF %DS_BIT% == 64 IF %OS_BIT% == 64 (
-			Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
+			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
 			GOTO runDS 
 			GOTO EXIT
 	)		
 
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 32 IF %OS_BIT% == 32 (
-		 	Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit "
+		 	Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit "
 			GOTO runDS 
 			GOTO EXIT
 	) 
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 32 IF %OS_BIT% == 64 (
-		 	Echo "OS is %OS_BIT% , Java 1.8 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit "
+		 	Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit "
 			GOTO runDS 
 			GOTO EXIT
 	) 	
