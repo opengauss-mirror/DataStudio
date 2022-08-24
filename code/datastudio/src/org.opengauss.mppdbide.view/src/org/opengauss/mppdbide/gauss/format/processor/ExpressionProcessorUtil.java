@@ -41,12 +41,12 @@ public class ExpressionProcessorUtil {
 
     static {
         currentPreTextMap.put("=", Arrays.asList(":", ">", "<", "!", "="));
-        currentPreTextMap.put("<", Arrays.asList("=", ">"));
+        currentPreTextMap.put("<", Arrays.asList("=", ">", "<"));
         currentPreTextMap.put(">", Arrays.asList("=", "<"));
         currentPreTextMap.put("!", Arrays.asList("="));
         currentPreTextMap.put(":", Arrays.asList("=", ":"));
         currentPreTextMap.put("|", Arrays.asList("|"));
-
+        currentPreTextMap.put("@", Arrays.asList("<"));
     }
 
     /**
