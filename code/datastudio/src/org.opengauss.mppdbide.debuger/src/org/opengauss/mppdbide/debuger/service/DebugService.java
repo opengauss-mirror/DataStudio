@@ -102,9 +102,11 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      */
     public void prepareDebug() throws SQLException {
         List<Object> inputsParams = Arrays.asList(functionVo.oid);
-        serverConn.getDebugOptPrepareStatement(
+        try (PreparedStatement ps = serverConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.START_SESSION,
-                inputsParams).execute();
+                inputsParams)) {
+			ps.execute();
+        }
     }
 
     /**
@@ -203,9 +205,11 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * @throws SQLException the exp
      */
     public void debugOff() throws SQLException {
-        serverConn.getDebugOptPrepareStatement(
+    	try (PreparedStatement ps = serverConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.DEBUG_OFF,
-                new ArrayList<Object>(1)).execute();
+                new ArrayList<Object>(1))) {
+		    ps.execute();
+    	}
     }
 
     /**
@@ -349,6 +353,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     private <T> List<T> getListVos(DebugConstants.DebugOpt debugOpt, Class<T> clazz) throws SQLException {
+        validCheckForConnection();
         List<Object> inputParams = Arrays.asList(sessionVo.clientPort);
         try (PreparedStatement ps = clientConn.getDebugOptPrepareStatement(
                 debugOpt, inputParams)) {
@@ -397,6 +402,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
             positionVo.func = functionVo.oid;
         }
 
+        validCheckForConnection();
         List<Object> inputParams = Arrays.asList(
                 sessionVo.clientPort,
                 positionVo.func,
@@ -677,8 +683,15 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
     }
 
     private void serverExecuteInner(String sql) throws SQLException {
+        validCheckForConnection();
         try (PreparedStatement ps = serverConn.getStatement(sql)) {
             ps.execute();
+        }
+    }
+    
+    private void validCheckForConnection() throws SQLException {
+        if (serverConn == null || clientConn == null) {
+            throw new SQLException("debug connection already disconnect!");
         }
     }
 }
