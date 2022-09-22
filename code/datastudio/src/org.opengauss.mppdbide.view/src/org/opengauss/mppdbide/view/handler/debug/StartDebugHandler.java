@@ -29,6 +29,8 @@ import org.opengauss.mppdbide.bl.serverdatacache.DefaultParameter;
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectParameter;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectParameter.PARAMETERTYPE;
+import org.opengauss.mppdbide.debuger.service.DebugService;
+import org.opengauss.mppdbide.debuger.service.WrappedDebugService;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
@@ -143,7 +145,11 @@ public class StartDebugHandler {
                         .get(debugObject.getOid());
                 debugParams = getDebugParams(serverParams);
             }
-            serviceHelper.getDebugService().begin(debugParams);
+            WrappedDebugService debugService = serviceHelper.getDebugService();
+            if (debugService == null) {
+                throw new SQLException("you operation too quick, please retry slowly!");
+            }
+            debugService.begin(debugParams);
             debugUtils.setDebugStart(true);
         } catch (DatabaseCriticalException exception) {
             UIDisplayFactoryProvider.getUIDisplayStateIf().handleDBCriticalError(exception, debugObject.getDatabase());
@@ -157,6 +163,12 @@ public class StartDebugHandler {
                     exception);
             MPPDBIDEDialogs.generateErrorDialog(MessageConfigLoader.getProperty(IMessagesConstants.PLSQL_ERR),
                     MessageConfigLoader.getProperty(IMessagesConstants.UNKNOWN_INTERNAL_ERR), exception);
+        } catch (Exception allExp) {
+            MPPDBIDELoggerUtility.error(
+                    "unknown exception occur " + allExp.getMessage(),
+                    allExp);
+            MPPDBIDEDialogs.generateErrorDialog(MessageConfigLoader.getProperty(IMessagesConstants.PLSQL_ERR),
+                    MessageConfigLoader.getProperty(IMessagesConstants.UNKNOWN_INTERNAL_ERR), allExp);
         }
     }
 
