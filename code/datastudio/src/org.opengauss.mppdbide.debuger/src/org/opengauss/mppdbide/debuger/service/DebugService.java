@@ -694,4 +694,103 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
             throw new SQLException("debug connection already disconnect!");
         }
     }
+
+    /**
+     * getFunctionVo
+     *
+     * @return FunctionVo functionVo
+     */
+    FunctionVo getFunctionVo() {
+        return functionVo;
+    }
+
+    /**
+     * getClientConn
+     *
+     * @return IConnection iConnection
+     */
+    IConnection getClientConn() {
+        return clientConn;
+    }
+
+    /**
+     * getServerConn
+     *
+     * @return IConnection iConnection
+     */
+    IConnection getServerConn() {
+        return serverConn;
+    }
+
+    /**
+     * getSessionVo
+     *
+     * @return SessionVo sessionVo
+     */
+    SessionVo getSessionVo() {
+        return sessionVo;
+    }
+
+    /**
+     * getDelay
+     *
+     * @return delay delay
+     */
+    int getDelay() {
+        return DEFAULT_WAIT_LOCK_TIME;
+    }
+
+    /**
+     * get client state
+     *
+     * @return DebugState debugState
+     */
+    DebugState getClientState() {
+        return clientState;
+    }
+
+    /**
+     * get server state
+     *
+     * @return DebugState debugState
+     */
+    DebugState getServerState() {
+        return serverState;
+    }
+
+    /**
+     * getValidCheckForConnection
+     *
+     * @throws SQLException sql exception
+     */
+    void getValidCheckForConnection() throws SQLException {
+        validCheckForConnection();
+    }
+
+    /**
+     * getWaitServerStart
+     *
+     * @throws SQLException sql exception
+     */
+    void getWaitServerStart() throws SQLException {
+        waitServerStart();
+    }
+
+    /**
+     * getServerCallBackEnd
+     *
+     * @throws SQLException sql exception
+     */
+    void getServerCallBackEnd() throws SQLException {
+        serverCallBackEnd();
+    }
+
+    /**
+     * getServerCallBackBegin
+     *
+     * @throws SQLException sql exception
+     */
+    void getServerCallBackBegin() throws SQLException {
+        serverCallBackBegin();
+    }
 }

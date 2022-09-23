@@ -43,6 +43,9 @@ import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  */
 
 public class DebugObjects extends BatchDropServerObject implements ObjectChange, GaussOLAPDBMSObject, IDebugObject {
+
+    private static String coverageHint;
+
     private boolean isDebugable;
     private String executeTemplate;
     private String executionQuery;
@@ -88,6 +91,7 @@ public class DebugObjects extends BatchDropServerObject implements ObjectChange,
      */
     public void setUsagehint(String usagehint) {
         this.usageHint = usagehint;
+        this.coverageHint = usagehint;
     }
 
     /**
@@ -869,6 +873,9 @@ public class DebugObjects extends BatchDropServerObject implements ObjectChange,
             hasout = createTemplateFromParams(params, parameterObject.getTemplateParams(), template,
                     parameterObject.getOutParams());
 
+            if (MessageConfigLoader.getProperty(IMessagesConstants.COVERAGE_HINT).equalsIgnoreCase(coverageHint)) {
+                usagehint.append(coverageHint + MPPDBIDEConstants.LINE_SEPARATOR);
+            }
             if (hasout) {
                 usagehint.append(MessageConfigLoader.getProperty(IMessagesConstants.EXEC_DEBUG_DIALOG_OUT_PARA_MSG)
                         + MPPDBIDEConstants.LINE_SEPARATOR);

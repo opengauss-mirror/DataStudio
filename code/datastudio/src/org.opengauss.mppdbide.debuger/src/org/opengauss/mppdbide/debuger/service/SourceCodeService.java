@@ -17,6 +17,7 @@ package org.opengauss.mppdbide.debuger.service;
 
 import org.opengauss.mppdbide.debuger.exception.DebugPositionNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +33,9 @@ public class SourceCodeService implements IService {
      *  the offset of show code and base code
      */
     public static final int CODE_BASE_OFFSET = 1;
+    private static final String BEGIN = "BEGIN";
+    private static final String END = "END;";
+
     private CodeDescription baseCodeDesc = null;
     private CodeDescription totalCodeDesc = null;
 
@@ -226,9 +230,71 @@ public class SourceCodeService implements IService {
             return Arrays.stream(srcCode.split("[\\n]")).collect(Collectors.toList());
         }
 
+        /**
+         * get code to run lines
+         *
+         * @param srcCode the code
+         * @return the run line num
+         */
+        public static List<String> getRunLines(String srcCode) {
+            List<String> totalLines = getLines(srcCode);
+            Boolean isStart = false;
+            Boolean isEnd = false;
+            Boolean isBegin = false;
+            List<String> runLines = new ArrayList();
+            for (String line : totalLines) {
+                if (!isStart) {
+                    isStart = line.toUpperCase(Locale.ENGLISH).contains(BEGIN);
+                }
+                isEnd = line.toUpperCase(Locale.ENGLISH).contains(END);
+                if (isEnd) {
+                    break;
+                }
+                if (isStart) {
+                    isBegin = line.toUpperCase(Locale.ENGLISH).contains(BEGIN);
+                    if (!isBegin) {
+                        runLines.add(line);
+                    }
+                }
+            }
+            return runLines;
+        }
+
+        /**
+         * get line num by code
+         *
+         * @param srcCode the code
+         * @return the line num
+         */
+        public static List<String> getRunLinesNums(String srcCode) {
+            List<String> totalLines = getLines(srcCode);
+            Boolean isStart = false;
+            Boolean isEnd = false;
+            Boolean isBegin = false;
+            List<String> runLines = new ArrayList();
+            Integer count = 0;
+            for (String line : totalLines) {
+                count++;
+                if (!isStart) {
+                    isStart = line.toUpperCase(Locale.ENGLISH).contains(BEGIN);
+                }
+                isEnd = line.toUpperCase(Locale.ENGLISH).contains(END);
+                if (isEnd) {
+                    break;
+                }
+                if (isStart) {
+                    isBegin = line.toUpperCase(Locale.ENGLISH).contains(BEGIN);
+                    if (!isBegin) {
+                        runLines.add(count.toString());
+                    }
+                }
+            }
+            return runLines;
+        }
+
         private int getBeginFromCode(List<String> lines) {
-            for (int i = 0; i < lines.size(); i ++) {
-                if (lines.get(i).toUpperCase(Locale.ENGLISH).startsWith("BEGIN")) {
+            for (int i = 0; i < lines.size(); i++) {
+                if (lines.get(i).toUpperCase(Locale.ENGLISH).trim().startsWith("BEGIN")) {
                     return i;
                 }
             }

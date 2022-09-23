@@ -107,7 +107,7 @@ public class DebugerJdbcTestCaseBase extends BasicJDBCTestCaseAdapter {
      *
      * @see com.mockrunner.jdbc.BasicJDBCTestCaseAdapter#setUp()
      */
-    protected void basicSetUp() throws Exception
+    protected void basicSetUp(String... version) throws Exception
     {
         super.setUp();
         CommonLLTUtilsHelper.runLinuxFilePermissionInstance();
@@ -121,7 +121,7 @@ public class DebugerJdbcTestCaseBase extends BasicJDBCTestCaseAdapter {
         preparedstatementHandler = connection.getPreparedStatementResultSetHandler();
         MPPDBIDELoggerUtility.setArgs(null);
         getJDBCMockObjectFactory().getMockDriver().setupConnection(connection);
-        CommonLLTUtils.prepareProxyInfo(preparedstatementHandler);
+        CommonLLTUtils.prepareProxyInfo(preparedstatementHandler, version);
         CommonLLTUtilsHelper.mockConnection(getJDBCMockObjectFactory().getMockDriver());
         
         connProfCache = DBConnProfCache.getInstance();

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.opengauss.mppdbide.debuger.service.DbeDebugService;
 import org.opengauss.mppdbide.debuger.vo.FunctionVo;
 import com.mockrunner.jdbc.PreparedStatementResultSetHandler;
 import com.mockrunner.mock.jdbc.MockResultSet;
@@ -45,7 +46,33 @@ public class MockDebugServiceHelper {
             true, 22L, 1};
         mockOneRow(sql, variables, oneRow);
     }
-    
+
+    /**
+     * the mockDbeVariable
+     *
+     * @param sql the sql value
+     */
+    public void mockDbeVariable(String sql) {
+        DbeDebugService.map.put(funcVo.oid, Arrays.asList("param1"));
+        String[] variables = new String[]{"varname", "vartype", "value", "package_name", "isconst"};
+        mockOneRow(sql, variables, Arrays.asList("param1", "int4", "210101", "", false).toArray());
+    }
+
+    /**
+     * the mockDbeInfoCode
+     *
+     * @param sql the sql value
+     */
+    public void mockDbeInfoCode(String sql) {
+        String[] breakPointTitle = new String[]{"lineno", "query", "canbreak"};
+        ResultColumnHelper helper = new ResultColumnHelper(breakPointTitle);
+        helper.addRow(Arrays.asList(1, "AS DECLARE", false).toArray());
+        helper.addRow(Arrays.asList(2, "BEGIN", false).toArray());
+        helper.addRow(Arrays.asList(3, " IF param1 > 100 THEN", false).toArray());
+        helper.addRow(Arrays.asList(4, "END;", false).toArray());
+        mockHelper(sql, helper);
+    }
+
     public void mockStack(String sql) {
         String[] stackColumn = new String[] {"level", "targetname", "func",
             "linenumber", "args"};
@@ -54,10 +81,30 @@ public class MockDebugServiceHelper {
         mockOneRow(sql, stackColumn, oneRowValues);
     }
 
+    /**
+     * the function mockDbeStack
+     *
+     * @param sql the sql
+     */
+    public void mockDbeStack(String sql) {
+        String[] stackColumn = new String[]{"frameno", "funcname", "lineno", "query", "funcoid"};
+        mockOneRow(sql, stackColumn, Arrays.asList(0, funcVo.proname, 3, "add_test", funcVo.oid).toArray());
+    }
+
     public void mockBreakPoint(String sql) {
         mockPositionOneLine(sql);
     }
-    
+
+    /**
+     * the mockDbeBreakPoint
+     *
+     * @param sql the sql
+     */
+    public void mockDbeBreakPoint(String sql) {
+        String[] breakPointTitle = new String[]{"breakpointno", "funcoid", "lineno", "query", "enable"};
+        mockOneRow(sql, breakPointTitle, Arrays.asList(5, funcVo.oid, -1, funcVo.proname, false).toArray());
+    }
+
     public void mockPositionOneLine(String sql) {
         String[] breakPointTitle = new String[] {"func", "linenumber", "targetname"};
         Object[] oneRow = new Object[] {new Long(funcVo.oid),
@@ -65,7 +112,17 @@ public class MockDebugServiceHelper {
             funcVo.proname};
         mockOneRow(sql, breakPointTitle, oneRow); 
     }
-    
+
+    /**
+     * the mockDbePositionOneLine
+     *
+     * @param sql the sql statement
+     */
+    public void mockDbePositionOneLine(String sql) {
+        String[] breakPointTitle = new String[]{"funcoid", "funcname", "lineno", "query"};
+        mockOneRow(sql, breakPointTitle, Arrays.asList(funcVo.oid, funcVo.proname, 4, "funcVo.proname").toArray());
+    }
+
     public void mockAbortDebug(String sql) {
         mockOneRow(sql, new String[] {"result"}, new Object[] {new Boolean(true)});
     }
@@ -89,7 +146,18 @@ public class MockDebugServiceHelper {
             new Integer(1), new Long(1)};
         mockOneRow(sql, columns, oneRow);
     }
-    
+
+    /**
+     * the mockDbeDebugVersion
+     *
+     * @param sql the value
+     */
+    public void mockDbeDebugVersion(String sql) {
+        String[] columns = new String[]{"version"};
+        String ver = "(openGauss 3.0.0 build 02c14696) compiled at 2022-04-01 18:29:12 commit 0 last mr  release";
+        mockOneRow(sql, columns, Arrays.asList(ver).toArray());
+    }
+
     public void mockFunctionVo(String sql, Object[] args) {
         String[] columns = new String[] {"oid", "proname", "proretset",
                 "prorettype", "pronargs", "pronargdefaults",

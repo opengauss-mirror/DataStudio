@@ -1,0 +1,316 @@
+antlr4-runtime: 
+  cpeName: antlr4-runtime
+  groupId: org.antlr
+  url: null
+  version: 4.9.2
+commons-lang3: 
+  cpeName: commons-lang3
+  groupId: org.apache.commons
+  url: null
+  version: 3.12.0
+commons-collections4: 
+  cpeName: commons-collections4
+  groupId: org.apache.commons
+  url: null
+  version: 4.4
+commons-compress: 
+  cpeName: commons-compress
+  groupId: org.apache.commons
+  url: null
+  version: 1.21
+commons-math3: 
+  cpeName: commons-math3
+  groupId: org.apache.commons
+  url: null
+  version: 3.6.1
+commons-io: 
+  cpeName: commons-io
+  groupId: commons-io
+  url: null
+  version: 2.11.0
+log4j-core: 
+  cpeName: log4j-core
+  groupId: org.apache.logging.log4j
+  url: null
+  version: 2.17.1
+log4j-api: 
+  cpeName: log4j-api
+  groupId: org.apache.logging.log4j
+  url: null
+  version: 2.17.1
+poi-ooxml: 
+  cpeName: poi-ooxml
+  groupId: org.apache.poi
+  url: null
+  version: 4.1.2
+xmlbeans: 
+  cpeName: xmlbeans
+  groupId: org.apache.xmlbeans
+  url: null
+  version: 3.1.0
+commons-csv: 
+  cpeName: commons-csv
+  groupId: org.apache.commons
+  url: null
+  version: 1.9.0
+guava: 
+  cpeName: guava
+  groupId: com.google.guava
+  url: null
+  version: 30.1.1-jre
+guice: 
+  cpeName: guice
+  groupId: com.google.inject
+  url: null
+  version: 4.2.0
+gson: 
+  cpeName: gson
+  groupId: com.google.code.gson
+  url: null
+  version: 2.8.6
+commons-codec: 
+  cpeName: commons-codec
+  groupId: commons-codec
+  url: null
+  version: 1.15
+jsqlparser: 
+  cpeName: jsqlparser
+  groupId: com.github.jsqlparser
+  url: null
+  version: 3.2
+hamcrest-api: 
+  cpeName: hamcrest-api
+  groupId: org.hamcrest
+  url: null
+  version: 1.0
+junit: 
+  cpeName: junit
+  groupId: junit
+  url: null
+  version: 4.11
+log4j: 
+  cpeName: log4j
+  groupId: log4j
+  url: null
+  version: 1.2.15
+commons-logging: 
+  cpeName: commons-logging
+  groupId: commons-logging
+  url: null
+  version: 1.0.4
+oro: 
+  cpeName: oro
+  groupId: oro
+  url: null
+  version: 2.0.8
+jdom: 
+  cpeName: jdom
+  groupId: org.jdom
+  url: null
+  version: 2.0.2
+mockrunner-jdbc: 
+  cpeName: mockrunner-jdbc
+  groupId: com.mockrunner
+  url: null
+  version: 2.0.6
+xml-apis: 
+  cpeName: xml-apis
+  groupId: xml-apis
+  url: null
+  version: 1.0.b2
+cglib-nodep: 
+  cpeName: cglib-nodep
+  groupId: cglib
+  url: null
+  version: 3.3.0
+easymock: 
+  cpeName: easymock
+  groupId: org.easymock
+  url: null
+  version: 4.3
+objenesis: 
+  cpeName: objenesis
+  groupId: org.objenesis
+  url: null
+  version: 3.2
+org.eclipse.osgi: 
+  cpeName: org.eclipse.osgi
+  groupId: org.eclipse.tycho
+  url: null
+  version: 3.9.1.v20130814-1242
+powermock-api-mockito: 
+  cpeName: powermock-api-mockito
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-api-mockito-common: 
+  cpeName: powermock-api-mockito-common
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-api-support: 
+  cpeName: powermock-api-support
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-core: 
+  cpeName: powermock-core
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-api-easymock: 
+  cpeName: powermock-api-easymock
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-api-mockito2: 
+  cpeName: powermock-api-mockito2
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-module-javaagent: 
+  cpeName: powermock-module-javaagent
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-module-junit4: 
+  cpeName: powermock-module-junit4
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-module-junit4-common: 
+  cpeName: powermock-module-junit4-common
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-module-junit4-legacy: 
+  cpeName: powermock-module-junit4-legacy
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-module-testng: 
+  cpeName: powermock-module-testng
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-module-testng-common: 
+  cpeName: powermock-module-testng-common
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-classloading-base: 
+  cpeName: powermock-classloading-base
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-module-junit4-rule-agent: 
+  cpeName: powermock-module-junit4-rule-agent
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-module-testng-agent: 
+  cpeName: powermock-module-testng-agent
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+powermock-reflect: 
+  cpeName: powermock-reflect
+  groupId: org.powermock
+  url: null
+  version: 1.6.6
+bsh: 
+  cpeName: bsh
+  groupId: bsh
+  url: null
+  version: 2.0b4
+javassist: 
+  cpeName: javassist
+  groupId: org.javassist
+  url: null
+  version: 3.20.0-GA
+jcommander: 
+  cpeName: jcommander
+  groupId: com.beust
+  url: null
+  version: 1.27
+mockito-all: 
+  cpeName: mockito-all
+  groupId: org.mockito
+  url: null
+  version: 1.10.19
+snakeyaml: 
+  cpeName: snakeyaml
+  groupId: org.yaml
+  url: null
+  version: 1.30
+org.eclipse.core.contenttype: 
+  cpeName: org.eclipse.core.contenttype
+  groupId: org.eclipse.core
+  url: null
+  version: 3.4.100
+org.eclipse.core.jobs: 
+  cpeName: org.eclipse.core.jobs
+  groupId: org.eclipse.core
+  url: null
+  version: 3.5.100
+org.eclipse.core.runtime: 
+  cpeName: org.eclipse.core.runtime
+  groupId: org.eclipse.core
+  url: null
+  version: 3.7.0
+org.eclipse.e4.core.services: 
+  cpeName: org.eclipse.e4.core.services
+  groupId: org.eclipse.platform
+  url: null
+  version: 2.0.100
+org.eclipse.e4.core.di: 
+  cpeName: org.eclipse.e4.core.di
+  groupId: org.eclipse.platform
+  url: null
+  version: 1.8.100
+org.eclipse.equinox.app: 
+  cpeName: org.eclipse.equinox.app
+  groupId: org.eclipse.equinox
+  url: null
+  version: 1.3.100
+org.eclipse.equinox.common: 
+  cpeName: org.eclipse.equinox.common
+  groupId: org.eclipse.equinox
+  url: null
+  version: 3.6.0
+org.eclipse.equinox.preferences: 
+  cpeName: org.eclipse.equinox.preferences
+  groupId: org.eclipse.platform
+  url: null
+  version: 3.6.1
+org.eclipse.equinox.registry: 
+  cpeName: org.eclipse.equinox.registry
+  groupId: org.eclipse.platform
+  url: null
+  version: 3.6.100
+org.eclipse.osgi.services: 
+  cpeName: org.eclipse.osgi.services
+  groupId: org.eclipse.platform
+  url: null
+  version: 3.5.100
+runtime_registry_compatibility: 
+  cpeName: runtime_registry_compatibility
+  groupId: com.anaptecs.jeaf.owalibs
+  url: null
+  version: 4.3.1
+javafx-base: 
+  cpeName: javafx-base
+  groupId: org.openjfx
+  url: null
+  version: 18-ea+2
+javafx-controls: 
+  cpeName: javafx-controls
+  groupId: org.openjfx
+  url: null
+  version: 18-ea+2
+javafx-graphics: 
+  cpeName: javafx-graphics
+  groupId: org.openjfx
+  url: null
+  version: 18-ea+2
+

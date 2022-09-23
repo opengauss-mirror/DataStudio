@@ -21,7 +21,9 @@ import org.opengauss.mppdbide.debuger.debug.DebugConstants;
 import org.opengauss.mppdbide.debuger.vo.FunctionVo;
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.common.IConnectionProvider;
+import org.opengauss.mppdbide.common.VersionHelper;
 import org.opengauss.mppdbide.debuger.vo.VersionVo;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 import java.sql.PreparedStatement;
@@ -118,11 +120,23 @@ public class ServiceFactory {
             FunctionVo functionVo,
             IConnection serverConn,
             IConnection clientConn) {
-        DebugService debugService = new DebugService();
+        DebugService debugService = getDebugService(clientConn);
         debugService.setFunctionVo(functionVo);
         debugService.setServerConn(serverConn);
         debugService.setClientConn(clientConn);
         return debugService;
+    }
+
+    private static DebugService getDebugService(IConnection conn) {
+        try {
+            VariableRunLine.isPldebugger = VersionHelper.getDebuggerVersion(conn).isPldebugger();
+        } catch (SQLException e) {
+            MPPDBIDELoggerUtility.error(e.getMessage());
+        }
+        if (!VariableRunLine.isPldebugger) {
+            return new DbeDebugService();
+        }
+        return new DebugService();
     }
 
     private static QueryService createQueryService(IConnection conn) {

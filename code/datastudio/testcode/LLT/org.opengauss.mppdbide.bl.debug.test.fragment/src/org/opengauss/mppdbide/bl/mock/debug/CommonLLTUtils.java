@@ -378,7 +378,7 @@ public class CommonLLTUtils
     }
 
     public static void prepareProxyInfo(
-            PreparedStatementResultSetHandler preparedstatementHandler)
+            PreparedStatementResultSetHandler preparedstatementHandler, String... version)
     {
         mockCheckDebugSupport(preparedstatementHandler);
         mockCheckExplainPlanSupport(preparedstatementHandler);
@@ -1525,7 +1525,34 @@ public class CommonLLTUtils
         getUserRoleRs.addRow(new Object[] {"tom", false, 16410});
         preparedstatementHandler.prepareResultSet(
                 "SELECT rolname,rolcanlogin,oid FROM pg_catalog.pg_roles WHERE rolsuper = false;", getUserRoleRs);
-        
+
+        MockResultSet queryVersion = preparedstatementHandler.createResultSet();
+        queryVersion.addColumn("version");
+        if (version.length == 0) {
+            version = new String[]{
+                    "(openGauss 2.0.0 build 02c14696) compiled at 2022-04-01 18:29:12 commit 0 last mr  release"};
+        }
+        queryVersion.addRow(version);
+        preparedstatementHandler.prepareResultSet("select version()", queryVersion);
+
+        MockResultSet turnOn = preparedstatementHandler.createResultSet();
+        turnOn.addColumn("nodename");
+        turnOn.addColumn("port");
+        turnOn.addRow(new Object[]{"gaussdb", 0});
+        preparedstatementHandler.prepareResultSet(
+                "select * from DBE_PLDEBUGGER.turn_on(?)", turnOn);
+
+        MockResultSet attachDebug = preparedstatementHandler.createResultSet();
+        attachDebug.addColumn("funcoid");
+        attachDebug.addColumn("funcname");
+        attachDebug.addColumn("lineno");
+        attachDebug.addColumn("query");
+        attachDebug.addRow(
+                new Object[]{16407,
+                        "insert_data", 3, "INSERT INTO graderecord VALUES(param1, param2, param3, param4);"});
+        preparedstatementHandler.prepareResultSet(
+                "select * from DBE_PLDEBUGGER.attach(?,?)", attachDebug);
+
         mockServerEncoding(preparedstatementHandler);
     }
 

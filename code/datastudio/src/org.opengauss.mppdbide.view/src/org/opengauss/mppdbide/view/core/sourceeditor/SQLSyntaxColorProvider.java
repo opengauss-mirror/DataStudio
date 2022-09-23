@@ -73,6 +73,11 @@ public class SQLSyntaxColorProvider {
     public static final Color BACKGROUND_COLOR = new Color(Display.getCurrent(), BACKGROUND);
 
     /**
+     * The Constant REMAR_BACKGROUND_COLOR.
+     */
+    public static final Color BACKGROUND_COLOR_GREY = new Color(Display.getCurrent(), new RGB(167, 169, 169));
+
+    /**
      * use for debug position highlight
      */
     public static final Color DEBUG_POSITION_COLOR = new Color(

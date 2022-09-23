@@ -19,6 +19,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectChange;
+import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
@@ -54,6 +55,10 @@ public class ViewSourceDebugObjectHandler implements ExecuteWrapper {
         PLSourceEditor editorObject = null;
         Object partObject = UIElement.getInstance().getActivePartObject();
         IDebugObject debugObject = IHandlerUtilities.getSelectedDebugObject();
+        if (debugObject != null) {
+            Long oid = debugObject.getOid();
+            DebuggerStartVariable.getStartInfo(oid).remarLinesStr = "";
+        }
         if (debugObject != null) {
             if (!(UIElement.getInstance().isEditorExistByDbgObj(debugObject))) {
                 try {
@@ -112,7 +117,7 @@ public class ViewSourceDebugObjectHandler implements ExecuteWrapper {
     /**
      * Handle exception.
      *
-     * @param e the e
+     * @param e     the e
      * @param event the event
      */
     @Override

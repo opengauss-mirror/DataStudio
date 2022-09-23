@@ -20,7 +20,8 @@ Export-Package: org.opengauss.mppdbide.common,
  org.opengauss.mppdbide.debuger.service,
  org.opengauss.mppdbide.debuger.service.chain,
  org.opengauss.mppdbide.debuger.thread,
- org.opengauss.mppdbide.debuger.vo
+ org.opengauss.mppdbide.debuger.vo,
+ org.opengauss.mppdbide.debuger.vo.dbe
 Bundle-ClassPath: .
 Import-Package: org.postgresql.core,
  org.postgresql.jdbc,

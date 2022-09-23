@@ -45,10 +45,8 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentListener;
-import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
-import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
@@ -60,10 +58,6 @@ import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IAnnotationAccess;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.jface.text.source.projection.ProjectionViewer;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.Clipboard;
@@ -77,7 +71,6 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -86,8 +79,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.texteditor.AnnotationPreference;
-
 import org.opengauss.mppdbide.adapter.keywordssyntax.SQLSyntax;
 import org.opengauss.mppdbide.bl.errorlocator.IErrorLocator;
 import org.opengauss.mppdbide.bl.serverdatacache.Database;
@@ -102,6 +93,7 @@ import org.opengauss.mppdbide.presentation.grid.IDSGridDataProvider;
 import org.opengauss.mppdbide.presentation.resultset.ActionAfterResultFetch;
 import org.opengauss.mppdbide.presentation.resultsetif.IConsoleResult;
 import org.opengauss.mppdbide.presentation.resultsetif.IResultConfig;
+import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
 import org.opengauss.mppdbide.utils.MemoryCleaner;
@@ -112,13 +104,16 @@ import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
 import org.opengauss.mppdbide.utils.logger.ILogger;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.opengauss.mppdbide.utils.messaging.MessageQueue;
+import org.opengauss.mppdbide.utils.vo.DebuggerStartInfoVo;
 import org.opengauss.mppdbide.view.core.ConsoleCoreWindow;
 import org.opengauss.mppdbide.view.core.ConsoleMessageWindow;
+import org.opengauss.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationType;
 import org.opengauss.mppdbide.view.core.sourceeditor.AnnotationHover;
 import org.opengauss.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
+import org.opengauss.mppdbide.view.core.sourceeditor.DebugFailPositionAnnotation;
+import org.opengauss.mppdbide.view.core.sourceeditor.DebugPassPositionAnnotation;
 import org.opengauss.mppdbide.view.core.sourceeditor.DebugPositionAnnotation;
 import org.opengauss.mppdbide.view.core.sourceeditor.ErrorAnnotation;
-import org.opengauss.mppdbide.view.core.sourceeditor.ErrorPositionAnnotation;
 import org.opengauss.mppdbide.view.core.sourceeditor.PLAnnotationMarkerAccess;
 import org.opengauss.mppdbide.view.core.sourceeditor.PLSourceEditorCore;
 import org.opengauss.mppdbide.view.core.sourceeditor.SQLDocumentPartitioner;
@@ -126,12 +121,9 @@ import org.opengauss.mppdbide.view.core.sourceeditor.SQLEditorPlugin;
 import org.opengauss.mppdbide.view.core.sourceeditor.SQLPartitionScanner;
 import org.opengauss.mppdbide.view.core.sourceeditor.SQLSourceViewerConfig;
 import org.opengauss.mppdbide.view.core.sourceeditor.SQLSyntaxColorProvider;
-import org.opengauss.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationType;
 import org.opengauss.mppdbide.view.handler.ExecuteEditorItem;
 import org.opengauss.mppdbide.view.handler.HandlerUtilities;
-import org.opengauss.mppdbide.view.handler.debug.DebugHandlerUtils;
 import org.opengauss.mppdbide.view.handler.debug.DebugServiceHelper;
-import org.opengauss.mppdbide.view.prefernces.PreferenceWrapper;
 import org.opengauss.mppdbide.view.terminal.executioncontext.FuncProcEditorTerminalExecutionContext;
 import org.opengauss.mppdbide.view.ui.autosave.AbstractAutoSaveObject;
 import org.opengauss.mppdbide.view.ui.autosave.IAutoSaveDbgObject;
@@ -140,8 +132,6 @@ import org.opengauss.mppdbide.view.ui.terminal.FuncProcTerminalResultDisplayUIMa
 import org.opengauss.mppdbide.view.ui.terminal.resulttab.ResultTabManager;
 import org.opengauss.mppdbide.view.ui.uiif.PLSourceEditorIf;
 import org.opengauss.mppdbide.view.uidisplay.UIDisplayFactoryProvider;
-import org.opengauss.mppdbide.view.uidisplay.UIDisplayState;
-import org.opengauss.mppdbide.view.utils.IUserPreference;
 import org.opengauss.mppdbide.view.utils.UIElement;
 import org.opengauss.mppdbide.view.utils.UserPreference;
 import org.opengauss.mppdbide.view.utils.common.SourceViewerUtil;
@@ -697,6 +687,9 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 sourceEditor.setDocument(new Document(debugObject.getLatestSouceCode().getCode()), 0);
                 debugObject.setCodeReloaded(false);
             }
+            String sourceCode = debugObject.getLatestSouceCode().getCode();
+            DebuggerStartInfoVo info = DebuggerStartVariable.getStartInfo(debugObject.getOid());
+            info.sourceCode = sourceCode;
             registerModifyListener();
             setSourceChangedInEditor(false);
             setSourceViewerConfiguration();
@@ -1335,17 +1328,40 @@ public class PLSourceEditor extends AbstractAutoSaveObject
      */
     public void removeDebugPosition() {
         Iterator<Annotation> annoIterator = fAnnotationModel.getAnnotationIterator();
-        List<DebugPositionAnnotation> needRemoveAnnotations =
-                new ArrayList<DebugPositionAnnotation>(1);
+        List<Object> needRemoveAnnotations =
+                new ArrayList<Object>(1);
         while (annoIterator.hasNext()) {
             Annotation annotation = annoIterator.next();
             if (annotation instanceof DebugPositionAnnotation) {
                 needRemoveAnnotations.add((DebugPositionAnnotation) annotation);
             }
+            if (annotation instanceof DebugPassPositionAnnotation) {
+                needRemoveAnnotations.add((DebugPassPositionAnnotation) annotation);
+            }
+            if (annotation instanceof DebugFailPositionAnnotation) {
+                needRemoveAnnotations.add((DebugFailPositionAnnotation) annotation);
+            }
         }
-        for (DebugPositionAnnotation anno: needRemoveAnnotations) {
-            fAnnotationModel.removeAnnotation(anno);
-            deHighlightLine(anno.getLine());
+        for (Object anno : needRemoveAnnotations) {
+            Annotation annotation = null;
+            int line = -1;
+            if (anno instanceof DebugPositionAnnotation) {
+                DebugPositionAnnotation debug = (DebugPositionAnnotation) anno;
+                annotation = debug;
+                line = debug.getLine();
+            }
+            if (anno instanceof DebugPassPositionAnnotation) {
+                DebugPassPositionAnnotation pass = (DebugPassPositionAnnotation) anno;
+                annotation = pass;
+                line = pass.getLine();
+            }
+            if (anno instanceof DebugFailPositionAnnotation) {
+                DebugFailPositionAnnotation fail = (DebugFailPositionAnnotation) anno;
+                annotation = fail;
+                line = fail.getLine();
+            }
+            fAnnotationModel.removeAnnotation(annotation);
+            deHighlightLine(line);
         }
     }
 
@@ -1363,6 +1379,30 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         sourceEditor.goToLineNumber(line);
         highlightLine(line);
         setDebugPositionLine(line);
+    }
+
+    /**
+     * create Pass Position
+     *
+     * @param line  the debug pass line
+     */
+    public void createPassPosition(int line) throws BadLocationException {
+        DebugPassPositionAnnotation annotation = new DebugPassPositionAnnotation(line);
+        fAnnotationModel.addAnnotation(annotation,
+                new Position(sourceEditor.getDocument().getLineOffset(line))
+        );
+    }
+
+    /**
+     * create Fail Position
+     *
+     * @param line  the debug fail line
+     */
+    public void createFailPosition(int line) throws BadLocationException {
+        DebugFailPositionAnnotation annotation = new DebugFailPositionAnnotation(line);
+        fAnnotationModel.addAnnotation(annotation,
+                new Position(sourceEditor.getDocument().getLineOffset(line))
+        );
     }
 
     /**

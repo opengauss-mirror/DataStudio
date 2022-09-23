@@ -36,6 +36,9 @@ public class BreakpointList {
      * @return Map<Integer, BreakpointVo> the instance of BreakpointList
      */
     public static Map<Integer, BreakpointVo> getInstance() {
+        if (breakpointList == null) {
+            initialInstance();
+        }
         return breakpointList;
     }
 
