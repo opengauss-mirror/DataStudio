@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
-
+import org.opengauss.mppdbide.adapter.gauss.Datatype;
 import org.opengauss.mppdbide.adapter.gauss.GaussDatatypeUtils;
 import org.opengauss.mppdbide.bl.serverdatacache.DefaultParameter;
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
@@ -164,7 +164,11 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
 
         private String getType() {
             int typeCode = variableVo.dtype.intValue();
-            String type = GaussDatatypeUtils.getDataTypeHashMap().get(typeCode).getTypename();
+            Datatype datatype = GaussDatatypeUtils.getDataTypeHashMap().get(typeCode);
+            if (datatype == null) {
+                return "<unknown>";
+            }
+            String type = datatype.getTypename();
             return type;
         }
 
