@@ -196,6 +196,15 @@ public interface ContentAssistUtilIf {
     SortedMap<String, ServerObject> getChildObject(SortedMap<String, ServerObject> found, boolean isParentDescNeeded);
 
     /**
+     * Gets the child select object.
+     *
+     * @param found the found
+     * @param isParentDescNeeded the is parent desc needed
+     * @return the child object
+     */
+    SortedMap<String, ServerObject> getChildObjectSelect(SortedMap<String, ServerObject> found, boolean isParentDescNeeded);
+
+    /**
      * Find matching trigger object.
      *
      * @param prefix the prefix
@@ -230,4 +239,28 @@ public interface ContentAssistUtilIf {
     default SortedMap<String, ServerObject> findExactMatchingSynonyms(String prefix) {
         return null;
     }
+
+    /**
+     * all column if is insert.
+     * 
+     * @param object the ServerObject
+     * @param start the start
+     * @param len the len
+     * @param columnName the column name
+     * @param resultMap the sorted map
+     * @param isParentDescNeeded the parent pesc needed
+     */
+    void saveAllColumn(ServerObject object, int start, int len, StringBuffer columnName, SortedMap<String, ServerObject> resultMap, boolean isParentDescNeeded);
+    
+    /**
+     * all column if is insert.
+     * 
+     * @param object the ServerObject
+     * @param start the start
+     * @param len the len
+     * @param columnName the column name
+     * @param resultMap the sorted map
+     * @param isParentDescNeeded the parent pesc needed
+     */
+    void saveAliasColumn(ServerObject object, int start, int len, StringBuffer columnName, SortedMap<String, ServerObject> resultMap, boolean isParentDescNeeded);
 }

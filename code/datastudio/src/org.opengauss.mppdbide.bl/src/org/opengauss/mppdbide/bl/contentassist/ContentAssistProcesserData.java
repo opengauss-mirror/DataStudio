@@ -133,6 +133,7 @@ public class ContentAssistProcesserData implements ISQLContentAssistProcessor {
                 } else if (servObj instanceof TableMetaData) {
                     TableMetaData tbl = (TableMetaData) servObj;
                     found.putAll(tbl.findAllChildObjects());
+                    found = contentAssistUtil.getChildObjectSelect(found, parentObjMap.size() > 1);
                 } else if (servObj instanceof ViewMetaData) {
                     ViewMetaData view = ViewMetaData.class.cast(servObj);
                     found.putAll(view.findAllChildObjects());

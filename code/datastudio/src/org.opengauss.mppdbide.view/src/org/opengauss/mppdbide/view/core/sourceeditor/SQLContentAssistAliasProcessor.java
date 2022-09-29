@@ -29,6 +29,7 @@ import org.opengauss.mppdbide.bl.queryparser.ParseContext;
 import org.opengauss.mppdbide.bl.serverdatacache.Alias;
 import org.opengauss.mppdbide.bl.serverdatacache.OBJECTTYPE;
 import org.opengauss.mppdbide.bl.serverdatacache.ServerObject;
+import org.opengauss.mppdbide.bl.util.OpUtils;
 import org.opengauss.mppdbide.presentation.contentassistprocesser.ContentAssistProcesserCore;
 import org.opengauss.mppdbide.utils.CustomStringUtility;
 import org.opengauss.mppdbide.utils.JSQLParserUtils;
@@ -94,6 +95,7 @@ public class SQLContentAssistAliasProcessor {
 
         aliasToTableNameMap = parseAndGetAliasMap(fullContent, isPrefixEndsWithDot);
 
+        OpUtils.setMap(aliasToTableNameMap);
         if (null != aliasToTableNameMap && aliasToTableNameMap.size() > 0) {
             /*
              * Assumption: There will only be 2 parts in the prefix Replace

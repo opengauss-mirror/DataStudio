@@ -23,9 +23,12 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.opengauss.mppdbide.bl.serverdatacache.groups.ColumnAll;
+import org.opengauss.mppdbide.bl.util.OpUtils;
 import org.opengauss.mppdbide.bl.serverdatacache.ColumnMetaData;
 import org.opengauss.mppdbide.bl.serverdatacache.Database;
 import org.opengauss.mppdbide.bl.serverdatacache.DebugObjects;
+import org.opengauss.mppdbide.bl.serverdatacache.OBJECTTYPE;
 import org.opengauss.mppdbide.bl.serverdatacache.SequenceMetadata;
 import org.opengauss.mppdbide.bl.serverdatacache.ServerObject;
 import org.opengauss.mppdbide.bl.serverdatacache.SynonymMetaData;
@@ -51,6 +54,8 @@ public class ContentAssistUtilOLAP extends ContentAssistUtil {
     private static final char DOUBLE_QUOTE = '\"';
 
     private static final char ESCAPE_CHAR = '\"';
+
+    private static final String COMMA = ", ";
 
     private static final char NEW_LINE_CHAR = MPPDBIDEConstants.LINE_SEPARATOR.length() > 1
             ? MPPDBIDEConstants.LINE_SEPARATOR.charAt(1)
@@ -528,10 +533,16 @@ public class ContentAssistUtilOLAP extends ContentAssistUtil {
     public SortedMap<String, ServerObject> getChildObject(SortedMap<String, ServerObject> found,
             boolean isParentDescNeeded) {
         SortedMap<String, ServerObject> resultMap = new TreeMap<String, ServerObject>();
+        int len = found.size();
+        if (isInsert()) {
+            len = len - 1;
+        }
+        StringBuffer columnName = new StringBuffer();
+        int temp = 0;
         for (ServerObject obj : found.values()) {
             if (obj instanceof ColumnMetaData) {
-                ColumnMetaData clm = (ColumnMetaData) obj;
-                resultMap.put(clm.getClmNameWithDatatype(isParentDescNeeded), obj);
+                saveAllColumn(obj, temp, len, columnName, resultMap, isParentDescNeeded);
+			    temp++;
             } else if (obj instanceof ViewColumnMetaData) {
                 ViewColumnMetaData clm = (ViewColumnMetaData) obj;
                 resultMap.put(clm.getClmNameWithDatatype(isParentDescNeeded), obj);
@@ -539,6 +550,75 @@ public class ContentAssistUtilOLAP extends ContentAssistUtil {
         }
         return resultMap;
     }
+
+    @Override
+	public void saveAllColumn(ServerObject object, int start, int len, StringBuffer columnName,
+	        SortedMap<String, ServerObject> resultMap, boolean isParentDescNeeded) {
+		ColumnMetaData clm = (ColumnMetaData) object;
+		resultMap.put(clm.getClmNameWithDatatype(isParentDescNeeded), object);
+		if (start < len) {
+			columnName.append(((ColumnMetaData) object).getParentTable().getColumnMetaDataList().get(start).getName());
+			if (start < len - 1) {
+				columnName.append(COMMA);
+			} else {
+				ColumnAll columnAll = new ColumnAll(start, columnName.toString(), OBJECTTYPE.COLUMN_METADATA, false);
+				resultMap.put(clm.getClms(), columnAll);
+			}
+			start++;
+		}
+	}
+
+    @Override
+    public SortedMap<String, ServerObject> getChildObjectSelect(SortedMap<String, ServerObject> found,
+            boolean isParentDescNeeded) {
+        SortedMap<String, ServerObject> resultMap = new TreeMap<String, ServerObject>();
+        int len = found.size();
+        StringBuffer columnName = new StringBuffer();
+        int temp = 0;
+        for (ServerObject obj : found.values()) {
+            if (obj instanceof ColumnMetaData) {
+                saveAliasColumn(obj, temp, len, columnName, resultMap, isParentDescNeeded);
+			    temp++;
+            } else if (obj instanceof ViewColumnMetaData) {
+                ViewColumnMetaData clm = (ViewColumnMetaData) obj;
+                resultMap.put(clm.getClmNameWithDatatype(isParentDescNeeded), obj);
+            }
+        }
+        OpUtils.getMap().clear();
+        return resultMap;
+    }
+
+    @Override
+	public void saveAliasColumn(ServerObject object, int start, int len, StringBuffer columnName, 
+            SortedMap<String, ServerObject> resultMap, boolean isParentDescNeeded) {
+		ColumnMetaData clm = (ColumnMetaData) object;
+		resultMap.put(clm.getClmNameWithDatatype(isParentDescNeeded), object);
+		if (start < len) {
+			columnName.append(((ColumnMetaData) object).getParentTable().getColumnMetaDataList().get(start).getName());
+			if (start < len - 1) {
+				columnName.append(COMMA);
+				String key = null;
+				if (!OpUtils.getMap().isEmpty()) {
+					for (Entry<String, List<String>> entry : OpUtils.getMap().entrySet()) {
+						if ((entry.getValue().contains((((ColumnMetaData) object).getParentTable().getName()))
+								|| entry.getValue().contains((((ColumnMetaData) object).getParentTable().getNameSpaceName()
+								+ DOT + (((ColumnMetaData) object).getParentTable().getName()))))
+								&& entry.getKey().equals(OpUtils.getPre().substring(0, OpUtils.getPre().length() - 1))) {
+							key = entry.getKey();
+						}
+					}
+					columnName.append(key);
+				} else {
+					columnName.append(((ColumnMetaData) object).getParentTable().getName());
+				}
+				columnName.append(DOT);
+			} else {
+				ColumnAll ocb = new ColumnAll(start, columnName.toString(), OBJECTTYPE.COLUMN_METADATA, false);
+				resultMap.put(clm.getClms(), ocb);
+			}
+			start++;
+		}
+	}
 
     /**
      * Find matching trigger object.
