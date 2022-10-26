@@ -116,6 +116,17 @@ public class CoverageVo {
     @DumpFiled
     public String params;
 
+    /**
+     * the name
+     */
+    public String name;
+
+    /**
+     * the canBreakLine
+     */
+    @DumpFiled
+    public String canBreakLine;
+
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 

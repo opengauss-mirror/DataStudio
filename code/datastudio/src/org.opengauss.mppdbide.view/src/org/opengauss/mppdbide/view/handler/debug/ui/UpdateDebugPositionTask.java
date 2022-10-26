@@ -16,18 +16,17 @@
 package org.opengauss.mppdbide.view.handler.debug.ui;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.Map;
 
 import org.eclipse.jface.text.BadLocationException;
+import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
+import org.opengauss.mppdbide.common.DbeCommonUtils;
 import org.opengauss.mppdbide.debuger.service.SourceCodeService;
+import org.opengauss.mppdbide.debuger.service.SourceCodeService.CodeDescription;
 import org.opengauss.mppdbide.debuger.vo.VersionVo;
 import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.VariableRunLine;
-import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
-import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.exceptions.MPPDBIDEException;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.opengauss.mppdbide.view.core.sourceeditor.SQLSyntaxColorProvider;
@@ -41,10 +40,6 @@ import org.opengauss.mppdbide.view.utils.UIElement;
  * @since 3.0.0
  */
 public class UpdateDebugPositionTask implements Runnable {
-    private static final String BEGIN = "BEGIN";
-
-    private static final String END = "END;";
-
     private int showLine = -1;
 
     /**
@@ -54,7 +49,9 @@ public class UpdateDebugPositionTask implements Runnable {
      */
     public UpdateDebugPositionTask(int showLine) {
         this.showLine = showLine;
-        VariableRunLine.passLine.add(showLine);
+        if (showLine != -1) {
+            VariableRunLine.passLine.add(showLine);
+        }
     }
 
     @Override
@@ -76,7 +73,7 @@ public class UpdateDebugPositionTask implements Runnable {
             } else {
                 // dbedebugger
                 if (VariableRunLine.isTerminate) {
-                    debDebuggerRemark(plSourceEditor);
+                    dbeDebuggerRemark(plSourceEditor);
                 }
             }
         } catch (MPPDBIDEException e) {
@@ -120,8 +117,12 @@ public class UpdateDebugPositionTask implements Runnable {
             MPPDBIDELoggerUtility.error(e.getMessage());
         }
         PLSourceEditor pl = terminateDebug();
-        getToatlLineNo(pl).forEach(item -> {
+        String code = pl.getDebugObject().getSourceCode().getCode();
+        List<String> list = DbeCommonUtils.getBreakLines(DbeCommonUtils.infoCodes,
+                SourceCodeService.CodeDescription.getLines(code));
+        list.forEach(core -> {
             try {
+                Integer item = Integer.parseInt(core);
                 if (VariableRunLine.runList.contains(String.valueOf(item))) {
                     pl.createPassPosition(item);
                 } else {
@@ -149,14 +150,17 @@ public class UpdateDebugPositionTask implements Runnable {
         }
     }
 
-    private void debDebuggerRemark(PLSourceEditor plSourceEditor) {
-        plSourceEditor.removeDebugPosition();
+    private void dbeDebuggerRemark(PLSourceEditor pl) {
+        pl.removeDebugPosition();
         try {
-            remarkBack(plSourceEditor);
-            if (showLine >= 0) {
-                plSourceEditor.createDebugPosition(showLine);
+            remarkBack(pl);
+            IDebugObject iDebugObject = pl.getDebugObject();
+            String code = iDebugObject.getSourceCode().getCode();
+            Map<String, Integer> map = DbeCommonUtils.getBeginToEndLineNo(CodeDescription.getLines(code));
+            if (showLine >= map.get(DbeCommonUtils.BEGIN) && map.get(DbeCommonUtils.END) >= showLine) {
+                pl.createDebugPosition(showLine);
             }
-            remark(showLine, plSourceEditor);
+            remark(showLine, pl);
         } catch (BadLocationException e) {
             MPPDBIDELoggerUtility.error("set debugPostion at " + showLine + " failed,err=" + e.getMessage());
         } catch (Exception e) {
@@ -165,8 +169,11 @@ public class UpdateDebugPositionTask implements Runnable {
     }
 
     private void remark(int line, PLSourceEditor plSourceEditor) {
-        getToatlLineNo(plSourceEditor).forEach(item -> {
+        String code = plSourceEditor.getDebugObject().getSourceCode().getCode();
+        List<String> list = DbeCommonUtils.getBreakLines(DbeCommonUtils.infoCodes, CodeDescription.getLines(code));
+        list.forEach(core -> {
             try {
+                Integer item = Integer.parseInt(core);
                 if (showLine != item && VariableRunLine.passLine.contains(item)) {
                     plSourceEditor.createPassPosition(item);
                 } else {
@@ -178,48 +185,5 @@ public class UpdateDebugPositionTask implements Runnable {
                 MPPDBIDELoggerUtility.error(e.getMessage());
             }
         });
-    }
-
-    /**
-     * The get Toatl LineNo
-     *
-     * @param plSourceEditor the source editor
-     * @return the value for function
-     */
-    public static Set<Integer> getToatlLineNo(PLSourceEditor plSourceEditor) {
-        Set<Integer> record = new HashSet<>();
-        int begin = -1;
-        int end = -1;
-        ;
-        try {
-            String sourceCode = plSourceEditor.getDebugObject().getLatestSouceCode().getCode();
-            List<String> total = SourceCodeService.CodeDescription.getLines(sourceCode);
-
-            for (int i = 0; i < total.size(); i++) {
-                String code = total.get(i);
-                if (code.toUpperCase(Locale.ENGLISH).trim().startsWith(BEGIN)) {
-                    begin = i;
-                }
-                if (code.toUpperCase(Locale.ENGLISH).trim().startsWith(END)) {
-                    end = i;
-                    break;
-                }
-            }
-            Boolean isFlag = true;
-            int beg = begin;
-            while (isFlag && begin != -1 && end != -1 && begin < end) {
-                int val = ++beg;
-                if (val == end) {
-                    break;
-                }
-                record.add(val);
-                if (val + 1 == end) {
-                    isFlag = false;
-                }
-            }
-        } catch (DatabaseOperationException | DatabaseCriticalException e) {
-            MPPDBIDELoggerUtility.error(e.getMessage());
-        }
-        return record;
     }
 }

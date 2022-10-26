@@ -56,6 +56,11 @@ public class DebuggerStartInfoVo {
     public boolean isMakeReport = true;
 
     /**
+     * totalCanBreakLine of function
+     */
+    public String canBreakLine;
+
+    /**
      * get remakr list
      *
      * @return the return value

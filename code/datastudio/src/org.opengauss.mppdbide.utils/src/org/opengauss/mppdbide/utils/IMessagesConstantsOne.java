@@ -1114,4 +1114,64 @@ public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
      * COVERAGE_CHECK
      */
     String COVERAGE_CHECK = "COVERAGE_CHECK";
+
+    /**
+     * BREAK
+     */
+    String NOT_SUPPORT_BREAK = "NOT_SUPPORT_BREAK";
+
+    /**
+     * VERSION_CHECK_FAIL
+     */
+    String VERSION_CHECK_FAIL = "VERSION_CHECK_FAIL";
+
+    /**
+     * EXP_EXECUTE_STATEMENT
+     */
+    String EXP_EXECUTE_STATEMENT = "EXP_EXECUTE_STATEMENT";
+
+    /**
+     * EXP_SERIAL_NUMBER
+     */
+    String EXP_SERIAL_NUMBER = "EXP_SERIAL_NUMBER";
+
+    /**
+     * EXP_TOTAL_ROWS
+     */
+    String EXP_TOTAL_ROWS = "EXP_TOTAL_ROWS";
+
+    /**
+     * EXP_TOTAL_RUNNING_LINES
+     */
+    String EXP_TOTAL_RUNNING_LINES = "EXP_TOTAL_RUNNING_LINES";
+
+    /**
+     * VERSION_CHECK_FAIL
+     */
+    String EXP_TOTAL_COVERAGE = "EXP_TOTAL_COVERAGE";
+
+    /**
+     * EXP_MARK_ROW
+     */
+    String EXP_MARK_ROW = "EXP_MARK_ROW";
+
+    /**
+     * EXP_MARK_EXECUTION_LINE
+     */
+    String EXP_MARK_EXECUTION_LINE = "EXP_MARK_EXECUTION_LINE";
+
+    /**
+     * VERSION_CHECK_FAIL
+     */
+    String EXP_MARKER_COVERAGE = "EXP_MARKER_COVERAGE";
+
+    /**
+     * EXP_INPUT_PARAMS
+     */
+    String EXP_INPUT_PARAMS = "EXP_INPUT_PARAMS";
+
+    /**
+     * EXP_UPDATE_TIME
+     */
+    String EXP_UPDATE_TIME = "EXP_UPDATE_TIME";
 }

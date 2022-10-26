@@ -17,6 +17,7 @@ package org.opengauss.mppdbide.view.core.sourceeditor;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PreDestroy;
 
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
@@ -86,6 +88,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
@@ -101,9 +104,11 @@ import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 
 import org.opengauss.mppdbide.adapter.keywordssyntax.SQLSyntax;
 import org.opengauss.mppdbide.bl.serverdatacache.Database;
+import org.opengauss.mppdbide.common.DbeCommonUtils;
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.common.IConnectionProvider;
 import org.opengauss.mppdbide.common.VersionHelper;
+import org.opengauss.mppdbide.debuger.service.SourceCodeService;
 import org.opengauss.mppdbide.gauss.sqlparser.SQLFoldingConstants;
 import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
@@ -142,10 +147,6 @@ import org.opengauss.mppdbide.view.workerjob.UIWorkerJob;
  * @since 3.0.0
  */
 public final class PLSourceEditorCore extends SelectMenuItem implements IPropertyChangeListener {
-    private static final String START_LINE = "startLine: ";
-
-    private static final String END_LINE = "endLine: ";
-
     private static final String FORMAT_COMMAND_ID = "org.opengauss.mppdbide.command.id.format";
 
     private ECommandService commandService;
@@ -213,6 +214,8 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
     private int counterForTxtInEditor = 0;
 
     private MenuItem toggleLineComments;
+    
+    private MenuItem toggleRemarkComments;
 
     private MenuItem toggleBlockComments;
 
@@ -1346,15 +1349,22 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         toggleLineComments.setImage(IconUtility.getIconImage(IiconPath.ICON_TOGGLE_LINE_COMMENTS, this.getClass()));
     }
 
+    /**
+     * Adds the toggle remark comment menu item.
+     *
+     * @param menuItem the menu item
+     */
     private void addRemarkLineCommentMenuItem(Menu menuItem) {
-        toggleLineComments = new MenuItem(menuItem, SWT.PUSH);
-        toggleLineComments.setText(MessageConfigLoader
+        toggleRemarkComments = new MenuItem(menuItem, SWT.PUSH);
+        toggleRemarkComments.setText(MessageConfigLoader
                 .getProperty(IMessagesConstants.REMARK_SHORTCUT_KEY_BINDING_TOGGLE_LINE_COMMENTS));
-        toggleLineComments.addSelectionListener(new SelectionListener() {
+        toggleRemarkComments.addSelectionListener(new SelectionListener() {
 
             @Override
             public void widgetSelected(SelectionEvent event) {
-                remarkLineCommentHandle();
+                Command cmd = commandService.getCommand("org.opengauss.mppdbide.view.command.ToggleRemarkComment");
+                ParameterizedCommand parameterizedCmd = new ParameterizedCommand(cmd, null);
+                handlerService.executeHandler(parameterizedCmd);
             }
 
             @Override
@@ -1362,60 +1372,51 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
 
             }
         });
-        toggleLineComments.setImage(IconUtility.getIconImage(IiconPath.ICON_REMARK_COVERAGE, this.getClass()));
+        toggleRemarkComments.setImage(IconUtility.getIconImage(IiconPath.ICON_REMARK_COVERAGE, this.getClass()));
     }
 
-    private void remarkLineCommentHandle() {
+    /**
+     * Remark line comment.
+     */
+    public void remarkLineComment() {
         PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
-        IConnectionProvider prov = new DBConnectionProvider(pl.getDebugObject().getDatabase());
-        Optional<IConnection> conn = prov.getFreeConnection();
-        try {
-            boolean isPldebugger = VersionHelper.getDebuggerVersion(conn.get()).isPldebugger();
-            if (isPldebugger) {
-                MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.INFORMATION, true,
-                        MessageConfigLoader.getProperty(IMessagesConstants.EXECDIALOG_HINT),
-                        MessageConfigLoader.getProperty(IMessagesConstants.COVERAGE_CHECK));
-                return;
-            }
-            ISelection res = viewer.getSelection();
-            int start = Integer.valueOf(res.toString().split(START_LINE)[1].split(",")[0]);
-            String[] arr = res.toString().split(END_LINE);
-            int endLength = 1;
-            if (arr.length > 1) {
-                endLength = Integer.parseInt(arr[1].split(",")[0]);
-            }
-            List<String> list = new ArrayList<String>();
-            for (int i = start; i < (endLength == 1 ? start + 1 : endLength + 1); i++) {
-                list.add(String.valueOf(i));
-            }
-            long oid = pl.getDebugObject().getOid();
-            DebuggerStartInfoVo startInfo = DebuggerStartVariable.getStartInfo(oid);
-            List<String> remarkLines = startInfo.getRemarkList();
-            List<String> cancel = list.stream()
-                    .filter(item -> remarkLines.contains(item)).collect(Collectors.toList());
-            cancel.forEach(item -> viewer.getTextWidget()
-                    .setLineBackground(Integer.parseInt(item), 1,
-                            SQLSyntaxColorProvider.BACKGROUND_COLOR));
-            List<String> newRemark = list.stream()
-                    .filter(item -> !remarkLines.contains(item)).collect(Collectors.toList());
-            newRemark.forEach(item -> viewer.getTextWidget()
-                    .setLineBackground(Integer.parseInt(item), 1,
-                            SQLSyntaxColorProvider.BACKGROUND_COLOR_GREY));
-            List<String> oldRemark = remarkLines.stream()
-                    .filter(item -> !list.contains(item)).collect(Collectors.toList());
-            newRemark.addAll(oldRemark);
-            String remarLinesStr = newRemark.stream().map(String::valueOf).collect(Collectors.joining(","));
-            startInfo.remarLinesStr = remarLinesStr;
-            DebuggerStartVariable.setStartInfo(oid, startInfo);
-        } catch (SQLException e) {
-            MPPDBIDELoggerUtility.error(e.getMessage());
-        } finally {
-            try {
-                conn.get().close();
-            } catch (SQLException e) {
-                MPPDBIDELoggerUtility.error(e.getMessage());
-            }
+        long oid = pl.getDebugObject().getOid();
+        List<String> list = getList();
+        DebuggerStartInfoVo startInfo = DebuggerStartVariable.getStartInfo(oid);
+        List<String> remarkLines = startInfo.getRemarkList();
+        List<String> cancels = getRemarkList(list, remarkLines, true);
+        setLineBackground(cancels, SQLSyntaxColorProvider.BACKGROUND_COLOR);
+        List<String> newRemarks = getRemarkList(list, remarkLines, false);
+        setLineBackground(newRemarks, SQLSyntaxColorProvider.BACKGROUND_COLOR_GREY);
+        List<String> oldRemarks = getRemarkList(remarkLines, list, false);
+        newRemarks.addAll(oldRemarks);
+        String remarLinesStr = newRemarks.stream().map(String::valueOf).collect(Collectors.joining(","));
+        startInfo.remarLinesStr = remarLinesStr;
+        DebuggerStartVariable.setStartInfo(oid, startInfo);
+    }
+
+    private List<String> getRemarkList(List<String> rangeList, List<String> lines, boolean isEqual) {
+        return rangeList.stream().filter(item -> {
+            if (isEqual) {
+                return lines.contains(item);
+            } 
+   	        return !lines.contains(item);
+        }).collect(Collectors.toList());
+    }
+
+    private void setLineBackground(List<String> lines, Color background) {
+        lines.forEach(item -> viewer.getTextWidget().setLineBackground(Integer.parseInt(item), 1, background));
+    }
+
+    private List<String> getList() {
+        ITextSelection selection = (ITextSelection) viewer.getSelection();
+        int start = selection.getStartLine();
+        int end = selection.getEndLine();
+        List<String> list = new ArrayList<String>();
+        for (int i = start; i < (end == 1 ? start + 1 : end + 1); i++) {
+            list.add(String.valueOf(i));
         }
+        return list;
     }
 
     /**
@@ -1933,10 +1934,12 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
             ITextSelection selection = (ITextSelection) viewer.getSelection();
             int selOffset = selection.getOffset();
             int selLength = selection.getLength();
+            int startLine = selection.getStartLine();
+            int endLine = selection.getEndLine();
+            removeRemarkLines(startLine, endLine);
             String selText = null != selection.getText() ? selection.getText() : "";
             int blockCommentOpenLen = MPPDBIDEConstants.ML_COMMENT_START.length();
             int blockCommentEndLen = MPPDBIDEConstants.ML_COMMENT_END.length();
-
             DocumentRewriteSession rewriteSession = null;
             rewriteSession = getRewriteSession(document);
 
@@ -2144,6 +2147,21 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
     public String getText() {
         return getDocument().get();
     }
+    
+    private void removeRemarkLines(int start, int end) {
+        PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
+        long oid = pl.getDebugObject().getOid();
+        DebuggerStartInfoVo vo = DebuggerStartVariable.getStartInfo(oid);
+        List<String> oldList = Arrays.asList(vo.remarLinesStr.split(","));
+        List<String> newLine = new ArrayList<>();
+        oldList.forEach(item -> {
+            if (!StringUtils.isBlank(item) && (Integer.valueOf(item) < start || Integer.valueOf(item) > end)) {
+                newLine.add(item);
+            }
+        });
+        vo.remarLinesStr = String.join(",", newLine);
+        DebuggerStartVariable.setStartInfo(oid, vo);
+    }
 
     /**
      * Toggle line comment.
@@ -2157,6 +2175,9 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
             boolean firstLineFlag = true;
             int startLine = textSelection.getStartLine();
             int endLine = textSelection.getEndLine();
+            
+            removeRemarkLines(startLine, endLine);
+            
             int lineCommentLen = SL_COMMENT.length();
             boolean lineComment = false;
             int selLineNo = 0;
@@ -2403,9 +2424,40 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         }
         toggleLineComments.setEnabled(isEnabled);
         toggleBlockComments.setEnabled(isEnabled);
-
+        checkVisiable(isEnabled);
     }
 
+    private void checkVisiable(boolean isEnabled) {
+        PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
+        long oid = pl.getDebugObject().getOid();
+        IDocument document = viewer.getDocument();
+        List<String> codes = SourceCodeService.CodeDescription.getLines(document.get());
+        List<String> list = getList();
+        IConnectionProvider prov = new DBConnectionProvider(pl.getDebugObject().getDatabase());
+        Optional<IConnection> conn = Optional.empty();
+        boolean isVisiable = true;
+        boolean isPldebugger = false;
+        try {
+            conn = prov.getFreeConnection();
+            isPldebugger = VersionHelper.getDebuggerVersion(conn.get()).isPldebugger();
+            DbeCommonUtils.checkCanBreakLines(codes, conn.get(), oid, list);
+        } catch (SQLException e1) {
+            isVisiable = false;
+        } finally {
+            try {
+                conn.get().close();
+            } catch (SQLException e) {
+                MPPDBIDELoggerUtility.error(e.getMessage());
+            }
+        }
+        if (!isPldebugger && isVisiable) {
+            toggleRemarkComments.setEnabled(isEnabled);
+        } else {
+            toggleRemarkComments.setEnabled(false);
+            return;
+        }
+    }
+    
     /**
      * Property change.
      *

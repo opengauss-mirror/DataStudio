@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -75,8 +76,10 @@ public class CoverageHistory extends Dialog {
     private static final int REMARK_LINE = 4;
     private static final int REMARK_RUM_LINE_NUM = 5;
     private static final int REMARK_COVERAGE = 6;
-    private static final int UPDATE_TIME = 7;
+    private static final int INPUT_PARAMS = 7;
+    private static final int UPDATE_TIME = 8;
 
+    private String sqlName = null;
     private Table table = null;
     private ToolItem saveToolItem = null;
     private ToolItem deleteToolItem = null;
@@ -141,6 +144,9 @@ public class CoverageHistory extends Dialog {
         TableColumn remarkCoverage = new TableColumn(table, SWT.LEFT);
         remarkCoverage.setText(org.opengauss.mppdbide.utils.loader.MessageConfigLoader.getProperty(
                 IMessagesConstants.REMARK_COVERAGE));
+        TableColumn inputParams = new TableColumn(table, SWT.LEFT);
+        inputParams.setText(org.opengauss.mppdbide.utils.loader.MessageConfigLoader.getProperty(
+                IMessagesConstants.INPUT_PARAMS));
         TableColumn updateTime = new TableColumn(table, SWT.LEFT);
         updateTime.setText(org.opengauss.mppdbide.utils.loader.MessageConfigLoader.getProperty(
                 IMessagesConstants.UPDATE_TIME));
@@ -149,9 +155,10 @@ public class CoverageHistory extends Dialog {
         totalRunLineNum.pack();
         totalCoverage.pack();
         remarkCoverage.pack();
+        inputParams.setWidth(150);
         updateTime.setWidth(150);
-        remarkLine.setWidth(200);
-        remarkRunLineNum.setWidth(200);
+        remarkLine.setWidth(150);
+        remarkRunLineNum.setWidth(150);
         displaySqlHistoryObject();
         mainSc.setExpandHorizontal(true);
         mainSc.setExpandVertical(true);
@@ -168,7 +175,7 @@ public class CoverageHistory extends Dialog {
     protected void configureShell(Shell shell) {
         super.configureShell(shell);
         shell.setText(MessageConfigLoader.getProperty(IMessagesConstants.COVERAGE_HISTORY_TITLE, profileName));
-        shell.setImage(IconUtility.getIconImage(IiconPath.SQL_HISTORY1, this.getClass()));
+        shell.setImage(IconUtility.getIconImage(IiconPath.ICON_COVERAGE, this.getClass()));
         shell.setSize(1000, 750);
     }
 
@@ -178,18 +185,21 @@ public class CoverageHistory extends Dialog {
     public void displaySqlHistoryObject() {
         PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
         long oid = pl.getDebugObject().getOid();
+        sqlName = pl.getDebugObject().getName();
         coverageServiceFactory = new CoverageServiceFactory(
                 new DBConnectionProvider(pl.getDebugObject().getDatabase()));
-        CoverageService coverageService = null;
+        Optional<CoverageService> coverageService = Optional.empty();
         try {
             coverageService = coverageServiceFactory.getCoverageService();
-            List<CoverageVo> ls = coverageService.getCoverageInfoByOid(oid);
-            setInput(ls);
+            if (coverageService.isPresent()) {
+                List<CoverageVo> ls = coverageService.get().getCoverageInfoByOid(oid);
+                setInput(ls);
+            }
         } catch (SQLException e) {
             MPPDBIDELoggerUtility.error(e.getMessage());
         } finally {
-            if (coverageService != null) {
-                coverageService.closeService();
+            if (coverageService.isPresent()) {
+                coverageService.get().closeService();
             }
         }
     }
@@ -222,6 +232,7 @@ public class CoverageHistory extends Dialog {
         row.setText(REMARK_LINE, String.valueOf(item.remarkLinesArr));
         row.setText(REMARK_RUM_LINE_NUM, String.valueOf(item.remarkCoverageLinesArr));
         row.setText(REMARK_COVERAGE, String.valueOf(item.remarkPercent));
+        row.setText(INPUT_PARAMS, item.params);
         row.setText(UPDATE_TIME, item.parseDate());
     }
 
@@ -247,7 +258,7 @@ public class CoverageHistory extends Dialog {
 
     private void createToolbar(final Composite parent) {
         final ToolBar bar = new ToolBar(parent, SWT.FLAT | SWT.FOCUSED);
-        final Image sqlcloseIcon = IconUtility.getIconImage(IiconPath.LOAD_QUERY_SQL, getClass());
+        final Image sqlcloseIcon = IconUtility.getIconImage(IiconPath.ICO_EXPORT_CURRENT_PAGE, getClass());
         saveToolItem = new ToolItem(bar, SWT.PUSH);
         saveToolItem.setEnabled(false);
         saveToolItem.setImage(sqlcloseIcon);
@@ -328,20 +339,13 @@ public class CoverageHistory extends Dialog {
                 List<String> list = getData(item);
                 serialNum = String.valueOf(index + 1);
                 list.add(0, serialNum);
-                Map<Integer, String> code = getCode(vo.sourceCode);
-                ExportParamVo expVo = new ExportParamVo();
-                expVo.oid = vo.oid;
-                expVo.index = serialNum;
-                expVo.executeSql = code;
-                expVo.remarkLines = vo.remarkLinesArr.stream().collect(Collectors.toSet());
-                expVo.coveragePassLines = vo.coverageLinesArr.stream().collect(Collectors.toSet());
-                expVo.list = list;
+                ExportParamVo expVo = getExportParamVo(vo, list, serialNum);
                 if (isFlag) {
-                    html = ExportUtil.exportReport(expVo);
+                    html = ExportUtil.exportReport(expVo, sqlName);
                     isFlag = false;
                 } else {
                     expVo.html = html;
-                    html = ExportUtil.exportReport(expVo);
+                    html = ExportUtil.exportReport(expVo, sqlName);
                 }
             }
             try {
@@ -358,6 +362,19 @@ public class CoverageHistory extends Dialog {
         @Override
         public void widgetDefaultSelected(SelectionEvent event) {
         }
+    }
+
+    private ExportParamVo getExportParamVo(CoverageVo vo, List<String> list, String serialNum) {
+        Map<Integer, String> code = getCode(vo.sourceCode);
+        ExportParamVo expVo = new ExportParamVo();
+        expVo.oid = vo.oid;
+        expVo.index = serialNum;
+        expVo.executeSql = code;
+        expVo.remarkLines = vo.remarkLinesArr.stream().collect(Collectors.toSet());
+        expVo.coveragePassLines = vo.coverageLinesArr.stream().collect(Collectors.toSet());
+        expVo.list = list;
+        expVo.canBreakLine = vo.canBreakLine;
+        return expVo;
     }
 
     private Map<Integer, String> getCode(String sourceCode) {
@@ -414,7 +431,7 @@ public class CoverageHistory extends Dialog {
             if (counter != 0) {
                 CoverageService[] service = new CoverageService[1];
                 try {
-                    service[0] = coverageServiceFactory.getCoverageService();
+                    service[0] = coverageServiceFactory.getCoverageService().get();
                     historyItems.forEach(item -> {
                         service[0].delCoverageInfoByOid(item.oid, item.cid);
                     });

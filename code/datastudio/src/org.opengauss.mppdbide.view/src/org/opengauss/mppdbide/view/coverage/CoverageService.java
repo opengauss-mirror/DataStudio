@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,6 @@ import java.util.stream.Collectors;
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.debuger.annotation.ParseVo;
 import org.opengauss.mppdbide.debuger.service.IService;
-import org.opengauss.mppdbide.debuger.service.SourceCodeService;
 import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.opengauss.mppdbide.utils.vo.DebuggerEndInfoVo;
@@ -82,7 +82,7 @@ public class CoverageService implements IService {
             List<CoverageVo> res = this.queryList(sql, CoverageVo.class);
             res.stream().forEach(cov -> {
                 if (cov.sourceCode != null) {
-                    List<String> toRunLines = SourceCodeService.CodeDescription.getRunLinesNums(cov.sourceCode);
+                    List<String> toRunLines = Arrays.asList(cov.canBreakLine.split(","));
                     cov.totalLineNum = toRunLines.size();
                     cov.coverageLineNum = cov.getRunList().size();
                     cov.coverageLinesArr = cov.getRunList();
@@ -162,7 +162,7 @@ public class CoverageService implements IService {
     }
 
     private <T> List<T> queryList(String sql, Class<T> clazz) throws SQLException {
-        List<T> list = null;
+        List<T> list = new ArrayList<T>();
         try (PreparedStatement ps = conn.getStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
                 list = ParseVo.parseList(rs, clazz);

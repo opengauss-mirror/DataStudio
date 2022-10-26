@@ -15,15 +15,27 @@
 
 package org.opengauss.mppdbide.debuger.service;
 
-import org.opengauss.mppdbide.debuger.event.Event;
-import org.opengauss.mppdbide.debuger.event.EventHander;
-import org.opengauss.mppdbide.debuger.event.Event.EventMessage;
-import org.opengauss.mppdbide.debuger.exception.DebugExitException;
-import org.opengauss.mppdbide.debuger.service.chain.MsgChainHelper;
+import java.lang.Thread.State;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+
+import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.debuger.annotation.ParseVo;
 import org.opengauss.mppdbide.debuger.debug.DebugConstants;
 import org.opengauss.mppdbide.debuger.debug.DebugConstants.DebugOpt;
 import org.opengauss.mppdbide.debuger.debug.DebugState;
+import org.opengauss.mppdbide.debuger.event.Event;
+import org.opengauss.mppdbide.debuger.event.Event.EventMessage;
+import org.opengauss.mppdbide.debuger.event.EventHander;
+import org.opengauss.mppdbide.debuger.exception.DebugExitException;
+import org.opengauss.mppdbide.debuger.service.chain.MsgChainHelper;
 import org.opengauss.mppdbide.debuger.thread.DebugServerRunable;
 import org.opengauss.mppdbide.debuger.thread.DebugServerThreadProxy;
 import org.opengauss.mppdbide.debuger.thread.EventQueueThread;
@@ -33,19 +45,8 @@ import org.opengauss.mppdbide.debuger.vo.SessionVo;
 import org.opengauss.mppdbide.debuger.vo.StackVo;
 import org.opengauss.mppdbide.debuger.vo.VariableVo;
 import org.opengauss.mppdbide.debuger.vo.VersionVo;
-import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.postgresql.core.NoticeListener;
-
-import java.lang.Thread.State;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Title: the DebugService class
@@ -150,10 +151,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
                     ps.setObject(i, args.get(i - 1));
                 }
                 try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        return Optional.ofNullable(rs.getObject(1));
-                    }
-                    return Optional.empty();
+                    return this.listResultSet(rs);
                 }
             }
         } finally {
@@ -792,5 +790,29 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      */
     void getServerCallBackBegin() throws SQLException {
         serverCallBackBegin();
+    }
+    
+    /**
+     * get all val from ResultSet
+     *
+     * @param rs param
+     * @return Optional<> Object
+     * @throws SQLException  Exception
+     */
+    private Optional<Object> listResultSet(ResultSet rs) throws SQLException {
+        if (rs.next()) {
+            int totalCount = rs.getMetaData().getColumnCount();
+            int initCount = 0;
+            List<String> resList = new ArrayList<String>();
+            while (initCount < totalCount) {
+                initCount++;
+                String columnName = rs.getMetaData().getColumnName(initCount);
+                Object result = rs.getObject(initCount);
+                String coverRes = String.format(Locale.ENGLISH, columnName+"%s "+result,":");
+                resList.add(coverRes);
+            }
+            return Optional.ofNullable(String.join("; ", resList));
+        }
+        return Optional.empty();
     }
 }

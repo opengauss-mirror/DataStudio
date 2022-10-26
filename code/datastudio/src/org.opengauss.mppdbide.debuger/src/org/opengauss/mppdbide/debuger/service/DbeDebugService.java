@@ -21,13 +21,16 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.common.QueryResVoConvertHelper;
 import org.opengauss.mppdbide.common.VersionHelper;
 import org.opengauss.mppdbide.debuger.annotation.ParseVo;
@@ -39,6 +42,7 @@ import org.opengauss.mppdbide.debuger.vo.PositionVo;
 import org.opengauss.mppdbide.debuger.vo.StackVo;
 import org.opengauss.mppdbide.debuger.vo.VariableVo;
 import org.opengauss.mppdbide.debuger.vo.dbe.AttachVo;
+import org.opengauss.mppdbide.debuger.vo.dbe.InfoCodeVo;
 import org.opengauss.mppdbide.debuger.vo.dbe.TurnOnVo;
 import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.VariableRunLine;
@@ -107,7 +111,17 @@ public class DbeDebugService extends DebugService {
                 }, 2000);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        return Optional.ofNullable(rs.getObject(1));
+                        int totalCount = rs.getMetaData().getColumnCount();
+                        int initCount = 0;
+                        List<String> resList = new ArrayList<String>();
+                        while (initCount < totalCount) {
+                            initCount++;
+                            String columnName = rs.getMetaData().getColumnName(initCount);
+                            Object result = rs.getObject(initCount);
+                            String coverRes = String.format(Locale.ENGLISH, columnName+"%s "+result,":");
+                            resList.add(coverRes);
+                        }
+                        return Optional.ofNullable(String.join("; ", resList));
                     }
                     return Optional.empty();
                 }
@@ -347,6 +361,27 @@ public class DbeDebugService extends DebugService {
             }
         }
         return VariableRunLine.isPldebugger;
+    }
+
+    /**
+     * get infoCodes
+     *
+     * @param conn     the dbConnection
+     * @param debugOpt debugOpt
+     * @param params   oid
+     * @return List InfoCodeVo
+     * @throws SQLException Exception
+     */
+    public static List<InfoCodeVo> getInfoCodes(IConnection conn, List<Object> params) throws SQLException {
+        try (PreparedStatement ps = conn.getDebugOptPrepareStatement(
+                DebugConstants.DebugOpt.DBE_GET_SOURCE_CODE, params)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                return ParseVo.parseList(rs, InfoCodeVo.class);
+            } catch (SQLException e) {
+                MPPDBIDELoggerUtility.error(e.getMessage());
+            }
+        }
+        return Collections.emptyList();
     }
 
     private boolean disposeDbeBreakpoint(DebugOpt debugOpt, PositionVo positionVo, Boolean isDelete)

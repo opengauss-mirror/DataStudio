@@ -59,4 +59,9 @@ public class ExportParamVo {
      * html of function
      */
     public String html;
+
+    /**
+     * canBreakLine of function
+     */
+    public String canBreakLine;
 }

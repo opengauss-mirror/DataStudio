@@ -994,4 +994,9 @@ public interface IiconPath {
      * The icon remark coverage
      */
     String ICON_REMARK_COVERAGE = "icon-remarkCoverage.png";
+
+    /**
+     * The icon remark coverage
+     */
+    String ICON_COVERAGE = PRE_DEBUG_PATH + "breakpoint_indicate.png";
 }

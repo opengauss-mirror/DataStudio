@@ -3120,4 +3120,9 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
      * The update time
      */
     String UPDATE_TIME = "UPDATE_TIME";
+
+    /**
+     * The input params
+     */
+    String INPUT_PARAMS = "INPUT_PARAMS";
 }

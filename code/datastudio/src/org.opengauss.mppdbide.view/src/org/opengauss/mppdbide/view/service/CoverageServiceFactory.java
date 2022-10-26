@@ -16,9 +16,11 @@
 package org.opengauss.mppdbide.view.service;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.common.IConnectionProvider;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.view.coverage.CoverageService;
 
 /**
@@ -39,13 +41,16 @@ public class CoverageServiceFactory {
      * @return the value
      * @throws SQLException the exception
      */
-    public CoverageService getCoverageService() throws SQLException {
+    public Optional<CoverageService > getCoverageService() throws SQLException {
         return createCoverageService(provider.getValidFreeConnection());
     }
 
-    private static CoverageService createCoverageService(IConnection conn) {
+    private static Optional<CoverageService > createCoverageService(IConnection conn) {
+        if (VariableRunLine.isPldebugger != null && VariableRunLine.isPldebugger) {
+            return Optional.empty();
+        }
         CoverageService service = new CoverageService();
         service.setConn(conn);
-        return service;
+        return Optional.of(service);
     }
 }

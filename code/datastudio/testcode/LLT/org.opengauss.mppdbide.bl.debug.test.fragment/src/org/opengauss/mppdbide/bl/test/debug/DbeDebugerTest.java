@@ -32,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.opengauss.mppdbide.bl.mock.debug.DebugerJdbcTestCaseBase;
 import org.opengauss.mppdbide.bl.mock.debug.MockDebugServiceHelper;
+import org.opengauss.mppdbide.common.DbeCommonUtils;
 import org.opengauss.mppdbide.common.IConnectionProvider;
 import org.opengauss.mppdbide.debuger.debug.DebugConstants.DebugOpt;
 import org.opengauss.mppdbide.debuger.debug.DebugState;
@@ -119,8 +120,8 @@ public class DbeDebugerTest extends DebugerJdbcTestCaseBase {
         mockHelper.mockDbeInfoCode("select * from DBE_PLDEBUGGER.info_code(?)");
         try {
             Optional<SourceCodeVo> sourceCode = queryService.getSourceCode(functionVo.oid);
-            SourceCodeService.CodeDescription.getRunLines(sourceCode.get().getSourceCode());
-            SourceCodeService.CodeDescription.getRunLinesNums(sourceCode.get().getSourceCode());
+            DbeCommonUtils.getBeginToEndLineNo(
+                    SourceCodeService.CodeDescription.getLines(sourceCode.get().getSourceCode()));
         } catch (SQLException e) {
             fail("get breakpoints failed!");
         }
