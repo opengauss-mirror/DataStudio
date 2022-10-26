@@ -166,6 +166,7 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_6IaakDXPEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.view.handledmenuitem.stepin" visible="false" label="%executemenu.label.stepin" iconURI="platform:/plugin/org.opengauss.mppdbide.view/icons/debug/step-in.png" tooltip="%executemenu.tooltip.stepin" command="_1t6MMC-PEeu3vZBI81hPmA"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_KFBBMDXQEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.view.handledmenuitem.stepover" label="%executemenu.label.stepover" iconURI="platform:/plugin/org.opengauss.mppdbide.view/icons/debug/step-over.png" tooltip="%executemenu.tooltip.stepover" command="_zmRKQC-PEeu3vZBI81hPmA"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_PrFR0DXQEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.view.handledmenuitem.stepout" visible="false" label="%executemenu.label.stepout" iconURI="platform:/plugin/org.opengauss.mppdbide.view/icons/debug/step-out.png" tooltip="%executemenu.tooltip.stepout" command="_4NaUgC-PEeu3vZBI81hPmA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_PrFR0DXQEeu3vZBI81hPmB" elementId="org.opengauss.mppdbide.view.handledmenuitem.historyconverg" label="%executemenu.label.historyconverg" iconURI="platform:/plugin/org.opengauss.mppdbide.view/icons/debug/breakpoint_indicate.png" tooltip="%executemenu.tooltip.historyconverg" command="_qQEP4C-PEeu3vZBI81hPmB"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_bPUcwPflEeGIPdc-KG9aww" elementId="org.opengauss.mppdbide.view.trimbar" side="Bottom">
@@ -314,6 +315,7 @@
   <handlers xmi:id="_4gpxcAFTEeq9mJM5AwY0ng" elementId="org.opengauss.mppdbide.handler.id.zdropsynonym" contributionURI="bundleclass://org.opengauss.mppdbide.view/org.opengauss.mppdbide.view.synonym.handler.DropSynonymHandler" command="_x2-HsAFTEeq9mJM5AwY0ng"/>
   <handlers xmi:id="_hKInwEdAEeqLWpgRlTLE0g" elementId="org.opengauss.mppdbide.view.handler.viewviewdata" contributionURI="bundleclass://org.opengauss.mppdbide.view/org.opengauss.mppdbide.view.view.handler.ViewViewDataHandler" command="_alBU8EdAEeqLWpgRlTLE0g"/>
   <handlers xmi:id="_DNwx0C-3Eeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.view.handler.startdebug" contributionURI="bundleclass://org.opengauss.mppdbide.view/org.opengauss.mppdbide.view.handler.debug.StartDebugHandler" command="_qQEP4C-PEeu3vZBI81hPmA"/>
+  <handlers xmi:id="_DNwx0C-3Eeu3vZBI81hPmB" elementId="org.opengauss.mppdbide.view.handler.debughistorycoverage" contributionURI="bundleclass://org.opengauss.mppdbide.view/org.opengauss.mppdbide.view.handler.debug.DebugHistoryCoverageHandler" command="_qQEP4C-PEeu3vZBI81hPmB"/>
   <handlers xmi:id="_s7sGYDK1Eeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.view.handler.terminate" contributionURI="bundleclass://org.opengauss.mppdbide.view/org.opengauss.mppdbide.view.handler.debug.TerminateDebugHandler" command="_tz90cC-PEeu3vZBI81hPmA"/>
   <handlers xmi:id="_w2Z2QDRnEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.view.handler.stepout" contributionURI="bundleclass://org.opengauss.mppdbide.view/org.opengauss.mppdbide.view.handler.debug.StepOutDebugHandler" command="_4NaUgC-PEeu3vZBI81hPmA"/>
   <handlers xmi:id="_PxB-QDXPEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.view.handler.stepin" contributionURI="bundleclass://org.opengauss.mppdbide.view/org.opengauss.mppdbide.view.handler.debug.StepInDebugHandler" command="_1t6MMC-PEeu3vZBI81hPmA"/>
@@ -1020,6 +1022,7 @@
   </commands>
   <commands xmi:id="_alBU8EdAEeqLWpgRlTLE0g" elementId="org.opengauss.mppdbide.view.command.viewviewdata" commandName="ViewViewData" description="ViewViewData"/>
   <commands xmi:id="_qQEP4C-PEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.command.id.startdebug" commandName="Start Debugging" description="Start Debugging Desc"/>
+  <commands xmi:id="_qQEP4C-PEeu3vZBI81hPmB" elementId="org.opengauss.mppdbide.command.id.historyconverg" commandName="history converg" description="get history convarg data"/>
   <commands xmi:id="_tz90cC-PEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.command.id.terminate" commandName="Terminate Debugging" description="Terminate Debugging"/>
   <commands xmi:id="_xGswgC-PEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.command.id.continue" commandName="Continue" description="Continue"/>
   <commands xmi:id="_zmRKQC-PEeu3vZBI81hPmA" elementId="org.opengauss.mppdbide.command.id.stepover" commandName="Step over" description="Step over"/>

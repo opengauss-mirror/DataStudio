@@ -3015,4 +3015,109 @@ public interface IMessagesConstants extends IMessagesConstantsOne {
     String CREATE_VIEW_UI_VIEW = "CREATE_VIEW_UI_VIEW";
     String CREATE_VIEW_UI_MATERVIEW = "CREATE_VIEW_UI_MATERVIEW";
     String CREATE_VIEW_UI_NAME_NOT_EMPTY = "CREATE_VIEW_UI_NAME_NOT_EMPTY";
+
+    /**
+     * DEBUG_POSITION_LABEL_PASS
+     */
+    String DEBUG_POSITION_LABEL_PASS = "DEBUG_POSITION_LABEL_PASS";
+
+    /**
+     * DEBUG_POSITION_LABEL_FAIL
+     */
+    String DEBUG_POSITION_LABEL_FAIL = "DEBUG_POSITION_LABEL_FAIL";
+
+    /**
+     * REMARK_SHORTCUT_KEY_BINDING_TOGGLE_LINE_COMMENTS
+     */
+    String REMARK_SHORTCUT_KEY_BINDING_TOGGLE_LINE_COMMENTS = "REMARK_SHORTCUT_KEY_BINDING_TOGGLE_LINE_COMMENTS";
+
+    /**
+     * OID
+     */
+    String OID = "OID";
+
+    /**
+     * TOTAL_LINE
+     */
+    String TOTAL_LINE = "TOTAL_LINE";
+
+    /**
+     * TOTAL_RUN_LINE_NUM
+     */
+    String TOTAL_RUN_LINE_NUM = "TOTAL_RUN_LINE_NUM";
+
+    /**
+     * TOTAL_Coverage
+     */
+    String TOTAL_COVERAGE = "TOTAL_COVERAGE";
+
+    /**
+     * REMARK_LINE
+     */
+    String REMARK_LINE = "REMARK_LINE";
+
+    /**
+     * REMARK_RUM_LINE_NUM
+     */
+    String REMARK_RUM_LINE_NUM = "REMARK_RUM_LINE_NUM";
+
+    /**
+     * REMARK_COVERAGE
+     */
+    String REMARK_COVERAGE = "REMARK_COVERAGE";
+
+    /**
+     * DELETE_COVERAGE
+     */
+    String DELETE_COVERAGE = "DELETE_COVERAGE";
+
+    /**
+     * DELETE_COVERAGE_ALL
+     */
+    String DELETE_COVERAGE_ALL = "DELETE_COVERAGE_ALL";
+
+    /**
+     * EXPORT_REPORT
+     */
+    String EXPORT_REPORT = "EXPORT_REPORT";
+
+    /**
+     * COVERAGE_HISTORY_TITLE
+     */
+    String COVERAGE_HISTORY_TITLE = "COVERAGE_HISTORY_TITLE";
+
+    /**
+     * DELETE_COVERAGE_REPORT_TITLE
+     */
+    String DELETE_COVERAGE_REPORT_TITLE = "DELETE_COVERAGE_REPORT_TITLE";
+
+    /**
+     * DELETE_SELECTED_COVERAGE_HISTORY_ALERT
+     */
+    String DELETE_SELECTED_COVERAGE_HISTORY_ALERT = "DELETE_SELECTED_COVERAGE_HISTORY_ALERT";
+
+    /**
+     * DELETE_ALL_COVERAGE_HISTORY_ALERT
+     */
+    String DELETE_ALL_COVERAGE_HISTORY_ALERT = "DELETE_ALL_COVERAGE_HISTORY_ALERT";
+
+    /**
+     * SURE_EXPORT_REPORT
+     */
+    String SURE_EXPORT_REPORT = "SURE_EXPORT_REPORT";
+
+    /**
+     * The coverage report not exist
+     */
+    String COVERAGE_REPORT_NOT_EXIST = "COVERAGE_REPORT_NOT_EXIST";
+
+    /**
+     * The coverage report to select
+     */
+    String COVERAGE_REPORT_TO_SELECT = "COVERAGE_REPORT_TO_SELECT";
+
+    /**
+     * The update time
+     */
+    String UPDATE_TIME = "UPDATE_TIME";
 }

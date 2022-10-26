@@ -15,9 +15,13 @@
 
 package org.opengauss.mppdbide.view.core.sourceeditor;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.annotation.PreDestroy;
 
@@ -63,8 +67,6 @@ import org.eclipse.jface.text.source.IOverviewRuler;
 import org.eclipse.jface.text.source.ISharedTextColors;
 import org.eclipse.jface.text.source.OverviewRuler;
 import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -81,7 +83,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
@@ -100,13 +101,18 @@ import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 
 import org.opengauss.mppdbide.adapter.keywordssyntax.SQLSyntax;
 import org.opengauss.mppdbide.bl.serverdatacache.Database;
+import org.opengauss.mppdbide.common.IConnection;
+import org.opengauss.mppdbide.common.IConnectionProvider;
+import org.opengauss.mppdbide.common.VersionHelper;
 import org.opengauss.mppdbide.gauss.sqlparser.SQLFoldingConstants;
+import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
+import org.opengauss.mppdbide.utils.vo.DebuggerStartInfoVo;
 import org.opengauss.mppdbide.view.core.SelectMenuItem;
-import org.opengauss.mppdbide.view.handler.debug.DebugHandlerUtils;
+import org.opengauss.mppdbide.view.handler.debug.DBConnectionProvider;
 import org.opengauss.mppdbide.view.handler.debug.DebugServiceHelper;
 import org.opengauss.mppdbide.view.prefernces.DSFormatterPreferencePage;
 import org.opengauss.mppdbide.view.prefernces.FormatterPreferenceKeys;
@@ -123,6 +129,7 @@ import org.opengauss.mppdbide.view.uidisplay.UIDisplayState;
 import org.opengauss.mppdbide.view.uidisplay.uidisplayif.UIDisplayStateIf;
 import org.opengauss.mppdbide.view.utils.IUserPreference;
 import org.opengauss.mppdbide.view.utils.TerminalStatusBar;
+import org.opengauss.mppdbide.view.utils.UIElement;
 import org.opengauss.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
 import org.opengauss.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
 import org.opengauss.mppdbide.view.utils.icon.IconUtility;
@@ -135,6 +142,10 @@ import org.opengauss.mppdbide.view.workerjob.UIWorkerJob;
  * @since 3.0.0
  */
 public final class PLSourceEditorCore extends SelectMenuItem implements IPropertyChangeListener {
+    private static final String START_LINE = "startLine: ";
+
+    private static final String END_LINE = "endLine: ";
+
     private static final String FORMAT_COMMAND_ID = "org.opengauss.mppdbide.command.id.format";
 
     private ECommandService commandService;
@@ -337,6 +348,7 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         addPasteMenuItem(menu);
         addSelectAllMenuItem(menu);
         addToggleLineCommentMenuItem(menu);
+        addRemarkLineCommentMenuItem(menu);
         addToggleBlockCommentMenuItem(menu);
         addFormatMenuItem(menu);
         addExecStmtMenuItem(menu);
@@ -1332,6 +1344,78 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
             }
         });
         toggleLineComments.setImage(IconUtility.getIconImage(IiconPath.ICON_TOGGLE_LINE_COMMENTS, this.getClass()));
+    }
+
+    private void addRemarkLineCommentMenuItem(Menu menuItem) {
+        toggleLineComments = new MenuItem(menuItem, SWT.PUSH);
+        toggleLineComments.setText(MessageConfigLoader
+                .getProperty(IMessagesConstants.REMARK_SHORTCUT_KEY_BINDING_TOGGLE_LINE_COMMENTS));
+        toggleLineComments.addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent event) {
+                remarkLineCommentHandle();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
+
+            }
+        });
+        toggleLineComments.setImage(IconUtility.getIconImage(IiconPath.ICON_REMARK_COVERAGE, this.getClass()));
+    }
+
+    private void remarkLineCommentHandle() {
+        PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
+        IConnectionProvider prov = new DBConnectionProvider(pl.getDebugObject().getDatabase());
+        Optional<IConnection> conn = prov.getFreeConnection();
+        try {
+            boolean isPldebugger = VersionHelper.getDebuggerVersion(conn.get()).isPldebugger();
+            if (isPldebugger) {
+                MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.INFORMATION, true,
+                        MessageConfigLoader.getProperty(IMessagesConstants.EXECDIALOG_HINT),
+                        MessageConfigLoader.getProperty(IMessagesConstants.COVERAGE_CHECK));
+                return;
+            }
+            ISelection res = viewer.getSelection();
+            int start = Integer.valueOf(res.toString().split(START_LINE)[1].split(",")[0]);
+            String[] arr = res.toString().split(END_LINE);
+            int endLength = 1;
+            if (arr.length > 1) {
+                endLength = Integer.parseInt(arr[1].split(",")[0]);
+            }
+            List<String> list = new ArrayList<String>();
+            for (int i = start; i < (endLength == 1 ? start + 1 : endLength + 1); i++) {
+                list.add(String.valueOf(i));
+            }
+            long oid = pl.getDebugObject().getOid();
+            DebuggerStartInfoVo startInfo = DebuggerStartVariable.getStartInfo(oid);
+            List<String> remarkLines = startInfo.getRemarkList();
+            List<String> cancel = list.stream()
+                    .filter(item -> remarkLines.contains(item)).collect(Collectors.toList());
+            cancel.forEach(item -> viewer.getTextWidget()
+                    .setLineBackground(Integer.parseInt(item), 1,
+                            SQLSyntaxColorProvider.BACKGROUND_COLOR));
+            List<String> newRemark = list.stream()
+                    .filter(item -> !remarkLines.contains(item)).collect(Collectors.toList());
+            newRemark.forEach(item -> viewer.getTextWidget()
+                    .setLineBackground(Integer.parseInt(item), 1,
+                            SQLSyntaxColorProvider.BACKGROUND_COLOR_GREY));
+            List<String> oldRemark = remarkLines.stream()
+                    .filter(item -> !list.contains(item)).collect(Collectors.toList());
+            newRemark.addAll(oldRemark);
+            String remarLinesStr = newRemark.stream().map(String::valueOf).collect(Collectors.joining(","));
+            startInfo.remarLinesStr = remarLinesStr;
+            DebuggerStartVariable.setStartInfo(oid, startInfo);
+        } catch (SQLException e) {
+            MPPDBIDELoggerUtility.error(e.getMessage());
+        } finally {
+            try {
+                conn.get().close();
+            } catch (SQLException e) {
+                MPPDBIDELoggerUtility.error(e.getMessage());
+            }
+        }
     }
 
     /**

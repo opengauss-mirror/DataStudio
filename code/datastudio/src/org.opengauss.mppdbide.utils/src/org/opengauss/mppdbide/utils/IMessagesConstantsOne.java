@@ -1099,4 +1099,19 @@ public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
     
     String ERROR_WHILE_FETCHING_OWNER_NAME = "ERROR_WHILE_FETCHING_OWNER_NAME";
     String ERR_WHILE_FETCHING_SEQ_VALUE = "ERR_WHILE_FETCHING_SEQ_VALUE";
+
+    /**
+     * COVERAGE_HINT
+     */
+    String COVERAGE_HINT = "COVERAGE_HINT";
+
+    /**
+     * EXPORT_PATH
+     */
+    String EXPORT_PATH = "EXPORT_PATH";
+
+    /**
+     * COVERAGE_CHECK
+     */
+    String COVERAGE_CHECK = "COVERAGE_CHECK";
 }

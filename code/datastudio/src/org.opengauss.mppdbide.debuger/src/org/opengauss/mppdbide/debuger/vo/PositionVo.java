@@ -31,6 +31,16 @@ public class PositionVo {
     public static final String FORMAT = "%8s %20s";
 
     /**
+     * the format of this vo
+     */
+    public Boolean isEnable;
+
+    /**
+     * the format of this vo
+     */
+    public Integer breakpointno;
+
+    /**
      *  func of positionvo
      */
     @DumpFiled
@@ -56,6 +66,15 @@ public class PositionVo {
         this.func = func;
         this.linenumber = linenumber;
         this.targetname = targetname;
+    }
+
+    /**
+     * getBreakpointno
+     *
+     * @return breakpointno of value
+     */
+    public Integer getBreakpointno() {
+        return breakpointno;
     }
 
     /**

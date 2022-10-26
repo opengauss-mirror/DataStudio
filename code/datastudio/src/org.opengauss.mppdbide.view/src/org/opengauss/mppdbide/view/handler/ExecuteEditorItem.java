@@ -15,6 +15,7 @@
 
 package org.opengauss.mppdbide.view.handler;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -35,10 +36,13 @@ import org.opengauss.mppdbide.adapter.keywordssyntax.SQLSyntax;
 import org.opengauss.mppdbide.bl.errorlocator.IErrorLocator;
 import org.opengauss.mppdbide.bl.serverdatacache.Database;
 import org.opengauss.mppdbide.bl.serverdatacache.DatabaseUtils;
+import org.opengauss.mppdbide.bl.serverdatacache.DebugObjects;
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
 import org.opengauss.mppdbide.bl.serverdatacache.OBJECTTYPE;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectChange;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectParameter;
+import org.opengauss.mppdbide.common.IConnection;
+import org.opengauss.mppdbide.common.VersionHelper;
 import org.opengauss.mppdbide.presentation.CanContextContinueExecuteRule;
 import org.opengauss.mppdbide.presentation.IExecutionContext;
 import org.opengauss.mppdbide.presentation.IResultDisplayUIManager;
@@ -56,6 +60,7 @@ import org.opengauss.mppdbide.view.functionchange.ExecuteWrapper;
 import org.opengauss.mppdbide.view.functionchange.ObjectChangeEvent;
 import org.opengauss.mppdbide.view.functionchange.ObjectChangeEvent.ButtonPressed;
 import org.opengauss.mppdbide.view.functionchange.ObjectChangeWorker;
+import org.opengauss.mppdbide.view.handler.debug.DBConnectionProvider;
 import org.opengauss.mppdbide.view.terminal.TerminalQueryExecutionWorker;
 import org.opengauss.mppdbide.view.terminal.executioncontext.FuncProcEditorTerminalExecutionContext;
 import org.opengauss.mppdbide.view.ui.PLSourceEditor;
@@ -89,6 +94,8 @@ public class ExecuteEditorItem implements ExecuteWrapper {
 
     private static final String ERROR_POSITION_IDENTIFIER = "Position:";
 
+    private volatile boolean isPldebugger = true;
+
     /**
      * Execute.
      */
@@ -106,7 +113,16 @@ public class ExecuteEditorItem implements ExecuteWrapper {
         }
         editor.setExecuteInProgress(true);
         editor.enabledisableTextWidget(false);
-        IDebugObject debugObject = editor.getDebugObject();
+        DebugObjects debugObject = null;
+        checkVersion(editor);
+        if (editor.getDebugObject() instanceof DebugObjects) {
+            debugObject = (DebugObjects) editor.getDebugObject();
+            if (!isPldebugger) {
+                debugObject.setUsagehint(MessageConfigLoader.getProperty(IMessagesConstants.COVERAGE_HINT));
+            } else {
+                debugObject.setUsagehint("");
+            }
+        }
         ObjectChangeWorker<ObjectChange> objWorker = new ObjectChangeWorker<ObjectChange>("Function Change Worker",
                 null, debugObject, editor, this, IMessagesConstants.FUNCTN_CHANGE_MSG,
                 IMessagesConstants.FUNCTN_CHANGE_OVERWRITE);
@@ -143,6 +159,24 @@ public class ExecuteEditorItem implements ExecuteWrapper {
             editor.setCompileInProgress(false);
             editor.setExecuteInProgress(false);
             executeSQLObjWindow(debugObject, false);
+        }
+    }
+
+    private void checkVersion(PLSourceEditor editor) {
+        IConnection conn = null;
+        try {
+            conn = new DBConnectionProvider(editor.getDebugObject().getDatabase()).getValidFreeConnection();
+            isPldebugger = VersionHelper.getDebuggerVersion(conn).isPldebugger();
+        } catch (SQLException e) {
+            MPPDBIDELoggerUtility.error(e.getMessage());
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    MPPDBIDELoggerUtility.error(e.getMessage());
+                }
+            }
         }
     }
 

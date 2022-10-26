@@ -260,6 +260,13 @@ public interface IDebugObject {
     ArrayList<ObjectParameter> getTemplateParameters();
 
     /**
+     * Gets the parameters.
+     *
+     * @return the parameters
+     */
+    ObjectParameter[] getObjectParameters();
+
+    /**
      * Clear template parameter values.
      */
     void clearTemplateParameterValues();

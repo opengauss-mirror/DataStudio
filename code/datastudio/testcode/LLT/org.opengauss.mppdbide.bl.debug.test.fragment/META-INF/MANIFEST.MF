@@ -23,4 +23,11 @@ Require-Bundle: org.junit;bundle-version="4.12.0",
  org.opengauss.mppdbide.util,
  org.apache.commons.codec;bundle-version="1.10.0",
  org.opengauss.mppdbide.debuger;bundle-version="1.0.0"
-Export-Package: org.opengauss.mppdbide.bl.mock.debug
+Export-Package: org.opengauss.mppdbide.bl.mock.debug,
+ org.opengauss.mppdbide.bl.test.debug
+Import-Package: org.eclipse.e4.ui.workbench,
+ org.eclipse.jface.window,
+ org.eclipse.swt.widgets,
+ org.opengauss.mppdbide.view.handler.debug,
+ org.opengauss.mppdbide.view.ui,
+ org.opengauss.mppdbide.view.utils

@@ -21,6 +21,7 @@ import java.util.Optional;
 import org.eclipse.jface.preference.PreferenceStore;
 
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
+import org.opengauss.mppdbide.common.IConnectionProvider;
 import org.opengauss.mppdbide.debuger.event.Event;
 import org.opengauss.mppdbide.debuger.event.IHandlerManger;
 import org.opengauss.mppdbide.debuger.event.Event.EventMessage;
@@ -29,12 +30,15 @@ import org.opengauss.mppdbide.debuger.service.ServiceFactory;
 import org.opengauss.mppdbide.debuger.service.SourceCodeService;
 import org.opengauss.mppdbide.debuger.service.WrappedDebugService;
 import org.opengauss.mppdbide.debuger.vo.FunctionVo;
+import org.opengauss.mppdbide.debuger.service.DebuggerReportService;
 import org.opengauss.mppdbide.debuger.vo.SourceCodeVo;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
 import org.opengauss.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
+import org.opengauss.mppdbide.view.coverage.CoverageService;
 import org.opengauss.mppdbide.view.prefernces.PreferenceWrapper;
+import org.opengauss.mppdbide.view.service.CoverageServiceFactory;
 
 /**
  * Title: class
@@ -46,10 +50,13 @@ public class DebugServiceHelper {
     private static DebugServiceHelper debugServiceHelper = new DebugServiceHelper();
     private IDebugObject debugObject = null;
     private ServiceFactory serviceFactory = null;
+    private CoverageServiceFactory coverageServiceFactory = null;
     private WrappedDebugService debugService = null;
+    private DebuggerReportService debuggerReportService = null;
     private FunctionVo functionVo = null;
     private QueryService queryService = null;
     private SourceCodeService codeService = null;
+    private CoverageService coverageService = null;
 
     private DebugServiceHelper() {
     }
@@ -75,21 +82,28 @@ public class DebugServiceHelper {
             return false;
         }
         if (!isCommonDatabase(debugObject)) {
-            serviceFactory = new ServiceFactory(new DBConnectionProvider(debugObject.getDatabase()));
+            IConnectionProvider provider = new DBConnectionProvider(debugObject.getDatabase());
+            serviceFactory = new ServiceFactory(provider);
+            coverageServiceFactory = new CoverageServiceFactory(provider);
             checkSupportDebug();
             queryService = serviceFactory.getQueryService();
             functionVo = queryService.queryFunction(debugObject.getName());
+            debuggerReportService = DebuggerReportService.getInstance();
+            debuggerReportService.setAttr(provider, functionVo);
             debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));
             debugService.addHandler(new UiEventHandler());
             debugService.addHandler(new DebugEventHandler());
             codeService = serviceFactory.getCodeService();
+            coverageService = coverageServiceFactory.getCoverageService();
             Optional<SourceCodeVo> sourceCode = queryService.getSourceCode(functionVo.oid);
             if (sourceCode.isPresent()) {
                 codeService.setBaseCode(sourceCode.get().getSourceCode());
+                debuggerReportService.setBaseCode(codeService.getBaseCodeDesc());
             } else {
                 throw new SQLException("get source code failed!");
             }
             codeService.setTotalCode(debugObject.getSourceCode().getCode());
+            debuggerReportService.setTotalCode(codeService.getTotalCodeDesc());
             this.debugObject = debugObject;
         }
         if (debugService != null) {
@@ -143,6 +157,11 @@ public class DebugServiceHelper {
     public QueryService getQueryService() {
         return queryService;
     }
+
+    public CoverageService getCoverageService() {
+        return coverageService;
+    }
+
 
     /**
      * description: get code service

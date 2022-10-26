@@ -17,19 +17,19 @@ package org.opengauss.mppdbide.view.handler.debug;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Display;
-
 import org.opengauss.mppdbide.adapter.keywordssyntax.SQLSyntax;
 import org.opengauss.mppdbide.bl.serverdatacache.DefaultParameter;
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectParameter;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectParameter.PARAMETERTYPE;
-import org.opengauss.mppdbide.debuger.service.DebugService;
+import org.opengauss.mppdbide.debuger.service.DbeDebugService;
 import org.opengauss.mppdbide.debuger.service.WrappedDebugService;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
@@ -90,6 +90,11 @@ public class StartDebugHandler {
         plSourceEditor.setExecuteInProgress(true);
         debugUtils.showAllDebugView(true);
         startInputParamDialog();
+        PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
+        List<ObjectParameter> params = Arrays.asList(pl.getDebugObject().getObjectParameters());
+        long oid = pl.getDebugObject().getOid();
+        List<String> paramNames = params.stream().map(item -> item.getName()).distinct().collect(Collectors.toList());
+        DbeDebugService.map.put(oid, paramNames);
     }
 
     private void startInputParamDialog() {
@@ -175,10 +180,10 @@ public class StartDebugHandler {
     private List<Object> getDebugParams(List<DefaultParameter> serverParams) throws DatabaseOperationException {
         List<DefaultParameter> filterInParams = serverParams.stream().filter(
                 param -> (PARAMETERTYPE.IN.equals(param.getDefaultParameterMode())
-                || PARAMETERTYPE.INOUT.equals(param.getDefaultParameterMode()))
-                ).collect(Collectors.toList());
+                        || PARAMETERTYPE.INOUT.equals(param.getDefaultParameterMode()))
+        ).collect(Collectors.toList());
         List<Object> params = new ArrayList<>(filterInParams.size());
-        for (int i = 0; i < filterInParams.size(); i ++) {
+        for (int i = 0; i < filterInParams.size(); i++) {
             DefaultParameter defaultParameter = filterInParams.get(i);
             if ("refcursor".equals(defaultParameter.getDefaultParameterType())) {
                 throw new DatabaseOperationException(

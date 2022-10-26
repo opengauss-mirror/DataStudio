@@ -23,6 +23,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 
 import org.opengauss.mppdbide.debuger.exception.DebugExitException;
 import org.opengauss.mppdbide.debuger.vo.PositionVo;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 
 /**
  * Title: class
@@ -53,6 +54,7 @@ public class ContinueDebugHandler extends BaseDebugStepHandler {
 
     @Override
     public Optional<PositionVo> debugRun() throws SQLException, DebugExitException {
+        VariableRunLine.isContinue = true;
         return getDebugService().continueExec();
     }
 }

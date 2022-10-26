@@ -23,7 +23,9 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
 import org.opengauss.mppdbide.eclipse.dependent.EclipseInjections;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.view.handler.IHandlerUtilities;
+import org.opengauss.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
 import org.opengauss.mppdbide.view.prefernces.PreferenceWrapper;
 import org.opengauss.mppdbide.view.ui.PLSourceEditor;
 import org.opengauss.mppdbide.view.utils.UIElement;
@@ -92,6 +94,16 @@ public class DebugHandlerUtils {
      */
     public void setDebugStart(boolean isDebugStart) {
         this.isDebugStart = isDebugStart;
+    }
+
+    /**
+     * The terminate Debug
+     *
+     * @param
+     */
+    public void terminateDebug() {
+        VariableRunLine.isTerminate = false;
+        UpdateDebugPositionTask.terminateDebug();
     }
 
     /**

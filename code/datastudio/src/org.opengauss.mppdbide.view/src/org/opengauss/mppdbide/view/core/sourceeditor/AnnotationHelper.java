@@ -52,10 +52,30 @@ public class AnnotationHelper {
      * debug position annotation type label
      */
     public static final String DEBUG_POSITION_TYPE_LABEL = IMessagesConstants.DEBUG_POSITION_LABEL;
+
+    /**
+     * debug position annotation type pass
+     */
+    public static final String DEBUG_POSITION_TYPE_PASS = IMessagesConstants.DEBUG_POSITION_LABEL_PASS;
+
+    /**
+     * debug position annotation type fail
+     */
+    public static final String DEBUG_POSITION_TYPE_FAIL = IMessagesConstants.DEBUG_POSITION_LABEL_FAIL;
     /**
      * debug position annotation strategy id
      */
     public static final String DEBUG_POSITION_STRATEGY_ID = "PLSQL_DEBUGGER_DEBUG_POSITION";
+
+    /**
+     * debug position annotation pass id
+     */
+    public static final String DEBUG_POSITION_STRATEGY_PASS_ID = "PLSQL_DEBUGGER_DEBUG_POSITION_PASS";
+
+    /**
+     * debug position annotation fail id
+     */
+    public static final String DEBUG_POSITION_STRATEGY_FAIL_ID = "PLSQL_DEBUGGER_DEBUG_POSITION_FAIL";
     /**
      * debug position annotation rgb
      */
@@ -96,6 +116,27 @@ public class AnnotationHelper {
     public static final RGB ERROR_POSITION_RGB = new RGB(255, 255, 0);
 
     /**
+     * pass position annotation rgb
+     */
+    public static final int DEBUG_POSITION_LAYER_PASS = 4;
+
+    /**
+     * pass position annotation rgb
+     */
+    public static final RGB DEBUG_POSITION_PASS_RGB = new RGB(40, 255, 15);
+
+    /**
+     * fail position annotation rgb
+     */
+    public static final int DEBUG_POSITION_LAYER_FAIL = 5;
+
+    /**
+     * fail position annotation rgb
+     */
+    public static final RGB DEBUG_POSITION_FAIL_RGB = new RGB(255, 30, 25);
+
+
+    /**
      * Title: AnnotationType enum this enum assocate with AnnotationWithLineNumber's instance
      * Description: The Class AnnotationType
      */
@@ -104,6 +145,10 @@ public class AnnotationHelper {
                 BREAKPOINT_RGB),
         DEBUG_POSITION(DEBUG_POSITION_LAYER, DEBUG_POSITION_TYPE_LABEL, DEBUG_POSITION_STRATEGY_ID,
                 DEBUG_POSITION_RGB),
+        DEBUG_POSITION_PASS(DEBUG_POSITION_LAYER_PASS, DEBUG_POSITION_TYPE_PASS, DEBUG_POSITION_STRATEGY_PASS_ID,
+                DEBUG_POSITION_PASS_RGB),
+        DEBUG_POSITION_FAIL(DEBUG_POSITION_LAYER_FAIL, DEBUG_POSITION_TYPE_FAIL, DEBUG_POSITION_STRATEGY_FAIL_ID,
+                DEBUG_POSITION_FAIL_RGB),
         ERROR(ERROR_LAYER, ERROR_TYPE_LABEL, ERROR_STRATEGY_ID,
                 ERROR_RGB),
         ERROR_POSITION(ERROR_POSITION_LAYER, ERROR_POSITION_TYPE_LABEL, ERROR_POSITION_STRATEGY_ID,

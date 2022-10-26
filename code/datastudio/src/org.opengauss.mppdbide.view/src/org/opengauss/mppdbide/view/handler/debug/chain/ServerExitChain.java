@@ -19,7 +19,9 @@ import org.eclipse.swt.widgets.Display;
 
 import org.opengauss.mppdbide.debuger.event.Event;
 import org.opengauss.mppdbide.debuger.event.Event.EventMessage;
+import org.opengauss.mppdbide.debuger.service.DebuggerReportService;
 import org.opengauss.mppdbide.debuger.service.chain.IMsgChain;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.opengauss.mppdbide.view.handler.debug.DebugHandlerUtils;
 import org.opengauss.mppdbide.view.handler.debug.DebugServiceHelper;
@@ -34,6 +36,10 @@ import org.opengauss.mppdbide.view.handler.debug.ui.UpdateHighlightLineNumTask;
  * @since 3.0.0
  */
 public class ServerExitChain extends IMsgChain {
+    /**
+     * The Debugger Report Service
+     */
+    public DebuggerReportService reportService = DebuggerReportService.getInstance();
     private boolean isResultUpdated = false;
     private DebugHandlerUtils debugUtils = DebugHandlerUtils.getInstance();
     private DebugServiceHelper serviceHelper = DebugServiceHelper.getInstance();
@@ -52,6 +58,13 @@ public class ServerExitChain extends IMsgChain {
         }
         Display.getDefault().asyncExec(new UpdateDebugPositionTask(-1));
         Display.getDefault().asyncExec(new UpdateHighlightLineNumTask());
+
+        if (!VariableRunLine.isPldebugger) {
+            reportService.makeReport();
+            if (VariableRunLine.isContinue != null && VariableRunLine.isContinue) {
+                Display.getDefault().asyncExec(() -> UpdateDebugPositionTask.continueDebug());
+            }
+        }
         if (!isResultUpdated) {
             isResultUpdated = true;
             Display.getDefault().asyncExec(new UpdateDebugResultTask(event));

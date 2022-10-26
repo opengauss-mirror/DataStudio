@@ -979,4 +979,19 @@ public interface IiconPath {
      * The ico breakpoint arrow.
      */
     String ICO_BREAKPOINT_ARROW = PRE_DEBUG_PATH + "debugarrows.png";
+
+    /**
+     * The ico execute pass
+     */
+    String ICO_EXECUTE_PASS = PRE_DEBUG_PATH + "debug_pass.png";
+
+    /**
+     * The ico execute fail
+     */
+    String ICO_EXECUTE_FAIL = PRE_DEBUG_PATH + "debug_fail.png";
+
+    /**
+     * The icon remark coverage
+     */
+    String ICON_REMARK_COVERAGE = "icon-remarkCoverage.png";
 }

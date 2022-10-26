@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <table style="height:50px">
+        <thead>
+            <tr>
+                <th colspan="4">执行语句</th>
+            </tr>
+        </thead>
+        <tbody id="executeSql">
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>总行数</th>
+                <th>执行行数</th>
+                <th>总覆盖率</th>
+                <th>标记行</th>
+                <th>标记执行行</th>
+                <th>标记覆盖率</th>
+                <th>入参</th>
+                <th>结束时间</th>
+            </tr>
+        </thead>
+        <tbody id ="data">
+        </tbody>
+    </table>
+</body>
+<style>
+    .bac_nor {
+        border-top: none;
+        border-bottom: none;
+    }
+    .bac_remark {
+        background-color: rgb(167, 169, 169);
+    }
+    .bac_fail {
+        width: 10px;
+        height: 10px;
+        background-color: #ff0000;
+        border-radius: 50%;
+        float: right;
+    }
+    .bac_pass {
+        width: 10px;
+        height: 10px;
+        background-color: #008000;
+        border-radius: 50%;
+        float: right;
+    }
+
+    table {
+        width: 100%;
+        height: 200px;
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+        text-align: center;
+    }
+
+    thead {
+        background-color: rgb(220, 157, 157);
+    }
+</style>
+</html>
