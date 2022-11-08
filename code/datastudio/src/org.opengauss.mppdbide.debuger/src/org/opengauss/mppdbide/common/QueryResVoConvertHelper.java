@@ -18,6 +18,7 @@ package org.opengauss.mppdbide.common;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.opengauss.mppdbide.debuger.annotation.ParseVo;
@@ -43,7 +44,7 @@ public class QueryResVoConvertHelper {
      * @return return value
      * @throws SQLException the exception
      */
-    public static <T> T parse(ResultSet rs, Class<T> clazz, IConnection conn) throws SQLException {
+    public static <T> Optional<T> parse(ResultSet rs, Class<T> clazz, IConnection conn) throws SQLException {
         VersionVo version = VersionHelper.getDebuggerVersion(conn);
         return parse(rs, clazz, version);
     }
@@ -58,17 +59,12 @@ public class QueryResVoConvertHelper {
      * @return the converted value
      * @throws SQLException the exception
      */
-    public static <T> T parse(ResultSet rs, Class<T> clazz, VersionVo versionVo) throws SQLException {
+    public static <T> Optional<T> parse(ResultSet rs, Class<T> clazz, VersionVo versionVo) throws SQLException {
         T obj = null;
-        // if openGauss2.0 command do not need to convert
-        if (!getConvert(versionVo.getDebuggerVersion())) {
-            obj = ParseVo.parse(rs, clazz);
-        } else {
-            if (SourceCodeVo.class.equals(clazz)) {
-                obj = convertToSourceCodeVo(rs);
-            }
+        if (SourceCodeVo.class.equals(clazz)) {
+            obj = convertToSourceCodeVo(rs, clazz);
         }
-        return obj;
+        return Optional.of(obj);
     }
 
     /**
@@ -111,12 +107,14 @@ public class QueryResVoConvertHelper {
      * Convert vo by class
      *
      * @param rs  the rs
+     * @param clazz class
      * @param <T> the Generics
      * @return the converted value
      * @throws SQLException the exception
      */
-    public static <T> T convertToSourceCodeVo(ResultSet rs) throws SQLException {
+    public static <T> T convertToSourceCodeVo(ResultSet rs, Class<T> clazz) throws SQLException {
         List<InfoCodeVo> infos = ParseVo.parseList(rs, InfoCodeVo.class);
+        DbeCommonUtils.infoCodes = infos;
         List<InfoCodeVo> infoCodeList = infos.stream().filter(item -> item.lineno != null).collect(Collectors.toList());
         StringBuffer buffer = new StringBuffer();
         infoCodeList.forEach(infoItem -> {

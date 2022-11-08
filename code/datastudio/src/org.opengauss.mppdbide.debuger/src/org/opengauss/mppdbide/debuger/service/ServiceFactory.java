@@ -21,7 +21,6 @@ import org.opengauss.mppdbide.debuger.debug.DebugConstants;
 import org.opengauss.mppdbide.debuger.vo.FunctionVo;
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.common.IConnectionProvider;
-import org.opengauss.mppdbide.common.VersionHelper;
 import org.opengauss.mppdbide.debuger.vo.VersionVo;
 import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
@@ -87,7 +86,7 @@ public class ServiceFactory {
      * @return Optional<VersionVo> the version vo
      * @throws SQLException sql error
      */
-    public Optional<VersionVo> getVersion() throws SQLException  {
+    public Optional<VersionVo> getVersion() throws SQLException {
         IConnection conn = provider.getValidFreeConnection();
         try (PreparedStatement ps = conn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.DEBUG_VERSION,
@@ -113,6 +112,9 @@ public class ServiceFactory {
      * @return SourceCodeService the code service
      */
     public SourceCodeService getCodeService() {
+        if (!VariableRunLine.isPldebugger) {
+            return new DbeSourceCodeService();
+        }
         return new SourceCodeService();
     }
 
@@ -128,11 +130,6 @@ public class ServiceFactory {
     }
 
     private static DebugService getDebugService(IConnection conn) {
-        try {
-            VariableRunLine.isPldebugger = VersionHelper.getDebuggerVersion(conn).isPldebugger();
-        } catch (SQLException e) {
-            MPPDBIDELoggerUtility.error(e.getMessage());
-        }
         if (!VariableRunLine.isPldebugger) {
             return new DbeDebugService();
         }
@@ -140,7 +137,12 @@ public class ServiceFactory {
     }
 
     private static QueryService createQueryService(IConnection conn) {
-        QueryService queryService = new QueryService();
+        QueryService queryService;
+        if (!VariableRunLine.isPldebugger) {
+            queryService = new DbeQueryService();
+        } else {
+            queryService = new QueryService();
+        }
         queryService.setFunctionDao(new FunctionDao());
         queryService.setConn(conn);
         return queryService;

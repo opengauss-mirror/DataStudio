@@ -15,23 +15,21 @@
 
 package org.opengauss.mppdbide.debuger.service;
 
+import org.opengauss.mppdbide.debuger.dao.FunctionDao;
+import org.opengauss.mppdbide.debuger.annotation.ParseVo;
+import org.opengauss.mppdbide.debuger.debug.DebugConstants;
+import org.opengauss.mppdbide.debuger.vo.FunctionVo;
+import org.opengauss.mppdbide.debuger.vo.SourceCodeVo;
+import org.opengauss.mppdbide.debuger.vo.TotalSourceCodeVo;
+import org.opengauss.mppdbide.common.IConnection;
+import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import org.opengauss.mppdbide.common.IConnection;
-import org.opengauss.mppdbide.common.QueryResVoConvertHelper;
-import org.opengauss.mppdbide.common.VersionHelper;
-import org.opengauss.mppdbide.debuger.dao.FunctionDao;
-import org.opengauss.mppdbide.debuger.debug.DebugConstants;
-import org.opengauss.mppdbide.debuger.debug.DebugConstants.DebugOpt;
-import org.opengauss.mppdbide.debuger.vo.FunctionVo;
-import org.opengauss.mppdbide.debuger.vo.SourceCodeVo;
-import org.opengauss.mppdbide.debuger.vo.TotalSourceCodeVo;
-import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 /**
  * Title: the QueryService class
@@ -68,10 +66,9 @@ public class QueryService implements IService {
      * @throws SQLException sql exp
      */
     public Optional<SourceCodeVo> getSourceCode(Long oid) throws SQLException {
-        DebugOpt opt = VersionHelper.getDebugOptByDebuggerVersion(conn, DebugConstants.DebugOpt.GET_SOURCE_CODE);
-        Optional<SourceCodeVo> sourceCodeVo = getTempSourceCode(oid, opt, SourceCodeVo.class);
-        String sourceCode = sourceCodeVo.get().getSourceCode();
-        return sourceCodeVo;
+        return getTempSourceCode(oid,
+                DebugConstants.DebugOpt.GET_SOURCE_CODE,
+                SourceCodeVo.class);
     }
 
     /**
@@ -96,7 +93,7 @@ public class QueryService implements IService {
                 debugOpt, inputParams)) {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return Optional.of(QueryResVoConvertHelper.parse(rs, clazz, conn));
+                    return Optional.of(ParseVo.parse(rs, clazz));
                 }
                 return Optional.empty();
             }
@@ -156,5 +153,9 @@ public class QueryService implements IService {
         } catch (SQLException e) {
             MPPDBIDELoggerUtility.warn("close conn with err:" + e.toString());
         }
+    }
+
+    IConnection getIConn() {
+        return conn;
     }
 }

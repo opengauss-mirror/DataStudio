@@ -21,7 +21,9 @@ import java.util.Optional;
 import org.eclipse.jface.preference.PreferenceStore;
 
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
+import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.common.IConnectionProvider;
+import org.opengauss.mppdbide.common.VersionHelper;
 import org.opengauss.mppdbide.debuger.event.Event;
 import org.opengauss.mppdbide.debuger.event.IHandlerManger;
 import org.opengauss.mppdbide.debuger.event.Event.EventMessage;
@@ -34,11 +36,14 @@ import org.opengauss.mppdbide.debuger.service.DebuggerReportService;
 import org.opengauss.mppdbide.debuger.vo.SourceCodeVo;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
+import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.opengauss.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
 import org.opengauss.mppdbide.view.coverage.CoverageService;
 import org.opengauss.mppdbide.view.prefernces.PreferenceWrapper;
-import org.opengauss.mppdbide.view.service.CoverageServiceFactory;
+import org.opengauss.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
+import org.opengauss.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
 
 /**
  * Title: class
@@ -50,7 +55,6 @@ public class DebugServiceHelper {
     private static DebugServiceHelper debugServiceHelper = new DebugServiceHelper();
     private IDebugObject debugObject = null;
     private ServiceFactory serviceFactory = null;
-    private CoverageServiceFactory coverageServiceFactory = null;
     private WrappedDebugService debugService = null;
     private DebuggerReportService debuggerReportService = null;
     private FunctionVo functionVo = null;
@@ -84,17 +88,18 @@ public class DebugServiceHelper {
         if (!isCommonDatabase(debugObject)) {
             IConnectionProvider provider = new DBConnectionProvider(debugObject.getDatabase());
             serviceFactory = new ServiceFactory(provider);
-            coverageServiceFactory = new CoverageServiceFactory(provider);
             checkSupportDebug();
+            checkDebugVersion(provider);
             queryService = serviceFactory.getQueryService();
             functionVo = queryService.queryFunction(debugObject.getName());
-            debuggerReportService = DebuggerReportService.getInstance();
-            debuggerReportService.setAttr(provider, functionVo);
             debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));
             debugService.addHandler(new UiEventHandler());
             debugService.addHandler(new DebugEventHandler());
+            debuggerReportService = DebuggerReportService.getInstance();
+            if (!VariableRunLine.isPldebugger) {
+                debuggerReportService.setAttr(provider, functionVo);
+            }
             codeService = serviceFactory.getCodeService();
-            coverageService = coverageServiceFactory.getCoverageService();
             Optional<SourceCodeVo> sourceCode = queryService.getSourceCode(functionVo.oid);
             if (sourceCode.isPresent()) {
                 codeService.setBaseCode(sourceCode.get().getSourceCode());
@@ -158,10 +163,14 @@ public class DebugServiceHelper {
         return queryService;
     }
 
+    /**
+     * description: get coverage service
+     *
+     * @return CoverageService the coverage service
+     */
     public CoverageService getCoverageService() {
         return coverageService;
     }
-
 
     /**
      * description: get code service
@@ -250,6 +259,24 @@ public class DebugServiceHelper {
         }
     }
 
+    private void checkDebugVersion(IConnectionProvider provider) throws SQLException {
+        IConnection conn = null;
+        try {
+            conn = provider.getValidFreeConnection();
+            VariableRunLine.isPldebugger = VersionHelper.getDebuggerVersion(conn).isPldebugger();
+        } catch (SQLException e) {
+            MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.INFORMATION, true,
+                    MessageConfigLoader.getProperty(IMessagesConstants.EXECDIALOG_HINT),
+                    MessageConfigLoader.getProperty(IMessagesConstants.VERSION_CHECK_FAIL));
+            MPPDBIDELoggerUtility.error(e.getMessage());
+            return;
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
     private static boolean getRollbackPreference() {
         PreferenceStore store = PreferenceWrapper.getInstance().getPreferenceStore();
         if (store != null) {
@@ -277,5 +304,11 @@ public class DebugServiceHelper {
             return MessageConfigLoader.getProperty(
                     IMessagesConstants.DEBUG_NOT_SUPPORT_WARN);
         }
+    }
+
+    void closeDbConn() {
+        queryService.closeService();
+        debuggerReportService.close();
+        debugService.closeService();
     }
 }

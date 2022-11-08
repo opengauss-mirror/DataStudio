@@ -85,6 +85,7 @@ public class StartDebugHandler {
         } catch (SQLException sqlExp) {
             MPPDBIDELoggerUtility.warn("create servicefactory with error:" + sqlExp.getMessage());
             showMsg(sqlExp.getLocalizedMessage());
+            serviceHelper.closeDbConn();
             return;
         }
         plSourceEditor.setExecuteInProgress(true);

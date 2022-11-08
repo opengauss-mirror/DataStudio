@@ -23,7 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
+import org.opengauss.mppdbide.common.DbeCommonUtils;
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.common.IConnectionProvider;
 import org.opengauss.mppdbide.debuger.annotation.ParseVo;
@@ -52,8 +54,9 @@ public class DebuggerReportService {
     public static final int CODE_BASE_OFFSET = 1;
     private static final String CREAT_TABLE = "CREATE TABLE IF NOT EXISTS his_coverage( oid BIGINT,";
     private static final String TABLE_FIELD_ONE = " cid BIGINT, coverageLines VARCHAR, remarkLines VARCHAR, ";
-    private static final String TABLE_FIELD_TWO = "endTime BIGINT, sourceCode VARCHAR, params VARCHAR);";
-    private static final String INSERT = "insert into his_coverage VALUES(?,?,?,?,?,?,?);";
+    private static final String TABLE_FIELD_TWO = "endTime BIGINT, sourceCode VARCHAR, params VARCHAR,"
+            + " canBreakLine VARCHAR);";
+    private static final String INSERT = "insert into his_coverage VALUES(?,?,?,?,?,?,?,?);";
 
     /**
      * default value
@@ -62,6 +65,7 @@ public class DebuggerReportService {
 
     private IConnection serverConn;
     private IConnection clientConn;
+    private IConnection queryConn;
     private FunctionVo functionVo;
     private TurnOnVo turnOnVo;
     private DebuggerStartInfoVo startInfo;
@@ -109,12 +113,9 @@ public class DebuggerReportService {
     }
 
     private String getCurLine() {
-        try {
-            return String.valueOf(getBeginDebugCodeLine());
-        } catch (DebugPositionNotFoundException debugExp) {
-            MPPDBIDELoggerUtility.error("receive invalid position:" + debugExp.toString());
-        }
-        return "-1";
+        List<String> terminalCodes = this.totalCodeDesc.getCodeList();
+        int index = DbeCommonUtils.compluteIndex(DbeCommonUtils.infoCodes, terminalCodes);
+        return String.valueOf(index);
     }
 
     /**
@@ -127,6 +128,7 @@ public class DebuggerReportService {
         try {
             this.serverConn = connectProvider.getValidFreeConnection();
             this.clientConn = connectProvider.getValidFreeConnection();
+            this.queryConn = connectProvider.getValidFreeConnection();
             this.functionVo = functionVo;
         } catch (SQLException e) {
             MPPDBIDELoggerUtility.error(e.getMessage());
@@ -174,6 +176,14 @@ public class DebuggerReportService {
             }
         } catch (SQLException sqlErr) {
             MPPDBIDELoggerUtility.warn("reportService clientConn close failed, err=" + sqlErr.toString());
+        }
+        try {
+            if (queryConn != null) {
+                queryConn.close();
+                queryConn = null;
+            }
+        } catch (SQLException sqlErr) {
+            MPPDBIDELoggerUtility.warn("reportService queryConn close failed, err=" + sqlErr.toString());
         }
     }
 
@@ -273,6 +283,11 @@ public class DebuggerReportService {
         List<DebuggerEndInfoVo> historyList = DebuggerStartVariable.getHistoryList(functionVo.oid);
         historyList.add(endInfo);
         DebuggerStartVariable.setHistoryList(functionVo.oid, historyList);
+        List<String> toRunLines = DbeCommonUtils.getCanBreakLinesByInfo(queryConn,
+                Arrays.asList(functionVo.oid), SourceCodeService.CodeDescription.getLines(endInfo.sourceCode))
+                .stream().map(item -> String.valueOf(Integer.parseInt(item) + 1))
+                .collect(Collectors.toList());
+        endInfo.canBreakLine = String.join(",", toRunLines);
         createTbale(endInfo);
     }
 
@@ -293,6 +308,7 @@ public class DebuggerReportService {
             if (endInfo.args != null) {
                 preparedStatement.setObject(7, endInfo.args.toString());
             }
+            preparedStatement.setObject(8, endInfo.canBreakLine);
             preparedStatement.execute();
         } catch (SQLException e) {
             MPPDBIDELoggerUtility.error(e.getMessage());
