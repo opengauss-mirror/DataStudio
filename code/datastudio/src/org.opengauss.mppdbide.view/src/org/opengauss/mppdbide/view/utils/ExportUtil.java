@@ -43,6 +43,9 @@ import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
  * @since 3.0.0
  */
 public final class ExportUtil {
+    private static final String USER_DIR = "user.dir";
+    private static final String FILE_SEP = "file.separator";
+    private static final String LINE_SEP = "line.separator";
     private static String outpath;
     private static File file;
 
@@ -127,10 +130,15 @@ public final class ExportUtil {
             if (html == null) {
                 String path = FileLocator.toFileURL(url).getPath().substring(1);
                 file = new File(path);
-                String workDir = System.getProperty("user.dir");
-                String fileSepa = System.getProperty("file.separator");
-                outpath = String.format(Locale.ENGLISH, "%s%s%s_%s_%s.html",
-                        workDir, fileSepa, oid, sqlName, System.currentTimeMillis());
+                String workDir = System.getProperty(USER_DIR);
+                String fileSepa = System.getProperty(FILE_SEP);
+                String dir = String.format(Locale.ENGLISH, "%s%shis_coverage%s", workDir, fileSepa, fileSepa);
+                File outFile = new File(dir);
+                if (!outFile.exists()) {
+                    outFile.mkdir();
+                }
+                outpath = String.format(Locale.ENGLISH, "%s%s_%s_%s.html", dir, oid, sqlName,
+                        System.currentTimeMillis());
                 parse = Jsoup.parse(file, "gbk");
                 convertZhCn(parse);
             } else {
@@ -180,7 +188,7 @@ public final class ExportUtil {
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
         String[] split = text.split("     ");
         for (String str : split) {
-            bw.write(str + System.getProperty("line.separator"));
+            bw.write(str + System.getProperty(LINE_SEP));
         }
         if (bw != null) {
             bw.close();

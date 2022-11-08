@@ -16,6 +16,7 @@
 package org.opengauss.mppdbide.debuger.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.opengauss.mppdbide.common.DbeCommonUtils;
 import org.opengauss.mppdbide.debuger.exception.DebugPositionNotFoundException;
@@ -36,5 +37,57 @@ public class DbeSourceCodeService extends SourceCodeService {
     public int getBeginDebugCodeLine() throws DebugPositionNotFoundException {
         List<String> terminalCodes = super.totalCodeDesc.getCodeList();
         return DbeCommonUtils.compluteIndex(DbeCommonUtils.infoCodes, terminalCodes);
+    }
+
+    /**
+     * set base code
+     *
+     * @param the base code
+     * @return void
+     */
+    @Override
+    public void setBaseCode(String code) {
+        this.baseCodeDesc = new DbeCodeDescription(code);
+    }
+
+    /**
+     * set total code
+     *
+     * @param the total code
+     * @return void
+     */
+    @Override
+    public void setTotalCode(String code) {
+        this.totalCodeDesc = new DbeCodeDescription(code);
+    }
+
+    /**
+     * Title: CodeDescription class
+     */
+    public static class DbeCodeDescription extends CodeDescription{
+        /**
+         * DbeCodeDescription
+         *
+         * @param code
+         */
+        public DbeCodeDescription(String code) {
+            super(code);
+        }
+
+        /**
+         * get BeginFromCode
+         *
+         * @param lines line
+         * @return int linse item
+         */
+        @Override
+        public int getBeginFromCode(List<String> lines) {
+            for (int i = 0; i < lines.size(); i++) {
+                if (lines.get(i).toUpperCase(Locale.ENGLISH).trim().startsWith(DbeCommonUtils.BEGIN)) {
+                    return i;
+                }
+            }
+            return DbeCommonUtils.getBeginIndex(lines, DbeCommonUtils.BEGIN);
+        }
     }
 }
