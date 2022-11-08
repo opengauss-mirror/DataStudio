@@ -42,6 +42,7 @@ import org.opengauss.mppdbide.bl.serverdatacache.OBJECTTYPE;
 import org.opengauss.mppdbide.bl.serverdatacache.ServerObject;
 import org.opengauss.mppdbide.bl.util.ExecTimer;
 import org.opengauss.mppdbide.bl.util.IExecTimer;
+import org.opengauss.mppdbide.bl.util.OpUtils;
 import org.opengauss.mppdbide.presentation.contentassistprocesser.ContentAssistProcesserCore;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
@@ -79,6 +80,7 @@ public class SQLContentAssistProcessor implements IContentAssistProcessor {
     private LinkedHashMap<String, ServerObject> autoMap = null;
     private static LinkedHashMap<String, ServerObject> map = null;
     private static boolean lookupTemplates = false;
+    private static final String ISFROM = "from";
 
     /**
      * Instantiates a new SQL content assist processor.
@@ -139,6 +141,9 @@ public class SQLContentAssistProcessor implements IContentAssistProcessor {
         if (validateFullText(fullContent)) {
             fullPretext = fullContent.substring(0, offset);
             prefix = core.findString(fullPretext, DatabaseUtils.getCharacterList(database));
+            if (fullPretext.contains(ISFROM)) {
+                OpUtils.setFrom(true);
+            }
             if (canCheckForAlias(viewer)) {
                 assistant.enableAutoInsert(true);
                 assistant.setShowEmptyList(true);
@@ -147,6 +152,7 @@ public class SQLContentAssistProcessor implements IContentAssistProcessor {
 
                 boolean isSuccess = aliasProcessor.computeAliasProposal(core);
                 if (isSuccess) {
+                    OpUtils.setPre(prefix);
                     prefix = aliasProcessor.getProcessedPrefix();
                     aliasMap = aliasProcessor.getComputedAliasMap();
                 }

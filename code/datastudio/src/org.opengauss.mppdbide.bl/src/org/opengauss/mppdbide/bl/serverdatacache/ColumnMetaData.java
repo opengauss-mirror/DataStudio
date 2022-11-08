@@ -66,6 +66,8 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
 
     private String colDescription;
 
+    private static final String OCP = "all";
+
     /**
      * Gets the col description.
      *
@@ -892,6 +894,17 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
         commentQry.append(null == this.colDescription ? "NULL" : ServerObject.getLiteralName(this.colDescription));
         commentQry.append(MPPDBIDEConstants.SEMICOLON);
         return commentQry.toString();
+    }
+
+
+    /**
+     * Gets the String.
+     *
+     * @param
+     * @return the string all
+     */
+    public String getClms() {
+        return OCP;
     }
 
     /**

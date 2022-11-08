@@ -23,8 +23,12 @@ import java.util.TreeMap;
 
 import org.apache.commons.collections4.trie.PatriciaTrie;
 
+import org.opengauss.mppdbide.bl.serverdatacache.OBJECTTYPE;
 import org.opengauss.mppdbide.bl.serverdatacache.ServerObject;
+import org.opengauss.mppdbide.bl.serverdatacache.TableMetaData;
+import org.opengauss.mppdbide.bl.serverdatacache.groups.ColumnAll;
 import org.opengauss.mppdbide.bl.util.BLUtils;
+import org.opengauss.mppdbide.bl.util.OpUtils;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
 
 /**
@@ -42,6 +46,7 @@ public abstract class ContentAssistUtil implements ContentAssistUtilIf {
     private static final char CLOSING_BRACE = ')';
     private static final char SEMI_COLON = ';';
     private static final String COMMA = ",";
+    private static final String OPENING_PERIOD = ".";
     private int minPosition = 0;
 
     /**
@@ -66,9 +71,19 @@ public abstract class ContentAssistUtil implements ContentAssistUtilIf {
         SortedMap<String, ServerObject> resultMap = new TreeMap<String, ServerObject>();
         for (ServerObject obj : serverObjMap.values()) {
             if (obj.getSearchName().toLowerCase(Locale.ENGLISH).startsWith(prefix.toLowerCase(Locale.ENGLISH))) {
-                resultMap.put(obj.getSearchName(), obj);
+                if (obj instanceof TableMetaData && OpUtils.getFrom()) {
+            	    StringBuffer tableName = new StringBuffer();
+            	    tableName.append(obj.getNamespace().getName());
+            	    tableName.append(OPENING_PERIOD);
+            	    tableName.append(obj.getName());
+            	    ColumnAll ocb = new ColumnAll(1,tableName.toString(),OBJECTTYPE.TABLEMETADATA, false);
+            	    resultMap.put(obj.getSearchName(), ocb);
+                } else {
+                    resultMap.put(obj.getSearchName(), obj);
+                }
             }
         }
+        OpUtils.setFrom(false);
 
         return (SortedMap<String, ServerObject>) resultMap;
     }

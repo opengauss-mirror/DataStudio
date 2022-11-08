@@ -259,6 +259,12 @@ public class ContentAssistUtilDefault extends ContentAssistUtil {
     }
 
     @Override
+    public SortedMap<String, ServerObject> getChildObjectSelect(SortedMap<String, ServerObject> found,
+            boolean isParentDescNeeded) {
+        return defaultMap;
+    }
+
+    @Override
     public SortedMap<String, ServerObject> findMatchingTriggerObject(String prefix) {
         return defaultMap;
     }
@@ -277,5 +283,18 @@ public class ContentAssistUtilDefault extends ContentAssistUtil {
     public SortedMap<String, ServerObject> findMatchingSynonyms(String prefix) {
         return defaultMap;
     }
+
+
+    @Override
+	public void saveAllColumn(ServerObject object, int start, int len, StringBuffer columnName,
+			SortedMap<String, ServerObject> resultMap, boolean isParentDescNeeded) {
+	    // TODO Auto-generated method stub	
+	}
+	
+	@Override
+	public void saveAliasColumn(ServerObject object, int start, int len, StringBuffer columnName,
+			SortedMap<String, ServerObject> resultMap, boolean isParentDescNeeded) {
+	    // TODO Auto-generated method stub	
+	}
 
 }

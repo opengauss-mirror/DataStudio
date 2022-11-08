@@ -39,6 +39,7 @@ public class ContentAssistProcesserCore {
     private String[] currentPrefix = new String[0];
     private int replaceLength = 0;
     private ContentAssistProcesserData contentData;
+    private static final String SEMICOLON = ";";
 
     /**
      * Instantiates a new content assist processer core.
@@ -68,6 +69,9 @@ public class ContentAssistProcesserCore {
 
             // Mark the object items for lazy loading of schema.
             setCurrentPrefix(unQuotedPrefix);
+            if (fullPretext.endsWith(SEMICOLON)) {
+                return autoMap;
+            }
             if ((prefixLen != 0 && isEndsWithDot) || (prefixLen != 0 && contentData.isInsert()
                     && (fullPretext.endsWith("(") || fullPretext.endsWith(",")))) {
                 autoMap = contentData.findExactMatchingObjects(unQuotedPrefix);

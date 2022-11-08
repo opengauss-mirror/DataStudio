@@ -34,6 +34,7 @@ public abstract class ServerObject {
     private String name;
     private OBJECTTYPE type;
     private boolean isValid = true;
+    private static final String isObjectName = "^([a-z_][a-z|0-9|_|$]*)|([a-z_][a-z|0-9|_|,| |.|$]*)$";
     
     /** 
      * The is loaded. 
@@ -344,7 +345,7 @@ public abstract class ServerObject {
      * @return true, if is qualified simple object name
      */
     public static boolean isQualifiedSimpleObjectName(String objectName) {
-        if (null != objectName && !objectName.isEmpty() && objectName.matches("^[a-z_][a-z|0-9|_|$]*$")) {
+        if (null != objectName && !objectName.isEmpty() && objectName.matches(isObjectName)) {
             return true;
         }
 
