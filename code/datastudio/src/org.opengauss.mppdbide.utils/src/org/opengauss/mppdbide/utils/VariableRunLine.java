@@ -52,7 +52,12 @@ public class VariableRunLine {
     public static volatile Boolean isPldebugger;
 
     /**
-     * id of function
+     * isDebugUsagehint of function
+     */
+    public static volatile Boolean isDebugUsagehint;
+
+    /**
+     * currentOid of function
      */
     public static volatile long currentOid;
 }

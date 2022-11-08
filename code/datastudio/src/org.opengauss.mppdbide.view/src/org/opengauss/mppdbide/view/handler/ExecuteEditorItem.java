@@ -48,6 +48,7 @@ import org.opengauss.mppdbide.presentation.IExecutionContext;
 import org.opengauss.mppdbide.presentation.IResultDisplayUIManager;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.exceptions.MPPDBIDEException;
@@ -117,7 +118,9 @@ public class ExecuteEditorItem implements ExecuteWrapper {
         checkVersion(editor);
         if (editor.getDebugObject() instanceof DebugObjects) {
             debugObject = (DebugObjects) editor.getDebugObject();
+            VariableRunLine.isDebugUsagehint = null;
             if (!isPldebugger) {
+                VariableRunLine.isDebugUsagehint = false;
                 debugObject.setUsagehint(MessageConfigLoader.getProperty(IMessagesConstants.COVERAGE_HINT));
             } else {
                 debugObject.setUsagehint("");

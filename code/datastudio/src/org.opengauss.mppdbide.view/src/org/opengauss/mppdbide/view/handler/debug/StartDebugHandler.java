@@ -25,6 +25,7 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Display;
 import org.opengauss.mppdbide.adapter.keywordssyntax.SQLSyntax;
+import org.opengauss.mppdbide.bl.serverdatacache.DebugObjects;
 import org.opengauss.mppdbide.bl.serverdatacache.DefaultParameter;
 import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectParameter;
@@ -34,6 +35,7 @@ import org.opengauss.mppdbide.debuger.service.QueryService;
 import org.opengauss.mppdbide.debuger.service.WrappedDebugService;
 import org.opengauss.mppdbide.debuger.vo.FunctionVo;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.exceptions.MPPDBIDEException;
@@ -108,6 +110,19 @@ public class StartDebugHandler {
             setUsagehint(plSourceEditor);
         } catch (SQLException e) {
             MPPDBIDELoggerUtility.info("dbeStartDebugParam get failed: " + e.getMessage());
+        }
+    }
+
+    private void setUsagehint(PLSourceEditor plSourceEditor) {
+    	if (plSourceEditor.getDebugObject() instanceof DebugObjects) {
+    	    VariableRunLine.isDebugUsagehint = null;
+    	    DebugObjects debugObject = (DebugObjects) plSourceEditor.getDebugObject();
+            if (!VariableRunLine.isPldebugger) {
+                VariableRunLine.isDebugUsagehint = true;
+                debugObject.setUsagehint(MessageConfigLoader.getProperty(IMessagesConstants.WRITE_DATA));
+            } else {
+                debugObject.setUsagehint("");
+            }
         }
     }
 
