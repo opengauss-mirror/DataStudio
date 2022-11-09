@@ -50,4 +50,9 @@ public class VariableRunLine {
      * isPldebugger of function
      */
     public static volatile Boolean isPldebugger;
+
+    /**
+     * id of function
+     */
+    public static volatile long currentOid;
 }

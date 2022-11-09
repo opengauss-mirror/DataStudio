@@ -22,6 +22,7 @@ import org.opengauss.mppdbide.debuger.vo.FunctionVo;
 import org.opengauss.mppdbide.debuger.vo.SourceCodeVo;
 import org.opengauss.mppdbide.debuger.vo.TotalSourceCodeVo;
 import org.opengauss.mppdbide.common.IConnection;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 import java.sql.PreparedStatement;
@@ -50,8 +51,11 @@ public class QueryService implements IService {
     public FunctionVo queryFunction(String proname) throws SQLException {
         try (PreparedStatement ps = conn.getStatement(functionDao.getSql(proname))) {
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return functionDao.parse(rs);
+                while(rs.next()) {
+                    FunctionVo functionVo = functionDao.parse(rs);
+                    if (functionVo.oid == VariableRunLine.currentOid) {
+                        return functionVo;
+                    }
                 }
                 throw new SQLException("proname:" + proname + " not found!");
             }

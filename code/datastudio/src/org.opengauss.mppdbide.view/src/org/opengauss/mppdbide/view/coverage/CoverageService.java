@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.debuger.annotation.ParseVo;
 import org.opengauss.mppdbide.debuger.service.IService;
@@ -77,19 +78,19 @@ public class CoverageService implements IService {
      * @return the value
      */
     public List<CoverageVo> getCoverageInfoByOid(long oid) {
-        String sql = "select * from his_coverage where oid=" + oid + " order by cid desc;";
+        String sql = "select * from public.his_coverage where oid=" + oid + " order by cid desc;";
         try {
             List<CoverageVo> res = this.queryList(sql, CoverageVo.class);
             res.stream().forEach(cov -> {
                 if (cov.sourceCode != null) {
-                    List<String> toRunLines = Arrays.asList(cov.canBreakLine.split(","));
+                    List<String> toRunLines = Arrays.asList(cov.canBreakLine.split(",")).stream()
+                            .filter(item -> StringUtils.isNotBlank(item)).collect(Collectors.toList());
                     cov.totalLineNum = toRunLines.size();
                     cov.coverageLineNum = cov.getRunList().size();
                     cov.coverageLinesArr = cov.getRunList();
-                    cov.totalPercent = Double.parseDouble(
-                            String.format("%.2f",
-                                    ((double) cov.coverageLineNum * 100 / (double) cov.totalLineNum)))
-                            + "%";
+                    Double totPer = Double.parseDouble(String.format("%.2f",
+                            ((double) cov.coverageLineNum * 100 / (double) cov.totalLineNum)));
+                    cov.totalPercent = Double.isNaN(totPer) ? "0%" : totPer + "%";
                     // if not remark
                     if (cov.remarkLines == null || "".equals(cov.remarkLines)) {
                         cov.remarkLines = toRunLines.stream()
@@ -105,10 +106,9 @@ public class CoverageService implements IService {
                             Integer.parseInt(item) + 1 + "")
                             .filter(ite -> cov.remarkLinesArr.contains(ite)).collect(Collectors.toList());
                     cov.remarkCoverageLineNum = cov.remarkCoverageLinesArr.size();
-                    cov.remarkPercent = Double.parseDouble(
-                            String.format("%.2f",
-                                    ((double) cov.remarkCoverageLineNum * 100 / (double) cov.remarkLineNum)))
-                            + "%";
+                    Double remarkPer = Double.parseDouble(String.format("%.2f",
+                                    ((double) cov.remarkCoverageLineNum * 100 / (double) cov.remarkLineNum)));
+                    cov.remarkPercent = Double.isNaN(remarkPer) ? "0%" : remarkPer + "%";
                 }
             });
             return res.stream().sorted(Comparator.comparing(CoverageVo::getEndTime)
@@ -125,7 +125,7 @@ public class CoverageService implements IService {
      * @param cid the cid
      */
     public void delCoverageInfoByOid(long oid, Long cid) {
-        String sql = "delete from his_coverage where oid=" + oid + " and cid=" + cid + ";";
+        String sql = "delete from public.his_coverage where oid=" + oid + " and cid=" + cid + ";";
         try {
             conn.getStatement(sql).executeUpdate();
         } catch (SQLException e) {
