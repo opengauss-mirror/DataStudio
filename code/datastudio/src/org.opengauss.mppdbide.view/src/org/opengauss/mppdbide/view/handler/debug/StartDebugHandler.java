@@ -30,7 +30,9 @@ import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectParameter;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectParameter.PARAMETERTYPE;
 import org.opengauss.mppdbide.debuger.service.DbeDebugService;
+import org.opengauss.mppdbide.debuger.service.QueryService;
 import org.opengauss.mppdbide.debuger.service.WrappedDebugService;
+import org.opengauss.mppdbide.debuger.vo.FunctionVo;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
@@ -91,11 +93,22 @@ public class StartDebugHandler {
         plSourceEditor.setExecuteInProgress(true);
         debugUtils.showAllDebugView(true);
         startInputParamDialog();
-        PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
-        List<ObjectParameter> params = Arrays.asList(pl.getDebugObject().getObjectParameters());
-        long oid = pl.getDebugObject().getOid();
-        List<String> paramNames = params.stream().map(item -> item.getName()).distinct().collect(Collectors.toList());
-        DbeDebugService.map.put(oid, paramNames);
+        dbeStartDebugParam(plSourceEditor);
+    }
+
+    private void dbeStartDebugParam(PLSourceEditor pl) {
+        try {
+            List<ObjectParameter> params = Arrays.asList(pl.getDebugObject().getObjectParameters());
+            String functionName = plSourceEditor.getDebugObject().getName();
+            QueryService queryService = serviceHelper.getQueryService();
+            FunctionVo functionVo = queryService.queryFunction(functionName);
+            long oid = functionVo.oid;
+            List<String> paramNames = params.stream().map(item -> item.getName()).distinct().collect(Collectors.toList());
+            DbeDebugService.map.put(oid, paramNames);
+            setUsagehint(plSourceEditor);
+        } catch (SQLException e) {
+            MPPDBIDELoggerUtility.info("dbeStartDebugParam get failed: " + e.getMessage());
+        }
     }
 
     private void startInputParamDialog() {
