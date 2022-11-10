@@ -158,7 +158,7 @@ public class DbeDebugerTest extends DebugerJdbcTestCaseBase {
         total.append(toParam4);
         CodeDescription totalCode = new CodeDescription(total.toString());
         debuggerReportService.setTotalCode(totalCode);
-        debuggerReportService.makeReport();
+        debuggerReportService.makeReport(false);
     }
 
     @Test

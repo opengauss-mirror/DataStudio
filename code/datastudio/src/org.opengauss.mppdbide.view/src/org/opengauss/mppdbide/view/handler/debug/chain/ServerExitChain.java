@@ -60,9 +60,7 @@ public class ServerExitChain extends IMsgChain {
         Display.getDefault().asyncExec(new UpdateHighlightLineNumTask());
 
         if (VariableRunLine.isPldebugger != null && !VariableRunLine.isPldebugger) {
-            if (!event.hasException()) {
-                reportService.makeReport();
-            }
+            reportService.makeReport(event.hasException());
             if (VariableRunLine.isContinue != null && VariableRunLine.isContinue) {
                 Display.getDefault().asyncExec(() -> UpdateDebugPositionTask.continueDebug());
             }
