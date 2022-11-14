@@ -2152,7 +2152,10 @@ public final class PLSourceEditorCore extends SelectMenuItem implements IPropert
         PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
         long oid = pl.getDebugObject().getOid();
         DebuggerStartInfoVo vo = DebuggerStartVariable.getStartInfo(oid);
-        List<String> oldList = Arrays.asList(vo.remarLinesStr.split(","));
+        List<String> oldList = new ArrayList<String>();
+        if (StringUtils.isNotBlank(vo.remarLinesStr)) {
+            oldList.addAll(Arrays.asList(vo.remarLinesStr.split(",")));
+        }
         List<String> newLine = new ArrayList<>();
         oldList.forEach(item -> {
             if (!StringUtils.isBlank(item) && (Integer.valueOf(item) < start || Integer.valueOf(item) > end)) {

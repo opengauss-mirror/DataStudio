@@ -20,7 +20,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -254,7 +256,7 @@ public class DebuggerReportService {
         } catch (SQLException e) {
             MPPDBIDELoggerUtility.error(e.getMessage());
         }
-        List<String> runLinks = new ArrayList();
+        Set<String> runLinks = new LinkedHashSet<String>();
         runLinks.add(getCurLine());
         // next
         inputsParams = new ArrayList();
@@ -275,18 +277,20 @@ public class DebuggerReportService {
                 hasNext = false;
             }
         }
-        VariableRunLine.runList.addAll(runLinks);
+        List<String> toRunLines = DbeCommonUtils.getCanBreakLinesByInfo(queryConn,
+                Arrays.asList(functionVo.oid), SourceCodeService.CodeDescription.getLines(startInfo.sourceCode))
+                .stream().map(item -> String.valueOf(Integer.parseInt(item) + 1))
+                .collect(Collectors.toList());
+        List<String> runnings = runLinks.stream().filter(item -> toRunLines.
+                contains(String.valueOf(Integer.valueOf(item) + 1))).sorted().collect(Collectors.toList());
+        VariableRunLine.runList.addAll(runnings);
         DebuggerEndInfoVo endInfo = new DebuggerEndInfoVo();
-        String runStr = String.join(",", runLinks);
+        String runStr = String.join(",", runnings);
         endInfo.runStr = runStr;
         endInfo.setInfo(startInfo);
         List<DebuggerEndInfoVo> historyList = DebuggerStartVariable.getHistoryList(functionVo.oid);
         historyList.add(endInfo);
         DebuggerStartVariable.setHistoryList(functionVo.oid, historyList);
-        List<String> toRunLines = DbeCommonUtils.getCanBreakLinesByInfo(queryConn,
-                Arrays.asList(functionVo.oid), SourceCodeService.CodeDescription.getLines(endInfo.sourceCode))
-                .stream().map(item -> String.valueOf(Integer.parseInt(item) + 1))
-                .collect(Collectors.toList());
         endInfo.canBreakLine = String.join(",", toRunLines);
         createTbale(endInfo);
     }

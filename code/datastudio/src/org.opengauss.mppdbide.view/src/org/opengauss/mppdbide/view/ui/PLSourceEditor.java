@@ -93,7 +93,6 @@ import org.opengauss.mppdbide.presentation.grid.IDSGridDataProvider;
 import org.opengauss.mppdbide.presentation.resultset.ActionAfterResultFetch;
 import org.opengauss.mppdbide.presentation.resultsetif.IConsoleResult;
 import org.opengauss.mppdbide.presentation.resultsetif.IResultConfig;
-import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
 import org.opengauss.mppdbide.utils.MemoryCleaner;
@@ -104,7 +103,6 @@ import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
 import org.opengauss.mppdbide.utils.logger.ILogger;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.opengauss.mppdbide.utils.messaging.MessageQueue;
-import org.opengauss.mppdbide.utils.vo.DebuggerStartInfoVo;
 import org.opengauss.mppdbide.view.core.ConsoleCoreWindow;
 import org.opengauss.mppdbide.view.core.ConsoleMessageWindow;
 import org.opengauss.mppdbide.view.core.sourceeditor.AnnotationHelper.AnnotationType;
@@ -687,9 +685,6 @@ public class PLSourceEditor extends AbstractAutoSaveObject
                 sourceEditor.setDocument(new Document(debugObject.getLatestSouceCode().getCode()), 0);
                 debugObject.setCodeReloaded(false);
             }
-            String sourceCode = debugObject.getLatestSouceCode().getCode();
-            DebuggerStartInfoVo info = DebuggerStartVariable.getStartInfo(debugObject.getOid());
-            info.sourceCode = sourceCode;
             registerModifyListener();
             setSourceChangedInEditor(false);
             setSourceViewerConfiguration();

@@ -34,11 +34,13 @@ import org.opengauss.mppdbide.debuger.service.WrappedDebugService;
 import org.opengauss.mppdbide.debuger.vo.FunctionVo;
 import org.opengauss.mppdbide.debuger.service.DebuggerReportService;
 import org.opengauss.mppdbide.debuger.vo.SourceCodeVo;
+import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
 import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
+import org.opengauss.mppdbide.utils.vo.DebuggerStartInfoVo;
 import org.opengauss.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
 import org.opengauss.mppdbide.view.coverage.CoverageService;
 import org.opengauss.mppdbide.view.prefernces.PreferenceWrapper;
@@ -91,7 +93,9 @@ public class DebugServiceHelper {
             checkSupportDebug();
             checkDebugVersion(provider);
             queryService = serviceFactory.getQueryService();
+            VariableRunLine.currentOid = debugObject.getOid();
             functionVo = queryService.queryFunction(debugObject.getName());
+            functionVo.proname = debugObject.getNamespace().getName() + "." + functionVo.proname;
             debugService = new WrappedDebugService(serviceFactory.getDebugService(functionVo));
             debugService.addHandler(new UiEventHandler());
             debugService.addHandler(new DebugEventHandler());
@@ -110,6 +114,8 @@ public class DebugServiceHelper {
             codeService.setTotalCode(debugObject.getSourceCode().getCode());
             debuggerReportService.setTotalCode(codeService.getTotalCodeDesc());
             this.debugObject = debugObject;
+            DebuggerStartInfoVo info = DebuggerStartVariable.getStartInfo(debugObject.getOid());
+            info.sourceCode = debugObject.getSourceCode().getCode();
         }
         if (debugService != null) {
             debugService.setRollback(getRollbackPreference());
