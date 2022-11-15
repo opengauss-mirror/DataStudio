@@ -1174,4 +1174,9 @@ public interface IMessagesConstantsOne extends IMessagesConstantsTwo {
      * EXP_UPDATE_TIME
      */
     String EXP_UPDATE_TIME = "EXP_UPDATE_TIME";
+
+    /**
+     * EXP_UPDATE_TIME
+     */
+    String WRITE_DATA = "WRITE_DATA";
 }

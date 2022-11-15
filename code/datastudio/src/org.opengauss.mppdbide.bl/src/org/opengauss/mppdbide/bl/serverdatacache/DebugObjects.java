@@ -27,6 +27,7 @@ import org.opengauss.mppdbide.bl.serverdatacache.DebugObjects.DebugObjectsUtils.
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.IMessagesConstantsOne;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.exceptions.MPPDBIDEException;
@@ -873,7 +874,7 @@ public class DebugObjects extends BatchDropServerObject implements ObjectChange,
             hasout = createTemplateFromParams(params, parameterObject.getTemplateParams(), template,
                     parameterObject.getOutParams());
 
-            if (MessageConfigLoader.getProperty(IMessagesConstants.COVERAGE_HINT).equalsIgnoreCase(coverageHint)) {
+            if (VariableRunLine.isDebugUsagehint != null) {
                 usagehint.append(coverageHint + MPPDBIDEConstants.LINE_SEPARATOR);
             }
             if (hasout) {
