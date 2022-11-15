@@ -54,11 +54,11 @@ public class DebuggerReportService {
      * default offset value
      */
     public static final int CODE_BASE_OFFSET = 1;
-    private static final String CREAT_TABLE = "CREATE TABLE IF NOT EXISTS his_coverage( oid BIGINT,";
+    private static final String CREAT_TABLE = "CREATE TABLE IF NOT EXISTS public.his_coverage( oid BIGINT,";
     private static final String TABLE_FIELD_ONE = " cid BIGINT, coverageLines VARCHAR, remarkLines VARCHAR, ";
     private static final String TABLE_FIELD_TWO = "endTime BIGINT, sourceCode VARCHAR, params VARCHAR,"
             + " canBreakLine VARCHAR);";
-    private static final String INSERT = "insert into his_coverage VALUES(?,?,?,?,?,?,?,?);";
+    private static final String INSERT = "insert into public.his_coverage VALUES(?,?,?,?,?,?,?,?);";
 
     /**
      * default value

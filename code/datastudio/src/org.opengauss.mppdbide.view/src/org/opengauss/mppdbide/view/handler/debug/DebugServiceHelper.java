@@ -44,8 +44,6 @@ import org.opengauss.mppdbide.utils.vo.DebuggerStartInfoVo;
 import org.opengauss.mppdbide.view.core.sourceeditor.BreakpointAnnotation;
 import org.opengauss.mppdbide.view.coverage.CoverageService;
 import org.opengauss.mppdbide.view.prefernces.PreferenceWrapper;
-import org.opengauss.mppdbide.view.utils.dialog.MPPDBIDEDialogs;
-import org.opengauss.mppdbide.view.utils.dialog.MPPDBIDEDialogs.MESSAGEDIALOGTYPE;
 
 /**
  * Title: class
@@ -271,11 +269,7 @@ public class DebugServiceHelper {
             conn = provider.getValidFreeConnection();
             VariableRunLine.isPldebugger = VersionHelper.getDebuggerVersion(conn).isPldebugger();
         } catch (SQLException e) {
-            MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.INFORMATION, true,
-                    MessageConfigLoader.getProperty(IMessagesConstants.EXECDIALOG_HINT),
-                    MessageConfigLoader.getProperty(IMessagesConstants.VERSION_CHECK_FAIL));
-            MPPDBIDELoggerUtility.error(e.getMessage());
-            return;
+            throw new SQLException(MessageConfigLoader.getProperty(IMessagesConstants.VERSION_CHECK_FAIL));
         } finally {
             if (conn != null) {
                 conn.close();
@@ -313,8 +307,14 @@ public class DebugServiceHelper {
     }
 
     void closeDbConn() {
-        queryService.closeService();
-        debuggerReportService.close();
-        debugService.closeService();
+        if (queryService != null) {
+            queryService.closeService();
+        }
+        if (debuggerReportService != null) {
+            debuggerReportService.close();
+        }
+        if (debugService != null) {
+            debugService.closeService();
+	    }
     }
 }
