@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.opengauss.mppdbide.debuger.service.DbeDebugService;
+import org.opengauss.mppdbide.debuger.service.SourceCodeService;
 import org.opengauss.mppdbide.debuger.vo.dbe.InfoCodeVo;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
@@ -53,6 +54,10 @@ public final class DbeCommonUtils {
      */
     public static final String END = "END";
 
+    private static final String REPLACE_FUNCTION = "$function$";
+
+    private static final String REPLACED = "$$";
+
     private DbeCommonUtils() {
 
     }
@@ -72,7 +77,10 @@ public final class DbeCommonUtils {
         List<InfoCodeVo> canBreaks = infos.stream().filter(item -> item.canbreak).collect(Collectors.toList());
         for (int i = 0; i < indexs.size(); i++) {
             String selectCode = sourceCodes.get(Integer.parseInt(indexs.get(i)));
-            long count = canBreaks.stream().filter(item -> item.query.equalsIgnoreCase(selectCode)).count();
+            long count = canBreaks.stream().filter(item -> {
+                String str = item.query.replaceAll(REPLACE_FUNCTION, REPLACED);
+                return str.equalsIgnoreCase(selectCode);
+            }).count();
             if (count == 0) {
                 throw new SQLException(MessageConfigLoader.getProperty(IMessagesConstants.NOT_SUPPORT_BREAK));
             }
@@ -99,6 +107,14 @@ public final class DbeCommonUtils {
                 map.put(END, i);
             }
         }
+        Integer begin = map.get(BEGIN);
+        Integer end = map.get(END);
+        if (begin == null) {
+            map.put(BEGIN, getBeginIndex(sourceCodes, BEGIN));
+        }
+        if (end == null) {
+            map.put(END, getEndIndex(sourceCodes, END));
+        }
         return map;
     }
 
@@ -114,6 +130,49 @@ public final class DbeCommonUtils {
     }
 
     /**
+     * getBeginIndex
+     *
+     * @param codes codes
+     * @param match match
+     * @return int int
+     */
+    public static int getBeginIndex(List<String> codes, String match) {
+        for(int i =0; i<codes.size(); i++) {
+            if (codes.get(i).toUpperCase(Locale.ENGLISH).contains(match)) {
+                return i;
+            }
+        }
+        return SourceCodeService.CodeDescription.INVALID_POSITION;
+    }
+
+    /**
+     * getEndIndex
+     *
+     * @param codes codes
+     * @param match match
+     * @return int int
+     */
+    public static int getEndIndex(List<String> codes, String match) {
+        for(int i =codes.size()-1; i<codes.size(); i--) {
+            if (codes.get(i).toUpperCase(Locale.ENGLISH).contains(match) ) {
+                return i;
+            }
+        }
+        return SourceCodeService.CodeDescription.INVALID_POSITION;
+    }
+
+    /**
+     * checkIsEqualLine
+     *
+     * @param codes codes
+     * @param match match
+     * @return int int
+     */
+    public static long checkIsEqualLine(List<String> sourceCodes, String match) {
+        return sourceCodes.stream().filter(item -> checkStrEquals(item ,END)).count();
+    }
+
+    /**
      * getCanBreakLinesByInfo
      *
      * @param conn         dbConnection
@@ -122,7 +181,7 @@ public final class DbeCommonUtils {
      * @return List string
      */
     public static List<String> getCanBreakLinesByInfo(IConnection conn, List<Object> inputsParams,
-            List<String> sourceCodes) {
+                                                      List<String> sourceCodes) {
         List<InfoCodeVo> infos = null;
         try {
             infos = DbeDebugService.getInfoCodes(conn, inputsParams);
@@ -145,6 +204,9 @@ public final class DbeCommonUtils {
         List<String> linse = new ArrayList<String>();
         for (int i = map.get(BEGIN); i < sourceCodes.size(); i++) {
             if (i >= map.get(END)) {
+                if (checkIsEqualLine(sourceCodes, END) == 0) {
+                    linse.add(String.valueOf(i));
+                }
                 return linse;
             }
             if (i < infos.size() && infos.get(i).canbreak) {
