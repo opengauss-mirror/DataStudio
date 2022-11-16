@@ -19,10 +19,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import org.apache.commons.lang.StringUtils;
 import org.opengauss.mppdbide.debuger.annotation.ParseVo;
 import org.opengauss.mppdbide.debuger.vo.StackVo;
 import org.opengauss.mppdbide.debuger.vo.dbe.BackTraceVo;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 
 /**
  * Description: StackVoHandle
@@ -43,11 +46,16 @@ public class StackVoHandle implements IQueryResConvertService {
         List<T> list = new ArrayList<T>();
         List<BackTraceVo> infos = ParseVo.parseList(rs, BackTraceVo.class);
         infos.forEach(item -> {
+            /**
+             * If the step in function is later adapted, 
+             * the parameter type obtained here may not be obtained from the inner function parameter type
+             */
+            List<String> paramTypes = DbeDebugService.paramType.get(VariableRunLine.currentOid);
             StackVo vo = new StackVo();
             vo.func = item.funcoid;
             vo.linenumber = item.lineno;
-            vo.level = 0;
-            vo.targetname = item.query;
+            vo.level = item.frameno;
+            vo.targetname = String.format(Locale.ENGLISH, "%s(%s)", item.funcname, StringUtils.join(paramTypes,','));
             list.add((T) vo);
         });
         return list;

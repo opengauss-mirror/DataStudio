@@ -105,8 +105,11 @@ public class StartDebugHandler {
             QueryService queryService = serviceHelper.getQueryService();
             FunctionVo functionVo = queryService.queryFunction(functionName);
             long oid = functionVo.oid;
-            List<String> paramNames = params.stream().map(item -> item.getName()).distinct().collect(Collectors.toList());
+            List<String> paramNames = params.stream().map(item -> item.getName()).distinct()
+                    .collect(Collectors.toList());
             DbeDebugService.map.put(oid, paramNames);
+            List<String> paramTypes = params.stream().map(item -> item.getDataType()).collect(Collectors.toList());
+            DbeDebugService.paramType.put(oid, paramTypes);
             setUsagehint(plSourceEditor);
         } catch (SQLException e) {
             MPPDBIDELoggerUtility.info("dbeStartDebugParam get failed: " + e.getMessage());

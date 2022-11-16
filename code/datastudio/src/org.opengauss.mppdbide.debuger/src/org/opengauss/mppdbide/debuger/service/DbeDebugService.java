@@ -60,6 +60,11 @@ public class DbeDebugService extends DebugService {
      */
     public static final Map<Long, List<String>> map = new ConcurrentHashMap<>();
 
+    /**
+     * save param type
+     */
+    public static final Map<Long, List<String>> paramType = new ConcurrentHashMap<>();
+
     private TurnOnVo turnOnVo = null;
     private DebuggerReportService reportService = DebuggerReportService.getInstance();
 
