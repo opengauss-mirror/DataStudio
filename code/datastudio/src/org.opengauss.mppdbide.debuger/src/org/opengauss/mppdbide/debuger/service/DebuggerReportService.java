@@ -22,11 +22,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.StringUtils;
 import org.opengauss.mppdbide.common.DbeCommonUtils;
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.common.IConnectionProvider;
@@ -59,6 +62,7 @@ public class DebuggerReportService {
     private static final String TABLE_FIELD_TWO = "endTime BIGINT, sourceCode VARCHAR, params VARCHAR,"
             + " canBreakLine VARCHAR);";
     private static final String INSERT = "insert into public.his_coverage VALUES(?,?,?,?,?,?,?,?);";
+    private static final String DROP_SQL = "DROP TABLE IF EXISTS %s";
 
     /**
      * default value
@@ -68,11 +72,13 @@ public class DebuggerReportService {
     private IConnection serverConn;
     private IConnection clientConn;
     private IConnection queryConn;
+    private IConnection dropConn;
     private FunctionVo functionVo;
     private TurnOnVo turnOnVo;
     private DebuggerStartInfoVo startInfo;
     private CodeDescription baseCodeDesc = null;
     private CodeDescription totalCodeDesc = null;
+    private boolean hasExp = false;
 
     private DebuggerReportService() {
 
@@ -131,6 +137,7 @@ public class DebuggerReportService {
             this.serverConn = connectProvider.getValidFreeConnection();
             this.clientConn = connectProvider.getValidFreeConnection();
             this.queryConn = connectProvider.getValidFreeConnection();
+            this.dropConn = connectProvider.getValidFreeConnection();
             this.functionVo = functionVo;
         } catch (SQLException e) {
             MPPDBIDELoggerUtility.error(e.getMessage());
@@ -187,6 +194,14 @@ public class DebuggerReportService {
         } catch (SQLException sqlErr) {
             MPPDBIDELoggerUtility.warn("reportService queryConn close failed, err=" + sqlErr.toString());
         }
+        try {
+            if (dropConn != null) {
+                dropConn.close();
+                dropConn = null;
+            }
+        } catch (SQLException sqlErr) {
+            MPPDBIDELoggerUtility.warn("reportService dropConn close failed, err=" + sqlErr.toString());
+        }
     }
 
     /**
@@ -201,8 +216,11 @@ public class DebuggerReportService {
 
     /**
      * make dbedebugger report info
+     *
+     * @param hasExp exception
      */
-    public void makeReport() {
+    public void makeReport(boolean hasExp) {
+        this.hasExp = hasExp;
         startInfo = DebuggerStartVariable.getStartInfo(functionVo.oid);
         if (!startInfo.isMakeReport) {
             return;
@@ -210,6 +228,7 @@ public class DebuggerReportService {
         List<Object> inputsParams = Arrays.asList(functionVo.oid);
         ResultSet rs = null;
         try {
+            dropTable(startInfo.sourceCode);
             // DBE_DEBUG_OFF
             DebugOpt opt = DebugConstants.DebugOpt.DBE_DEBUG_OFF;
             rs = serverConn.getDebugOptPrepareStatement(opt, inputsParams).executeQuery();
@@ -244,6 +263,21 @@ public class DebuggerReportService {
         }
     }
 
+    private void dropTable(String code) {
+        if (StringUtils.isBlank(code)) {
+            return;
+        }
+        List<String> tableNames = DbeCommonUtils.getNeedDropTableName(code);
+        tableNames.forEach(item -> {
+            String dropSql = String.format(Locale.ENGLISH, DROP_SQL, item) ;
+            try {
+                dropConn.getStatement(dropSql).executeQuery();
+            } catch (SQLException e) {
+                MPPDBIDELoggerUtility.error("dropTable failed: " + e.getMessage());
+            }
+        });
+    }
+
     private void doClient() {
         VariableRunLine.runList.clear();
         // attach
@@ -262,13 +296,20 @@ public class DebuggerReportService {
         inputsParams = new ArrayList();
         opt = DebugConstants.DebugOpt.DBE_STEP_OVER;
         Boolean hasNext = true;
+        Boolean isAdd= true;
         while (hasNext) {
             try (ResultSet rs = clientConn.getDebugOptPrepareStatement(opt, inputsParams).executeQuery()) {
                 if (rs.next()) {
                     AttachVo attachVo = ParseVo.parse(rs, AttachVo.class);
                     Integer lineNo = attachVo.lineno;
                     if (lineNo > 1) {
-                        runLinks.add(getCurLine(lineNo));
+                        if (isAdd && this.hasExp && attachVo.query.toUpperCase(Locale.ENGLISH).contains(DbeCommonUtils.CREATE_TABLE)) {
+                            runLinks.add(getCurLine(lineNo));
+                            isAdd = false;
+                        }
+                        if (isAdd) {
+                            runLinks.add(getCurLine(lineNo));
+                        }
                     }
                 } else {
                     hasNext = false;
@@ -292,7 +333,9 @@ public class DebuggerReportService {
         historyList.add(endInfo);
         DebuggerStartVariable.setHistoryList(functionVo.oid, historyList);
         endInfo.canBreakLine = String.join(",", toRunLines);
-        createTbale(endInfo);
+        if (!this.hasExp) {
+            createTbale(endInfo);
+        }
     }
 
     private void createTbale(DebuggerEndInfoVo endInfo) {

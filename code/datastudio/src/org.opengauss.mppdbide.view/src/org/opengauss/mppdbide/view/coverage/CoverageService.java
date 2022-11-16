@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -105,6 +106,8 @@ public class CoverageService implements IService {
                     cov.remarkCoverageLinesArr = cov.coverageLinesArr.stream().map(item ->
                             Integer.parseInt(item) + 1 + "")
                             .filter(ite -> cov.remarkLinesArr.contains(ite)).collect(Collectors.toList());
+                    Collections.sort(cov.remarkCoverageLinesArr,
+                            (o1, o2) -> Integer.valueOf(o1).compareTo(Integer.valueOf(o2)));
                     cov.remarkCoverageLineNum = cov.remarkCoverageLinesArr.size();
                     Double remarkPer = Double.parseDouble(String.format("%.2f",
                                     ((double) cov.remarkCoverageLineNum * 100 / (double) cov.remarkLineNum)));

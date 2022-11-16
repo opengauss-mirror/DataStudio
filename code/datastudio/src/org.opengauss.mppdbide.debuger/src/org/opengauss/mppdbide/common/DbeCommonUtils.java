@@ -54,6 +54,13 @@ public final class DbeCommonUtils {
      */
     public static final String END = "END";
 
+    /**
+     * CREATE_TABLE
+     */
+    public static final String CREATE_TABLE = "CREATE TABLE";
+
+    private static final String CREATE_TABLE_NOT = "CREATE TABLE IF NOT EXISTS";
+
     private static final String REPLACE_FUNCTION = "$function$";
 
     private static final String REPLACED = "$$";
@@ -236,5 +243,31 @@ public final class DbeCommonUtils {
             }
         }
         return index;
+    }
+
+    /**
+     * getNeedDropTableName
+     *
+     * @param code code
+     * @return List<String> list
+     */
+    public static List<String> getNeedDropTableName(String code) {
+        List<String> list = new ArrayList<>();
+        String newCode = code.toUpperCase(Locale.ENGLISH).replaceAll(CREATE_TABLE, CREATE_TABLE_NOT);
+        int index = 0;
+        String needCode = null;
+        while (true) {
+            index = newCode.indexOf(CREATE_TABLE_NOT);
+            if (index == -1) {
+                return list;
+            }
+            index = index + CREATE_TABLE_NOT.length();
+            newCode = newCode.substring(index);
+            index = newCode.indexOf("(");
+            if (index != -1) {
+                needCode = newCode.substring(0, index);
+                list.add(needCode.trim());
+            }
+        }
     }
 }
