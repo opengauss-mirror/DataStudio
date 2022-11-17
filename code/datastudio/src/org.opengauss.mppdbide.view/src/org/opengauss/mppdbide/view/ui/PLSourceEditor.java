@@ -96,6 +96,7 @@ import org.opengauss.mppdbide.presentation.resultsetif.IResultConfig;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
 import org.opengauss.mppdbide.utils.MemoryCleaner;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.exceptions.MPPDBIDEException;
@@ -1457,6 +1458,12 @@ public class PLSourceEditor extends AbstractAutoSaveObject
         if (null != tab) {
             tab.getParent().setSelectedElement(tab);
         }
+        if (VariableRunLine.hasStartDebug) {
+            MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.INFORMATION, true,
+                    MessageConfigLoader.getProperty(IMessagesConstants.EXECDIALOG_HINT),
+                    MessageConfigLoader.getProperty(IMessagesConstants.NO_CLOSE));
+            return Save.CANCEL;
+        }
         String title = MessageConfigLoader.getProperty(IMessagesConstants.DISCARD_CHANGES_TITLE);
         String message = MessageConfigLoader.getProperty(IMessagesConstants.DISCARD_TERMINAL_DATA_BODY);
         String cancel = MessageConfigLoader.getProperty(IMessagesConstants.MPPDBIDE_DIA_BTN_CANC);
@@ -1779,7 +1786,7 @@ public class PLSourceEditor extends AbstractAutoSaveObject
             @Override
             public void documentChanged(DocumentEvent event) {
                 setSourceChangedInEditor(true);
-
+                VariableRunLine.hasUpdateStatus.put(VariableRunLine.currentOid, true);
             }
 
             @Override

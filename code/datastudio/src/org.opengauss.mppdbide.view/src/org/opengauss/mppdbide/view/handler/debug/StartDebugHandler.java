@@ -86,6 +86,9 @@ public class StartDebugHandler {
                 showMsg("create debug service failed!");
                 return;
             }
+            if (VariableRunLine.isPldebugger != null && !VariableRunLine.isPldebugger) {
+                plSourceEditor.setDirty(VariableRunLine.hasStartDebug);
+            }
         } catch (SQLException sqlExp) {
             MPPDBIDELoggerUtility.warn("create servicefactory with error:" + sqlExp.getMessage());
             showMsg(sqlExp.getLocalizedMessage());
@@ -178,6 +181,10 @@ public class StartDebugHandler {
                         .getDefaulParametertMap()
                         .get(debugObject.getOid());
                 debugParams = getDebugParams(serverParams);
+            } else if (!VariableRunLine.isPldebugger){
+                MPPDBIDEDialogs.generateOKMessageDialog(MESSAGEDIALOGTYPE.INFORMATION, true,
+                        MessageConfigLoader.getProperty(IMessagesConstants.EXECDIALOG_HINT),
+                        MessageConfigLoader.getProperty(IMessagesConstants.WRITE_DATA));
             }
             WrappedDebugService debugService = serviceHelper.getDebugService();
             if (debugService == null) {

@@ -21,6 +21,7 @@ import org.opengauss.mppdbide.bl.serverdatacache.IDebugObject;
 import org.opengauss.mppdbide.bl.serverdatacache.ObjectChange;
 import org.opengauss.mppdbide.utils.DebuggerStartVariable;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
@@ -58,6 +59,7 @@ public class ViewSourceDebugObjectHandler implements ExecuteWrapper {
         if (debugObject != null) {
             Long oid = debugObject.getOid();
             DebuggerStartVariable.getStartInfo(oid).remarLinesStr = "";
+            VariableRunLine.hasUpdateStatus.put(oid, false);
         }
         if (debugObject != null) {
             if (!(UIElement.getInstance().isEditorExistByDbgObj(debugObject))) {

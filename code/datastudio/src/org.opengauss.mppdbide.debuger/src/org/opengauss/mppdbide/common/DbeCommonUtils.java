@@ -82,7 +82,11 @@ public final class DbeCommonUtils {
             throws SQLException {
         List<InfoCodeVo> infos = DbeDebugService.getInfoCodes(conn, Arrays.asList(oid));
         List<InfoCodeVo> canBreaks = infos.stream().filter(item -> item.canbreak).collect(Collectors.toList());
+        Map<String, Integer> map = getBeginToEndLineNo(sourceCodes);
         for (int i = 0; i < indexs.size(); i++) {
+            if (map.get(BEGIN) >= Integer.valueOf(indexs.get(i))) {
+                throw new SQLException(MessageConfigLoader.getProperty(IMessagesConstants.NOT_SUPPORT_BREAK));
+            }
             String selectCode = sourceCodes.get(Integer.parseInt(indexs.get(i)));
             long count = canBreaks.stream().filter(item -> {
                 String str = item.query.replaceAll(REPLACE_FUNCTION, REPLACED);
@@ -209,7 +213,7 @@ public final class DbeCommonUtils {
     public static List<String> getBreakLines(List<InfoCodeVo> infos, List<String> sourceCodes) {
         Map<String, Integer> map = getBeginToEndLineNo(sourceCodes);
         List<String> linse = new ArrayList<String>();
-        for (int i = map.get(BEGIN); i < sourceCodes.size(); i++) {
+        for (int i = map.get(BEGIN) + 1; i < sourceCodes.size(); i++) {
             if (i >= map.get(END)) {
                 if (checkIsEqualLine(sourceCodes, END) == 0) {
                     linse.add(String.valueOf(i));
