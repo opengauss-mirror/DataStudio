@@ -238,11 +238,6 @@ mockito-all:
   groupId: org.mockito
   url: null
   version: 1.10.19
-snakeyaml: 
-  cpeName: snakeyaml
-  groupId: org.yaml
-  url: null
-  version: 1.30
 org.eclipse.core.contenttype: 
   cpeName: org.eclipse.core.contenttype
   groupId: org.eclipse.core

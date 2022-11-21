@@ -39,7 +39,6 @@ Bundle-ClassPath: lib/mockrunner-jdbc.jar,
  lib/jcommander-1.27.jar,
  lib/mockito-all-1.10.19.jar,
  lib/objenesis-3.2.jar,
- lib/snakeyaml-1.30.jar,
  lib/gsjdbc4.jar
 Eclipse-ExtensibleAPI: true 
 Require-Bundle: org.opengauss.dbdriver.jdbc.gauss;bundle-version="1.0.0",

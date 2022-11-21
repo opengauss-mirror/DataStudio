@@ -119,7 +119,6 @@ xcopy %SOURCE%\3rd_src\target\dependency\javassist-3.20.0-GA.jar %TEST%\org.open
 xcopy %SOURCE%\3rd_src\target\dependency\jcommander-1.27.jar %TEST%\org.opengauss.mppdbide.bl.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\mockito-all-1.10.19.jar %TEST%\org.opengauss.mppdbide.bl.test.fragment\lib\.
 xcopy %SOURCE%\3rd_src\target\dependency\objenesis-3.2.jar %TEST%\org.opengauss.mppdbide.bl.test.fragment\lib\.
-xcopy %SOURCE%\3rd_src\target\dependency\snakeyaml-1.30.jar %TEST%\org.opengauss.mppdbide.bl.test.fragment\lib\.
 xcopy %SOURCE%\platform\Gauss200\gs_jdbc\gsjdbc4.jar %TEST%\org.opengauss.mppdbide.bl.test.fragment\lib\.
 xcopy %SOURCE%\platform\Gauss200\gs_jdbc\mockrunner-jdbc.jar %TEST%\org.opengauss.mppdbide.bl.test.fragment\lib\.
 
