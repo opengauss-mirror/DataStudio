@@ -18,6 +18,7 @@ package org.opengauss.mppdbide.view.handler.debug;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.opengauss.mppdbide.utils.DebuggerStartVariable;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.opengauss.mppdbide.utils.vo.DebuggerStartInfoVo;
 import org.opengauss.mppdbide.view.ui.PLSourceEditor;
@@ -65,5 +66,9 @@ public class TerminateDebugHandler {
         debugUtils.setDebugStart(false);
         debugUtils.terminateDebug();
         serviceHelper.closeService();
+        if (VariableRunLine.isPldebugger != null && !VariableRunLine.isPldebugger) {
+            Boolean hasUpdate = VariableRunLine.hasUpdateStatus.get(oid);
+            plSourceEditor.setDirty(hasUpdate == null ? false : hasUpdate);
+        }
     }
 }

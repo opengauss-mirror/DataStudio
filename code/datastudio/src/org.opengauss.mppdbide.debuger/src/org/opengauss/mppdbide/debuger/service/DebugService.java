@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
 import org.opengauss.mppdbide.common.IConnection;
 import org.opengauss.mppdbide.debuger.annotation.ParseVo;
 import org.opengauss.mppdbide.debuger.debug.DebugConstants;
@@ -45,8 +46,10 @@ import org.opengauss.mppdbide.debuger.vo.SessionVo;
 import org.opengauss.mppdbide.debuger.vo.StackVo;
 import org.opengauss.mppdbide.debuger.vo.VariableVo;
 import org.opengauss.mppdbide.debuger.vo.VersionVo;
+import org.opengauss.mppdbide.utils.VariableRunLine;
 import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.postgresql.core.NoticeListener;
+import org.postgresql.util.PGobject;
 
 /**
  * Title: the DebugService class
@@ -203,7 +206,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * @throws SQLException the exp
      */
     public void debugOff() throws SQLException {
-    	try (PreparedStatement ps = serverConn.getDebugOptPrepareStatement(
+        try (PreparedStatement ps = serverConn.getDebugOptPrepareStatement(
                 DebugConstants.DebugOpt.DEBUG_OFF,
                 new ArrayList<Object>(1))) {
 		    ps.execute();
@@ -577,6 +580,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
             MPPDBIDELoggerUtility.debug("debugOff with error:" + e.toString());
         }
         closeService();
+        VariableRunLine.hasStartDebug = false;
     }
 
     /**
@@ -799,7 +803,7 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
      * @return Optional<> Object
      * @throws SQLException  Exception
      */
-    private Optional<Object> listResultSet(ResultSet rs) throws SQLException {
+    static Optional<Object> listResultSet(ResultSet rs) throws SQLException {
         if (rs.next()) {
             int totalCount = rs.getMetaData().getColumnCount();
             int initCount = 0;
@@ -808,7 +812,14 @@ public class DebugService implements NoticeListener, EventHander, IDebugService 
                 initCount++;
                 String columnName = rs.getMetaData().getColumnName(initCount);
                 Object result = rs.getObject(initCount);
-                String coverRes = String.format(Locale.ENGLISH, columnName+"%s "+result,":");
+                String coverRes = String.format(Locale.ENGLISH, columnName + "%s " + result, ":");
+                if (result instanceof PGobject) {
+                    PGobject val = (PGobject) result;
+                    coverRes = String.format(Locale.ENGLISH, columnName + "%s " + "ok", ":");
+                    if (StringUtils.isNotBlank(val.getValue())) {
+                        coverRes = String.format(Locale.ENGLISH, columnName + "%s " + val.getValue(), ":");
+                    }
+                }
                 resList.add(coverRes);
             }
             return Optional.ofNullable(String.join("; ", resList));

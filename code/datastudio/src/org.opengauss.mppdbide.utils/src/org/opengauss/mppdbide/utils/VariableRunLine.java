@@ -16,7 +16,9 @@
 package org.opengauss.mppdbide.utils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -60,4 +62,14 @@ public class VariableRunLine {
      * currentOid of function
      */
     public static volatile long currentOid;
+
+    /**
+     * hasStartDebug of function
+     */
+    public static volatile boolean hasStartDebug;
+
+    /**
+     * hasUpdateStatus of function
+     */
+    public static volatile Map<Long, Boolean> hasUpdateStatus = new ConcurrentHashMap<>();
 }

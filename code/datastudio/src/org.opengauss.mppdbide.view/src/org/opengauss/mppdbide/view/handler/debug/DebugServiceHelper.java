@@ -118,6 +118,7 @@ public class DebugServiceHelper {
         if (debugService != null) {
             debugService.setRollback(getRollbackPreference());
         }
+        VariableRunLine.hasStartDebug = true;
         return debugService != null;
     }
 

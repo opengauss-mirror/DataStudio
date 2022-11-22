@@ -28,6 +28,8 @@ import org.opengauss.mppdbide.view.handler.debug.DebugServiceHelper;
 import org.opengauss.mppdbide.view.handler.debug.ui.UpdateDebugPositionTask;
 import org.opengauss.mppdbide.view.handler.debug.ui.UpdateDebugResultTask;
 import org.opengauss.mppdbide.view.handler.debug.ui.UpdateHighlightLineNumTask;
+import org.opengauss.mppdbide.view.ui.PLSourceEditor;
+import org.opengauss.mppdbide.view.utils.UIElement;
 
 /**
  * Title: class
@@ -60,6 +62,9 @@ public class ServerExitChain extends IMsgChain {
         Display.getDefault().asyncExec(new UpdateHighlightLineNumTask());
 
         if (VariableRunLine.isPldebugger != null && !VariableRunLine.isPldebugger) {
+            PLSourceEditor pl = UIElement.getInstance().getVisibleSourceViewer();
+            Boolean hasUpdate = VariableRunLine.hasUpdateStatus.get(VariableRunLine.currentOid);
+            pl.setDirty(hasUpdate == null ? false : hasUpdate);
             reportService.makeReport(event.hasException());
             if (VariableRunLine.isContinue != null && VariableRunLine.isContinue) {
                 Display.getDefault().asyncExec(() -> UpdateDebugPositionTask.continueDebug());

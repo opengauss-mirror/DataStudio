@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Timer;
@@ -115,20 +114,7 @@ public class DbeDebugService extends DebugService {
                     }
                 }, 2000);
                 try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        int totalCount = rs.getMetaData().getColumnCount();
-                        int initCount = 0;
-                        List<String> resList = new ArrayList<String>();
-                        while (initCount < totalCount) {
-                            initCount++;
-                            String columnName = rs.getMetaData().getColumnName(initCount);
-                            Object result = rs.getObject(initCount);
-                            String coverRes = String.format(Locale.ENGLISH, columnName+"%s "+result,":");
-                            resList.add(coverRes);
-                        }
-                        return Optional.ofNullable(String.join("; ", resList));
-                    }
-                    return Optional.empty();
+                    return listResultSet(rs);
                 }
             }
         } finally {
