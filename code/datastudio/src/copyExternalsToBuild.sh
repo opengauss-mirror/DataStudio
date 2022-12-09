@@ -12,7 +12,7 @@ rm -rf $DEST/db_assistant
 
 cp $SOURCE/platform/Gauss200/gs_jdbc/gsjdbc4.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/hamcrest-api-1.0.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/commons-logging-1.0.4.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
 cp $SOURCE/3rd_src/target/dependency/oro-2.0.8.jar $DEST/org.opengauss.mppdbide.presentation/src-test/.
@@ -81,7 +81,7 @@ cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar  $TEST/org.opengauss.mppdbid
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar  $TEST/org.opengauss.mppdbide.bl.debug.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-jdbc-2.0.6.jar $TEST/org.opengauss.mppdbide.bl.debug.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-core-2.0.6.jar $TEST/org.opengauss.mppdbide.bl.debug.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.bl.debug.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.bl.debug.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-io-2.11.0.jar $TEST/org.opengauss.mppdbide.bl.debug.test.fragment/lib/.
 
 rm -rf $TEST/org.opengauss.mppdbide.bl.test.fragment/lib
@@ -95,7 +95,7 @@ cp $SOURCE/3rd_src/target/dependency/hamcrest-api-1.0.jar  $TEST/org.opengauss.m
 cp $SOURCE/3rd_src/target/dependency/easymock-4.3.jar  $TEST/org.opengauss.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar  $TEST/org.opengauss.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar  $TEST/org.opengauss.mppdbide.bl.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.bl.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/jsqlparser-3.2.jar $TEST/org.opengauss.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/org.eclipse.osgi-3.9.1.v20130814-1242.jar $TEST/org.opengauss.mppdbide.bl.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-io-2.11.0.jar $TEST/org.opengauss.mppdbide.bl.test.fragment/lib/.
@@ -134,7 +134,7 @@ cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar  $TEST/org.opengauss.mppdbid
 cp $SOURCE/platform/Gauss200/gs_jdbc/gsjdbc4.jar $TEST/org.opengauss.mppdbide.bl.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/hamcrest-api-1.0.jar  $TEST/org.opengauss.mppdbide.bl.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/jsqlparser-3.2.jar $TEST/org.opengauss.mppdbide.bl.windows.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.bl.windows.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.bl.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar  $TEST/org.opengauss.mppdbide.bl.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-io-2.11.0.jar $TEST/org.opengauss.mppdbide.bl.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/objenesis-3.2.jar $TEST/org.opengauss.mppdbide.bl.windows.test.fragment/lib/.
@@ -160,7 +160,7 @@ cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.2.jar $TEST/org.opengaus
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar  $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-codec-1.15.jar $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/hamcrest-api-1.0.jar $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.editor.extension.test.fragment/lib/.
 
 rm -rf $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib
 mkdir $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib
@@ -173,7 +173,7 @@ cp $SOURCE/3rd_src/target/dependency/easymock-4.3.jar $TEST/org.opengauss.mppdbi
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar  $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-codec-1.15.jar $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-jdbc-2.0.6.jar $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-core-2.0.6.jar $TEST/org.opengauss.mppdbide.explainplan.test.fragment/lib/.
 
@@ -188,7 +188,7 @@ cp $SOURCE/3rd_src/target/dependency/easymock-4.3.jar $TEST/org.opengauss.mppdbi
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-codec-1.15.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/antlr4-runtime-4.9.2.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-jdbc-2.0.6.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-core-2.0.6.jar $TEST/org.opengauss.mppdbide.parser.test.fragment/lib/.
@@ -213,7 +213,7 @@ cp $SOURCE/3rd_src/target/dependency/poi-4.1.2.jar $TEST/org.opengauss.mppdbide.
 cp $SOURCE/3rd_src/target/dependency/poi-ooxml-4.1.2.jar $TEST/org.opengauss.mppdbide.presentation.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/poi-ooxml-schemas-4.1.2.jar $TEST/org.opengauss.mppdbide.presentation.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/xmlbeans-3.1.0.jar $TEST/org.opengauss.mppdbide.presentation.windows.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.presentation.windows.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.presentation.windows.test.fragment/lib/.
 
 rm -rf $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib
 mkdir $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib
@@ -227,7 +227,7 @@ cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $TEST/org.opengauss.mppdbide
 cp $SOURCE/platform/Gauss200/gs_jdbc/gsjdbc4.jar $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/hamcrest-api-1.0.jar $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/jsqlparser-3.2.jar $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-codec-1.15.jar $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-io-2.11.0.jar $TEST/org.opengauss.mppdbide.util.windows.test.fragment/lib/.
@@ -243,7 +243,7 @@ cp $SOURCE/3rd_src/target/dependency/easymock-4.3.jar $TEST/org.opengauss.mppdbi
 cp $SOURCE/3rd_src/target/dependency/gson-2.8.6.jar $TEST/org.opengauss.mppdbide.utils.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/log4j-1.2.15.jar $TEST/org.opengauss.mppdbide.utils.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-codec-1.15.jar $TEST/org.opengauss.mppdbide.utils.test.fragment/lib/.
-cp $SOURCE/3rd_src/target/dependency/junit-4.11.jar $TEST/org.opengauss.mppdbide.utils.test.fragment/lib/.
+cp $SOURCE/3rd_src/target/dependency/junit-4.13.2.jar $TEST/org.opengauss.mppdbide.utils.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/jsqlparser-3.2.jar $TEST/org.opengauss.mppdbide.utils.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/commons-io-2.11.0.jar $TEST/org.opengauss.mppdbide.utils.test.fragment/lib/.
 cp $SOURCE/3rd_src/target/dependency/mockrunner-jdbc-2.0.6.jar $TEST/org.opengauss.mppdbide.utils.test.fragment/lib/.
