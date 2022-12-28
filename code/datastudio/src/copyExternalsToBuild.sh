@@ -2,8 +2,11 @@
 SOURCE=../../..
 DEST=./
 TEST=../testcode/LLT/
+WORKSPACE=$(pwd)
 
-mvn dependency:copy-dependencies -f $SOURCE/3rd_src/pom.xml
+cd $SOURCE/3rd_src
+mvn dependency:copy-dependencies -f pom.xml
+cd $WORKSPACE
 #::0 Delete the old folders
 rm -rf $DEST/org.opengauss.mppdbide.repository/tools
 rm -rf ../docs
