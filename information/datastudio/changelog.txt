@@ -1,4 +1,4 @@
-﻿Data Studio 3.1.0
+﻿Data Studio 3.1.1
 =====================================================================================================
-This is a version of Data Studio supporting openGauss 3.1.0
+This is a version of Data Studio supporting openGauss 3.1.1
 =====================================================================================================
