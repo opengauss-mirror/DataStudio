@@ -22,7 +22,7 @@ Bundle-ClassPath: lib/mockrunner-jdbc-2.0.6.jar,
  .,
  lib/commons-codec-1.15.jar,
  lib/org.eclipse.osgi-3.9.1.v20130814-1242.jar,
- lib/gsjdbc4.jar
+ lib/opengauss-jdbc-3.1.0.jar
 Import-Package: org.opengauss.mppdbide.bl.serverdatacache,
  org.opengauss.mppdbide.bl.util,
  org.opengauss.mppdbide.bl.serverdatacache.connectioninfo

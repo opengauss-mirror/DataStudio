@@ -17,7 +17,6 @@ package org.opengauss.mppdbide.utils.logger;
 
 import java.io.FileNotFoundException;
 import java.net.BindException;
-import java.security.acl.NotOwnerException;
 import java.util.ConcurrentModificationException;
 import java.util.MissingResourceException;
 import java.util.jar.JarException;
@@ -46,7 +45,7 @@ public interface ISensitiveExceptionsFilter {
      */
     static boolean isSensitiveException(Throwable throwable) {
         if (throwable instanceof FileNotFoundException || throwable instanceof JarException
-                || throwable instanceof MissingResourceException || throwable instanceof NotOwnerException
+                || throwable instanceof MissingResourceException
                 || throwable instanceof ConcurrentModificationException
                 || throwable instanceof InsufficientResourcesException || throwable instanceof BindException
                 || throwable instanceof OutOfMemoryError || throwable instanceof StackOverflowError) {

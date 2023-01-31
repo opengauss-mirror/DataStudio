@@ -393,4 +393,34 @@ public class Connfactory implements QueryExecutor
     public String getGaussdbVersion() {
         return "";
     }
+
+	@Override
+	public String getCompatibilityMode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean getEnableOutparamOveride() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setAvailability(boolean arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCompatibilityMode(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEnableOutparamOveride(boolean arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }

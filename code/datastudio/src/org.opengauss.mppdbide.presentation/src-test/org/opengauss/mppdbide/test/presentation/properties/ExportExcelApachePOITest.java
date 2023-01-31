@@ -1676,12 +1676,6 @@ public class ExportExcelApachePOITest extends BasicJDBCTestCaseAdapter
             String progressLabelName = core.getProgressLabelName();
             assertEquals("MyTable.pg_catalog.Gauss@TestConnectionName", progressLabelName);
         }
-
-        catch (DatabaseOperationException e)
-        {
-            fail(e.getMessage());
-
-        }
         catch (MPPDBIDEException e)
         {
             fail(e.getMessage());
