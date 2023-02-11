@@ -22,6 +22,7 @@ import org.postgresql.core.Version;
 import org.postgresql.fastpath.Fastpath;
 import org.postgresql.log.Log;
 import org.postgresql.jdbc.AutoSave;
+import org.postgresql.jdbc.ClientLogic;
 import org.postgresql.jdbc.FieldMetadata;
 import org.postgresql.jdbc.FieldMetadata.Key;
 import org.postgresql.jdbc.PreferQueryMode;
@@ -420,5 +421,17 @@ private boolean throwSQLException;
     public String getSocketAddress() {
         return "";
     }
+
+	@Override
+	public boolean getBitToString() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ClientLogic getClientLogic() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -15,11 +15,11 @@ Bundle-ClassPath: lib/commons-logging-1.0.4.jar,
  lib/log4j-1.2.15.jar,
  .,
  lib/commons-codec-1.15.jar,
- lib/junit-4.11.jar,
  lib/jsqlparser-3.2.jar,
  lib/commons-io-2.11.0.jar,
  lib/mockrunner-jdbc-2.0.6.jar,
- lib/mockrunner-core-2.0.6.jar
+ lib/mockrunner-core-2.0.6.jar,
+ lib/junit-4.13.2.jar
 Require-Bundle: org.eclipse.e4.core.services;bundle-version="2.0.0",
  org.junit;bundle-version="4.12.0",
  org.apache.log4j;bundle-version="1.2.15"
