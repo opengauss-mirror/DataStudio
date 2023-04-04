@@ -99,7 +99,10 @@ public final class UIUtils {
      * @param datatype the datatype
      * @return true, if successful
      */
-    public static boolean enableDisableScaleFieldForDatatype(String datatype) {
+    public static boolean enableDisableScaleFieldForDatatype(String datatype, HashMap<String, boolean[]> dolphinTypes) {
+        if (dolphinTypes != null && dolphinTypes.containsKey(datatype)) {
+            return dolphinTypes.get(datatype)[1];
+        }
         return scaleMap.get(datatype);
 
     }
@@ -180,8 +183,10 @@ public final class UIUtils {
      * @param datatype the datatype
      * @return true, if successful
      */
-    public static boolean enableDisablePrecisionFieldForDatatype(String datatype) {
-
+    public static boolean enableDisablePrecisionFieldForDatatype(String datatype, HashMap<String, boolean[]> dolphinTypes) {
+        if (dolphinTypes != null && dolphinTypes.containsKey(datatype)) {
+            return dolphinTypes.get(datatype)[0];
+        }
         return precisionMap.get(datatype);
     }
 

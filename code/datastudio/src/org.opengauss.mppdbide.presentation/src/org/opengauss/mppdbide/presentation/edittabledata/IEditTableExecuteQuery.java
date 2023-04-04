@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -244,7 +245,11 @@ public interface IEditTableExecuteQuery {
             int placeholderIdx, PreparedStatement stmt, int index) throws SQLException {
         Object value = valueParam;
         value = transformToSqlDatatypes(columnProvider, index, value, stmt.getConnection());
-        stmt.setObject(placeholderIdx, value);
+        if (value instanceof String) {
+            stmt.setObject(placeholderIdx, value, Types.OTHER);
+        } else {
+            stmt.setObject(placeholderIdx, value);
+        }
     }
 
     /**
@@ -398,7 +403,7 @@ public interface IEditTableExecuteQuery {
                 strBldr.append(" is null");
             } else {
                 strBldr.append(" = ");
-                handleNonEditableDatatypeQuery(columnProvider, value, columnIndex, strBldr);
+                handleNonEditableDatatypeQuery(columnProvider, value, columnIndex, strBldr, dsEditTableDataGridDataProvider.getDatabse().getDolphinTypes());
             }
 
             if (iterator.hasNext()) {
@@ -463,7 +468,7 @@ public interface IEditTableExecuteQuery {
                 queryBuilder.append(" is null");
             } else {
                 queryBuilder.append(" = ");
-                handleNonEditableDatatypeQuery(columnProvider, value, columnIndex, queryBuilder);
+                handleNonEditableDatatypeQuery(columnProvider, value, columnIndex, queryBuilder, dsEditTableDataGridDataProvider.getDatabse().getDolphinTypes());
             }
 
             if (iterator.hasNext()) {
@@ -484,9 +489,9 @@ public interface IEditTableExecuteQuery {
      * @param query the query
      */
     static void handleNonEditableDatatypeQuery(IDSGridColumnProvider columnProvider, Object value, int columnIndex,
-            StringBuilder query) {
+            StringBuilder query, HashMap<String, boolean[]> dolphinTypes) {
         if (!isDatatypeSupported(columnProvider.getColumnDataTypeName(columnIndex),
-                columnProvider.getPrecision(columnIndex))) {
+                columnProvider.getPrecision(columnIndex), dolphinTypes)) {
             query.append(ServerObject.getLiteralName(value.toString()));
         } else {
             filterPlaceHolderQuery(value, query);
@@ -529,7 +534,7 @@ public interface IEditTableExecuteQuery {
      * @param precision the precision
      * @return true, if is datatype supported
      */
-    public static boolean isDatatypeSupported(String sqlType, int precision) {
+    public static boolean isDatatypeSupported(String sqlType, int precision, HashMap<String, boolean[]> dolphinTypes) {
         switch (sqlType.toLowerCase(Locale.ENGLISH)) {
             case "bpchar":
             case "char":
@@ -555,6 +560,9 @@ public interface IEditTableExecuteQuery {
                 }
                 return true;
             default:
+                if (dolphinTypes != null && dolphinTypes.containsKey(sqlType.toLowerCase(Locale.ENGLISH))) {
+                    return true;
+                }
                 return false;
         }
     }

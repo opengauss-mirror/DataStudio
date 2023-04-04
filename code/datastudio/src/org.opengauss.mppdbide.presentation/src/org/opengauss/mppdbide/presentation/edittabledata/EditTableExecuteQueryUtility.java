@@ -17,6 +17,7 @@ package org.opengauss.mppdbide.presentation.edittabledata;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.opengauss.mppdbide.adapter.gauss.DBConnection;
@@ -93,7 +94,7 @@ public interface EditTableExecuteQueryUtility {
                 value = updatedRow.getOriginalValue(columnIndex);
                 if (value != null && !IEditTableExecuteQuery.isNonPlaceholderType(value)
                         && IEditTableExecuteQuery.isDatatypeSupported(columnProvider.getColumnDataTypeName(columnIndex),
-                                columnProvider.getPrecision(columnIndex))) {
+                                columnProvider.getPrecision(columnIndex), dsEditTableDataGridDataProvider.getDatabse().getDolphinTypes())) {
                     placeholderIdx++;
                     IEditTableExecuteQuery.preparePlaceHolderStmt(columnProvider, value, placeholderIdx, stmt, index);
                 }
@@ -168,7 +169,7 @@ public interface EditTableExecuteQueryUtility {
         PreparedStatement stmt = null;
         try {
             stmt = conn.getConnection().prepareStatement(query);
-            addPlaceHolderForDeletedClms(deletedRow, uniqueKeys, columnProvider, stmt, conn);
+            addPlaceHolderForDeletedClms(deletedRow, uniqueKeys, columnProvider, stmt, conn, dsEditTableDataGridDataProvider.getDatabse().getDolphinTypes());
 
             int result = stmt.executeUpdate();
             if (result == 0) {
@@ -208,7 +209,7 @@ public interface EditTableExecuteQueryUtility {
      * @throws SQLException the SQL exception
      */
     public default void addPlaceHolderForDeletedClms(IDSGridEditDataRow deletedRow, List<String> uniqueKeys,
-            IDSGridColumnProvider columnProvider, PreparedStatement stmt, DBConnection conn) throws SQLException {
+            IDSGridColumnProvider columnProvider, PreparedStatement stmt, DBConnection conn, HashMap<String, boolean[]> dolphinTypes) throws SQLException {
         Object value;
         String colName;
         int columnIndex;
@@ -220,7 +221,7 @@ public interface EditTableExecuteQueryUtility {
             value = deletedRow.getOriginalValue(columnIndex);
             if (null != value && !IEditTableExecuteQuery.isNonPlaceholderType(value)
                     && IEditTableExecuteQuery.isDatatypeSupported(columnProvider.getColumnDataTypeName(columnIndex),
-                            columnProvider.getPrecision(columnIndex))) {
+                            columnProvider.getPrecision(columnIndex), dolphinTypes)) {
                 placeHolder++;
                 value = IEditTableExecuteQuery.transformToSqlDatatypes(columnProvider, index, value,
                         conn.getConnection());

@@ -244,7 +244,8 @@ public class DSGridToolTipProvider extends NatTableContentTooltip {
                 return toolTipText + MessageConfigLoader.getProperty(IMessagesConstants.TOOLTIP_DISTRIBUTION_COL);
             } else if (dataProvider instanceof DSObjectPropertiesGridDataProvider) {
                 return toolTipText;
-            } else if (!GridUIUtils.isDatatypeEditSupported(colDatatypeName, colPrecisionVal)) {
+            } else if (!GridUIUtils.isDatatypeEditSupported(colDatatypeName, colPrecisionVal,
+                    dataProvider.getDatabse())) {
                 return toolTipText + MessageConfigLoader.getProperty(IMessagesConstants.TOOLTIP_READONLY_COL);
             }
         }

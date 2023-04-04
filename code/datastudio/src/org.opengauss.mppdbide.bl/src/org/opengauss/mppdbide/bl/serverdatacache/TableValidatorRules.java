@@ -16,6 +16,7 @@
 package org.opengauss.mppdbide.bl.serverdatacache;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -89,6 +90,9 @@ public final class TableValidatorRules {
         ArrayList<TypeMetaData> types = null;
 
         types = db.getDefaultDatatype().getList();
+        HashMap<String, boolean[]> dolphinTypes = db.getDolphinTypes();
+
+        boolean dolphin = dolphinTypes != null;
 
         // remove pseudo types when listing data types for column
         if (column) {
@@ -106,7 +110,23 @@ public final class TableValidatorRules {
                     objectIter.remove();
                 }
 
+                if (dolphin && dolphinTypes.containsKey(name)) {
+                    dolphin = false;
+                }
                 hasMore = objectIter.hasNext();
+            }
+        }
+        if (dolphin) {
+            Namespace ns = (Namespace)db.getSystemNamespaces().get("pg_catalog");
+            Iterator<String> dolphinTypesIter = dolphinTypes.keySet().stream().sorted().iterator();
+            int typeOid = 10000;
+            String typename = null;
+            boolean hasMore = dolphinTypesIter.hasNext();
+
+            while (hasMore) {
+                typename = dolphinTypesIter.next();
+                types.add(new TypeMetaData(typeOid++, typename, ns));
+                hasMore = dolphinTypesIter.hasNext();
             }
         }
 

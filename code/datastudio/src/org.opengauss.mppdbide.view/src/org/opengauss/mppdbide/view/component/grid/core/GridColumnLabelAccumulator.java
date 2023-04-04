@@ -217,7 +217,7 @@ public class GridColumnLabelAccumulator extends ColumnOverrideLabelAccumulator {
     private boolean checkIfDatatypeSupported(int colPosition, IDSEditGridDataProvider editDataProvider) {
         String columnDataTypeName = editDataProvider.getColumnDataProvider().getColumnDataTypeName(colPosition);
         int colPrecisionValue = editDataProvider.getColumnDataProvider().getPrecision(colPosition);
-        return GridUIUtils.isDatatypeEditSupported(columnDataTypeName, colPrecisionValue);
+        return GridUIUtils.isDatatypeEditSupported(columnDataTypeName, colPrecisionValue, editDataProvider.getDatabse());
     }
 
     /*

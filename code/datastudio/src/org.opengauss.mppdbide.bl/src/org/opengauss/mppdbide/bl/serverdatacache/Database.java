@@ -15,6 +15,7 @@
 
 package org.opengauss.mppdbide.bl.serverdatacache;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -135,6 +136,8 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
     private FetchObjHelper fetchQueryHelper = null;
 
     private DataTypeProvider dataTypeProvider = null;
+
+    private HashMap<String, boolean[]> dolphinTypes = null;
 
     /**
      * Gets the db name.
@@ -1430,5 +1433,88 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
 
     public boolean isExplainPlanSupported() {
         return isExplainPlanSupported;
+    }
+
+    public void initDolphinTypesIfNeeded() throws DatabaseCriticalException, DatabaseOperationException {
+        if (hasDolphin()) {
+            initDolphinTypes();
+        }
+    }
+
+    private boolean hasDolphin()
+            throws DatabaseCriticalException, DatabaseOperationException {
+        String qry = "select count(*) = 1 from pg_extension where extname = 'dolphin'";
+        String qry2 = "select count(*) = 1 from pg_proc where proname = 'dolphin_types' and pronamespace = 11 and pronargs = 0";
+        boolean hasDolphinExtention = false;
+        boolean hasDolphinTypesFunction = false;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        try {
+            rs = this.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(qry);
+            boolean hasNext = rs.next();
+            while (hasNext) {
+                hasDolphinExtention = rs.getBoolean(1);
+                hasNext = rs.next();
+            }
+            rs2 = this.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(qry2);
+            hasNext = rs2.next();
+            while (hasNext) {
+                hasDolphinTypesFunction = rs2.getBoolean(1);
+                hasNext = rs2.next();
+            }
+        } catch (SQLException exp) {
+            try {
+                GaussUtils.handleCriticalException(exp);
+            } catch (DatabaseCriticalException dc) {
+                throw dc;
+            }
+            MPPDBIDELoggerUtility
+                    .error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION), exp);
+            throw new DatabaseOperationException(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION, exp);
+        } finally {
+            this.getConnectionManager().closeRSOnObjBrowserConn(rs);
+            this.getConnectionManager().closeRSOnObjBrowserConn(rs2);
+        }
+
+        return hasDolphinExtention & hasDolphinTypesFunction;
+    }
+
+    public void initDolphinTypes() throws DatabaseCriticalException, DatabaseOperationException
+    {
+        String qry = "select dolphin_types()";
+        ResultSet rs = null;
+        try {
+            rs = this.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(qry);
+            boolean hasNext = rs.next();
+            while (hasNext) {
+                 Array array = rs.getArray(1);
+                 if (array != null) {
+                     String[][] strs = (String[][]) array.getArray();
+                     dolphinTypes = new HashMap<String, boolean[]>(strs.length);
+                     for (int i = 0; i < strs.length; i++) {
+                         dolphinTypes.put(strs[i][0], new boolean[] {Boolean.parseBoolean(strs[i][1]),
+                                 Boolean.parseBoolean(strs[i][2])});
+                     }
+                 }
+                hasNext = rs.next();
+            }
+        } catch (SQLException exp) {
+            try {
+                GaussUtils.handleCriticalException(exp);
+            } catch (DatabaseCriticalException dc) {
+                throw dc;
+            }
+            MPPDBIDELoggerUtility
+                    .error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION), exp);
+            throw new DatabaseOperationException(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION, exp);
+        } finally {
+            this.getConnectionManager().closeRSOnObjBrowserConn(rs);
+        }
+
+        return;
+    }
+
+    public HashMap<String, boolean[]> getDolphinTypes() {
+        return this.dolphinTypes;
     }
 }

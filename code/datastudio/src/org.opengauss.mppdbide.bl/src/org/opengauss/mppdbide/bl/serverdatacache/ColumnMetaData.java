@@ -15,6 +15,9 @@
 
 package org.opengauss.mppdbide.bl.serverdatacache;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import org.opengauss.mppdbide.adapter.gauss.DBConnection;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
@@ -66,6 +69,10 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
 
     private String colDescription;
 
+    private ArrayList<String> enumOrSetValues;
+
+    private HashSet<String> enumOrSetList;
+
     private static final String OCP = "all";
 
     /**
@@ -84,6 +91,24 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
      */
     public void setColDescription(String colDescription) {
         this.colDescription = colDescription;
+    }
+
+    /**
+     * Gets the enum or set values.
+     *
+     * @return the enum or set values
+     */
+    public ArrayList<String> getEnumOrSetValues() {
+        return enumOrSetValues;
+    }
+
+    /**
+     * Sets the enum or set values.
+     *
+     * @param enumOrSetValues the new enum or set values
+     */
+    public void setEnumOrSetValues(ArrayList<String> enumOrSetValues) {
+        this.enumOrSetValues = enumOrSetValues;
     }
 
     /**
@@ -403,7 +428,11 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
             if (isSchemaselected) {
                 query.append(this.dataType.getDisplayName());
             } else {
-                query.append(this.dataType.getName());
+                String dataType = this.dataType.getName();
+                query.append(dataType);
+                if ("set".equals(dataType) || "enum".equals(dataType)) {
+                    query.append(formEnumOrSetValues());
+                }
             }
 
         }
@@ -433,6 +462,31 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
         }
 
         return query.toString();
+    }
+
+    /**
+     * Form enum or set values string
+     *
+     */
+    private String formEnumOrSetValues() {
+        if (this.enumOrSetValues == null || this.enumOrSetValues.size() == 0) {
+            return "";
+        }
+        Iterator<String> valuesItr = this.enumOrSetValues.iterator();
+        boolean hasNext = valuesItr.hasNext();
+        String value = null;
+        StringBuilder formValues = new StringBuilder();
+        formValues.append('(');
+        while (hasNext) {
+            value = valuesItr.next();
+            formValues.append('\'').append(value).append('\'');
+            hasNext = valuesItr.hasNext();
+            if (hasNext) {
+                formValues.append(", ");
+            }
+        }
+        formValues.append(')');
+        return formValues.toString();
     }
 
     /**
@@ -621,6 +675,9 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
                 qry.append(this.dataType.getName());
             }
 
+            if ("set".equals(this.dataType.getName()) || "enum".equals(this.dataType.getName())) {
+                qry.append(formEnumOrSetValues());
+            }
         }
         if (0 != this.lenOrPrecision) {
             qry.append('(');
@@ -948,6 +1005,14 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
             return " - " + getParentDetails();
         }
         return "";
+    }
+
+    public HashSet<String> getEnumOrSetList() {
+        return enumOrSetList;
+    }
+
+    public void setEnumOrSetList(HashSet<String> enumOrSetList) {
+        this.enumOrSetList = enumOrSetList;
     }
 
 }

@@ -25,4 +25,4 @@ Export-Package: org.postgresql,
  org.postgresql.util,
  org.postgresql.xa
 Bundle-ClassPath: .,
- opengauss-jdbc-3.1.0.jar
+ opengauss-jdbc-3.1.1.jar

@@ -76,7 +76,7 @@ public class GridColumnHeaderAccumulator extends ColumnLabelAccumulator {
                 return;
             }
 
-            if (!GridUIUtils.isDatatypeEditSupported(columnDTName, precisionVal)
+            if (!GridUIUtils.isDatatypeEditSupported(columnDTName, precisionVal, editDP.getDatabse())
                     || editDP.isDistributionColumn(columnPosition)) {
                 configLabels.addLabel(IEditTableGridStyleLabelFactory.COL_HEADER_LABEL_READONLY_CELL);
             }

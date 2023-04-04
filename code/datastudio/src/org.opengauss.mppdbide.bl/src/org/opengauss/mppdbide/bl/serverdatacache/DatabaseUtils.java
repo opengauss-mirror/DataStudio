@@ -555,11 +555,11 @@ public interface DatabaseUtils {
      */
     static String[][] getdefaultDatatypeList() {
         String[][] defaultDatatype = {{"char", null}, {"varchar", null}, {"text", null}, {"int4", "integer"},
-            {"int2", "smallint"}, {"int8", "bigint"}, {"date", null}, {"money", null}, {"numeric", null},
-            {"numeric", "decimal"}, {"float8", "double precision"}, {"float4", "real"}, {"interval", null},
-            {"time", "time without time zone"}, {"timestamp", "timestamp without time zone"}, {"bool", "boolean"},
-            {"bit", null}, {"box", null}, {"bytea", null}, {"cidr", null}, {"circle", null}, {"inet", null},
-            {"lseg", null}, {"macaddr", null}, {"path", null}, {"point", null}, {"polygon", null},
+            {"int1", "tinyint"}, {"int2", "smallint"}, {"int8", "bigint"}, {"date", null}, {"money", null},
+            {"numeric", null}, {"numeric", "decimal"}, {"float8", "double precision"}, {"float4", "real"},
+            {"interval", null}, {"time", "time without time zone"}, {"timestamp", "timestamp without time zone"},
+            {"bool", "boolean"}, {"bit", null}, {"box", null}, {"bytea", null}, {"cidr", null}, {"circle", null},
+            {"inet", null}, {"lseg", null}, {"macaddr", null}, {"path", null}, {"point", null}, {"polygon", null},
             {"timetz", "time with time zone"}, {"timestamptz", "timestamp with time zone"}, {"tsquery", null},
             {"tsvector", null}, {"txid_snapshot", null}, {"uuid", null}, {"varbit", null}, {"xml", null},
             {"clob", null}, {"blob", null}};

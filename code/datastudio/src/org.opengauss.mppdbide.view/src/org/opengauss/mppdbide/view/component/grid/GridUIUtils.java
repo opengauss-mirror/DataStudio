@@ -15,6 +15,9 @@
 
 package org.opengauss.mppdbide.view.component.grid;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.eclipse.swt.SWT;
@@ -22,11 +25,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-
+import org.opengauss.mppdbide.adapter.gauss.GaussUtils;
+import org.opengauss.mppdbide.bl.serverdatacache.Database;
 import org.opengauss.mppdbide.presentation.objectproperties.PropertiesConstants;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
+import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
+import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 
 /**
  * 
@@ -95,13 +102,14 @@ public class GridUIUtils {
      * @param precision the precision
      * @return true, if is datatype edit supported
      */
-    public static boolean isDatatypeEditSupported(String sqlType, int precision) {
+    public static boolean isDatatypeEditSupported(String sqlType, int precision, Database db) {
         switch (sqlType.toLowerCase(Locale.ENGLISH)) {
             case "bpchar":
             case "char":
             case "varchar":
             case "text":
             case "int4":
+            case "int1":
             case "int2":
             case "int8":
             case "date":
@@ -118,6 +126,18 @@ public class GridUIUtils {
             case "real":
             case "number":
             case "boolean":
+            case "nvarchar2":
+            case "interval":
+            case "blob":
+            case "clob":
+            case "varbit":
+            case "box":
+            case "path":
+            case "circle":
+            case "lseg":
+            case "point":
+            case "polygon":
+            case "binary":
             case MPPDBIDEConstants.BYTEA: {
                 return true;
             }
@@ -128,10 +148,52 @@ public class GridUIUtils {
                 return true;
             }
             default: {
+                HashMap<String, boolean[]> dolphinTypes = db.getDolphinTypes();
+                if (dolphinTypes != null) {
+                    String typeName = sqlType.toLowerCase(Locale.ENGLISH);
+                    if (dolphinTypes.containsKey(typeName)) {
+                        return true;
+                    }
+                    try {
+                        if (istypType(typeName, "s", db) || istypType(typeName, "e", db)) {
+                            return true;
+                        }
+                    } catch (DatabaseCriticalException exception) {
+                        MPPDBIDELoggerUtility.error("istypType query failed", exception);
+                    } catch (DatabaseOperationException exception) {
+                        MPPDBIDELoggerUtility.error("istypType query failed", exception);
+                    }
+                }
                 return false;
             }
         }
 
+    }
+
+    public static boolean istypType(String typeName, String typType, Database db) throws DatabaseCriticalException, DatabaseOperationException {
+        String qry = "select count(*) from pg_type where typname = '" + typeName + "' and typtype = '" + typType + "';";
+        boolean isSetType = false;
+        ResultSet rs = null;
+        try {
+            rs = db.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(qry);
+            boolean hasNext = rs.next();
+            while (hasNext) {
+                isSetType = rs.getBoolean(1);
+                hasNext = rs.next();
+            }
+        } catch (SQLException exp) {
+            try {
+                GaussUtils.handleCriticalException(exp);
+            } catch (DatabaseCriticalException dc) {
+                throw dc;
+            }
+            MPPDBIDELoggerUtility
+                    .error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION), exp);
+            throw new DatabaseOperationException(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION, exp);
+        } finally {
+            db.getConnectionManager().closeRSOnObjBrowserConn(rs);
+        }
+        return isSetType;
     }
 
     /**
