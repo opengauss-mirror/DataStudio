@@ -54,6 +54,7 @@ import org.opengauss.mppdbide.bl.serverdatacache.TableValidatorRules;
 import org.opengauss.mppdbide.bl.serverdatacache.TypeMetaData;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.SystemObjectName;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
 import org.opengauss.mppdbide.view.utils.FontAndColorUtility;
 import org.opengauss.mppdbide.view.utils.icon.IconUtility;
@@ -505,11 +506,11 @@ public class ChangeDataTypeDialog extends Dialog {
          * we have not mapped the data types of information_schema and
          * pg_catalog hence the check is to avoid null pointer exception
          */
-        if (selectedNamespace == null || (!"information_schema".equals(selectedNamespace.getName())
-                && !"pg_catalog".equals(selectedNamespace.getName()))) {
+        if (selectedNamespace == null || (!SystemObjectName.INFORMATION_SCHEMA.equals(selectedNamespace.getName())
+                && !SystemObjectName.PG_CATALOG.equals(selectedNamespace.getName()))) {
             spinnerPrevSize.setEnabled(UIUtils.enableDisablePrecisionFieldForDatatype(type.getName(), db.getDolphinTypes()));
             spinnerScale.setEnabled(UIUtils.enableDisableScaleFieldForDatatype(type.getName(), db.getDolphinTypes()));
-            if ("set".equals(type.getName()) || "enum".equals(type.getName())) {
+            if (SystemObjectName.SET.equals(type.getName()) || SystemObjectName.ENUM.equals(type.getName())) {
                 editValues.setVisible(true);
             } else {
                 grpValues.setVisible(false);
@@ -550,7 +551,7 @@ public class ChangeDataTypeDialog extends Dialog {
             columnMetaData.setPre(spinnerPrevSize.getSelection(), spinnerScale.getSelection());
         }
 
-        if ("set".equals(type.getName()) || "enum".equals(type.getName())) {
+        if (SystemObjectName.SET.equals(type.getName()) || SystemObjectName.ENUM.equals(type.getName())) {
             columnMetaData.setEnumOrSetValues(new ArrayList<String>(this.setOrEnumValues));
             columnMetaData.setEnumOrSetList(new HashSet<String>(this.setOrEnumList));
         }
@@ -675,6 +676,7 @@ public class ChangeDataTypeDialog extends Dialog {
         createAddToValue(addRemoveValueComposite);
         createRemoveFromIndex(addRemoveValueComposite);
     }
+
     /**
      * Creates the add to index.Add/Remove/MoveUp/MoveDown Buttons
      *
@@ -707,22 +709,18 @@ public class ChangeDataTypeDialog extends Dialog {
             }
         });
     }
-    
+
     public void repopulateValueCols() {
         TableItem item = null;
         tblValues.removeAll();
         Iterator<String> valuesItr = this.setOrEnumValues.iterator();
-        boolean hasNext = valuesItr.hasNext();
         String value = null;
-
-        while (hasNext) {
+        while (valuesItr.hasNext()) {
             value = valuesItr.next();
             item = new TableItem(tblValues, SWT.NONE);
             item.setText(value);
-            hasNext = valuesItr.hasNext();
         }
     }
-
 
     private void createRemoveFromIndex(Composite comp) {
         Button removeFromIndex = new Button(comp, SWT.ARROW | SWT.LEFT);
@@ -794,7 +792,7 @@ public class ChangeDataTypeDialog extends Dialog {
             @Override
             public void widgetSelected(SelectionEvent event) {
                 grpValues.setVisible(false);
-                grpValues.setSize(0,0);
+                grpValues.setSize(0, 0);
                 editValues.setVisible(true);
                 currentShell.setSize(720, 345);
             }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.opengauss.mppdbide.utils.SystemObjectName;
 /**
  * 
  * Title: class
@@ -92,41 +93,31 @@ public final class TableValidatorRules {
         types = db.getDefaultDatatype().getList();
         HashMap<String, boolean[]> dolphinTypes = db.getDolphinTypes();
 
-        boolean dolphin = dolphinTypes != null;
+        boolean hasDolphin = (dolphinTypes != null);
 
         // remove pseudo types when listing data types for column
         if (column) {
             Iterator<TypeMetaData> objectIter = types.iterator();
-
             TypeMetaData typename = null;
-            boolean hasMore = objectIter.hasNext();
-            String name = null;
-
-            while (hasMore) {
+            while (objectIter.hasNext()) {
                 typename = objectIter.next();
-                name = typename.getName();
-
+                String name = typename.getName();
                 if (pseudoTypes.contains(name)) {
                     objectIter.remove();
                 }
-
-                if (dolphin && dolphinTypes.containsKey(name)) {
-                    dolphin = false;
+                if (hasDolphin && dolphinTypes.containsKey(name)) {
+                    hasDolphin = false;
                 }
-                hasMore = objectIter.hasNext();
             }
         }
-        if (dolphin) {
-            Namespace ns = (Namespace)db.getSystemNamespaces().get("pg_catalog");
+        if (hasDolphin) {
+            Namespace ns =  (Namespace)db.getSystemNamespaces().get(SystemObjectName.PG_CATALOG);
             Iterator<String> dolphinTypesIter = dolphinTypes.keySet().stream().sorted().iterator();
-            int typeOid = 10000;
             String typename = null;
-            boolean hasMore = dolphinTypesIter.hasNext();
 
-            while (hasMore) {
+            while (dolphinTypesIter.hasNext()) {
                 typename = dolphinTypesIter.next();
-                types.add(new TypeMetaData(typeOid++, typename, ns));
-                hasMore = dolphinTypesIter.hasNext();
+                types.add(new TypeMetaData(db.getDolphinTypeOid(typename), typename, ns));
             }
         }
 

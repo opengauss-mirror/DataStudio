@@ -54,6 +54,7 @@ import org.opengauss.mppdbide.bl.serverdatacache.TableValidatorRules;
 import org.opengauss.mppdbide.bl.serverdatacache.TypeMetaData;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.SystemObjectName;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
 import org.opengauss.mppdbide.view.utils.FontAndColorUtility;
 import org.opengauss.mppdbide.view.utils.UIMandatoryAttribute;
@@ -713,8 +714,8 @@ public class ColumnUI {
             return;
         }
 
-        if (selectedNS == null
-                || (!"information_schema".equals(selectedNS.getName()) && !"pg_catalog".equals(selectedNS.getName()))) {
+        if (selectedNS == null || (!SystemObjectName.INFORMATION_SCHEMA.equals(selectedNS.getName()) &&
+                !SystemObjectName.PG_CATALOG.equals(selectedNS.getName()))) {
 
             spinnerPreSize.setEnabled(UIUtils.enableDisablePrecisionFieldForDatatype(type.getName(), db.getDolphinTypes()));
             spinnerScale.setEnabled(UIUtils.enableDisableScaleFieldForDatatype(type.getName(), db.getDolphinTypes()));
@@ -742,15 +743,11 @@ public class ColumnUI {
      */
     public void enableDisableSetValues() {
         Namespace selectedNS = UIUtils.getNamespaceForDatatype(db, cmbClmDataSchema);
-        TypeMetaData type = null;
-
-        type = UIUtils.getDtypeFromCombo(selectedNS, db, cmbClmDataType);
-
+        TypeMetaData type = UIUtils.getDtypeFromCombo(selectedNS, db, cmbClmDataType);
         if (null == type || null == grpValues) {
             return;
         }
-
-        if ("set".equals(type.getName()) || "enum".equals(type.getName())) {
+        if (SystemObjectName.SET.equals(type.getName()) || SystemObjectName.ENUM.equals(type.getName())) {
             editValues.setVisible(true);
         } else {
             grpValues.setVisible(false);
@@ -841,7 +838,7 @@ public class ColumnUI {
         }
 
         newTempColumn.setColDescription(textColumnDescription.getText());
-        if ("set".equals(type.getName()) || "enum".equals(type.getName())) {
+        if (SystemObjectName.SET.equals(type.getName()) || SystemObjectName.ENUM.equals(type.getName())) {
             newTempColumn.setEnumOrSetValues(new ArrayList<String>(this.setOrEnumValues));
             newTempColumn.setEnumOrSetList(new HashSet<String>(this.setOrEnumList));
             setOrEnumValues = new ArrayList<String>();
@@ -900,7 +897,8 @@ public class ColumnUI {
         spinnerScale.setSelection(columnMetaData.getScale());
         chkColumnNameCase.setSelection(columnMetaData.getColumnCase());
         this.editIndex = editIndx;
-        if ("set".equals(columnMetaData.getDataTypeName()) || "enum".equals(columnMetaData.getDataTypeName())) {
+        if (SystemObjectName.SET.equals(columnMetaData.getDataTypeName()) ||
+                SystemObjectName.ENUM.equals(columnMetaData.getDataTypeName())) {
             this.setOrEnumValues = columnMetaData.getEnumOrSetValues() != null ? new ArrayList<String>(columnMetaData.getEnumOrSetValues()) :
                 new ArrayList<String>();
             this.setOrEnumList = columnMetaData.getEnumOrSetList() != null ? new HashSet<String>(columnMetaData.getEnumOrSetList()) :
@@ -1169,14 +1167,11 @@ public class ColumnUI {
         TableItem item = null;
         tblValues.removeAll();
         Iterator<String> valuesItr = this.setOrEnumValues.iterator();
-        boolean hasNext = valuesItr.hasNext();
         String value = null;
-
-        while (hasNext) {
+        while (valuesItr.hasNext()) {
             value = valuesItr.next();
             item = new TableItem(tblValues, SWT.NONE);
             item.setText(value);
-            hasNext = valuesItr.hasNext();
         }
     }
 

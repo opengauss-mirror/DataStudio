@@ -18,8 +18,10 @@ package org.opengauss.mppdbide.bl.serverdatacache;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 import org.opengauss.mppdbide.adapter.gauss.DBConnection;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.SystemObjectName;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 
@@ -430,7 +432,7 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
             } else {
                 String dataType = this.dataType.getName();
                 query.append(dataType);
-                if ("set".equals(dataType) || "enum".equals(dataType)) {
+                if (SystemObjectName.SET.equals(dataType) || SystemObjectName.ENUM.equals(dataType)) {
                     query.append(formEnumOrSetValues());
                 }
             }
@@ -472,21 +474,8 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
         if (this.enumOrSetValues == null || this.enumOrSetValues.size() == 0) {
             return "";
         }
-        Iterator<String> valuesItr = this.enumOrSetValues.iterator();
-        boolean hasNext = valuesItr.hasNext();
-        String value = null;
-        StringBuilder formValues = new StringBuilder();
-        formValues.append('(');
-        while (hasNext) {
-            value = valuesItr.next();
-            formValues.append('\'').append(value).append('\'');
-            hasNext = valuesItr.hasNext();
-            if (hasNext) {
-                formValues.append(", ");
-            }
-        }
-        formValues.append(')');
-        return formValues.toString();
+        String collect = this.enumOrSetValues.stream().map(String::valueOf).collect(Collectors.joining("\', \'"));
+        return "(\'" + collect + "\')";
     }
 
     /**
@@ -675,7 +664,8 @@ public class ColumnMetaData extends BatchDropServerObject implements GaussOLAPDB
                 qry.append(this.dataType.getName());
             }
 
-            if ("set".equals(this.dataType.getName()) || "enum".equals(this.dataType.getName())) {
+            if (SystemObjectName.SET.equals(this.dataType.getName()) ||
+                    SystemObjectName.ENUM.equals(this.dataType.getName())) {
                 qry.append(formEnumOrSetValues());
             }
         }

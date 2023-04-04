@@ -45,9 +45,9 @@ import org.opengauss.mppdbide.bl.serverdatacache.groups.ObjectList;
 import org.opengauss.mppdbide.bl.serverdatacache.groups.SystemNamespaceObjectGroup;
 import org.opengauss.mppdbide.bl.serverdatacache.groups.UserNamespaceObjectGroup;
 import org.opengauss.mppdbide.bl.util.BLUtils;
-import org.opengauss.mppdbide.bl.util.ExecTimer;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.SystemObjectName;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.exceptions.MPPDBIDEException;
@@ -138,6 +138,13 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
     private DataTypeProvider dataTypeProvider = null;
 
     private HashMap<String, boolean[]> dolphinTypes = null;
+
+    private static final String DOLPHIN_EXTENSION_QUERY = "select count(*) from pg_extension where extname = 'dolphin'";
+    private static final String DOLPHIN_TYPE_FUNCTION_QUERY = "select count(*) from pg_proc " +
+                                                                "where proname = 'dolphin_types' and " +
+                                                                "pronamespace = 11 and pronargs = 0";
+
+    private static final String DOLPHIN_TYPES_QUERY = "select dolphin_types()";
 
     /**
      * Gets the db name.
@@ -534,7 +541,7 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
          */
         public void loadDefaultDatatype() throws DatabaseOperationException {
             defaultDatatypes.clear();
-            ServerObject servObj = getSystemNamespaces().get("pg_catalog");
+            ServerObject servObj = getSystemNamespaces().get(SystemObjectName.PG_CATALOG);
 
             if (!(servObj instanceof Namespace)) {
                 return;
@@ -564,7 +571,7 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
 
             orcDatatypes = new OLAPObjectList<TypeMetaData>(OBJECTTYPE.DATATYPE_GROUP, this);
 
-            ServerObject servObj = getSystemNamespaces().get("pg_catalog");
+            ServerObject servObj = getSystemNamespaces().get(SystemObjectName.PG_CATALOG);
 
             if (!(servObj instanceof Namespace)) {
                 return;
@@ -1441,52 +1448,30 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
         }
     }
 
+    /**
+     * Checks has dolphin plugin and dolphin type function
+     *
+     * @return true, if has dolphin plugin and dolphin type function
+     */
     private boolean hasDolphin()
             throws DatabaseCriticalException, DatabaseOperationException {
-        String qry = "select count(*) = 1 from pg_extension where extname = 'dolphin'";
-        String qry2 = "select count(*) = 1 from pg_proc where proname = 'dolphin_types' and pronamespace = 11 and pronargs = 0";
-        boolean hasDolphinExtention = false;
-        boolean hasDolphinTypesFunction = false;
-        ResultSet rs = null;
-        ResultSet rs2 = null;
-        try {
-            rs = this.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(qry);
-            boolean hasNext = rs.next();
-            while (hasNext) {
-                hasDolphinExtention = rs.getBoolean(1);
-                hasNext = rs.next();
-            }
-            rs2 = this.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(qry2);
-            hasNext = rs2.next();
-            while (hasNext) {
-                hasDolphinTypesFunction = rs2.getBoolean(1);
-                hasNext = rs2.next();
-            }
-        } catch (SQLException exp) {
-            try {
-                GaussUtils.handleCriticalException(exp);
-            } catch (DatabaseCriticalException dc) {
-                throw dc;
-            }
-            MPPDBIDELoggerUtility
-                    .error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION), exp);
-            throw new DatabaseOperationException(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION, exp);
-        } finally {
-            this.getConnectionManager().closeRSOnObjBrowserConn(rs);
-            this.getConnectionManager().closeRSOnObjBrowserConn(rs2);
-        }
+        String dolphinExtensionResult =
+                this.getConnectionManager().execSelectAndGetFirstValOnObjBrowserConn(DOLPHIN_EXTENSION_QUERY);
+        String dolphinFunctionResult =
+                this.getConnectionManager().execSelectAndGetFirstValOnObjBrowserConn(DOLPHIN_TYPE_FUNCTION_QUERY);
+        boolean hasDolphinExtention = Integer.parseInt(dolphinExtensionResult) == 1;
+        boolean hasDolphinTypesFunction = Integer.parseInt(dolphinFunctionResult) == 1;
 
-        return hasDolphinExtention & hasDolphinTypesFunction;
+        return hasDolphinExtention && hasDolphinTypesFunction;
     }
+
 
     public void initDolphinTypes() throws DatabaseCriticalException, DatabaseOperationException
     {
-        String qry = "select dolphin_types()";
         ResultSet rs = null;
         try {
-            rs = this.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(qry);
-            boolean hasNext = rs.next();
-            while (hasNext) {
+            rs = this.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(DOLPHIN_TYPES_QUERY);
+            while (rs.next()) {
                  Array array = rs.getArray(1);
                  if (array != null) {
                      String[][] strs = (String[][]) array.getArray();
@@ -1496,7 +1481,6 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
                                  Boolean.parseBoolean(strs[i][2])});
                      }
                  }
-                hasNext = rs.next();
             }
         } catch (SQLException exp) {
             try {
@@ -1514,7 +1498,29 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
         return;
     }
 
+    /**
+     * Get the dolphinTypes
+     *
+     * @return dolphinTypes
+     */
     public HashMap<String, boolean[]> getDolphinTypes() {
         return this.dolphinTypes;
+    }
+
+    /**
+     * Get the oid of type
+     *
+     * @return integer, the dolphin type oid
+     */
+    public int getDolphinTypeOid(String typname) {
+        int oid = 0;
+        try {
+            String getTypeOidQuery = "select oid from pg_type where typname=\'" + typname + "\' and typnamespace = 11";
+            String result  = this.getConnectionManager().execSelectAndGetFirstValOnObjBrowserConn(getTypeOidQuery);
+            oid = Integer.parseInt(result);
+        } catch (DatabaseOperationException | DatabaseCriticalException exp) {
+            MPPDBIDELoggerUtility.error("getDolphinTypeOid: Failed to get the type oid.");
+        }
+        return oid;
     }
 }

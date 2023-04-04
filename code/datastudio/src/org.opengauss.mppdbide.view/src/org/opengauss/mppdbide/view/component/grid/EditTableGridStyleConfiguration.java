@@ -52,6 +52,7 @@ import org.opengauss.mppdbide.presentation.objectproperties.PropertiesConstants;
 import org.opengauss.mppdbide.presentation.objectproperties.PropertiesUserRoleImpl;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.SystemObjectName;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
@@ -354,25 +355,7 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
                         break;
                     }
                     case Types.OTHER: {
-                        String colDatatypeName = dataProvider.getColumnDataProvider().getColumnDataTypeName(i);
-                        if (extraTypes.contains(colDatatypeName) || (dolphinTypes != null && dolphinTypes.containsKey(colDatatypeName))) {
-                                configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
-                                        DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
-                                break;
-                            }
-                        try {
-                            if (GridUIUtils.istypType(colDatatypeName, "s", dataProvider.getDatabse()) ||
-                                    GridUIUtils.istypType(colDatatypeName, "e", dataProvider.getDatabse())) {
-                                configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
-                                        DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
-                                break;
-                            }
-                        } catch (DatabaseCriticalException exception) {
-                            MPPDBIDELoggerUtility.error("istypType query failed", exception);
-                        } catch (DatabaseOperationException exception) {
-                            MPPDBIDELoggerUtility.error("istypType query failed", exception);
-                        }
-                        cursorTypeConfiguration(configRegistry, dataProvider);
+                        handleCommonColumnConfigureForOther(configRegistry, dataProvider, dolphinTypes, i);
                         break;
                     }
 
@@ -407,6 +390,31 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
                 configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
                         DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
             }
+        }
+
+        private void handleCommonColumnConfigureForOther(IConfigRegistry configRegistry,
+                IDSGridDataProvider dataProvider, HashMap<String, boolean[]> dolphinTypes, int i) {
+            String colDatatypeName = dataProvider.getColumnDataProvider().getColumnDataTypeName(i);
+            if (extraTypes.contains(colDatatypeName)
+                    || (dolphinTypes != null && dolphinTypes.containsKey(colDatatypeName))) {
+                configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
+                        DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
+                return;
+            }
+            try {
+                if (GridUIUtils.checkTypType(colDatatypeName, SystemObjectName.SET_TYP_TYPE, dataProvider.getDatabse())
+                        || GridUIUtils.checkTypType(colDatatypeName, SystemObjectName.ENUM_TYP_TYPE,
+                                dataProvider.getDatabse())) {
+                    configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
+                            DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
+                    return;
+                }
+            } catch (DatabaseCriticalException exception) {
+                MPPDBIDELoggerUtility.error("checkTypType query failed", exception);
+            } catch (DatabaseOperationException exception) {
+                MPPDBIDELoggerUtility.error("checkTypType query failed", exception);
+            }
+            cursorTypeConfiguration(configRegistry, dataProvider);
         }
 
         /**
