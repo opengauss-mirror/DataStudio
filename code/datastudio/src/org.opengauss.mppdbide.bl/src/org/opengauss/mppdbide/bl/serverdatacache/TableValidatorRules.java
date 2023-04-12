@@ -16,8 +16,10 @@
 package org.opengauss.mppdbide.bl.serverdatacache;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
+import org.opengauss.mppdbide.utils.SystemObjectName;
 /**
  * 
  * Title: class
@@ -89,24 +91,33 @@ public final class TableValidatorRules {
         ArrayList<TypeMetaData> types = null;
 
         types = db.getDefaultDatatype().getList();
+        HashMap<String, boolean[]> dolphinTypes = db.getDolphinTypes();
+
+        boolean hasDolphin = (dolphinTypes != null);
 
         // remove pseudo types when listing data types for column
         if (column) {
             Iterator<TypeMetaData> objectIter = types.iterator();
-
             TypeMetaData typename = null;
-            boolean hasMore = objectIter.hasNext();
-            String name = null;
-
-            while (hasMore) {
+            while (objectIter.hasNext()) {
                 typename = objectIter.next();
-                name = typename.getName();
-
+                String name = typename.getName();
                 if (pseudoTypes.contains(name)) {
                     objectIter.remove();
                 }
+                if (hasDolphin && dolphinTypes.containsKey(name)) {
+                    hasDolphin = false;
+                }
+            }
+        }
+        if (hasDolphin) {
+            Namespace ns =  (Namespace)db.getSystemNamespaces().get(SystemObjectName.PG_CATALOG);
+            Iterator<String> dolphinTypesIter = dolphinTypes.keySet().stream().sorted().iterator();
+            String typename = null;
 
-                hasMore = objectIter.hasNext();
+            while (dolphinTypesIter.hasNext()) {
+                typename = dolphinTypesIter.next();
+                types.add(new TypeMetaData(db.getDolphinTypeOid(typename), typename, ns));
             }
         }
 

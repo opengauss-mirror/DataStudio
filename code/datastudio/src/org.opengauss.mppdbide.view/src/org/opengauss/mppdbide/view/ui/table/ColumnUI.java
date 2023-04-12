@@ -15,8 +15,12 @@
 
 package org.opengauss.mppdbide.view.ui.table;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
@@ -37,6 +41,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
@@ -49,6 +54,7 @@ import org.opengauss.mppdbide.bl.serverdatacache.TableValidatorRules;
 import org.opengauss.mppdbide.bl.serverdatacache.TypeMetaData;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.SystemObjectName;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
 import org.opengauss.mppdbide.view.utils.FontAndColorUtility;
 import org.opengauss.mppdbide.view.utils.UIMandatoryAttribute;
@@ -67,6 +73,7 @@ import org.opengauss.mppdbide.view.utils.icon.IiconPath;
  */
 public class ColumnUI {
     private Text textColumnName;
+    private StyledText txtUserValue;
 
     private Button chkColumnNameCase;
 
@@ -93,12 +100,14 @@ public class ColumnUI {
     private StyledText textCheckExpr;
 
     private Group grpColumns;
+    private Group grpValues;
 
     private Database db;
     private TableMetaData selectedTable;
     private int editIndex = -1;
     private TableValidatorRules validator;
     private Table tableCloumnList;
+    private Table tblValues;
 
     private boolean duplicateName;
 
@@ -108,8 +117,12 @@ public class ColumnUI {
     private Label lblCheck;
 
     private Button chkFunction;
+    private Button editValues;
 
     private Text textColumnDescription;
+
+    private ArrayList<String> setOrEnumValues;
+    private HashSet<String> setOrEnumList;
 
     /**
      * Sets the UI labels color gray.
@@ -254,9 +267,9 @@ public class ColumnUI {
         /**
          * STEP: 2 COLUMN CREATION
          */
-        Composite columnDetails = new Composite(compositeColumns, SWT.NONE);
+        Composite columnDetails = new Composite(compositeColumns, SWT.FILL);
         columnDetails.setLayout(new GridLayout(4, false));
-        GridData columnDetailsGD = new GridData(SWT.FILL, SWT.NONE, true, true);
+        GridData columnDetailsGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         columnDetails.setLayoutData(columnDetailsGD);
 
         addColumnNameGui(columnDetails);
@@ -270,17 +283,19 @@ public class ColumnUI {
 
         addDataTypeSchemaGui(columnDetails);
 
-        Composite typeDescriptionComposite = new Composite(compositeColumns, SWT.NONE);
+        Composite typeDescriptionComposite = new Composite(compositeColumns, SWT.FILL);
         typeDescriptionComposite.setLayout(new GridLayout(2, false));
         GridData typeDescriptionCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         typeDescriptionCompositeGD.heightHint = 50;
         typeDescriptionComposite.setLayoutData(typeDescriptionCompositeGD);
         addDatatypeDescpGui(typeDescriptionComposite);
 
+        addDisplayEditValuesButton(compositeColumns);
         addDatatypeGui(columnDetails);
         addPrecisionSizeGUI(columnDetails);
         addScaleGui(columnDetails);
 
+        createValues(compositeColumns);
         addColumnConstraintGui(compositeColumns);
 
         addColumnDescription(compositeColumns);
@@ -448,7 +463,7 @@ public class ColumnUI {
      * @param compositeColumns the composite columns
      */
     private void addDatatypeGui(Composite compositeColumns) {
-        Composite dataTypeComposite = new Composite(compositeColumns, SWT.NONE);
+        Composite dataTypeComposite = new Composite(compositeColumns, SWT.FILL);
         dataTypeComposite.setLayout(new GridLayout(1, false));
         GridData dataTypeCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         dataTypeComposite.setLayoutData(dataTypeCompositeGD);
@@ -562,6 +577,7 @@ public class ColumnUI {
 
         textColumnName = new Text(columnNameComposite, SWT.BORDER);
         GridData textColumnNameGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        textColumnNameGD.heightHint = 30;
         textColumnNameGD.widthHint = 200;
         textColumnName.setLayoutData(textColumnNameGD);
         textColumnName.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_TXT_COLUMNUI_COL_NAME_001");
@@ -596,6 +612,7 @@ public class ColumnUI {
          */
         public void modifyText(ModifyEvent event) {
             enableDisableSizeLen();
+            enableDisableSetValues();
         }
 
     }
@@ -697,11 +714,11 @@ public class ColumnUI {
             return;
         }
 
-        if (selectedNS == null
-                || (!"information_schema".equals(selectedNS.getName()) && !"pg_catalog".equals(selectedNS.getName()))) {
+        if (selectedNS == null || (!SystemObjectName.INFORMATION_SCHEMA.equals(selectedNS.getName()) &&
+                !SystemObjectName.PG_CATALOG.equals(selectedNS.getName()))) {
 
-            spinnerPreSize.setEnabled(UIUtils.enableDisablePrecisionFieldForDatatype(type.getName()));
-            spinnerScale.setEnabled(UIUtils.enableDisableScaleFieldForDatatype(type.getName()));
+            spinnerPreSize.setEnabled(UIUtils.enableDisablePrecisionFieldForDatatype(type.getName(), db.getDolphinTypes()));
+            spinnerScale.setEnabled(UIUtils.enableDisableScaleFieldForDatatype(type.getName(), db.getDolphinTypes()));
         } else {
             spinnerPreSize.setEnabled(false);
             spinnerScale.setEnabled(false);
@@ -718,6 +735,24 @@ public class ColumnUI {
         } else {
             spinnerColumnArray.setEnabled(false);
             textArrayDim.setEnabled(false);
+        }
+    }
+
+    /**
+     * Enable disable set values tab.
+     */
+    public void enableDisableSetValues() {
+        Namespace selectedNS = UIUtils.getNamespaceForDatatype(db, cmbClmDataSchema);
+        TypeMetaData type = UIUtils.getDtypeFromCombo(selectedNS, db, cmbClmDataType);
+        if (null == type || null == grpValues) {
+            return;
+        }
+        if (SystemObjectName.SET.equals(type.getName()) || SystemObjectName.ENUM.equals(type.getName())) {
+            editValues.setVisible(true);
+        } else {
+            grpValues.setVisible(false);
+            grpValues.setSize(0,0);
+            editValues.setVisible(false);
         }
     }
 
@@ -803,6 +838,14 @@ public class ColumnUI {
         }
 
         newTempColumn.setColDescription(textColumnDescription.getText());
+        if (SystemObjectName.SET.equals(type.getName()) || SystemObjectName.ENUM.equals(type.getName())) {
+            newTempColumn.setEnumOrSetValues(new ArrayList<String>(this.setOrEnumValues));
+            newTempColumn.setEnumOrSetList(new HashSet<String>(this.setOrEnumList));
+            setOrEnumValues = new ArrayList<String>();
+            setOrEnumList = new HashSet<String>();
+            repopulateValueCols();
+            txtUserValue.setText("");
+        }
         return newTempColumn;
     }
 
@@ -854,6 +897,14 @@ public class ColumnUI {
         spinnerScale.setSelection(columnMetaData.getScale());
         chkColumnNameCase.setSelection(columnMetaData.getColumnCase());
         this.editIndex = editIndx;
+        if (SystemObjectName.SET.equals(columnMetaData.getDataTypeName()) ||
+                SystemObjectName.ENUM.equals(columnMetaData.getDataTypeName())) {
+            this.setOrEnumValues = columnMetaData.getEnumOrSetValues() != null ? new ArrayList<String>(columnMetaData.getEnumOrSetValues()) :
+                new ArrayList<String>();
+            this.setOrEnumList = columnMetaData.getEnumOrSetList() != null ? new HashSet<String>(columnMetaData.getEnumOrSetList()) :
+                new HashSet<String>();
+            repopulateValueCols();
+        }
 
         setSpinnerData(columnMetaData);
     }
@@ -912,6 +963,9 @@ public class ColumnUI {
         textColumnDescription.setText("");
 
         cmbClmDataSchema.select(0);
+        this.setOrEnumList = new HashSet<>();
+        this.setOrEnumValues = new ArrayList<>();
+        tblValues.removeAll();
         populateDataTypes();
         this.editIndex = -1;
     }
@@ -1015,4 +1069,295 @@ public class ColumnUI {
         }
     }
 
+    /**
+     * Creates the values list for enum or set.
+     *
+     * @param comp the comp
+     */
+    private void createValues(Composite comp) {
+        grpValues = new Group(comp, SWT.FILL);
+        grpValues.setLayout(new GridLayout(5, false));
+        GridData groupGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        groupGD.heightHint = 10;
+        groupGD.horizontalSpan = 4;
+        grpValues.setLayoutData(groupGD);
+
+        createUserDefComposite();
+        createAddRemoveValueComposite();
+        createValueTable(grpValues);
+        createUpDownValueComposite();
+        createFinishComposite();
+        grpValues.setVisible(false);
+        
+    }
+
+    private void createUserDefComposite() {
+        Composite userValueComp = new Composite(this.grpValues, SWT.FILL);
+        userValueComp.setLayout(new GridLayout(1, false));
+        GridData avalColsOrUserExpCompGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        userValueComp.setLayoutData(avalColsOrUserExpCompGD);
+
+        Composite userExprComposite = new Composite(userValueComp, SWT.FILL);
+        
+        userExprComposite.setLayout(new GridLayout(1, false));
+        GridData userExprCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        userExprCompositeGD.verticalAlignment = SWT.CENTER;
+        userExprComposite.setLayoutData(userExprCompositeGD);
+        userExprComposite.setSize(50, 30);
+
+        Label lblUserDefinedValue = new Label(userExprComposite, SWT.FILL);
+        lblUserDefinedValue.setText(MessageConfigLoader.getProperty(IMessagesConstants.SET_ENUM_UI_USER_VALUE));
+        lblUserDefinedValue.pack();
+
+        txtUserValue = new StyledText(userExprComposite, SWT.BORDER);
+        txtUserValue.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_TXT_INDEXUI_USEREXPR_001");
+        GridData txtUserExprGD = new GridData(SWT.FILL, SWT.NONE, true, true);
+        txtUserExprGD.heightHint = 30;
+        txtUserValue.setLayoutData(txtUserExprGD);
+
+        setOrEnumList = new HashSet<String>();
+        setOrEnumValues = new ArrayList<String>();
+    }
+
+    private void createAddRemoveValueComposite() {
+        Composite addRemoveValueComposite = new Composite(this.grpValues, SWT.NONE);
+        addRemoveValueComposite.setLayout(new GridLayout(1, false));
+        GridData addRemoveIndexCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        addRemoveIndexCompositeGD.verticalAlignment = SWT.CENTER;
+        addRemoveValueComposite.setLayoutData(addRemoveIndexCompositeGD);
+
+        createAddToValue(addRemoveValueComposite);
+        createRemoveFromValues(addRemoveValueComposite);
+    }
+
+    /**
+     * Creates the add to Add/Remove/MoveUp/MoveDown Buttons
+     *
+     * @param comp the comp
+     */
+    private void createAddToValue(Composite comp) {
+        Button addToIndex = new Button(comp, SWT.ARROW | SWT.RIGHT);
+        GridData addToIndexGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        addToIndexGD.heightHint = 20;
+        addToIndex.setLayoutData(addToIndexGD);
+        addToIndex.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_BTN_INDEXUI_ADD_TO_INDEX_001");
+        addToIndex.setText(MessageConfigLoader.getProperty(IMessagesConstants.INDEX_UI_ADD_TO));
+        addToIndex.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
+                String userExpr = txtUserValue.getText().trim();
+                if (!"".equals(userExpr)) {
+                    if (!setOrEnumList.contains(userExpr)) {
+                        setOrEnumList.add(userExpr);
+                        setOrEnumValues.add(userExpr);
+                        repopulateValueCols();
+                        txtUserValue.setText("");
+                    }
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
+                // Nothing to do
+            }
+        });
+    }
+
+    public void repopulateValueCols() {
+        TableItem item = null;
+        tblValues.removeAll();
+        Iterator<String> valuesItr = this.setOrEnumValues.iterator();
+        String value = null;
+        while (valuesItr.hasNext()) {
+            value = valuesItr.next();
+            item = new TableItem(tblValues, SWT.NONE);
+            item.setText(value);
+        }
+    }
+
+    private void createRemoveFromValues(Composite comp) {
+        Button removeFromValues = new Button(comp, SWT.ARROW | SWT.LEFT);
+        GridData removeFromValuesGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        removeFromValuesGD.heightHint = 20;
+        removeFromValues.setLayoutData(removeFromValuesGD);
+        removeFromValues.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_BTN_INDEXUI_REMOVE_FROM_INDEX_001");
+        removeFromValues.setText(MessageConfigLoader.getProperty(IMessagesConstants.INDEX_UI_REMOVE));
+        removeFromValues.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
+                int selectedIdx = tblValues.getSelectionIndex();
+                if (selectedIdx > -1) {
+                    String expr = setOrEnumValues.get(selectedIdx);
+                    setOrEnumValues.remove(selectedIdx);
+                    tblValues.remove(selectedIdx);
+                    setOrEnumList.remove(expr);
+                    txtUserValue.setText(expr);
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent eevent) {
+                // Nothing to do.
+            }
+        });
+    }
+
+    private void createValueTable(Composite comp) {
+        tblValues = new Table(comp, SWT.BORDER | SWT.FULL_SELECTION);
+        tblValues.setLayout(new GridLayout(1, false));
+        GridData tblIndexColsGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        tblIndexColsGD.horizontalIndent = 5;
+        tblValues.setLayoutData(tblIndexColsGD);
+
+        tblValues.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_TBL_INDEXUI_INDEX_COLS_001");
+        tblValues.setLinesVisible(true);
+        tblValues.setHeaderVisible(true);
+
+        ControlDecoration decofk = new ControlDecoration(tblValues, SWT.TOP | SWT.LEFT);
+
+        // use an existing image
+        Image image = IconUtility.getIconImage(IiconPath.MANDATORY_FIELD, this.getClass());
+
+        // set description and image
+        decofk.setDescriptionText(MessageConfigLoader.getProperty(IMessagesConstants.INDEX_UI_MSG));
+        decofk.setImage(image);
+
+        TableColumn tblclmnValues = new TableColumn(tblValues, SWT.NONE);
+        tblclmnValues.setWidth(185);
+        tblclmnValues.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_TBL_COL_INDEXUI_INDEX_COLS_001");
+        tblclmnValues.setText(MessageConfigLoader.getProperty(IMessagesConstants.SET_ENUM_UI_USER_VALUE));
+
+    }
+
+    private void createFinishComposite() {
+        Composite finishValueComposite = new Composite(this.grpValues, SWT.NONE);
+        finishValueComposite.setLayout(new GridLayout(1, false));
+        GridData finishValueCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        finishValueCompositeGD.verticalAlignment = SWT.CENTER;
+        finishValueComposite.setLayoutData(finishValueCompositeGD);
+        
+        Button finish = new Button(finishValueComposite, SWT.NONE);
+        GridData finishGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        finishGD.heightHint = 20;
+        finish.setLayoutData(finishGD);
+        finish.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_BTN_INDEXUI_MOVE_UP_INDEX_001");
+        finish.setText(MessageConfigLoader.getProperty(IMessagesConstants.CREATE_TABLE_FINISH_BTN));
+        finish.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
+                grpValues.setVisible(false);
+                grpValues.setSize(0,0);
+                editValues.setVisible(true);
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
+                // Nothing to do
+            }
+        });
+    }
+
+    private void createUpDownValueComposite() {
+        Composite upDownValueComposite = new Composite(this.grpValues, SWT.NONE);
+        upDownValueComposite.setLayout(new GridLayout(1, false));
+        GridData upDownValueCompositeGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        upDownValueCompositeGD.verticalAlignment = SWT.CENTER;
+        upDownValueComposite.setLayoutData(upDownValueCompositeGD);
+
+        createValueMoveUp(upDownValueComposite);
+        createValueMoveDown(upDownValueComposite);
+    }
+
+    /**
+     * 
+     * @param comp
+     */
+    private void createValueMoveUp(Composite comp) {
+        Button moveUp = new Button(comp, SWT.ARROW | SWT.UP);
+        GridData moveUpGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        moveUpGD.heightHint = 20;
+        moveUp.setLayoutData(moveUpGD);
+        moveUp.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_BTN_INDEXUI_MOVE_UP_INDEX_001");
+        moveUp.setText(MessageConfigLoader.getProperty(IMessagesConstants.INDEX_UI_MOVE_UP));
+        moveUp.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
+                int selectedIdx = tblValues.getSelectionIndex();
+                if (selectedIdx > 0) {
+                    String value = setOrEnumValues.get(selectedIdx);
+                    setOrEnumValues.remove(selectedIdx);
+                    setOrEnumValues.add(selectedIdx - 1, value);
+                    repopulateValueCols();
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
+                // Nothing to do
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param comp
+     */
+    private void createValueMoveDown(Composite comp) {
+        Button moveDown = new Button(comp, SWT.ARROW | SWT.DOWN);
+        GridData moveDownGD = new GridData(SWT.FILL, SWT.FILL, true, true);
+        moveDownGD.heightHint = 20;
+        moveDown.setLayoutData(moveDownGD);
+        moveDown.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_BTN_INDEXUI_MOVE_DOWN_INDEX_001");
+        moveDown.setText(MessageConfigLoader.getProperty(IMessagesConstants.INDEX_UI_MOVE_DOWN));
+        moveDown.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
+                int selectedIdx = tblValues.getSelectionIndex();
+                if (selectedIdx > -1 && selectedIdx < (tblValues.getItemCount() - 1)) {
+                    String value = setOrEnumValues.get(selectedIdx);
+                    setOrEnumValues.remove(selectedIdx);
+                    setOrEnumValues.add(selectedIdx + 1, value);
+                    repopulateValueCols();
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
+                // Nothing to do
+
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param compositeColumns
+     */
+    private void addDisplayEditValuesButton(Composite compositeColumns) {
+        Composite editValuesComposite = new Composite(compositeColumns, SWT.FILL);
+        editValuesComposite.setLayout(new GridLayout(1, false));
+        editValues = new Button(editValuesComposite, SWT.NONE);
+        GridData editValuesCompositeGD = new GridData(SWT.NONE, SWT.NONE, true, false);
+        editValuesCompositeGD.horizontalAlignment = SWT.RIGHT;
+        editValuesCompositeGD.heightHint = 30;
+        editValuesCompositeGD.widthHint = 100;
+        editValues.setLayoutData(editValuesCompositeGD);
+        editValues.setSize(30, 100);
+        editValues.setData(MPPDBIDEConstants.SWTBOT_KEY, "ID_BTN_INDEXUI_MOVE_UP_INDEX_001");
+        editValues.setText(MessageConfigLoader.getProperty(IMessagesConstants.EDIT_SETTING_VALUE));
+        editValues.setVisible(false);
+        editValues.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
+                grpValues.setVisible(true);
+                editValues.setVisible(false);
+                grpValues.setSize(625, 200);
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent event) {
+                // Nothing to do
+            }
+        });
+    }
 }

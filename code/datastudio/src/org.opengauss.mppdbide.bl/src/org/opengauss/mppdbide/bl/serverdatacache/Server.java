@@ -359,6 +359,7 @@ public class Server implements IConnectionProfile, GaussOLAPDBMSObject {
         setServerIP2(db.fetchServerIP());
         DatabaseUtils.checkCancelStatusAndAbort(status, db);
         refreshUserRoleObjectGroup();
+        db.initDolphinTypesIfNeeded();
 
         return db.getProfileId();
     }

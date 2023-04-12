@@ -15,6 +15,7 @@
 
 package org.opengauss.mppdbide.bl.serverdatacache;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,9 +45,9 @@ import org.opengauss.mppdbide.bl.serverdatacache.groups.ObjectList;
 import org.opengauss.mppdbide.bl.serverdatacache.groups.SystemNamespaceObjectGroup;
 import org.opengauss.mppdbide.bl.serverdatacache.groups.UserNamespaceObjectGroup;
 import org.opengauss.mppdbide.bl.util.BLUtils;
-import org.opengauss.mppdbide.bl.util.ExecTimer;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.SystemObjectName;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
 import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.exceptions.MPPDBIDEException;
@@ -135,6 +136,15 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
     private FetchObjHelper fetchQueryHelper = null;
 
     private DataTypeProvider dataTypeProvider = null;
+
+    private HashMap<String, boolean[]> dolphinTypes = null;
+
+    private static final String DOLPHIN_EXTENSION_QUERY = "select count(*) from pg_extension where extname = 'dolphin'";
+    private static final String DOLPHIN_TYPE_FUNCTION_QUERY = "select count(*) from pg_proc " +
+                                                                "where proname = 'dolphin_types' and " +
+                                                                "pronamespace = 11 and pronargs = 0";
+
+    private static final String DOLPHIN_TYPES_QUERY = "select dolphin_types()";
 
     /**
      * Gets the db name.
@@ -531,7 +541,7 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
          */
         public void loadDefaultDatatype() throws DatabaseOperationException {
             defaultDatatypes.clear();
-            ServerObject servObj = getSystemNamespaces().get("pg_catalog");
+            ServerObject servObj = getSystemNamespaces().get(SystemObjectName.PG_CATALOG);
 
             if (!(servObj instanceof Namespace)) {
                 return;
@@ -561,7 +571,7 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
 
             orcDatatypes = new OLAPObjectList<TypeMetaData>(OBJECTTYPE.DATATYPE_GROUP, this);
 
-            ServerObject servObj = getSystemNamespaces().get("pg_catalog");
+            ServerObject servObj = getSystemNamespaces().get(SystemObjectName.PG_CATALOG);
 
             if (!(servObj instanceof Namespace)) {
                 return;
@@ -1430,5 +1440,87 @@ public class Database extends ServerObject implements GaussOLAPDBMSObject {
 
     public boolean isExplainPlanSupported() {
         return isExplainPlanSupported;
+    }
+
+    public void initDolphinTypesIfNeeded() throws DatabaseCriticalException, DatabaseOperationException {
+        if (hasDolphin()) {
+            initDolphinTypes();
+        }
+    }
+
+    /**
+     * Checks has dolphin plugin and dolphin type function
+     *
+     * @return true, if has dolphin plugin and dolphin type function
+     */
+    private boolean hasDolphin()
+            throws DatabaseCriticalException, DatabaseOperationException {
+        String dolphinExtensionResult =
+                this.getConnectionManager().execSelectAndGetFirstValOnObjBrowserConn(DOLPHIN_EXTENSION_QUERY);
+        String dolphinFunctionResult =
+                this.getConnectionManager().execSelectAndGetFirstValOnObjBrowserConn(DOLPHIN_TYPE_FUNCTION_QUERY);
+        boolean hasDolphinExtention = Integer.parseInt(dolphinExtensionResult) == 1;
+        boolean hasDolphinTypesFunction = Integer.parseInt(dolphinFunctionResult) == 1;
+
+        return hasDolphinExtention && hasDolphinTypesFunction;
+    }
+
+
+    public void initDolphinTypes() throws DatabaseCriticalException, DatabaseOperationException
+    {
+        ResultSet rs = null;
+        try {
+            rs = this.getConnectionManager().execSelectAndReturnRsOnObjBrowserConn(DOLPHIN_TYPES_QUERY);
+            while (rs.next()) {
+                 Array array = rs.getArray(1);
+                 if (array != null) {
+                     String[][] strs = (String[][]) array.getArray();
+                     dolphinTypes = new HashMap<String, boolean[]>(strs.length);
+                     for (int i = 0; i < strs.length; i++) {
+                         dolphinTypes.put(strs[i][0], new boolean[] {Boolean.parseBoolean(strs[i][1]),
+                                 Boolean.parseBoolean(strs[i][2])});
+                     }
+                 }
+            }
+        } catch (SQLException exp) {
+            try {
+                GaussUtils.handleCriticalException(exp);
+            } catch (DatabaseCriticalException dc) {
+                throw dc;
+            }
+            MPPDBIDELoggerUtility
+                    .error(MessageConfigLoader.getProperty(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION), exp);
+            throw new DatabaseOperationException(IMessagesConstants.ERR_FETCH_DATABASE_OPERATION, exp);
+        } finally {
+            this.getConnectionManager().closeRSOnObjBrowserConn(rs);
+        }
+
+        return;
+    }
+
+    /**
+     * Get the dolphinTypes
+     *
+     * @return dolphinTypes
+     */
+    public HashMap<String, boolean[]> getDolphinTypes() {
+        return this.dolphinTypes;
+    }
+
+    /**
+     * Get the oid of type
+     *
+     * @return integer, the dolphin type oid
+     */
+    public int getDolphinTypeOid(String typname) {
+        int oid = 0;
+        try {
+            String getTypeOidQuery = "select oid from pg_type where typname=\'" + typname + "\' and typnamespace = 11";
+            String result  = this.getConnectionManager().execSelectAndGetFirstValOnObjBrowserConn(getTypeOidQuery);
+            oid = Integer.parseInt(result);
+        } catch (DatabaseOperationException | DatabaseCriticalException exp) {
+            MPPDBIDELoggerUtility.error("getDolphinTypeOid: Failed to get the type oid.");
+        }
+        return oid;
     }
 }

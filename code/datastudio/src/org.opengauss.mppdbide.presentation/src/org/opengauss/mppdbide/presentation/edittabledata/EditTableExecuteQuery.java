@@ -87,7 +87,11 @@ public class EditTableExecuteQuery implements EditTableExecuteQueryUtility {
             for (int index = 0; index < editValueCount; index++) {
                 value = editValues.get(index);
                 if (!IEditTableExecuteQuery.isNonPlaceholderType(value)) {
-                    stmt.setObject(index + 1, value);
+                    if (value instanceof String) {
+                        stmt.setObject(index + 1, value, Types.OTHER);
+                    } else {
+                        stmt.setObject(index + 1, value);
+                    }
                 }
             }
 

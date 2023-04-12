@@ -16,6 +16,8 @@
 package org.opengauss.mppdbide.view.component.grid;
 
 import java.sql.Types;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import org.eclipse.nebula.widgets.cdatetime.CDT;
 import org.eclipse.nebula.widgets.nattable.config.AbstractRegistryConfiguration;
@@ -50,7 +52,11 @@ import org.opengauss.mppdbide.presentation.objectproperties.PropertiesConstants;
 import org.opengauss.mppdbide.presentation.objectproperties.PropertiesUserRoleImpl;
 import org.opengauss.mppdbide.utils.IMessagesConstants;
 import org.opengauss.mppdbide.utils.MPPDBIDEConstants;
+import org.opengauss.mppdbide.utils.SystemObjectName;
+import org.opengauss.mppdbide.utils.exceptions.DatabaseCriticalException;
+import org.opengauss.mppdbide.utils.exceptions.DatabaseOperationException;
 import org.opengauss.mppdbide.utils.loader.MessageConfigLoader;
+import org.opengauss.mppdbide.utils.logger.MPPDBIDELoggerUtility;
 import org.opengauss.mppdbide.view.component.IGridUIPreference;
 import org.opengauss.mppdbide.view.component.grid.core.DSAbstractRegistryConfiguration;
 import org.opengauss.mppdbide.view.component.grid.core.DSBlobCellEditor;
@@ -70,7 +76,24 @@ import org.opengauss.mppdbide.view.utils.icon.IconUtility;
 public class EditTableGridStyleConfiguration extends AbstractRegistryConfiguration
         implements IEditTableGridStyleLabelFactory {
     private static final String COL_LABEL_TIMESTAMP = "TIMESTAMP";
+    private static HashSet<String> extraTypes = new HashSet<>();
 
+
+    static {
+        extraTypes.add("int1");
+        extraTypes.add("nvarchar2");
+        extraTypes.add("interval");
+        extraTypes.add("blob");
+        extraTypes.add("clob");
+        extraTypes.add("varbit");
+        extraTypes.add("box");
+        extraTypes.add("path");
+        extraTypes.add("circle");
+        extraTypes.add("lseg");
+        extraTypes.add("point");
+        extraTypes.add("polygon");
+        extraTypes.add("binary");
+    }
     /**
      * Configure registry.
      *
@@ -303,12 +326,13 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
             if (dataProvider instanceof DSObjectPropertiesGridDataProvider) {
                 handleDSObjectGridConfigureRegistry(configRegistry, dataProvider, columnCount);
             }
-            handleCommonColumnConfigureRegistry(configRegistry, dataProvider, columnCount);
+            handleCommonColumnConfigureRegistry(configRegistry, dataProvider, columnCount,
+                    dataProvider.getDatabse() != null ?dataProvider.getDatabse().getDolphinTypes() : null);
 
         }
 
         private void handleCommonColumnConfigureRegistry(IConfigRegistry configRegistry,
-                IDSGridDataProvider dataProvider, int columnCount) {
+                IDSGridDataProvider dataProvider, int columnCount, HashMap<String, boolean[]>dolphinTypes) {
             int colDatatype = 0;
             for (int i = 0; i < columnCount; i++) {
                 colDatatype = dataProvider.getColumnDataProvider().getColumnDatatype(i);
@@ -331,7 +355,7 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
                         break;
                     }
                     case Types.OTHER: {
-                        cursorTypeConfiguration(configRegistry, dataProvider);
+                        handleCommonColumnConfigureForOther(configRegistry, dataProvider, dolphinTypes, i);
                         break;
                     }
 
@@ -366,6 +390,31 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
                 configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
                         DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
             }
+        }
+
+        private void handleCommonColumnConfigureForOther(IConfigRegistry configRegistry,
+                IDSGridDataProvider dataProvider, HashMap<String, boolean[]> dolphinTypes, int i) {
+            String colDatatypeName = dataProvider.getColumnDataProvider().getColumnDataTypeName(i);
+            if (extraTypes.contains(colDatatypeName)
+                    || (dolphinTypes != null && dolphinTypes.containsKey(colDatatypeName))) {
+                configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
+                        DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
+                return;
+            }
+            try {
+                if (GridUIUtils.checkTypType(colDatatypeName, SystemObjectName.SET_TYP_TYPE, dataProvider.getDatabse())
+                        || GridUIUtils.checkTypType(colDatatypeName, SystemObjectName.ENUM_TYP_TYPE,
+                                dataProvider.getDatabse())) {
+                    configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
+                            DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
+                    return;
+                }
+            } catch (DatabaseCriticalException exception) {
+                MPPDBIDELoggerUtility.error("checkTypType query failed", exception);
+            } catch (DatabaseOperationException exception) {
+                MPPDBIDELoggerUtility.error("checkTypType query failed", exception);
+            }
+            cursorTypeConfiguration(configRegistry, dataProvider);
         }
 
         /**

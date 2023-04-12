@@ -110,7 +110,7 @@ public class AddColumn extends Dialog implements IDialogWorkerInteraction {
         crntShell.setLayout(new GridLayout(1, false));
         GridData crntShellGD = new GridData(SWT.FILL, SWT.FILL, true, true);
         crntShell.setLayoutData(crntShellGD);
-        crntShell.setSize(650, 480);
+        crntShell.setSize(650, 500);
         crntShell.setText(MessageConfigLoader.getProperty(IMessagesConstants.ADD_NEW_COLUMN));
 
         columnUI = new ColumnUI(tableMetaData.getNamespace().getDatabase(), tableMetaData);

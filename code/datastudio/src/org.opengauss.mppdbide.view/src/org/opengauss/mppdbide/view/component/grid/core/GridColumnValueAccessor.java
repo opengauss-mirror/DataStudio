@@ -319,7 +319,7 @@ public class GridColumnValueAccessor implements IColumnPropertyAccessor<IDSGridD
 
         String columnDataTypeName = dataProvider.getColumnDataProvider().getColumnDataTypeName(columnIndex);
         int colPrecisionVal = dataProvider.getColumnDataProvider().getPrecision(columnIndex);
-        if (!GridUIUtils.isDatatypeEditSupported(columnDataTypeName, colPrecisionVal)) {
+        if (!GridUIUtils.isDatatypeEditSupported(columnDataTypeName, colPrecisionVal, dataProvider.getDatabse())) {
             return;
         }
         if (distributedCols != null

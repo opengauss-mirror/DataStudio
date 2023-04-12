@@ -175,6 +175,7 @@ public class ConnectToDB {
             db.connectToServer();
             serverVersion = db.getExecutor().getServerVersion();
             Server server = db.getServer();
+            db.initDolphinTypesIfNeeded();
             serverConnectionInfo = server.getServerConnectionInfo();
             server.setServerVersion(serverVersion);
             ((ServerConnectionInfo) serverConnectionInfo).setDBVersion(server.getServerVersion(true));
