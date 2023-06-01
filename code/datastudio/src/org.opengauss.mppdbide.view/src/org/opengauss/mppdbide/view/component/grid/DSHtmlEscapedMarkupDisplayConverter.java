@@ -69,22 +69,29 @@ public class DSHtmlEscapedMarkupDisplayConverter extends MarkupDisplayConverter 
         Object canonicalValue = canonicalValueParam;
         IDSGridDataProvider dataProvider = dataGridContext.getDataProvider();
 
-        if (Types.OTHER == dataProvider.getColumnDataProvider()
-                .getColumnDatatype(dataProvider.getColumnDataProvider().getColumnCount() - 1)
-                && canonicalValueParam != null && canonicalValue instanceof List) {
-            return MPPDBIDEConstants.CURSOR_WATERMARK;
+        if (canonicalValueParam != null) {
+            if (Types.OTHER == dataProvider.getColumnDataProvider()
+                    .getColumnDatatype(dataProvider.getColumnDataProvider().getColumnCount() - 1)
+                    && canonicalValue instanceof List) {
+                return MPPDBIDEConstants.CURSOR_WATERMARK;
 
-        }
-
-        if (MPPDBIDEConstants.BLOB
-                .equalsIgnoreCase(dataProvider.getColumnDataProvider().getColumnDataTypeName(cell.getColumnIndex()))
-                && canonicalValueParam != null) {
-            return MPPDBIDEConstants.BLOB_WATERMARK;
-        }
-        if (MPPDBIDEConstants.BYTEA
-                .equalsIgnoreCase(dataProvider.getColumnDataProvider().getColumnDataTypeName(cell.getColumnIndex()))
-                && canonicalValueParam != null) {
-            return MPPDBIDEConstants.BYTEA_WATERMARK;
+            }
+            String colTypeName = dataProvider.getColumnDataProvider().getColumnDataTypeName(cell.getColumnIndex());
+            if (MPPDBIDEConstants.BLOB.equalsIgnoreCase(colTypeName)) {
+                return MPPDBIDEConstants.BLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.TINYBLOB.equalsIgnoreCase(colTypeName)) {
+                return MPPDBIDEConstants.TINYBLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.MEDIUMBLOB.equalsIgnoreCase(colTypeName)) {
+                return MPPDBIDEConstants.MEDIUMBLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.LONGBLOB.equalsIgnoreCase(colTypeName)) {
+                return MPPDBIDEConstants.LONGBLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.BYTEA.equalsIgnoreCase(colTypeName)) {
+                return MPPDBIDEConstants.BYTEA_WATERMARK;
+            }
         }
 
         if (dataProvider instanceof DSObjectPropertiesGridDataProvider && canonicalValue == null) {

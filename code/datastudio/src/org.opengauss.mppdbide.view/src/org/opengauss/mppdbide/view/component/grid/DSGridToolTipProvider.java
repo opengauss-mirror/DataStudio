@@ -149,8 +149,19 @@ public class DSGridToolTipProvider extends NatTableContentTooltip {
         String convertedDataType = CellDisplayConversionUtils.convertDataType(cell, getToolTipConfigRegistry());
         String columnDataType = dataProvider.getColumnDataProvider().getColumnDataTypeName(cell.getColumnIndex());
 
-        if (MPPDBIDEConstants.BLOB.equalsIgnoreCase(columnDataType) && !convertedDataType.isEmpty()) {
-            return MPPDBIDEConstants.BLOB_WATERMARK;
+        if (!convertedDataType.isEmpty()) {
+            if (MPPDBIDEConstants.BLOB.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.BLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.TINYBLOB.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.TINYBLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.MEDIUMBLOB.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.MEDIUMBLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.LONGBLOB.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.LONGBLOB_WATERMARK;
+            }
         }
         Object cellValue = cell.getDataValue();
         int dataType = dataProvider.getColumnDataProvider().getColumnDatatype(cell.getColumnIndex());
@@ -199,13 +210,24 @@ public class DSGridToolTipProvider extends NatTableContentTooltip {
     }
 
     private String getToolTipForLabelAsBody(String convertedDataType, String columnDataType) {
-        if (MPPDBIDEConstants.BLOB.equalsIgnoreCase(columnDataType) && !convertedDataType.isEmpty()) {
-            return MPPDBIDEConstants.BLOB_WATERMARK;
-        } else if (MPPDBIDEConstants.BYTEA.equalsIgnoreCase(columnDataType) && !convertedDataType.isEmpty()) {
-            return MPPDBIDEConstants.BYTEA_WATERMARK;
-        } else {
-            return getConvertedColumnData(convertedDataType, columnDataType);
+        if (!convertedDataType.isEmpty()) {
+            if (MPPDBIDEConstants.BLOB.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.BLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.TINYBLOB.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.TINYBLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.MEDIUMBLOB.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.MEDIUMBLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.LONGBLOB.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.LONGBLOB_WATERMARK;
+            }
+            if (MPPDBIDEConstants.BYTEA.equalsIgnoreCase(columnDataType)) {
+                return MPPDBIDEConstants.BYTEA_WATERMARK;
+            }
         }
+        return getConvertedColumnData(convertedDataType, columnDataType);
     }
 
     private String getExplainAnalyzePlanTooltip(ILayerCell cell, LabelStack cellLabels) {
