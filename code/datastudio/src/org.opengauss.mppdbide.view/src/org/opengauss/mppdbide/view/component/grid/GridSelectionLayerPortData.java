@@ -193,6 +193,18 @@ public class GridSelectionLayerPortData {
                             cellDataValue[i + 1] = MPPDBIDEConstants.BLOB_WATERMARK;
                             continue;
                         }
+                        case MPPDBIDEConstants.TINYBLOB: {
+                            cellDataValue[i + 1] = MPPDBIDEConstants.TINYBLOB_WATERMARK;
+                            continue;
+                        }
+                        case MPPDBIDEConstants.MEDIUMBLOB: {
+                            cellDataValue[i + 1] = MPPDBIDEConstants.MEDIUMBLOB_WATERMARK;
+                            continue;
+                        }
+                        case MPPDBIDEConstants.LONGBLOB: {
+                            cellDataValue[i + 1] = MPPDBIDEConstants.LONGBLOB_WATERMARK;
+                            continue;
+                        }
                         case MPPDBIDEConstants.BYTEA: {
                             cellDataValue[i + 1] = MPPDBIDEConstants.BYTEA_WATERMARK;
                             continue;

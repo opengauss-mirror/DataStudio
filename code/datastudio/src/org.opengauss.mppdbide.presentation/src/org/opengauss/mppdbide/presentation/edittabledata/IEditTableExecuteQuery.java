@@ -303,14 +303,18 @@ public interface IEditTableExecuteQuery {
      */
     static Blob convertToBlob(Connection con, Object value) {
 
-        if (null == value || !(value instanceof byte[])) {
+        if (value == null || !(value instanceof byte[] || value instanceof String)) {
             return null;
         }
 
         Blob createBlob = null;
         try {
             createBlob = con.createBlob();
-            createBlob.setBytes(1, (byte[]) value);
+            if (value instanceof byte[]) {
+                createBlob.setBytes(1, (byte[]) value);
+            } else {
+                createBlob.setBytes(1, ((String) value).getBytes());
+            }
         } catch (SQLException exception) {
             MPPDBIDELoggerUtility.error("Failed to convert bytes to blob object", exception);
         }

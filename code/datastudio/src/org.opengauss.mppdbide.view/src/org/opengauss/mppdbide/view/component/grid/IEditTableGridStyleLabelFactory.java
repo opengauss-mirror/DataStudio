@@ -160,6 +160,21 @@ public interface IEditTableGridStyleLabelFactory {
     String COL_LABEL_BLOB_TYPE_CELL = "COL_LABEL_BLOB_TYPE_CELL";
 
     /**
+     * The col label tinyblob type cell.
+     */
+    String COL_LABEL_TINYBLOB_TYPE_CELL = "COL_LABEL_TINYBLOB_TYPE_CELL";
+
+    /**
+     * The col label mediumblob type cell.
+     */
+    String COL_LABEL_MEDIUMBLOB_TYPE_CELL = "COL_LABEL_MEDIUMBLOB_TYPE_CELL";
+
+    /**
+     * The col label longblob type cell.
+     */
+    String COL_LABEL_LONGBLOB_TYPE_CELL = "COL_LABEL_LONGBLOB_TYPE_CELL";
+
+    /**
      * The col label cursor type cell.
      */
     String COL_LABEL_CURSOR_TYPE_CELL = "COL_LABEL_CURSOR_TYPE_CELL";

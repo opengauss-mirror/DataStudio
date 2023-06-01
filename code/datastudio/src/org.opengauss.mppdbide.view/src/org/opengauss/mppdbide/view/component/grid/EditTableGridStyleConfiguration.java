@@ -77,6 +77,7 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
         implements IEditTableGridStyleLabelFactory {
     private static final String COL_LABEL_TIMESTAMP = "TIMESTAMP";
     private static HashSet<String> extraTypes = new HashSet<>();
+    private static HashMap<String, String> typeCell = new HashMap<>();
 
 
     static {
@@ -93,6 +94,10 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
         extraTypes.add("point");
         extraTypes.add("polygon");
         extraTypes.add("binary");
+
+        typeCell.put(MPPDBIDEConstants.TINYBLOB, COL_LABEL_TINYBLOB_TYPE_CELL);
+        typeCell.put(MPPDBIDEConstants.MEDIUMBLOB, COL_LABEL_MEDIUMBLOB_TYPE_CELL);
+        typeCell.put(MPPDBIDEConstants.LONGBLOB, COL_LABEL_LONGBLOB_TYPE_CELL);
     }
     /**
      * Configure registry.
@@ -385,7 +390,7 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
         private void handleCommonColumnConfigureForBlob(IConfigRegistry configRegistry,
                 IDSGridDataProvider dataProvider, int i) {
             if (MPPDBIDEConstants.BLOB.equals(dataProvider.getColumnDataProvider().getColumnDataTypeName(i))) {
-                blobConfiguration(configRegistry, dataProvider);
+                blobConfiguration(configRegistry, dataProvider, COL_LABEL_BLOB_TYPE_CELL);
             } else {
                 configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
                         DisplayMode.NORMAL, COL_LABEL_COPY_READONLY_CELL);
@@ -395,6 +400,11 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
         private void handleCommonColumnConfigureForOther(IConfigRegistry configRegistry,
                 IDSGridDataProvider dataProvider, HashMap<String, boolean[]> dolphinTypes, int i) {
             String colDatatypeName = dataProvider.getColumnDataProvider().getColumnDataTypeName(i);
+            String cell = typeCell.get(colDatatypeName);
+            if (cell != null) {
+                blobConfiguration(configRegistry, dataProvider, cell);
+                return;
+            }
             if (extraTypes.contains(colDatatypeName)
                     || (dolphinTypes != null && dolphinTypes.containsKey(colDatatypeName))) {
                 configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSTextCellEditor(),
@@ -422,11 +432,13 @@ public class EditTableGridStyleConfiguration extends AbstractRegistryConfigurati
          *
          * @param configRegistry the config registry
          * @param dataProvider the data provider
+         * @param cell the data label
          */
-        public static void blobConfiguration(IConfigRegistry configRegistry, IDSGridDataProvider dataProvider) {
+        public static void blobConfiguration(IConfigRegistry configRegistry, IDSGridDataProvider dataProvider,
+            String cell) {
             configRegistry.registerConfigAttribute(EditConfigAttributes.CELL_EDITOR, new DSBlobCellEditor(),
-                    DisplayMode.NORMAL, COL_LABEL_BLOB_TYPE_CELL);
-            linkStyleConfiguration(configRegistry, COL_LABEL_BLOB_TYPE_CELL);
+                    DisplayMode.NORMAL, cell);
+            linkStyleConfiguration(configRegistry, cell);
         }
 
         /**

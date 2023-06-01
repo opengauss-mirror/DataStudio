@@ -412,6 +412,18 @@ public interface MPPDBIDEConstants {
     String BLOB = "BLOB";
 
     String BLOB_WATERMARK = "[BLOB]";
+    
+    String TINYBLOB = "TINYBLOB";
+
+    String TINYBLOB_WATERMARK = "[TINYBLOB]";
+    
+    String MEDIUMBLOB = "MEDIUMBLOB";
+
+    String MEDIUMBLOB_WATERMARK = "[MEIDUMBLOB]";
+    
+    String LONGBLOB = "LONGBLOB";
+
+    String LONGBLOB_WATERMARK = "[LONGBLOB]";
 
     String BYTEA = "bytea";
 

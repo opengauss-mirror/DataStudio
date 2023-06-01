@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.eclipse.nebula.widgets.nattable.layer.ILayer;
+import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
 import org.eclipse.nebula.widgets.nattable.print.command.TurnViewportOffCommand;
 import org.eclipse.nebula.widgets.nattable.print.command.TurnViewportOnCommand;
 import org.eclipse.nebula.widgets.nattable.util.IClientAreaProvider;
@@ -147,29 +148,44 @@ public class GridViewPortData implements Iterable<String[]> {
 
         // As we operate on Grid Layer, Skip the row number column
         for (int i = 1; i < this.colCount; i++) {
-            // If the datatype is Blob, [BLOB] watermark is added
-            // instead of the content since it can be huge
-            if (this.viewport.getConfigLabelsByPosition(i, this.dataReadIndex)
-                    .hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_BLOB_TYPE_CELL)
-                    && this.viewport.getDataValueByPosition(i, this.dataReadIndex) != null) {
-                rowData[i - 1] = MPPDBIDEConstants.BLOB_WATERMARK;
-                continue;
-            }
+            Object dataValue = this.viewport.getDataValueByPosition(i, this.dataReadIndex);
+            if (dataValue != null) {
+                LabelStack stack = this.viewport.getConfigLabelsByPosition(i, this.dataReadIndex);
+                
+                // If the datatype is Blob, [BLOB] watermark is added
+                // instead of the content since it can be huge
+                if (stack.hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_BLOB_TYPE_CELL)) {
+                    rowData[i - 1] = MPPDBIDEConstants.BLOB_WATERMARK;
+                    continue;
+                }
 
-            if (this.viewport.getConfigLabelsByPosition(i, this.dataReadIndex)
-                    .hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_CURSOR_TYPE_CELL)
-                    && this.viewport.getDataValueByPosition(i, this.dataReadIndex) != null
-                    && this.viewport.getDataValueByPosition(i, this.dataReadIndex) instanceof List) {
-                rowData[i - 1] = MPPDBIDEConstants.CURSOR_WATERMARK;
-                continue;
+                if (stack.hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_TINYBLOB_TYPE_CELL)) {
+                    rowData[i - 1] = MPPDBIDEConstants.TINYBLOB_WATERMARK;
+                    continue;
+                }
+
+                if (stack.hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_MEDIUMBLOB_TYPE_CELL)) {
+                    rowData[i - 1] = MPPDBIDEConstants.MEDIUMBLOB_WATERMARK;
+                    continue;
+                }
+
+                if (stack.hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_LONGBLOB_TYPE_CELL)) {
+                    rowData[i - 1] = MPPDBIDEConstants.LONGBLOB_WATERMARK;
+                    continue;
+                }
+
+                if (stack.hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_CURSOR_TYPE_CELL)
+                        && dataValue instanceof List) {
+                    rowData[i - 1] = MPPDBIDEConstants.CURSOR_WATERMARK;
+                    continue;
+                }
+
+                if (stack.hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_BYTEA_TYPE_CELL)) {
+                    rowData[i - 1] = MPPDBIDEConstants.BYTEA_WATERMARK;
+                    continue;
+                }
             }
-            if (this.viewport.getConfigLabelsByPosition(i, this.dataReadIndex)
-                    .hasLabel(IEditTableGridStyleLabelFactory.COL_LABEL_BYTEA_TYPE_CELL)
-                    && this.viewport.getDataValueByPosition(i, this.dataReadIndex) != null) {
-                rowData[i - 1] = MPPDBIDEConstants.BYTEA_WATERMARK;
-                continue;
-            }
-            rowData[i - 1] = getObjectString(this.viewport.getDataValueByPosition(i, this.dataReadIndex));
+            rowData[i - 1] = getObjectString(dataValue);
         }
         this.dataReadIndex++;
         return rowData;
