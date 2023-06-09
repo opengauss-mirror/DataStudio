@@ -195,9 +195,9 @@ public interface IQueryResult {
      */
     default StringBuilder getColumnDescriptionSQL() {
         StringBuilder queryBuilder = new StringBuilder(
-                "SELECT s.nspname     schema_name, " + 
-                "       o.relname     table_name, " + 
-                "       a.attname     column_name, " + 
+                "SELECT s.nspname as  schema_name, " +
+                "       o.relname as  table_name, " +
+                "       a.attname as  column_name, " +
                 "       d.description " + 
                 "  FROM pg_catalog.pg_class       o, " + 
                 "       pg_catalog.pg_namespace   s, " + 
