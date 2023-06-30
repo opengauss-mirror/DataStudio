@@ -287,7 +287,7 @@ public class DSEditTableDataGridDataProvider extends DSResultSetGridDataProvider
         } finally {
             commitStatus = doPostOperationTasks(isAtomic, success, autoCommitState);
 
-            if (this.lastCommitStatus.getListOfFailureRows().isEmpty()) {
+            if (this.lastCommitStatus.getListOfSuccessRows().isEmpty()) {
                 this.updatedRowCount = 0;
             }
         }
