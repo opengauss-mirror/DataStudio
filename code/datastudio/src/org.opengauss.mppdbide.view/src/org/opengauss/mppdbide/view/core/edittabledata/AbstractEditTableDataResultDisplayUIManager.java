@@ -684,6 +684,7 @@ public abstract class AbstractEditTableDataResultDisplayUIManager extends Abstra
             bottomStatusBar.activateStatusbar();
         }
         editTableUIWorker.schedule();
+        editTableGridComponent.refreshDataGrid();
     }
 
     /**
