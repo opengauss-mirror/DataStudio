@@ -406,22 +406,38 @@ public class DbeDebugService extends DebugService {
 
     private <T> List<T> getAllVariable(DebugConstants.DebugOpt debugOpt, Class<T> clazz) throws SQLException {
         List<T> vos = new ArrayList<T>();
-        map.get(getFunctionVo().oid).forEach(item -> {
-            try {
-                List<Object> inputParams = Arrays.asList(item);
-                try (PreparedStatement ps = getClientConn().getDebugOptPrepareStatement(debugOpt, inputParams)) {
-                    try (ResultSet rs = ps.executeQuery()) {
-                        if (rs.next()) {
-                            vos.addAll(QueryResVoConvertHelper.parseList(rs, clazz, getClientConn()));
-                        }
-                    } catch (SQLException e) {
-                        MPPDBIDELoggerUtility.error(e.getMessage());
+        if(debugOpt.equals(DebugConstants.DebugOpt.DBE_GET_VARIABLES)) {
+            try (PreparedStatement ps = getClientConn().getDebugOptPrepareStatement(debugOpt, new ArrayList<Object>())) {
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        vos.addAll(QueryResVoConvertHelper.parseList(rs, clazz, getClientConn()));
                     }
+
+                } catch (SQLException e) {
+                    MPPDBIDELoggerUtility.error(e.getMessage());
                 }
-            } catch (SQLException e) {
-                MPPDBIDELoggerUtility.error(e.getMessage());
             }
-        });
+        }else {
+            map.get(getFunctionVo().oid).forEach(item -> {
+                try {
+                    List<Object> inputParams = Arrays.asList(item);
+                    if(debugOpt.paramNum==0) {
+                        inputParams=new ArrayList<Object>();
+                    }
+                    try (PreparedStatement ps = getClientConn().getDebugOptPrepareStatement(debugOpt, inputParams)) {
+                        try (ResultSet rs = ps.executeQuery()) {
+                            if (rs.next()) {
+                                vos.addAll(QueryResVoConvertHelper.parseList(rs, clazz, getClientConn()));
+                            }
+                        } catch (SQLException e) {
+                            MPPDBIDELoggerUtility.error(e.getMessage());
+                        }
+                    }
+                } catch (SQLException e) {
+                    MPPDBIDELoggerUtility.error(e.getMessage());
+                }
+            });
+        }
         return vos;
     }
 
