@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (c) 2022 Huawei Technologies Co.,Ltd.
  *
  * openGauss is licensed under Mulan PSL v2.
@@ -6,7 +6,7 @@
  * You may obtain a copy of Mulan PSL v2 at:
  *
  *           http://license.coscl.org.cn/MulanPSL2
- *        
+ *
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
  * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
@@ -152,7 +152,7 @@ public class DebugConstants {
         DBE_STEP_OUT("pldbg_step_out", 1),
         DBE_CONTINUE_EXEC("DBE_PLDEBUGGER.continue", 0),
         DBE_ABORT_TARGET("DBE_PLDEBUGGER.abort", 0),
-        DBE_GET_VARIABLES("DBE_PLDEBUGGER.print_var", 1),
+        DBE_GET_VARIABLES("DBE_PLDEBUGGER.info_locals", 0),
         DBE_GET_STACKS("DBE_PLDEBUGGER.backtrace", 0),
         DBE_GET_BREAKPOINTS("DBE_PLDEBUGGER.info_breakpoints", 0),
         DBE_DROP_BREAKPOINT("DBE_PLDEBUGGER.delete_breakpoint", 1),
