@@ -1,5 +1,7 @@
 # Data Studio Introduction
 
+Notice: DataStudio will not maintenance from 2023.08.23,  we recommend use DataKit + WebDS plugin.
+
 ## Version introduction
 
 This version is version 5.0.0 of opengauss Data Studio, which mainly provides the following functions:

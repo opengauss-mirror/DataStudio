@@ -1,5 +1,7 @@
 # Data Studio介绍
 
+注意：DataStudio 自2023.08.25后放弃维护，所有功能已转移到DataKit的WebDS插件。
+
 ## 版本介绍
 
 本版本为openGauss Data Studio的5.0.0版本，主要提供如下功能：
