@@ -55,6 +55,7 @@ import org.opengauss.mppdbide.view.utils.UIElement;
  * @since 3.0.0
  */
 public class VariableTableWindow extends WindowBase<VariableVo> {
+    public static final String VARIABLE_NULL = "<NULL>";
     /**
      * description: the max number of the variables
      */
@@ -77,7 +78,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
      */
     public static void initializeVariableValues () {
         for (int i = 0; i < VARIABLES_MAX_NUM; i++) {
-            variableValues.add("<NULL>");
+            variableValues.add(VARIABLE_NULL);
         }
     }
 
@@ -106,6 +107,9 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
                 if (table.getItems().length > 0) {
                     for (int i = 0; i < table.getItems().length; i++) {
                         String newValue = table.getItems()[i].getText(1);
+                        if (variableValues.size() < i + 1) {
+                            variableValues.add(VARIABLE_NULL);
+                        }
                         String oldValue = variableValues.get(i);
                         if (!newValue.equals(oldValue)) {
                             table.getItems()[i].setBackground(color);
@@ -157,7 +161,7 @@ public class VariableTableWindow extends WindowBase<VariableVo> {
         private String getVariableValue() {
             String value = variableVo.value.toString();
             if ("NULL".equals(value)) {
-                value = "<NULL>";
+                value = VARIABLE_NULL;
             }
             return value;
         }
