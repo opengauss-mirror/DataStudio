@@ -4,7 +4,7 @@ Notice: DataStudio will not maintenance from 2023.08.23,  we recommend use DataK
 
 ## Version introduction
 
-This version is version 5.0.0 of opengauss Data Studio, which mainly provides the following functions:
+This version is version 5.1.0 of opengauss Data Studio, which mainly provides the following functions:
 
 - Manage / create database objects (functions, stored procedures, tables, views, sequences, triggers, etc.)
 - Execute SQL statements or SQL scripts
