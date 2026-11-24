@@ -1,3 +1,13 @@
+REM Copyright (c) 2026 Huawei Technologies Co., Ltd.
+REM DataStudio is licensed under Mulan PSL v2.
+REM You can use this software according to the terms and conditions of the Mulan PSL v2.
+REM You may obtain a copy of Mulan PSL v2 at:
+REM          http://license.coscl.org.cn/MulanPSL2
+REM THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+REM EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+REM MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+REM See the Mulan PSL v2 for more details.
+
 @ECHO OFF
 IF NOT DEFINED IS_MINIMIZED set IS_MINIMIZED=1 && start "" /min "%~dpnx0" %* && exit
 SET PATH=%PATH%;%SystemRoot%\system32\WindowsPowerShell\v1.0;C:\Windows\winsxs\x86_microsoft-windows-w..ommand-line-utility_31bf3856ad364e35_6.1.7600.16385_none_a1802b822e2a878c;
@@ -39,7 +49,7 @@ IF NOT EXIST """..\Data Studio.ini""" IF "%LANG%" == "ENG" (
 	)
 
 IF NOT EXIST """..\Data Studio.ini""" IF "%LANG%" == "CHZ" ( 
-	START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""Data Studio.ini ÎÄ¼þ²»´æÔÚ ""","""Data Studio""",0,48)>nul"
+	START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""Data Studio.ini ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ""","""Data Studio""",0,48)>nul"
 	Exit
 	)
 
@@ -119,7 +129,7 @@ FOR /F "tokens=2 delims=:" %%G in ('Systeminfo ^| Findstr "x64-based"') DO SET O
 		IF /I NOT "%JAVA_LOWER_VERSION%" == "" IF "%LANG%" == "CHZ" (
 			
 			@echo off
-			START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""Ö§³ÖData StudioµÄ×îµÍJava°æ±¾Îª11¡£`n`n Ê¹ÓÃ Data Studio Ç°Ðè°²×° Java 11¡£ """, """ ²»Ö§³Ö¸Ã Java °æ±¾ """,0,48)>nul"
+			START /MIN CMD /c "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""Ö§ï¿½ï¿½Data Studioï¿½ï¿½ï¿½ï¿½ï¿½Javaï¿½æ±¾Îª11ï¿½ï¿½`n`n Ê¹ï¿½ï¿½ Data Studio Ç°ï¿½è°²×° Java 11ï¿½ï¿½ """, """ ï¿½ï¿½Ö§ï¿½Ö¸ï¿½ Java ï¿½æ±¾ """,0,48)>nul"
 			GOTO EXIT
 		) 
 		
@@ -222,14 +232,14 @@ FOR /F "tokens=2 delims=:" %%G in ('Systeminfo ^| Findstr "x64-based"') DO SET O
 	IF %JAVA_BIT_64% == 64  IF %DS_BIT% == 32 IF %OS_BIT% == 64 (
 			
 			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_64% Bit Data Studio %DS_BIT% Bit"
-			START /MIN /B CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""ÄúÊÔÍ¼ÔÚÈçÏÂ»·¾³ÔËÐÐ32Î»Data Studio£º`n`n  . 64 Î»²Ù×÷ÏµÍ³ `n . %OS_NAME%  `n . 64Î»Java 11 JDK ^£¨²»¼æÈÝ^£© `n`n ÇëÊ¹ÓÃ64Î»µÄData Studio¡£ """, """²»Ö§³Ö¸Ã Data Studio °æ±¾""",0,48)>nul"
+			START /MIN /B CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Â»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½32Î»Data Studioï¿½ï¿½`n`n  . 64 Î»ï¿½ï¿½ï¿½ï¿½ÏµÍ³ `n . %OS_NAME%  `n . 64Î»Java 11 JDK ^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½ï¿½ `n`n ï¿½ï¿½Ê¹ï¿½ï¿½64Î»ï¿½ï¿½Data Studioï¿½ï¿½ """, """ï¿½ï¿½Ö§ï¿½Ö¸ï¿½ Data Studio ï¿½æ±¾""",0,48)>nul"
 			GOTO EXIT
 	)		
 
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 64 IF %OS_BIT% == 64 (
 
 			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
-			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""ÄúÊÔÍ¼ÔÚÈçÏÂ»·¾³ÔËÐÐ64Î»Data Studio£º `n`n  . 64Î»²Ù×÷ÏµÍ³ `n . %OS_NAME%  `n . 32Î»Java 11 JDK ^£¨²»¼æÈÝ^£©`n`n Çë°²×°64Î»Java 11¡£ """, """²»Ö§³Ö¸Ã Java °æ±¾""",0,48)>nul"
+			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Â»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½64Î»Data Studioï¿½ï¿½ `n`n  . 64Î»ï¿½ï¿½ï¿½ï¿½ÏµÍ³ `n . %OS_NAME%  `n . 32Î»Java 11 JDK ^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½ï¿½`n`n ï¿½ë°²×°64Î»Java 11ï¿½ï¿½ """, """ï¿½ï¿½Ö§ï¿½Ö¸ï¿½ Java ï¿½æ±¾""",0,48)>nul"
 			GOTO EXIT
 	)		 
 
@@ -237,7 +247,7 @@ FOR /F "tokens=2 delims=:" %%G in ('Systeminfo ^| Findstr "x64-based"') DO SET O
 	IF %JAVA_BIT_32% == 32  IF %DS_BIT% == 64 IF %OS_BIT% == 32 (
 
 			Echo "OS is %OS_BIT% , Java 11 %JAVA_BIT_32% Bit Data Studio %DS_BIT% Bit"
-			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""ÄúÊÔÍ¼ÔÚÈçÏÂ»·¾³ÔËÐÐ64Î»Data Studio£º `n`n  . 32Î»²Ù×÷ÏµÍ³ `n . %OS_NAME%  `n . 32Î»Java 11 JDK ^£¨²»¼æÈÝ^£©`n`n ÇëÊ¹ÓÃ32Î»µÄData Studio¡£ """, """²»Ö§³Ö¸Ã Data Studio °æ±¾""",0,48)>nul"
+			START /MIN CMD /C "powershell.exe [Reflection.Assembly]::LoadWithPartialName("""System.Windows.Forms""");[Windows.Forms.MessageBox]::show("""ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Â»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½64Î»Data Studioï¿½ï¿½ `n`n  . 32Î»ï¿½ï¿½ï¿½ï¿½ÏµÍ³ `n . %OS_NAME%  `n . 32Î»Java 11 JDK ^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½ï¿½`n`n ï¿½ï¿½Ê¹ï¿½ï¿½32Î»ï¿½ï¿½Data Studioï¿½ï¿½ """, """ï¿½ï¿½Ö§ï¿½Ö¸ï¿½ Data Studio ï¿½æ±¾""",0,48)>nul"
 			GOTO EXIT
 	)		
 	REM ADDED NEW SCENARIO
